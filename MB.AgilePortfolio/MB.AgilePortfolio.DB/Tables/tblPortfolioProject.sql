@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[tblPortfolioProject]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [PortfolioId] UNIQUEIDENTIFIER NOT NULL, 
+    [ProjectId] UNIQUEIDENTIFIER NOT NULL
+)

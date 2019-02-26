@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[tblProjectLanguage]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [ProjectId] UNIQUEIDENTIFIER NOT NULL, 
+    [LanguageId] UNIQUEIDENTIFIER NOT NULL
+)

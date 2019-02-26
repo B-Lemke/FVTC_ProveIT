@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[tblLanguage]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [Description] VARCHAR(255) NOT NULL
+)

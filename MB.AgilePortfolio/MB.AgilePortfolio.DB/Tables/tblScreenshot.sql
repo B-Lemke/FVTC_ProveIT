@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[tblScreenshot]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [Filepath] VARCHAR(255) NOT NULL, 
+    [ProjectId] UNIQUEIDENTIFIER NOT NULL
+)

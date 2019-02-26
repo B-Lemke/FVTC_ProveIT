@@ -1,0 +1,11 @@
+﻿CREATE TABLE [dbo].[tblProject]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [Name] VARCHAR(255) NOT NULL, 
+    [Location] VARCHAR(255) NOT NULL, 
+    [Filepath] VARCHAR(255) NOT NULL, 
+    [PrivacyId] UNIQUEIDENTIFIER NOT NULL, 
+    [Image] VARCHAR(255) NOT NULL, 
+    [Description] VARCHAR(255) NOT NULL, 
+    [UserId] UNIQUEIDENTIFIER NOT NULL
+)
