@@ -61,6 +61,7 @@
     <Folder Include="Pre-Deployment" />
     <Folder Include="Post-Deployment" />
     <Folder Include="Post-Deployment\DefaultData" />
+    <Folder Include="StoredProcedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\tblUser.sql" />
@@ -76,6 +77,13 @@
     <None Include="Post-Deployment\DefaultData\UserTypes.sql" />
     <Build Include="Tables\tblStatus.sql" />
     <None Include="Post-Deployment\DefaultData\PortfolioProjects.sql" />
+    <Build Include="StoredProcedures\Portfolios_ViewData.sql" />
+    <Build Include="StoredProcedures\Users_ViewData.sql" />
+    <Build Include="StoredProcedures\Projects_ViewData.sql" />
+    <Build Include="StoredProcedures\Projects_ViewSummaryData.sql" />
+    <Build Include="StoredProcedures\ProtfolioProjects_ViewData.sql" />
+    <Build Include="StoredProcedures\ProjectLanguages_ViewData.sql" />
+    <Build Include="StoredProcedures\Screenshots_ViewData.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="MB.AgilePortfolio.DB.refactorlog" />
