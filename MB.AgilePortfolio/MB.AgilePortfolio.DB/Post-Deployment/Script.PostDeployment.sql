@@ -9,5 +9,27 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
-:r DefaultData\UserType.sql
-:r DefaultData\User.sql
+
+--Default Data for tables that don't rely on other tables
+:r DefaultData\UserTypes.sql
+:r DefaultData\Languages.sql
+:r DefaultData\Privacies.sql
+:r DefaultData\Statuses.sql
+
+--Relies on UserTypes
+:r DefaultData\Users.sql
+
+--Relies on users
+:r DefaultData\Portfolios.sql
+
+--Relies on users, privacies and statuses
+:r DefaultData\Projects.sql
+
+--Relies on projects and portfolios
+:r DefaultData\PortfolioProjects.sql
+
+--Relies on Projects and Languages
+:r DefaultData\ProjectLanguages.sql
+
+--Relies on Projects
+:r DefaultData\Screenshots.sql

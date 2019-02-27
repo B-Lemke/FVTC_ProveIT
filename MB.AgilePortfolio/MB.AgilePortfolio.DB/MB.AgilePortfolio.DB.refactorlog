@@ -7,4 +7,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="Name" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="6e776381-2573-42db-8b17-0637776a0824" ChangeDateTime="02/27/2019 21:25:17">
+    <Property Name="ElementName" Value="[dbo].[tblProject].[Collbaroators]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[tblProject]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Collbarorators" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="c814afe2-acd1-4f90-ba2a-99cc689b4c3a" ChangeDateTime="02/27/2019 21:48:14">
+    <Property Name="ElementName" Value="[dbo].[tblProject].[Collbarorators]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[tblProject]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Collaborators" />
+  </Operation>
 </Operations>

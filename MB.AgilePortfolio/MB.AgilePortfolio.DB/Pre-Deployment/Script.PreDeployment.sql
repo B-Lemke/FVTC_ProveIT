@@ -9,12 +9,12 @@
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
-drop table if exists tblLanguage
-drop table if exists tblPortfolio
-drop table if exists tblPortfolioProject
-drop table if exists tblPrivacy
-drop table if exists tblProject
-drop table if exists tblProjectLanguage
-drop table if exists tblScreenshot
-drop table if exists tblUser
-drop table if exists tblUserType
+DROP TABLE IF EXISTS [dbo].tblLanguage
+DROP TABLE IF EXISTS [dbo].tblPortfolio
+DROP TABLE IF EXISTS [dbo].tblPortfolioProject
+DROP TABLE IF EXISTS [dbo].tblPrivacy
+DROP TABLE IF EXISTS [dbo].tblProject
+DROP TABLE IF EXISTS [dbo].tblProjectLanguage
+DROP TABLE IF EXISTS [dbo].tblScreenshot
+DROP TABLE IF EXISTS [dbo].tblUser
+DROP TABLE IF EXISTS [dbo].tblUserType
