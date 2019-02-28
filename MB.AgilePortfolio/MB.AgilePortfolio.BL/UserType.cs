@@ -42,18 +42,9 @@ namespace MB.AgilePortfolio.BL
         {
             try
             {
-                Delete(null);
-            }
-            catch (Exception ex) { throw ex; }
-        }
-
-        public void Delete(Guid? id)
-        {
-            try
-            {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
-                    tblUserType userType = dc.tblUserTypes.Where(ut => ut.Id == id).FirstOrDefault();
+                    tblUserType userType = dc.tblUserTypes.Where(ut => ut.Id == Id).FirstOrDefault();
                     if (userType != null)
                     {
                         dc.tblUserTypes.Remove(userType);
