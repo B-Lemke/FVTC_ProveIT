@@ -18,8 +18,8 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="Description" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="PortfolioImage" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="255" />
+          <Property Name="PortfolioImage" Type="varchar" MaxLength="255" />
           <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="tblPortfolioProject">
@@ -43,12 +43,21 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="Location" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="Filepath" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Location" Type="varchar" MaxLength="255" />
+          <Property Name="Filepath" Type="varchar" MaxLength="255" />
           <Property Name="PrivacyId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Image" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="Description" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Image" Type="varchar" MaxLength="255" />
+          <Property Name="Description" Type="varchar" MaxLength="255" />
           <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DateCreated" Type="date" Nullable="false" />
+          <Property Name="Purpose" Type="varchar" MaxLength="255" />
+          <Property Name="Environment" Type="varchar" MaxLength="255" />
+          <Property Name="Challenges" Type="varchar" MaxLength="255" />
+          <Property Name="FuturePlans" Type="varchar" MaxLength="255" />
+          <Property Name="Collaborators" Type="varchar" MaxLength="255" />
+          <Property Name="LastUpdated" Type="date" Nullable="false" />
+          <Property Name="SoftwareUsed" Type="varchar" MaxLength="255" />
+          <Property Name="StatusId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="tblProjectLanguage">
           <Key>
@@ -65,6 +74,13 @@
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Filepath" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="ProjectId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblUser">
           <Key>
@@ -93,6 +109,7 @@
           <EntitySet Name="tblProject" EntityType="Self.tblProject" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblProjectLanguage" EntityType="Self.tblProjectLanguage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblScreenshot" EntityType="Self.tblScreenshot" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblStatus" EntityType="Self.tblStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblUser" EntityType="Self.tblUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblUserType" EntityType="Self.tblUserType" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
@@ -113,8 +130,8 @@
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PortfolioImage" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="PortfolioImage" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="UserId" Type="Guid" Nullable="false" />
         </EntityType>
         <EntityType Name="tblPortfolioProject">
@@ -138,12 +155,21 @@
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Location" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Filepath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Location" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Filepath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="PrivacyId" Type="Guid" Nullable="false" />
-          <Property Name="Image" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Image" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Purpose" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Environment" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Challenges" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="FuturePlans" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Collaborators" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="LastUpdated" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="SoftwareUsed" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="StatusId" Type="Guid" Nullable="false" />
         </EntityType>
         <EntityType Name="tblProjectLanguage">
           <Key>
@@ -183,6 +209,7 @@
           <EntitySet Name="tblScreenshots" EntityType="Self.tblScreenshot" />
           <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
           <EntitySet Name="tblUserTypes" EntityType="brouchouddbModel.tblUserType" />
+          <EntitySet Name="tblStatus" EntityType="brouchouddbModel.tblStatu" />
         </EntityContainer>
         <EntityType Name="tblUserType">
           <Key>
@@ -190,6 +217,13 @@
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tblStatu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -236,6 +270,15 @@
           <EntitySetMapping Name="tblProjects">
             <EntityTypeMapping TypeName="brouchouddbModel.tblProject">
               <MappingFragment StoreEntitySet="tblProject">
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="SoftwareUsed" ColumnName="SoftwareUsed" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="Collaborators" ColumnName="Collaborators" />
+                <ScalarProperty Name="FuturePlans" ColumnName="FuturePlans" />
+                <ScalarProperty Name="Challenges" ColumnName="Challenges" />
+                <ScalarProperty Name="Environment" ColumnName="Environment" />
+                <ScalarProperty Name="Purpose" ColumnName="Purpose" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
@@ -281,6 +324,14 @@
           <EntitySetMapping Name="tblUserTypes">
             <EntityTypeMapping TypeName="brouchouddbModel.tblUserType">
               <MappingFragment StoreEntitySet="tblUserType">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblStatus">
+            <EntityTypeMapping TypeName="brouchouddbModel.tblStatu">
+              <MappingFragment StoreEntitySet="tblStatus">
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

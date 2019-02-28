@@ -93,6 +93,9 @@
     <Compile Include="tblScreenshot.cs">
       <DependentUpon>AgilePortfolio.tt</DependentUpon>
     </Compile>
+    <Compile Include="tblStatu.cs">
+      <DependentUpon>AgilePortfolio.tt</DependentUpon>
+    </Compile>
     <Compile Include="tblUser.cs">
       <DependentUpon>AgilePortfolio.tt</DependentUpon>
     </Compile>

@@ -7,14 +7,14 @@ using MB.AgilePortfolio.PL;
 
 namespace MB.AgilePortfolio.BL
 {
-    public class Language
+    public class Privacy
     {
         public Guid Id { get; set; }
         public string Description { get; set; }
 
-        public Language() { }
+        public Privacy() { }
 
-        public Language(Guid id, string description)
+        public Privacy(Guid id, string description)
         {
             Id = id;
             Description = description;
@@ -26,12 +26,12 @@ namespace MB.AgilePortfolio.BL
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
-                    tblLanguage language = new tblLanguage()
+                    tblPrivacy privacy = new tblPrivacy()
                     {
                         Id = Guid.NewGuid(),
                         Description = Description
                     };
-                    dc.tblLanguages.Add(language);
+                    dc.tblPrivacies.Add(privacy);
                     dc.SaveChanges();
                 }
             }
@@ -44,13 +44,13 @@ namespace MB.AgilePortfolio.BL
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
-                    tblLanguage language = dc.tblLanguages.Where(l => l.Id == Id).FirstOrDefault();
-                    if (language != null)
+                    tblPrivacy privacy = dc.tblPrivacies.Where(p => p.Id == Id).FirstOrDefault();
+                    if (privacy != null)
                     {
-                        dc.tblLanguages.Remove(language);
+                        dc.tblPrivacies.Remove(privacy);
                         dc.SaveChanges();
                     }
-                    else throw new Exception("Language not found");
+                    else throw new Exception("Privacy not found");
                 }
             }
             catch (Exception ex) { throw ex; }
@@ -62,13 +62,13 @@ namespace MB.AgilePortfolio.BL
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
-                    tblLanguage language = dc.tblLanguages.Where(l => l.Id == Id).FirstOrDefault();
-                    if (language != null)
+                    tblPrivacy privacy = dc.tblPrivacies.Where(p => p.Id == Id).FirstOrDefault();
+                    if (privacy != null)
                     {
-                        language.Description = Description;
+                        privacy.Description = Description;
                         dc.SaveChanges();
                     }
-                    else throw new Exception("Language not found");
+                    else throw new Exception("Privacy not found");
                 }
             }
             catch (Exception ex) { throw ex; }
@@ -80,19 +80,20 @@ namespace MB.AgilePortfolio.BL
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
-                    tblLanguage language = dc.tblLanguages.Where(l => l.Id == id).FirstOrDefault();
-                    if (language != null)
+                    tblPrivacy privacy = dc.tblPrivacies.Where(p => p.Id == id).FirstOrDefault();
+                    if (privacy != null)
                     {
-                        Id = language.Id;
-                        Description = language.Description;
+                        Id = privacy.Id;
+                        Description = privacy.Description;
                     }
-                    else throw new Exception("Language not found");
+                    else throw new Exception("Privacy not found");
                 }
             }
             catch (Exception ex) { throw ex; }
         }
     }
-    public class LanguageList : List<Language>
+
+    public class PrivacyList : List<Privacy>
     {
         public void Load()
         {
@@ -100,12 +101,12 @@ namespace MB.AgilePortfolio.BL
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
-                    var languages = dc.tblLanguages.OrderBy(l => l.Description);
-                    foreach (var l in languages)
+                    var privacies = dc.tblPrivacies.OrderBy(p => p.Description);
+                    foreach (var p in privacies)
 
                     {
-                        Language language = new Language(l.Id, l.Description);
-                        Add(language);
+                        Privacy privacy = new Privacy(p.Id, p.Description);
+                        Add(privacy);
                     }
                 }
             }
@@ -113,4 +114,3 @@ namespace MB.AgilePortfolio.BL
         }
     }
 }
-

@@ -7,14 +7,14 @@ using MB.AgilePortfolio.PL;
 
 namespace MB.AgilePortfolio.BL
 {
-    public class Language
+    public class Status
     {
         public Guid Id { get; set; }
         public string Description { get; set; }
 
-        public Language() { }
+        public Status() { }
 
-        public Language(Guid id, string description)
+        public Status(Guid id, string description)
         {
             Id = id;
             Description = description;
@@ -26,7 +26,7 @@ namespace MB.AgilePortfolio.BL
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
-                    tblLanguage language = new tblLanguage()
+                    tblStatus language = new tblLanguage()
                     {
                         Id = Guid.NewGuid(),
                         Description = Description
@@ -50,7 +50,7 @@ namespace MB.AgilePortfolio.BL
                         dc.tblLanguages.Remove(language);
                         dc.SaveChanges();
                     }
-                    else throw new Exception("Language not found");
+                    else throw new Exception("Status not found");
                 }
             }
             catch (Exception ex) { throw ex; }
@@ -68,7 +68,7 @@ namespace MB.AgilePortfolio.BL
                         language.Description = Description;
                         dc.SaveChanges();
                     }
-                    else throw new Exception("Language not found");
+                    else throw new Exception("Status not found");
                 }
             }
             catch (Exception ex) { throw ex; }
@@ -86,13 +86,14 @@ namespace MB.AgilePortfolio.BL
                         Id = language.Id;
                         Description = language.Description;
                     }
-                    else throw new Exception("Language not found");
+                    else throw new Exception("Status not found");
                 }
             }
             catch (Exception ex) { throw ex; }
         }
     }
-    public class LanguageList : List<Language>
+
+    public class StatusList : List<Status>
     {
         public void Load()
         {
@@ -104,7 +105,7 @@ namespace MB.AgilePortfolio.BL
                     foreach (var l in languages)
 
                     {
-                        Language language = new Language(l.Id, l.Description);
+                        Status language = new Status(l.Id, l.Description);
                         Add(language);
                     }
                 }
@@ -113,4 +114,3 @@ namespace MB.AgilePortfolio.BL
         }
     }
 }
-

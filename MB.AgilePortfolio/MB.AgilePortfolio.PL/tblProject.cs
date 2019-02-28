@@ -22,5 +22,14 @@ namespace MB.AgilePortfolio.PL
         public string Image { get; set; }
         public string Description { get; set; }
         public System.Guid UserId { get; set; }
+        public System.DateTime DateCreated { get; set; }
+        public string Purpose { get; set; }
+        public string Environment { get; set; }
+        public string Challenges { get; set; }
+        public string FuturePlans { get; set; }
+        public string Collaborators { get; set; }
+        public System.DateTime LastUpdated { get; set; }
+        public string SoftwareUsed { get; set; }
+        public System.Guid StatusId { get; set; }
     }
 }
