@@ -31,7 +31,7 @@ namespace MB.AgilePortfolio.BL
                         Id = Guid.NewGuid(),
                         Description = Description
                     };
-                    dc.tblLanguage.Add(language);
+                    dc.tblLanguages.Add(language);
                     dc.SaveChanges();
                 }
             }
@@ -53,10 +53,10 @@ namespace MB.AgilePortfolio.BL
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
-                    tblLanguage language = dc.tblLanguage.Where(lang => lang.Id == id).FirstOrDefault();
+                    tblLanguage language = dc.tblLanguages.Where(lang => lang.Id == id).FirstOrDefault();
                     if (language != null)
                     {
-                        dc.tblLanguage.Remove(language);
+                        dc.tblLanguages.Remove(language);
                         dc.SaveChanges();
                     }
                     else throw new Exception("Language not found");
@@ -71,7 +71,7 @@ namespace MB.AgilePortfolio.BL
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
-                    tblLanguage language = dc.tblLanguage.Where(lang => lang.Id == Id).FirstOrDefault();
+                    tblLanguage language = dc.tblLanguages.Where(lang => lang.Id == Id).FirstOrDefault();
                     if (language != null)
                     {
                         language.Description = Description;
@@ -89,7 +89,7 @@ namespace MB.AgilePortfolio.BL
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
-                    tblLanguage language = dc.tblLanguage.Where(lang => lang.Id == Id).FirstOrDefault();
+                    tblLanguage language = dc.tblLanguages.Where(lang => lang.Id == Id).FirstOrDefault();
                     if (language != null)
                     {
                         Id = language.Id;
@@ -118,7 +118,7 @@ namespace MB.AgilePortfolio.BL
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
-                    var languages = dc.tblLanguage.OrderBy(lang => lang.Description);
+                    var languages = dc.tblLanguages.OrderBy(lang => lang.Description);
                     foreach (var lang in languages)
                     {
                         Language language = new Language(lang.Id, lang.Description);
