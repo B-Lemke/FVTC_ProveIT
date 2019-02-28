@@ -42,18 +42,9 @@ namespace MB.AgilePortfolio.BL
         {
             try
             {
-                Delete(null);
-            }
-            catch (Exception ex) { throw ex; }
-        }
-
-        public void Delete(Guid? id)
-        {
-            try
-            {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
-                    tblLanguage language = dc.tblLanguages.Where(lang => lang.Id == id).FirstOrDefault();
+                    tblLanguage language = dc.tblLanguages.Where(l => l.Id == Id).FirstOrDefault();
                     if (language != null)
                     {
                         dc.tblLanguages.Remove(language);
@@ -71,7 +62,7 @@ namespace MB.AgilePortfolio.BL
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
-                    tblLanguage language = dc.tblLanguages.Where(lang => lang.Id == Id).FirstOrDefault();
+                    tblLanguage language = dc.tblLanguages.Where(l => l.Id == Id).FirstOrDefault();
                     if (language != null)
                     {
                         language.Description = Description;
@@ -89,7 +80,7 @@ namespace MB.AgilePortfolio.BL
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
-                    tblLanguage language = dc.tblLanguages.Where(lang => lang.Id == id).FirstOrDefault();
+                    tblLanguage language = dc.tblLanguages.Where(l => l.Id == id).FirstOrDefault();
                     if (language != null)
                     {
                         Id = language.Id;
@@ -107,21 +98,13 @@ namespace MB.AgilePortfolio.BL
         {
             try
             {
-                Load(null);
-            }
-            catch (Exception ex) { throw ex; }
-        }
-
-        public void Load(Guid? id)
-        {
-            try
-            {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
-                    var languages = dc.tblLanguages.OrderBy(lang => lang.Description);
-                    foreach (var lang in languages)
+                    var languages = dc.tblLanguages.OrderBy(l => l.Description);
+                    foreach (var l in languages)
+
                     {
-                        Language language = new Language(lang.Id, lang.Description);
+                        Language language = new Language(l.Id, l.Description);
 
                         Add(language);
                     }

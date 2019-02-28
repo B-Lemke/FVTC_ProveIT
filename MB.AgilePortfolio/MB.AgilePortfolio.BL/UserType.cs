@@ -108,15 +108,6 @@ namespace MB.AgilePortfolio.BL
         {
             try
             {
-                Load(null);
-            }
-            catch (Exception ex) { throw ex; }
-        }
-
-        public void Load(Guid? id)
-        {
-            try
-            {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
                     var userTypes = dc.tblUserTypes.OrderBy(ut => ut.Description);
