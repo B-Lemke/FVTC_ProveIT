@@ -89,7 +89,7 @@ namespace MB.AgilePortfolio.BL
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
-                    tblLanguage language = dc.tblLanguages.Where(lang => lang.Id == Id).FirstOrDefault();
+                    tblLanguage language = dc.tblLanguages.Where(lang => lang.Id == id).FirstOrDefault();
                     if (language != null)
                     {
                         Id = language.Id;
