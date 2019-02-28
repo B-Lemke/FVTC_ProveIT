@@ -122,6 +122,7 @@ namespace MB.AgilePortfolio.BL
                     foreach (var lang in languages)
                     {
                         Language language = new Language(lang.Id, lang.Description);
+
                         Add(language);
                     }
                 }
