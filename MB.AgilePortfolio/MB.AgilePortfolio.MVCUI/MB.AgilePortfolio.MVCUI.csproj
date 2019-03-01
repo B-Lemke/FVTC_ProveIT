@@ -156,12 +156,21 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LanguageController.cs" />
+    <Compile Include="Controllers\PortfolioController.cs" />
+    <Compile Include="Controllers\PrivacyController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\ScreenshotController.cs" />
+    <Compile Include="Controllers\StatusController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserTypeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\PortfolioUsers.cs" />
+    <Compile Include="ViewModels\ProjectPrivaciesUsersStatuses.cs" />
+    <Compile Include="ViewModels\ScreenshotProjects.cs" />
     <Compile Include="ViewModels\UserUserTypes.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -252,6 +261,36 @@
     <Content Include="Views\UserType\Create.cshtml" />
     <Content Include="Views\UserType\Edit.cshtml" />
     <Content Include="Views\UserType\Delete.cshtml" />
+    <Content Include="Views\Language\Index.cshtml" />
+    <Content Include="Views\Language\Details.cshtml" />
+    <Content Include="Views\Language\Create.cshtml" />
+    <Content Include="Views\Language\Edit.cshtml" />
+    <Content Include="Views\Language\Delete.cshtml" />
+    <Content Include="Views\Portfolio\Index.cshtml" />
+    <Content Include="Views\Portfolio\Details.cshtml" />
+    <Content Include="Views\Portfolio\Create.cshtml" />
+    <Content Include="Views\Portfolio\Edit.cshtml" />
+    <Content Include="Views\Portfolio\Delete.cshtml" />
+    <Content Include="Views\Privacy\Index.cshtml" />
+    <Content Include="Views\Privacy\Details.cshtml" />
+    <Content Include="Views\Privacy\Create.cshtml" />
+    <Content Include="Views\Privacy\Edit.cshtml" />
+    <Content Include="Views\Privacy\Delete.cshtml" />
+    <Content Include="Views\Project\Index.cshtml" />
+    <Content Include="Views\Project\Details.cshtml" />
+    <Content Include="Views\Project\Create.cshtml" />
+    <Content Include="Views\Project\Edit.cshtml" />
+    <Content Include="Views\Project\Delete.cshtml" />
+    <Content Include="Views\Screenshot\Index.cshtml" />
+    <Content Include="Views\Screenshot\Details.cshtml" />
+    <Content Include="Views\Screenshot\Create.cshtml" />
+    <Content Include="Views\Screenshot\Edit.cshtml" />
+    <Content Include="Views\Screenshot\Delete.cshtml" />
+    <Content Include="Views\Status\Index.cshtml" />
+    <Content Include="Views\Status\Details.cshtml" />
+    <Content Include="Views\Status\Create.cshtml" />
+    <Content Include="Views\Status\Edit.cshtml" />
+    <Content Include="Views\Status\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

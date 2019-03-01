@@ -26,12 +26,12 @@ namespace MB.AgilePortfolio.BL
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
-                    tblStatus language = new tblLanguage()
+                    tblStatus status = new tblStatus()
                     {
                         Id = Guid.NewGuid(),
                         Description = Description
                     };
-                    dc.tblLanguages.Add(language);
+                    dc.tblStatuses.Add(status);
                     dc.SaveChanges();
                 }
             }
@@ -44,10 +44,10 @@ namespace MB.AgilePortfolio.BL
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
-                    tblLanguage language = dc.tblLanguages.Where(l => l.Id == Id).FirstOrDefault();
-                    if (language != null)
+                    tblStatus status = dc.tblStatuses.Where(s => s.Id == Id).FirstOrDefault();
+                    if (status != null)
                     {
-                        dc.tblLanguages.Remove(language);
+                        dc.tblStatuses.Remove(status);
                         dc.SaveChanges();
                     }
                     else throw new Exception("Status not found");
@@ -62,10 +62,10 @@ namespace MB.AgilePortfolio.BL
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
-                    tblLanguage language = dc.tblLanguages.Where(l => l.Id == Id).FirstOrDefault();
-                    if (language != null)
+                    tblStatus status = dc.tblStatuses.Where(s => s.Id == Id).FirstOrDefault();
+                    if (status != null)
                     {
-                        language.Description = Description;
+                        status.Description = Description;
                         dc.SaveChanges();
                     }
                     else throw new Exception("Status not found");
@@ -80,11 +80,11 @@ namespace MB.AgilePortfolio.BL
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
-                    tblLanguage language = dc.tblLanguages.Where(l => l.Id == id).FirstOrDefault();
-                    if (language != null)
+                    tblStatus status = dc.tblStatuses.Where(s => s.Id == id).FirstOrDefault();
+                    if (status != null)
                     {
-                        Id = language.Id;
-                        Description = language.Description;
+                        Id = status.Id;
+                        Description = status.Description;
                     }
                     else throw new Exception("Status not found");
                 }
@@ -101,12 +101,12 @@ namespace MB.AgilePortfolio.BL
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
-                    var languages = dc.tblLanguages.OrderBy(l => l.Description);
-                    foreach (var l in languages)
+                    var statuses = dc.tblStatuses.OrderBy(s => s.Description);
+                    foreach (var s in statuses)
 
                     {
-                        Status language = new Status(l.Id, l.Description);
-                        Add(language);
+                        Status status = new Status(s.Id, s.Description);
+                        Add(status);
                     }
                 }
             }

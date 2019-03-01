@@ -34,6 +34,6 @@ namespace MB.AgilePortfolio.PL
         public virtual DbSet<tblScreenshot> tblScreenshots { get; set; }
         public virtual DbSet<tblUser> tblUsers { get; set; }
         public virtual DbSet<tblUserType> tblUserTypes { get; set; }
-        public virtual DbSet<tblStatu> tblStatus { get; set; }
+        public virtual DbSet<tblStatus> tblStatuses { get; set; }
     }
 }

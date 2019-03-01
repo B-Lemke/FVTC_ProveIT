@@ -209,7 +209,7 @@
           <EntitySet Name="tblScreenshots" EntityType="Self.tblScreenshot" />
           <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
           <EntitySet Name="tblUserTypes" EntityType="brouchouddbModel.tblUserType" />
-          <EntitySet Name="tblStatus" EntityType="brouchouddbModel.tblStatu" />
+          <EntitySet Name="tblStatus1" EntityType="brouchouddbModel.tblStatus" />
         </EntityContainer>
         <EntityType Name="tblUserType">
           <Key>
@@ -218,7 +218,7 @@
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="tblStatu">
+        <EntityType Name="tblStatus">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -329,8 +329,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblStatus">
-            <EntityTypeMapping TypeName="brouchouddbModel.tblStatu">
+          <EntitySetMapping Name="tblStatus1">
+            <EntityTypeMapping TypeName="brouchouddbModel.tblStatus">
               <MappingFragment StoreEntitySet="tblStatus">
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

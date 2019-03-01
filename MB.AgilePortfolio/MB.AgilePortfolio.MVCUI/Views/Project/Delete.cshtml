@@ -1,0 +1,153 @@
+﻿@model MB.AgilePortfolio.BL.Project
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Project</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Filepath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Filepath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PrivacyId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrivacyId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Image)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Image)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateCreated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Purpose)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Purpose)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Environment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Environment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Challenges)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Challenges)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FuturePlans)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FuturePlans)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Collaborators)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Collaborators)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastUpdated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastUpdated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SoftwareUsed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoftwareUsed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StatusId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StatusId)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

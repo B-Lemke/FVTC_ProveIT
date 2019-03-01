@@ -1,0 +1,124 @@
+﻿@model IEnumerable<MB.AgilePortfolio.BL.Project>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Location)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Filepath)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PrivacyId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Image)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Purpose)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Environment)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Challenges)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FuturePlans)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Collaborators)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastUpdated)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SoftwareUsed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StatusId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Location)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Filepath)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PrivacyId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Image)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateCreated)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Purpose)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Environment)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Challenges)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FuturePlans)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Collaborators)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastUpdated)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SoftwareUsed)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StatusId)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

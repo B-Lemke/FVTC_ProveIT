@@ -12,7 +12,7 @@ namespace MB.AgilePortfolio.PL
     using System;
     using System.Collections.Generic;
     
-    public partial class tblStatu
+    public partial class tblStatus
     {
         public System.Guid Id { get; set; }
         public string Description { get; set; }

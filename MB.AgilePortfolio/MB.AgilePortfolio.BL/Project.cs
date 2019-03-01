@@ -1,0 +1,249 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using MB.AgilePortfolio.PL;
+
+namespace MB.AgilePortfolio.BL
+{
+    public class Project
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Location { get; set; }
+        public string Filepath { get; set; }
+        public Guid PrivacyId { get; set; }
+        public string Image { get; set; }
+        public string Description { get; set; }
+        public Guid UserId { get; set; }
+        public DateTime DateCreated { get; set; }
+        public string Purpose { get; set; }
+        public string Environment { get; set; }
+        public string Challenges { get; set; }
+        public string FuturePlans { get; set; }
+        public string Collaborators { get; set; }
+        public DateTime LastUpdated { get; set; }
+        public string SoftwareUsed { get; set; }
+        public Guid StatusId { get; set; }
+
+        public Project() { }
+
+        public Project(Guid id, string name, string location, string filepath, Guid privacyId, string image, string description, Guid userId, DateTime dateCreated,
+                       string purpose, string environment, string challenges, string futurePlans, string collaborators, DateTime lastUpdated, string softwareUsed, Guid statusId)
+        {
+            Id = id;
+            Name = name;
+            Location = location;
+            Filepath = filepath;
+            PrivacyId = privacyId;
+            Image = image;
+            Description = description;
+            UserId = userId;
+            DateCreated = dateCreated;
+            Purpose = purpose;
+            Environment = environment;
+            Challenges = challenges;
+            FuturePlans = futurePlans;
+            Collaborators = collaborators;
+            LastUpdated = lastUpdated;
+            SoftwareUsed = softwareUsed;
+            StatusId = statusId;
+        }
+
+        public void Insert()
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    tblProject project = new tblProject()
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = Name,
+                        Location = Location,
+                        Filepath = Filepath,
+                        PrivacyId = PrivacyId,
+                        Image = Image,
+                        Description = Description,
+                        UserId = UserId,
+                        DateCreated = DateCreated,
+                        Purpose = Purpose,
+                        Environment = Environment,
+                        Challenges = Challenges,
+                        FuturePlans = FuturePlans,
+                        Collaborators = Collaborators,
+                        LastUpdated = LastUpdated,
+                        SoftwareUsed = SoftwareUsed,
+                        StatusId = StatusId
+                    };
+                    dc.tblProjects.Add(project);
+                    dc.SaveChanges();
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        public void Delete()
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    tblProject project = dc.tblProjects.Where(p => p.Id == Id).FirstOrDefault();
+                    if (project != null)
+                    {
+                        dc.tblProjects.Remove(project);
+                        dc.SaveChanges();
+                    }
+                    else throw new Exception("Project not found");
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        public void Update()
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    tblProject project = dc.tblProjects.Where(p => p.Id == Id).FirstOrDefault();
+                    if (project != null)
+                    {
+                        project.Name = Name;
+                        project.Location = Location;
+                        project.Filepath = Filepath;
+                        project.PrivacyId = PrivacyId;
+                        project.Image = Image;
+                        project.Description = Description;
+                        project.UserId = UserId;
+                        project.DateCreated = DateCreated;
+                        project.Purpose = Purpose;
+                        project.Environment = Environment;
+                        project.Challenges = Challenges;
+                        project.FuturePlans = FuturePlans;
+                        project.Collaborators = Collaborators;
+                        project.LastUpdated = LastUpdated;
+                        project.SoftwareUsed = SoftwareUsed;
+                        project.StatusId = StatusId;
+                        dc.SaveChanges();
+                    }
+                    else throw new Exception("Project not found");
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        public void LoadById(Guid id)
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    var project = (from p in dc.tblProjects
+                                join pr in dc.tblPrivacies on p.PrivacyId equals pr.Id
+                                join u in dc.tblUsers on p.UserId equals u.Id
+                                join s in dc.tblStatuses on p.StatusId equals s.Id
+                                where p.Id == id
+                                select new
+                                {
+                                    p.Id,
+                                    p.Name,
+                                    p.Location,
+                                    p.Filepath,
+                                    p.PrivacyId,
+                                    p.Image,
+                                    p.Description,
+                                    p.UserId,
+                                    p.DateCreated,
+                                    p.Purpose,
+                                    p.Environment,
+                                    p.Challenges,
+                                    p.FuturePlans,
+                                    p.Collaborators,
+                                    p.LastUpdated,
+                                    p.SoftwareUsed,
+                                    p.StatusId
+                                }).FirstOrDefault();
+                    if (project != null)
+                    {
+                        Id = project.Id;
+                        Name = project.Name;
+                        Location = project.Location;
+                        Filepath = project.Filepath;
+                        PrivacyId = project.PrivacyId;
+                        Image = project.Image;
+                        Description = project.Description;
+                        UserId = project.UserId;
+                        DateCreated = project.DateCreated;
+                        Purpose = project.Purpose;
+                        Environment = project.Environment;
+                        Challenges = project.Challenges;
+                        FuturePlans = project.FuturePlans;
+                        Collaborators = project.Collaborators;
+                        LastUpdated = project.LastUpdated;
+                        SoftwareUsed = project.SoftwareUsed;
+                        StatusId = project.StatusId;
+                    }
+                    else throw new Exception("Project not found");
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+    }
+
+    public class ProjectList : List<Project>
+    {
+        public void Load()
+        {
+            try
+            {
+                Load(null);
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        public void Load(Guid? id)
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    var projects = (from p in dc.tblProjects
+                                    join pr in dc.tblPrivacies on p.PrivacyId equals pr.Id
+                                    join u in dc.tblUsers on p.UserId equals u.Id
+                                    join s in dc.tblStatuses on p.StatusId equals s.Id
+                                    where p.UserId == id || id == null
+                                 select new
+                                 {
+                                     p.Id,
+                                     p.Name,
+                                     p.Location,
+                                     p.Filepath,
+                                     p.PrivacyId,
+                                     p.Image,
+                                     p.Description,
+                                     p.UserId,
+                                     p.DateCreated,
+                                     p.Purpose,
+                                     p.Environment,
+                                     p.Challenges,
+                                     p.FuturePlans,
+                                     p.Collaborators,
+                                     p.LastUpdated,
+                                     p.SoftwareUsed,
+                                     p.StatusId
+                                 }).OrderByDescending(p => p.LastUpdated).ToList();
+                    foreach (var p in projects)
+                    {
+                        Project project = new Project(p.Id, p.Name, p.Location, p.Filepath, p.PrivacyId, p.Image, p.Description, p.UserId, p.DateCreated, p.Purpose,
+                                                      p.Environment, p.Challenges, p.FuturePlans, p.Collaborators, p.LastUpdated, p.SoftwareUsed, p.StatusId);
+                        Add(project);
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+    }
+}
