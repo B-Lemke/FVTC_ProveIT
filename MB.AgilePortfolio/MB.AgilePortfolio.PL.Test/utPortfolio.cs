@@ -27,7 +27,6 @@ namespace MB.AgilePortfolio.PL.Test
                 //Create a portfolio
                 tblPortfolio portfolio = new tblPortfolio
                 {
-                    //Portfolio a GUID for testing purposes
                     Id = Guid.Parse("11112222-3333-4444-5555-666677778888"),
                     Description = "Test",
                     Name = "Test",

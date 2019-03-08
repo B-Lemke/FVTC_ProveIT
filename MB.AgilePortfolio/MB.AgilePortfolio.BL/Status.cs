@@ -20,7 +20,7 @@ namespace MB.AgilePortfolio.BL
             Description = description;
         }
 
-        public void Insert()
+        public int Insert()
         {
             try
             {
@@ -31,14 +31,17 @@ namespace MB.AgilePortfolio.BL
                         Id = Guid.NewGuid(),
                         Description = Description
                     };
+                    //Save the Id
+                    this.Id = status.Id;
+
                     dc.tblStatuses.Add(status);
-                    dc.SaveChanges();
+                    return dc.SaveChanges();
                 }
             }
             catch (Exception ex) { throw ex; }
         }
 
-        public void Delete()
+        public int Delete()
         {
             try
             {
@@ -48,7 +51,7 @@ namespace MB.AgilePortfolio.BL
                     if (status != null)
                     {
                         dc.tblStatuses.Remove(status);
-                        dc.SaveChanges();
+                        return dc.SaveChanges();
                     }
                     else throw new Exception("Status not found");
                 }
@@ -56,7 +59,7 @@ namespace MB.AgilePortfolio.BL
             catch (Exception ex) { throw ex; }
         }
 
-        public void Update()
+        public int Update()
         {
             try
             {
@@ -66,7 +69,7 @@ namespace MB.AgilePortfolio.BL
                     if (status != null)
                     {
                         status.Description = Description;
-                        dc.SaveChanges();
+                        return dc.SaveChanges();
                     }
                     else throw new Exception("Status not found");
                 }

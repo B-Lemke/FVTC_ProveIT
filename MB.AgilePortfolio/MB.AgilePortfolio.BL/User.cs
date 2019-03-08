@@ -31,7 +31,7 @@ namespace MB.AgilePortfolio.BL
             UserTypeId = userTypeId;
         }
 
-        public void Insert()
+        public int Insert()
         {
             try
             {
@@ -47,14 +47,17 @@ namespace MB.AgilePortfolio.BL
                         ProfileImage = ProfileImage,
                         UserTypeId = UserTypeId
                     };
+                    //Save the Id
+                    this.Id = user.Id;
+
                     dc.tblUsers.Add(user);
-                    dc.SaveChanges();
+                    return dc.SaveChanges();
                 }
             }
             catch (Exception ex) { throw ex; }
         }
 
-        public void Delete()
+        public int Delete()
         {
             try
             {
@@ -64,7 +67,7 @@ namespace MB.AgilePortfolio.BL
                     if (user != null)
                     {
                         dc.tblUsers.Remove(user);
-                        dc.SaveChanges();
+                        return dc.SaveChanges();
                     }
                     else throw new Exception("User not found");
                 }
@@ -72,7 +75,7 @@ namespace MB.AgilePortfolio.BL
             catch (Exception ex) { throw ex; }
         }
 
-        public void Update()
+        public int Update()
         {
             try
             {
@@ -87,7 +90,7 @@ namespace MB.AgilePortfolio.BL
                         user.LastName = LastName;
                         user.ProfileImage = ProfileImage;
                         user.UserTypeId = UserTypeId;
-                        dc.SaveChanges();
+                        return dc.SaveChanges();
                     }
                     else throw new Exception("User not found");
                 }
@@ -102,7 +105,7 @@ namespace MB.AgilePortfolio.BL
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
                     var user = (from u in dc.tblUsers
-                                join ut in dc.tblUserTypes on u.UserTypeId equals ut.Id
+                                //join ut in dc.tblUserTypes on u.UserTypeId equals ut.Id
                                   where u.Id == id
                                   select new
                                   {
@@ -148,8 +151,8 @@ namespace MB.AgilePortfolio.BL
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
                     var users = (from u in dc.tblUsers
-                                   join ut in dc.tblUserTypes on u.UserTypeId equals ut.Id
-                                   where u.UserTypeId == id || id == null
+                                   //join ut in dc.tblUserTypes on u.UserTypeId equals ut.Id
+                                   //where u.UserTypeId == id || id == null
                                    select new
                                    {
                                        u.Id,

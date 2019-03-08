@@ -71,7 +71,25 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AgilePortfolio.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Portfolio_ViewData_Result.cs">
+      <DependentUpon>AgilePortfolio.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectLanguages_ViewData_Result.cs">
+      <DependentUpon>AgilePortfolio.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Projects_ViewData_Result.cs">
+      <DependentUpon>AgilePortfolio.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Projects_ViewSummaryData_Result.cs">
+      <DependentUpon>AgilePortfolio.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProtfolioProjects_ViewData_Result.cs">
+      <DependentUpon>AgilePortfolio.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Screenshots_ViewData_Result.cs">
+      <DependentUpon>AgilePortfolio.tt</DependentUpon>
+    </Compile>
     <Compile Include="tblLanguage.cs">
       <DependentUpon>AgilePortfolio.tt</DependentUpon>
     </Compile>
@@ -100,6 +118,9 @@
       <DependentUpon>AgilePortfolio.tt</DependentUpon>
     </Compile>
     <Compile Include="tblUserType.cs">
+      <DependentUpon>AgilePortfolio.tt</DependentUpon>
+    </Compile>
+    <Compile Include="User_ViewData_Result.cs">
       <DependentUpon>AgilePortfolio.tt</DependentUpon>
     </Compile>
   </ItemGroup>

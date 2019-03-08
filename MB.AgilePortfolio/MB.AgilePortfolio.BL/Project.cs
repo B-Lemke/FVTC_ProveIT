@@ -51,7 +51,7 @@ namespace MB.AgilePortfolio.BL
             StatusId = statusId;
         }
 
-        public void Insert()
+        public int Insert()
         {
             try
             {
@@ -77,14 +77,17 @@ namespace MB.AgilePortfolio.BL
                         SoftwareUsed = SoftwareUsed,
                         StatusId = StatusId
                     };
+                    //Save the Id
+                    this.Id = project.Id;
+
                     dc.tblProjects.Add(project);
-                    dc.SaveChanges();
+                    return dc.SaveChanges();
                 }
             }
             catch (Exception ex) { throw ex; }
         }
 
-        public void Delete()
+        public int Delete()
         {
             try
             {
@@ -94,7 +97,7 @@ namespace MB.AgilePortfolio.BL
                     if (project != null)
                     {
                         dc.tblProjects.Remove(project);
-                        dc.SaveChanges();
+                        return dc.SaveChanges();
                     }
                     else throw new Exception("Project not found");
                 }
@@ -102,7 +105,7 @@ namespace MB.AgilePortfolio.BL
             catch (Exception ex) { throw ex; }
         }
 
-        public void Update()
+        public int Update()
         {
             try
             {
@@ -127,7 +130,8 @@ namespace MB.AgilePortfolio.BL
                         project.LastUpdated = LastUpdated;
                         project.SoftwareUsed = SoftwareUsed;
                         project.StatusId = StatusId;
-                        dc.SaveChanges();
+
+                        return dc.SaveChanges();
                     }
                     else throw new Exception("Project not found");
                 }
@@ -142,9 +146,9 @@ namespace MB.AgilePortfolio.BL
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
                     var project = (from p in dc.tblProjects
-                                join pr in dc.tblPrivacies on p.PrivacyId equals pr.Id
-                                join u in dc.tblUsers on p.UserId equals u.Id
-                                join s in dc.tblStatuses on p.StatusId equals s.Id
+                                //join pr in dc.tblPrivacies on p.PrivacyId equals pr.Id
+                                //join u in dc.tblUsers on p.UserId equals u.Id
+                                //join s in dc.tblStatuses on p.StatusId equals s.Id
                                 where p.Id == id
                                 select new
                                 {
@@ -211,9 +215,9 @@ namespace MB.AgilePortfolio.BL
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
                     var projects = (from p in dc.tblProjects
-                                    join pr in dc.tblPrivacies on p.PrivacyId equals pr.Id
-                                    join u in dc.tblUsers on p.UserId equals u.Id
-                                    join s in dc.tblStatuses on p.StatusId equals s.Id
+                                    //join pr in dc.tblPrivacies on p.PrivacyId equals pr.Id
+                                    //join u in dc.tblUsers on p.UserId equals u.Id
+                                    //join s in dc.tblStatuses on p.StatusId equals s.Id
                                     where p.UserId == id || id == null
                                  select new
                                  {

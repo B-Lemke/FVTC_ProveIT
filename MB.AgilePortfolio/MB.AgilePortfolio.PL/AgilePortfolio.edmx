@@ -101,6 +101,15 @@
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
+        <Function Name="Portfolio_ViewData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ProjectId" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="ProjectLanguages_ViewData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="Projects_ViewData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="Projects_ViewSummaryData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ProtfolioProjects_ViewData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="Screenshots_ViewData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="User_ViewData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="brouchouddbModelStoreContainer">
           <EntitySet Name="tblLanguage" EntityType="Self.tblLanguage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblPortfolio" EntityType="Self.tblPortfolio" Schema="dbo" store:Type="Tables" />
@@ -210,6 +219,15 @@
           <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
           <EntitySet Name="tblUserTypes" EntityType="brouchouddbModel.tblUserType" />
           <EntitySet Name="tblStatus1" EntityType="brouchouddbModel.tblStatus" />
+          <FunctionImport Name="Portfolio_ViewData" ReturnType="Collection(brouchouddbModel.Portfolio_ViewData_Result)">
+          <Parameter Name="ProjectId" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="ProjectLanguages_ViewData" ReturnType="Collection(brouchouddbModel.ProjectLanguages_ViewData_Result)" />
+          <FunctionImport Name="Projects_ViewData" ReturnType="Collection(brouchouddbModel.Projects_ViewData_Result)" />
+          <FunctionImport Name="Projects_ViewSummaryData" ReturnType="Collection(brouchouddbModel.Projects_ViewSummaryData_Result)" />
+          <FunctionImport Name="ProtfolioProjects_ViewData" ReturnType="Collection(brouchouddbModel.ProtfolioProjects_ViewData_Result)" />
+          <FunctionImport Name="Screenshots_ViewData" ReturnType="Collection(brouchouddbModel.Screenshots_ViewData_Result)" />
+          <FunctionImport Name="User_ViewData" ReturnType="Collection(brouchouddbModel.User_ViewData_Result)" />
         </EntityContainer>
         <EntityType Name="tblUserType">
           <Key>
@@ -225,6 +243,68 @@
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <ComplexType Name="Portfolio_ViewData_Result">
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="PortfolioImage" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="ProjectLanguages_ViewData_Result">
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Project" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Language" Nullable="false" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="Projects_ViewData_Result">
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Location" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Filepath" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Image" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Privacy" Nullable="false" MaxLength="255" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" />
+          <Property Type="String" Name="Purpose" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Environment" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Challenges" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="FuturePlans" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Collaborators" Nullable="true" MaxLength="255" />
+          <Property Type="DateTime" Name="LastUpdated" Nullable="false" />
+          <Property Type="String" Name="SoftwareUsed" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="Projects_ViewSummaryData_Result">
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Privacy" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="ProtfolioProjects_ViewData_Result">
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Name1" Nullable="false" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="Screenshots_ViewData_Result">
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Filepath" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="User_ViewData_Result">
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="ProfileImage" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="255" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -337,6 +417,96 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Portfolio_ViewData" FunctionName="brouchouddbModel.Store.Portfolio_ViewData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="brouchouddbModel.Portfolio_ViewData_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PortfolioImage" ColumnName="PortfolioImage" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ProjectLanguages_ViewData" FunctionName="brouchouddbModel.Store.ProjectLanguages_ViewData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="brouchouddbModel.ProjectLanguages_ViewData_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Project" ColumnName="Project" />
+                <ScalarProperty Name="Language" ColumnName="Language" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Projects_ViewData" FunctionName="brouchouddbModel.Store.Projects_ViewData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="brouchouddbModel.Projects_ViewData_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Filepath" ColumnName="Filepath" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Privacy" ColumnName="Privacy" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Purpose" ColumnName="Purpose" />
+                <ScalarProperty Name="Environment" ColumnName="Environment" />
+                <ScalarProperty Name="Challenges" ColumnName="Challenges" />
+                <ScalarProperty Name="FuturePlans" ColumnName="FuturePlans" />
+                <ScalarProperty Name="Collaborators" ColumnName="Collaborators" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="SoftwareUsed" ColumnName="SoftwareUsed" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Projects_ViewSummaryData" FunctionName="brouchouddbModel.Store.Projects_ViewSummaryData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="brouchouddbModel.Projects_ViewSummaryData_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Privacy" ColumnName="Privacy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ProtfolioProjects_ViewData" FunctionName="brouchouddbModel.Store.ProtfolioProjects_ViewData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="brouchouddbModel.ProtfolioProjects_ViewData_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Name1" ColumnName="Name1" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Screenshots_ViewData" FunctionName="brouchouddbModel.Store.Screenshots_ViewData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="brouchouddbModel.Screenshots_ViewData_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Filepath" ColumnName="Filepath" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="User_ViewData" FunctionName="brouchouddbModel.Store.User_ViewData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="brouchouddbModel.User_ViewData_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="ProfileImage" ColumnName="ProfileImage" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

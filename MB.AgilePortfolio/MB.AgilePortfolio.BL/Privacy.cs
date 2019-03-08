@@ -20,7 +20,7 @@ namespace MB.AgilePortfolio.BL
             Description = description;
         }
 
-        public void Insert()
+        public int Insert()
         {
             try
             {
@@ -31,14 +31,17 @@ namespace MB.AgilePortfolio.BL
                         Id = Guid.NewGuid(),
                         Description = Description
                     };
+                    //Save the Id
+                    this.Id = privacy.Id;
+
                     dc.tblPrivacies.Add(privacy);
-                    dc.SaveChanges();
+                    return dc.SaveChanges();
                 }
             }
             catch (Exception ex) { throw ex; }
         }
 
-        public void Delete()
+        public int Delete()
         {
             try
             {
@@ -48,7 +51,7 @@ namespace MB.AgilePortfolio.BL
                     if (privacy != null)
                     {
                         dc.tblPrivacies.Remove(privacy);
-                        dc.SaveChanges();
+                        return dc.SaveChanges();
                     }
                     else throw new Exception("Privacy not found");
                 }
@@ -56,7 +59,7 @@ namespace MB.AgilePortfolio.BL
             catch (Exception ex) { throw ex; }
         }
 
-        public void Update()
+        public int Update()
         {
             try
             {
@@ -66,7 +69,7 @@ namespace MB.AgilePortfolio.BL
                     if (privacy != null)
                     {
                         privacy.Description = Description;
-                        dc.SaveChanges();
+                        return dc.SaveChanges();
                     }
                     else throw new Exception("Privacy not found");
                 }

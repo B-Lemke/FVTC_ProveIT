@@ -12,6 +12,8 @@ namespace MB.AgilePortfolio.PL
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class PortfolioEntities : DbContext
     {
@@ -35,5 +37,44 @@ namespace MB.AgilePortfolio.PL
         public virtual DbSet<tblUser> tblUsers { get; set; }
         public virtual DbSet<tblUserType> tblUserTypes { get; set; }
         public virtual DbSet<tblStatus> tblStatuses { get; set; }
+    
+        public virtual ObjectResult<Portfolio_ViewData_Result> Portfolio_ViewData(Nullable<System.Guid> projectId)
+        {
+            var projectIdParameter = projectId.HasValue ?
+                new ObjectParameter("ProjectId", projectId) :
+                new ObjectParameter("ProjectId", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Portfolio_ViewData_Result>("Portfolio_ViewData", projectIdParameter);
+        }
+    
+        public virtual ObjectResult<ProjectLanguages_ViewData_Result> ProjectLanguages_ViewData()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProjectLanguages_ViewData_Result>("ProjectLanguages_ViewData");
+        }
+    
+        public virtual ObjectResult<Projects_ViewData_Result> Projects_ViewData()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Projects_ViewData_Result>("Projects_ViewData");
+        }
+    
+        public virtual ObjectResult<Projects_ViewSummaryData_Result> Projects_ViewSummaryData()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Projects_ViewSummaryData_Result>("Projects_ViewSummaryData");
+        }
+    
+        public virtual ObjectResult<ProtfolioProjects_ViewData_Result> ProtfolioProjects_ViewData()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProtfolioProjects_ViewData_Result>("ProtfolioProjects_ViewData");
+        }
+    
+        public virtual ObjectResult<Screenshots_ViewData_Result> Screenshots_ViewData()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Screenshots_ViewData_Result>("Screenshots_ViewData");
+        }
+    
+        public virtual ObjectResult<User_ViewData_Result> User_ViewData()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<User_ViewData_Result>("User_ViewData");
+        }
     }
 }

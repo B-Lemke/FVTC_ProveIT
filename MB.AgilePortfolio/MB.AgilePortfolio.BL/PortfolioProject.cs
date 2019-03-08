@@ -22,7 +22,7 @@ namespace MB.AgilePortfolio.BL
             ProjectId = projectId;
         }
 
-        public void Insert()
+        public int Insert()
         {
             try
             {
@@ -34,14 +34,17 @@ namespace MB.AgilePortfolio.BL
                         PortfolioId = PortfolioId,
                         ProjectId = ProjectId
                     };
+                    //Save the Id
+                    this.Id = portfolioProject.Id;
+
                     dc.tblPortfolioProjects.Add(portfolioProject);
-                    dc.SaveChanges();
+                    return dc.SaveChanges();
                 }
             }
             catch (Exception ex) { throw ex; }
         }
 
-        public void Delete()
+        public int Delete()
         {
             try
             {
@@ -51,7 +54,7 @@ namespace MB.AgilePortfolio.BL
                     if (portfolioProject != null)
                     {
                         dc.tblPortfolioProjects.Remove(portfolioProject);
-                        dc.SaveChanges();
+                        return dc.SaveChanges();
                     }
                     else throw new Exception("Portfolio Project not found");
                 }
@@ -59,7 +62,7 @@ namespace MB.AgilePortfolio.BL
             catch (Exception ex) { throw ex; }
         }
 
-        public void Update()
+        public int Update()
         {
             try
             {
@@ -70,7 +73,7 @@ namespace MB.AgilePortfolio.BL
                     {
                         portfolioProject.PortfolioId = PortfolioId;
                         portfolioProject.ProjectId = ProjectId;
-                        dc.SaveChanges();
+                        return dc.SaveChanges();
                     }
                     else throw new Exception("Portfolio Project not found");
                 }
@@ -85,8 +88,8 @@ namespace MB.AgilePortfolio.BL
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
                     var portfolioProject = (from pp in dc.tblPortfolioProjects
-                                   join p in dc.tblProjects on pp.ProjectId equals p.Id
-                                   join po in dc.tblPortfolios on pp.PortfolioId equals po.Id
+                                   //join p in dc.tblProjects on pp.ProjectId equals p.Id
+                                   //join po in dc.tblPortfolios on pp.PortfolioId equals po.Id
                                    where pp.Id == id
                                    select new
                                    {
@@ -101,6 +104,32 @@ namespace MB.AgilePortfolio.BL
                         ProjectId = portfolioProject.ProjectId;
                     }
                     else throw new Exception("Portfolio Project not found");
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+    }
+
+    public class PortfolioProjectList : List<PortfolioProject>
+    {
+        public void Load()
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    var portfolioProjects = (from p in dc.tblPortfolioProjects
+                                             select new
+                                       {
+                                           p.Id,
+                                           p.PortfolioId,
+                                           p.ProjectId
+                                       }).ToList();
+                    foreach (var p in portfolioProjects)
+                    {
+                        PortfolioProject portfolioProject = new PortfolioProject(p.Id, p.PortfolioId, p.ProjectId);
+                        Add(portfolioProject);
+                    }
                 }
             }
             catch (Exception ex) { throw ex; }

@@ -22,7 +22,7 @@ namespace MB.AgilePortfolio.BL
             LanguageId = languageId;
         }
 
-        public void Insert()
+        public int Insert()
         {
             try
             {
@@ -52,34 +52,38 @@ namespace MB.AgilePortfolio.BL
                     --------------------------------------------------------------------------------------
                         END TODO: Compare code
                     */
+                    //Save the Id
+                    this.Id = projectlanguage.Id;
 
                     dc.tblProjectLanguages.Add(projectlanguage);
-                    dc.SaveChanges();
+                    return dc.SaveChanges();
                 }
             }
             catch (Exception ex) { throw ex; }
         }
 
-        public void Delete()
+        /*
+        public int Delete()
         {
             try
             {
-                Delete(null);
+                return Delete(null);
             }
             catch (Exception ex) { throw ex; }
         }
+        */
 
-        public void Delete(Guid? id)
+        public int Delete()
         {
             try
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
-                    tblProjectLanguage projectlanguage = dc.tblProjectLanguages.Where(pl => pl.Id == id).FirstOrDefault();
+                    tblProjectLanguage projectlanguage = dc.tblProjectLanguages.Where(pl => pl.Id == this.Id).FirstOrDefault();
                     if (projectlanguage != null)
                     {
                         dc.tblProjectLanguages.Remove(projectlanguage);
-                        dc.SaveChanges();
+                        return dc.SaveChanges();
                     }
                     else throw new Exception("ProjectLanguage not found");
                 }
@@ -87,7 +91,7 @@ namespace MB.AgilePortfolio.BL
             catch (Exception ex) { throw ex; }
         }
 
-        public void Update()
+        public int Update()
         {
             try
             {
@@ -98,7 +102,7 @@ namespace MB.AgilePortfolio.BL
                     {
                         projectlanguage.ProjectId = this.ProjectId;
                         projectlanguage.LanguageId = this.LanguageId;
-                        dc.SaveChanges();
+                        return dc.SaveChanges();
                     }
                     else throw new Exception("ProjectLanguage not found");
                 }
@@ -122,8 +126,8 @@ namespace MB.AgilePortfolio.BL
                     */
 
                     var projectlanguage = (from pl in dc.tblProjectLanguages
-                                           join lang in dc.tblLanguages on pl.LanguageId equals lang.Id
-                                           join p in dc.tblProjects on pl.ProjectId equals p.Id
+                                           //join lang in dc.tblLanguages on pl.LanguageId equals lang.Id
+                                           //join p in dc.tblProjects on pl.ProjectId equals p.Id
                                 where pl.Id == id
                                 select new
                                 {
@@ -168,8 +172,8 @@ namespace MB.AgilePortfolio.BL
                     */
 
                     var projectlanguages = (from pl in dc.tblProjectLanguages 
-                                 join lang in dc.tblLanguages on pl.LanguageId equals lang.Id
-                                 join p in dc.tblProjects on pl.ProjectId equals p.Id
+                                 //join lang in dc.tblLanguages on pl.LanguageId equals lang.Id
+                                 //join p in dc.tblProjects on pl.ProjectId equals p.Id
                                  where pl.ProjectId == id || id == null
                                  select new
                                  {

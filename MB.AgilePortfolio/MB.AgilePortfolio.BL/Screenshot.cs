@@ -22,7 +22,7 @@ namespace MB.AgilePortfolio.BL
             ProjectId = projectId;
         }
 
-        public void Insert()
+        public int Insert()
         {
             try
             {
@@ -34,14 +34,17 @@ namespace MB.AgilePortfolio.BL
                         Filepath = Filepath,
                         ProjectId = ProjectId
                     };
+                    //Save the Id
+                    this.Id = screenshot.Id;
+
                     dc.tblScreenshots.Add(screenshot);
-                    dc.SaveChanges();
+                    return dc.SaveChanges();
                 }
             }
             catch (Exception ex) { throw ex; }
         }
 
-        public void Delete()
+        public int Delete()
         {
             try
             {
@@ -51,7 +54,7 @@ namespace MB.AgilePortfolio.BL
                     if (screenshot != null)
                     {
                         dc.tblScreenshots.Remove(screenshot);
-                        dc.SaveChanges();
+                        return dc.SaveChanges();
                     }
                     else throw new Exception("Screenshot not found");
                 }
@@ -59,7 +62,7 @@ namespace MB.AgilePortfolio.BL
             catch (Exception ex) { throw ex; }
         }
 
-        public void Update()
+        public int Update()
         {
             try
             {
@@ -70,7 +73,7 @@ namespace MB.AgilePortfolio.BL
                     {
                         screenshot.Filepath = Filepath;
                         screenshot.ProjectId = ProjectId;
-                        dc.SaveChanges();
+                        return dc.SaveChanges();
                     }
                     else throw new Exception("Screenshot not found");
                 }
@@ -85,8 +88,8 @@ namespace MB.AgilePortfolio.BL
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
                     var screenshot = (from s in dc.tblScreenshots
-                                     join p in dc.tblProjects on s.ProjectId equals p.Id
-                                     where p.Id == id
+                                    //join p in dc.tblProjects on s.ProjectId equals p.Id
+                                     where s.Id == id
                                      select new
                                      {
                                          s.Id,
@@ -124,8 +127,8 @@ namespace MB.AgilePortfolio.BL
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
                     var screenshots = (from s in dc.tblScreenshots
-                                      join p in dc.tblProjects on s.ProjectId equals p.Id
-                                      where s.ProjectId == id || id == null
+                                      //join p in dc.tblProjects on s.ProjectId equals p.Id
+                                      //where s.ProjectId == id || id == null
                                       select new
                                       {
                                           s.Id,
