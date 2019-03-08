@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MB.AgilePortfolio.PL", "MB.
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "MB.AgilePortfolio.DB", "MB.AgilePortfolio.DB\MB.AgilePortfolio.DB.sqlproj", "{A01DBE79-4A1F-4A62-A670-58E35A48D229}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MB.AgilePortfolio.PL.Test", "MB.AgilePortfolio.PL.Test\MB.AgilePortfolio.PL.Test.csproj", "{60D37A2C-BED9-445B-B363-1D1917CDA6DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MB.AgilePortfolio.BL.Test", "MB.AgilePortfolio.BL.Test\MB.AgilePortfolio.BL.Test.csproj", "{8EA00D5A-F015-4EB1-A254-5BB73453543F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +39,14 @@ Global
 		{A01DBE79-4A1F-4A62-A670-58E35A48D229}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A01DBE79-4A1F-4A62-A670-58E35A48D229}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A01DBE79-4A1F-4A62-A670-58E35A48D229}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{60D37A2C-BED9-445B-B363-1D1917CDA6DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60D37A2C-BED9-445B-B363-1D1917CDA6DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60D37A2C-BED9-445B-B363-1D1917CDA6DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60D37A2C-BED9-445B-B363-1D1917CDA6DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EA00D5A-F015-4EB1-A254-5BB73453543F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EA00D5A-F015-4EB1-A254-5BB73453543F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EA00D5A-F015-4EB1-A254-5BB73453543F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EA00D5A-F015-4EB1-A254-5BB73453543F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
