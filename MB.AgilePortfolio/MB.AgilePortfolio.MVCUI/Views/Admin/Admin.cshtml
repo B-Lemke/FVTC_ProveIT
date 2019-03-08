@@ -1,0 +1,134 @@
+﻿
+@{
+    ViewBag.Title = "Admin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Admin</h2>
+
+<div class="row">
+    <table class="table col-md-12 text-center">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Object</th>
+                <th scope="col">View All</th>
+                <th scope="col">Add New</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Languages</td>
+                <td>
+                    <a href="@Url.Action("Index", "Language")">
+                        <i class="fa fa-eye"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="@Url.Action("Create", "Language")">
+                        <i class="fa fa-plus-square"></i>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Portfolios</td>
+                <td>
+                    <a href="@Url.Action("Index", "Portfolio")">
+                        <i class="fa fa-eye"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="@Url.Action("Create", "Portfolio")">
+                        <i class="fa fa-plus-square"></i>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>Projects</td>
+                <td>
+                    <a href="@Url.Action("Index", "Project")">
+                        <i class="fa fa-eye"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="@Url.Action("Create", "Project")">
+                        <i class="fa fa-plus-square"></i>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">4</th>
+                <td>Privacies</td>
+                <td>
+                    <a href="@Url.Action("Index", "Privacy")">
+                        <i class="fa fa-eye"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="@Url.Action("Create", "Privacy")">
+                        <i class="fa fa-plus-square"></i>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">5</th>
+                <td>Screenshots</td>
+                <td>
+                    <a href="@Url.Action("Index", "Screenshot")">
+                        <i class="fa fa-eye"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="@Url.Action("Create", "Screenshot")">
+                        <i class="fa fa-plus-square"></i>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">6</th>
+                <td>Statuses</td>
+                <td>
+                    <a href="@Url.Action("Index", "Status")">
+                        <i class="fa fa-eye"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="@Url.Action("Create", "Status")">
+                        <i class="fa fa-plus-square"></i>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">7</th>
+                <td>Users</td>
+                <td>
+                    <a href="@Url.Action("Index", "User")">
+                        <i class="fa fa-eye"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="@Url.Action("Create", "User")">
+                        <i class="fa fa-plus-square"></i>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">8</th>
+                <td>UserTypes</td>
+                <td>
+                    <a href="@Url.Action("Index", "UserType")">
+                        <i class="fa fa-eye"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="@Url.Action("Create", "UserType")">
+                        <i class="fa fa-plus-square"></i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
