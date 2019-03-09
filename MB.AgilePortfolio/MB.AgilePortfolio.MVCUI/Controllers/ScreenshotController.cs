@@ -24,9 +24,16 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: Screenshot/Details/5
         public ActionResult Details(Guid id)
         {
-            screenshot = new Screenshot();
-            screenshot.LoadById(id);
-            return View(screenshot);
+            ScreenshotProjects sp = new ScreenshotProjects()
+            {
+                Screenshot = new Screenshot(),
+                Projects = new ProjectList()
+            };
+            sp.Projects.Load();
+            sp.Screenshot.LoadById(id);
+
+            sp.projectName = sp.Projects.FirstOrDefault(p => p.Id == sp.Screenshot.ProjectId).Name;
+            return View(sp);
         }
 
         // GET: Screenshot/Create
@@ -83,9 +90,16 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: Screenshot/Delete/5
         public ActionResult Delete(Guid id)
         {
-            screenshot = new Screenshot();
-            screenshot.LoadById(id);
-            return View(screenshot);
+            ScreenshotProjects sp = new ScreenshotProjects()
+            {
+                Screenshot = new Screenshot(),
+                Projects = new ProjectList()
+            };
+            sp.Projects.Load();
+            sp.Screenshot.LoadById(id);
+
+            sp.projectName = sp.Projects.FirstOrDefault(p => p.Id == sp.Screenshot.ProjectId).Name;
+            return View(sp);
         }
 
         // POST: Screenshot/Delete/5

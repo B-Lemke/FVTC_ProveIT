@@ -1,4 +1,4 @@
-﻿@model MB.AgilePortfolio.BL.Screenshot
+﻿@model MB.AgilePortfolio.MVCUI.ViewModels.ScreenshotProjects
 
 @{
     ViewBag.Title = "Details";
@@ -12,24 +12,24 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Filepath)
+            @Html.DisplayNameFor(model => model.Screenshot.Filepath)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Filepath)
+            @Html.DisplayFor(model => model.Screenshot.Filepath)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ProjectId)
+            @Html.DisplayNameFor(model => model.projectName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ProjectId)
+            @Html.DisplayFor(model => model.projectName)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Screenshot.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
