@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,18 +14,25 @@ namespace MB.AgilePortfolio.BL
         public string Name { get; set; }
         public string Location { get; set; }
         public string Filepath { get; set; }
+        [DisplayName("Privacy")]
         public Guid PrivacyId { get; set; }
         public string Image { get; set; }
         public string Description { get; set; }
+        [DisplayName("User")]
         public Guid UserId { get; set; }
+        [DisplayName("Date Created")]
         public DateTime DateCreated { get; set; }
         public string Purpose { get; set; }
         public string Environment { get; set; }
         public string Challenges { get; set; }
+        [DisplayName("Future Plans")]
         public string FuturePlans { get; set; }
         public string Collaborators { get; set; }
+        [DisplayName("Last Updated")]
         public DateTime LastUpdated { get; set; }
+        [DisplayName("Software Used")]
         public string SoftwareUsed { get; set; }
+        [DisplayName("Status")]
         public Guid StatusId { get; set; }
 
         public Project() { }

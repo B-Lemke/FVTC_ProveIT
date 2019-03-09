@@ -17,5 +17,6 @@ namespace MB.AgilePortfolio.MVCUI
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
     }
 }

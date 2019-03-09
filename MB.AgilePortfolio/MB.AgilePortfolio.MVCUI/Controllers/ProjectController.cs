@@ -12,7 +12,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
     {
         Project project;
         ProjectList projects;
-        
+
         // GET: Project
         public ActionResult Index()
         {
@@ -24,9 +24,25 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: Project/Details/5
         public ActionResult Details(Guid id)
         {
-            project = new Project();
-            project.LoadById(id);
-            return View(project);
+            ProjectPrivaciesUsersStatuses ppus = new ProjectPrivaciesUsersStatuses()
+            {
+                Project = new Project(),
+                Privacies = new PrivacyList(),
+                Users = new UserList(),
+                Statuses = new StatusList()
+            };
+            ppus.Project.LoadById(id);
+            ppus.Privacies.Load();
+            ppus.Users.Load();
+            ppus.Statuses.Load();
+
+
+            //Set display properties
+            ppus.privacyDescription = ppus.Privacies.FirstOrDefault(p => p.Id == ppus.Project.PrivacyId).Description;
+            ppus.userEmail = ppus.Users.FirstOrDefault(u => u.Id == ppus.Project.UserId).Email;
+            ppus.statusDescription = ppus.Statuses.FirstOrDefault(s => s.Id == ppus.Project.StatusId).Description;
+
+            return View(ppus);
         }
 
         // GET: Project/Create
@@ -91,9 +107,28 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: Project/Delete/5
         public ActionResult Delete(Guid id)
         {
-            project = new Project();
-            project.LoadById(id);
-            return View(project);
+
+
+            ProjectPrivaciesUsersStatuses ppus = new ProjectPrivaciesUsersStatuses()
+            {
+                Project = new Project(),
+                Privacies = new PrivacyList(),
+                Users = new UserList(),
+                Statuses = new StatusList()
+            };
+            ppus.Project.LoadById(id);
+            ppus.Privacies.Load();
+            ppus.Users.Load();
+            ppus.Statuses.Load();
+
+
+
+            //Set display properties
+            ppus.privacyDescription = ppus.Privacies.FirstOrDefault(p => p.Id == ppus.Project.PrivacyId).Description;
+            ppus.userEmail = ppus.Users.FirstOrDefault(u => u.Id == ppus.Project.UserId).Email;
+            ppus.statusDescription = ppus.Statuses.FirstOrDefault(s => s.Id == ppus.Project.StatusId).Description;
+
+            return View(ppus);
         }
 
         // POST: Project/Delete/5

@@ -3,12 +3,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using MB.AgilePortfolio.BL;
 
-namespace MB.AgileProjectLanguage.BL.Test
+namespace MB.AgilePortfolio.BL.Test
 {
     [TestClass]
     public class utProjectLanguage
     {
-
 
         [TestMethod]
         public void Load()
