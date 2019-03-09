@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,18 +13,22 @@ namespace MB.AgilePortfolio.BL
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        [DisplayName("Portfolio Image")]
         public string PortfolioImage { get; set; }
         public Guid UserId { get; set; }
+        [DisplayName("User")]
+        public string UserEmail { get; set; }
 
         public Portfolio() { }
 
-        public Portfolio(Guid id, string name, string description, string portfolioImage, Guid userId)
+        public Portfolio(Guid id, string name, string description, string portfolioImage, Guid userId, string email)
         {
             Id = id;
             Name = name;
             Description = description;
             PortfolioImage = portfolioImage;
             UserId = userId;
+            UserEmail = email;
         }
 
         public int Insert()
@@ -96,7 +101,7 @@ namespace MB.AgilePortfolio.BL
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
                     var portfolio = (from p in dc.tblPortfolios
-                                //join u in dc.tblUsers on p.UserId equals u.Id
+                                join u in dc.tblUsers on p.UserId equals u.Id
                                 where p.Id == id
                                 select new
                                 {
@@ -104,7 +109,8 @@ namespace MB.AgilePortfolio.BL
                                     p.Name,
                                     p.Description,
                                     p.PortfolioImage,
-                                    p.UserId
+                                    p.UserId,
+                                    u.Email
                                 }).FirstOrDefault();
                     if (portfolio != null)
                     {
@@ -113,6 +119,7 @@ namespace MB.AgilePortfolio.BL
                         Description = portfolio.Description;
                         PortfolioImage = portfolio.PortfolioImage;
                         UserId = portfolio.UserId;
+                        UserEmail = portfolio.Email;
                     }
                     else throw new Exception("Portfolio not found");
                 }
@@ -139,7 +146,7 @@ namespace MB.AgilePortfolio.BL
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
                     var portfolios = (from p in dc.tblPortfolios
-                                 //join u in dc.tblUsers on p.UserId equals u.Id
+                                 join u in dc.tblUsers on p.UserId equals u.Id
                                  //where p.UserId == id || id == null
                                  select new
                                  {
@@ -147,11 +154,12 @@ namespace MB.AgilePortfolio.BL
                                      p.Name,
                                      p.Description,
                                      p.PortfolioImage,
-                                     p.UserId
+                                     p.UserId,
+                                     u.Email
                                  }).OrderByDescending(p => p.Name).ToList();
                     foreach (var p in portfolios)
                     {
-                        Portfolio portfolio = new Portfolio(p.Id, p.Name, p.Description, p.PortfolioImage, p.UserId);
+                        Portfolio portfolio = new Portfolio(p.Id, p.Name, p.Description, p.PortfolioImage, p.UserId, p.Email);
                         Add(portfolio);
                     }
                 }

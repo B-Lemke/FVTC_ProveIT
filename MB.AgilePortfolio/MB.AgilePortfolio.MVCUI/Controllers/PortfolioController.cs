@@ -32,8 +32,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             pu.Portfolio.LoadById(id);
             pu.Users.Load();
 
-            //Set the property for display
-            pu.userEmail = pu.Users.FirstOrDefault(u => u.Id == pu.Portfolio.UserId).Email;
 
             return View(pu);
         }
@@ -100,8 +98,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             pu.Portfolio.LoadById(id);
             pu.Users.Load();
 
-            //Set the property for display
-            pu.userEmail = pu.Users.FirstOrDefault(u => u.Id == pu.Portfolio.UserId).Email;
 
             return View(pu);
         }

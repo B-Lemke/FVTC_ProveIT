@@ -11,8 +11,5 @@ namespace MB.AgilePortfolio.MVCUI.ViewModels
     {
         public Portfolio Portfolio { get; set; }
         public UserList Users { get; set; }
-
-        [DisplayName("Email")]
-        public string userEmail { get; set; }
     }
 }

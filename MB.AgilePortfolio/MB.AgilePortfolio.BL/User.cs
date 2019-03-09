@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,12 +16,14 @@ namespace MB.AgilePortfolio.BL
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string ProfileImage { get; set; }
+        [DisplayName("User Type")]
         public Guid UserTypeId { get; set; }
-
+        [DisplayName("User Type")]
+        public string UserTypeDescription { get; set; }
 
         public User() { }
 
-        public User(Guid id, string email, string password, string firstName, string lastName, string profileImage, Guid userTypeId)
+        public User(Guid id, string email, string password, string firstName, string lastName, string profileImage, Guid userTypeId, string userTypeDescription)
         {
             Id = id;
             Email = email;
@@ -29,6 +32,7 @@ namespace MB.AgilePortfolio.BL
             LastName = lastName;
             ProfileImage = profileImage;
             UserTypeId = userTypeId;
+            UserTypeDescription = userTypeDescription;
         }
 
         public int Insert()
@@ -105,7 +109,7 @@ namespace MB.AgilePortfolio.BL
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
                     var user = (from u in dc.tblUsers
-                                //join ut in dc.tblUserTypes on u.UserTypeId equals ut.Id
+                                join ut in dc.tblUserTypes on u.UserTypeId equals ut.Id
                                   where u.Id == id
                                   select new
                                   {
@@ -115,7 +119,8 @@ namespace MB.AgilePortfolio.BL
                                       u.FirstName,
                                       u.LastName,
                                       u.ProfileImage,
-                                      u.UserTypeId
+                                      u.UserTypeId,
+                                      ut.Description
                                   }).FirstOrDefault();
                     if (user != null)
                     {
@@ -126,6 +131,7 @@ namespace MB.AgilePortfolio.BL
                         LastName = user.LastName;
                         ProfileImage = user.ProfileImage;
                         UserTypeId = user.UserTypeId;
+                        UserTypeDescription = user.Description;
                     }
                     else throw new Exception("User not found");
                 }
@@ -139,20 +145,10 @@ namespace MB.AgilePortfolio.BL
         {
             try
             {
-                Load(null);
-            }
-            catch (Exception ex) { throw ex; }
-        }
-
-        public void Load(Guid? id)
-        {
-            try
-            {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
                     var users = (from u in dc.tblUsers
-                                   //join ut in dc.tblUserTypes on u.UserTypeId equals ut.Id
-                                   //where u.UserTypeId == id || id == null
+                                   join ut in dc.tblUserTypes on u.UserTypeId equals ut.Id
                                    select new
                                    {
                                        u.Id,
@@ -161,11 +157,12 @@ namespace MB.AgilePortfolio.BL
                                        u.FirstName,
                                        u.LastName,
                                        u.ProfileImage,
-                                       u.UserTypeId
+                                       u.UserTypeId,
+                                       ut.Description
                                    }).OrderByDescending(u => u.LastName).ToList();
                     foreach (var u in users)
                     {
-                        User user = new User(u.Id, u.Email, u.Password, u.FirstName, u.LastName, u.ProfileImage, u.UserTypeId);
+                        User user = new User(u.Id, u.Email, u.Password, u.FirstName, u.LastName, u.ProfileImage, u.UserTypeId, u.Description);
                         Add(user);
                     }
                 }

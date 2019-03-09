@@ -22,7 +22,7 @@
             @Html.DisplayNameFor(model => model.PortfolioImage)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UserId)
+            @Html.DisplayNameFor(model => model.UserEmail)
         </th>
         <th></th>
     </tr>
@@ -39,7 +39,7 @@
             @Html.DisplayFor(modelItem => item.PortfolioImage)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.UserId)
+            @Html.DisplayFor(modelItem => item.UserEmail)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
