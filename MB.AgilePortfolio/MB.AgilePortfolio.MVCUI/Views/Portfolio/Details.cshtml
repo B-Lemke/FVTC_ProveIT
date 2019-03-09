@@ -1,5 +1,4 @@
-﻿@model MB.AgilePortfolio.BL.Portfolio
-
+﻿@model MB.AgilePortfolio.MVCUI.ViewModels.PortfolioUsers
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,40 +11,39 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Portfolio.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.Portfolio.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.Portfolio.Description)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Description)
+            @Html.DisplayFor(model => model.Portfolio.Description)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.PortfolioImage)
+            @Html.DisplayNameFor(model => model.Portfolio.PortfolioImage)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PortfolioImage)
+            @Html.DisplayFor(model => model.Portfolio.PortfolioImage)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.UserId)
+            @Html.DisplayNameFor(model => model.userEmail)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.UserId)
+            @Html.DisplayFor(model => model.userEmail)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

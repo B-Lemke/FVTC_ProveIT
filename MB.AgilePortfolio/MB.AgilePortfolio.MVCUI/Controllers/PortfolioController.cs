@@ -24,9 +24,18 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: Portfolio/Details/5
         public ActionResult Details(Guid id)
         {
-            portfolio = new Portfolio();
-            portfolio.LoadById(id);
-            return View(portfolio);
+            PortfolioUsers pu = new PortfolioUsers()
+            {
+                Portfolio = new Portfolio(),
+                Users = new UserList()
+            };
+            pu.Portfolio.LoadById(id);
+            pu.Users.Load();
+
+            //Set the property for display
+            pu.userEmail = pu.Users.FirstOrDefault(u => u.Id == pu.Portfolio.UserId).Email;
+
+            return View(pu);
         }
 
         // GET: Portfolio/Create
@@ -83,9 +92,18 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: Portfolio/Delete/5
         public ActionResult Delete(Guid id)
         {
-            portfolio = new Portfolio();
-            portfolio.LoadById(id);
-            return View(portfolio);
+            PortfolioUsers pu = new PortfolioUsers()
+            {
+                Portfolio = new Portfolio(),
+                Users = new UserList()
+            };
+            pu.Portfolio.LoadById(id);
+            pu.Users.Load();
+
+            //Set the property for display
+            pu.userEmail = pu.Users.FirstOrDefault(u => u.Id == pu.Portfolio.UserId).Email;
+
+            return View(pu);
         }
 
         // POST: Portfolio/Delete/5
