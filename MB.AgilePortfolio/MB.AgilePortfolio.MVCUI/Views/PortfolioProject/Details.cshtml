@@ -1,0 +1,35 @@
+﻿@model MB.AgilePortfolio.MVCUI.ViewModels.PortfolioProjectViewModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PortfolioProjectViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.portfolioName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.portfolioName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.projectName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.projectName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PortfolioProject.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
