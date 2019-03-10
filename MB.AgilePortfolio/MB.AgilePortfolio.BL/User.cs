@@ -102,6 +102,19 @@ namespace MB.AgilePortfolio.BL
             catch (Exception ex) { throw ex; }
         }
 
+        public bool CheckIfEmailExists(string email)
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    bool exists = dc.tblUsers.Any(u => u.Email == email);
+                        return exists;
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
         public void LoadById(Guid id)
         {
             try

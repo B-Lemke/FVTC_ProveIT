@@ -114,5 +114,24 @@ namespace MB.AgilePortfolio.BL
             }
             catch (Exception ex) { throw ex; }
         }
+        public void LoadNonAdmin()
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    var userTypes = dc.tblUserTypes.OrderBy(ut => ut.Description);
+                    foreach (var ut in userTypes)
+                    {
+                        UserType userType = new UserType(ut.Id, ut.Description);
+                        if(ut.Description != "Admin")
+                        {
+                            Add(userType);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
     }
 }

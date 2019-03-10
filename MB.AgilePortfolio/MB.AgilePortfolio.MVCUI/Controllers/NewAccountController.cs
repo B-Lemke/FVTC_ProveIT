@@ -37,9 +37,11 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 User = new User(),
                 UserTypes = new UserTypeList()
             };
-            uut.UserTypes.Load();
+            uut.UserTypes.LoadNonAdmin();
+            
             return View(uut);
         }
+
 
         // POST: User/Create
         [HttpPost]
@@ -55,8 +57,20 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 if(uut.User.Email == null)
                 {
                     ModelState.AddModelError(string.Empty, "Email address is required");
-                    return RedirectToAction("Create", uut);
                 }
+
+                else if(uut.User.CheckIfEmailExists(uut.User.Email) == false)
+                {
+                    ModelState.AddModelError(string.Empty, "Email Already Exists");
+                }
+
+                if(!ModelState.IsValid)
+                {
+                    uut.UserTypes = new UserTypeList();
+                    uut.UserTypes.LoadNonAdmin();
+                    return View(uut);
+                }
+                
 
                 uut.User.Insert();
                 return RedirectToAction("Create");
