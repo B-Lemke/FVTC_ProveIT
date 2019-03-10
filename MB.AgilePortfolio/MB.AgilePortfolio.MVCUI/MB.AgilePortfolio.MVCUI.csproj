@@ -165,6 +165,7 @@
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\ScreenshotController.cs" />
     <Compile Include="Controllers\StatusController.cs" />
+    <Compile Include="Controllers\NewAccountController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserTypeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -241,7 +242,9 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -310,6 +313,8 @@
     <Content Include="Views\PortfolioProject\Delete.cshtml" />
     <Content Include="Views\PortfolioProject\Details.cshtml" />
     <Content Include="Views\PortfolioProject\Edit.cshtml" />
+    <Content Include="Views\NewAccount\Create.cshtml" />
+    <Content Include="Views\NewAccount\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
