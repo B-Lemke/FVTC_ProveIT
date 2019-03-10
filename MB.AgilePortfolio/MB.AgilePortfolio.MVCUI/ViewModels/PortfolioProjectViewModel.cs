@@ -12,11 +12,5 @@ namespace MB.AgilePortfolio.MVCUI.ViewModels
         public PortfolioProject PortfolioProject { get; set; }
         public PortfolioList Portfolios { get; set; }
         public ProjectList Projects { get; set; }
-
-        [DisplayName("Portfolio Name")]
-        public string portfolioName { get; set; }
-
-        [DisplayName("Project Name")]
-        public string projectName { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,15 +12,19 @@ namespace MB.AgilePortfolio.BL
     {
         public Guid Id { get; set; }
         public string Filepath { get; set; }
+        [DisplayName("Project")]
         public Guid ProjectId { get; set; }
+        [DisplayName("Project Name")]
+        public string ProjectName { get; set; }
 
         public Screenshot() { }
 
-        public Screenshot(Guid id, string filepath, Guid projectId)
+        public Screenshot(Guid id, string filepath, Guid projectId, string projectName)
         {
             Id = id;
             Filepath = filepath;
             ProjectId = projectId;
+            ProjectName = projectName;
         }
 
         public int Insert()
@@ -88,19 +93,21 @@ namespace MB.AgilePortfolio.BL
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
                     var screenshot = (from s in dc.tblScreenshots
-                                    //join p in dc.tblProjects on s.ProjectId equals p.Id
+                                      join p in dc.tblProjects on s.ProjectId equals p.Id
                                      where s.Id == id
                                      select new
                                      {
                                          s.Id,
                                          s.Filepath,
-                                         s.ProjectId
+                                         s.ProjectId,
+                                         p.Name
                                      }).FirstOrDefault();
                     if (screenshot != null)
                     {
                         Id = screenshot.Id;
                         Filepath = screenshot.Filepath;
                         ProjectId = screenshot.ProjectId;
+                        ProjectName = screenshot.Name;
                     }
                     else throw new Exception("Screenshot not found");
                 }
@@ -111,33 +118,26 @@ namespace MB.AgilePortfolio.BL
 
     public class ScreenshotList : List<Screenshot>
     {
-        public void Load()
-        {
-            try
-            {
-                Load(null);
-            }
-            catch (Exception ex) { throw ex; }
-        }
 
-        public void Load(Guid? id)
+        public void Load()
         {
             try
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
                     var screenshots = (from s in dc.tblScreenshots
-                                      //join p in dc.tblProjects on s.ProjectId equals p.Id
+                                      join p in dc.tblProjects on s.ProjectId equals p.Id
                                       //where s.ProjectId == id || id == null
                                       select new
                                       {
                                           s.Id,
                                           s.Filepath,
-                                          s.ProjectId
+                                          s.ProjectId,
+                                          p.Name
                                       }).OrderByDescending(p => p.Filepath).ToList();
                     foreach (var s in screenshots)
                     {
-                        Screenshot screenshot = new Screenshot(s.Id, s.Filepath, s.ProjectId);
+                        Screenshot screenshot = new Screenshot(s.Id, s.Filepath, s.ProjectId, s.Name);
                         Add(screenshot);
                     }
                 }

@@ -22,7 +22,7 @@
             @Html.DisplayNameFor(model => model.Filepath)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PrivacyId)
+            @Html.DisplayNameFor(model => model.PrivacyDescription)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Image)
@@ -31,7 +31,7 @@
             @Html.DisplayNameFor(model => model.Description)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UserId)
+            @Html.DisplayNameFor(model => model.UserEmail)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DateCreated)
@@ -58,7 +58,7 @@
             @Html.DisplayNameFor(model => model.SoftwareUsed)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.StatusId)
+            @Html.DisplayNameFor(model => model.StatusDescription)
         </th>
         <th></th>
     </tr>
@@ -75,7 +75,7 @@
             @Html.DisplayFor(modelItem => item.Filepath)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.PrivacyId)
+            @Html.DisplayFor(modelItem => item.PrivacyDescription)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Image)
@@ -84,7 +84,7 @@
             @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.UserId)
+            @Html.DisplayFor(modelItem => item.UserEmail)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.DateCreated)
@@ -111,7 +111,7 @@
             @Html.DisplayFor(modelItem => item.SoftwareUsed)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.StatusId)
+            @Html.DisplayFor(modelItem => item.StatusDescription)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

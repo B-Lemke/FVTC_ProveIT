@@ -1,4 +1,4 @@
-﻿@model MB.AgilePortfolio.MVCUI.ViewModels.ProjectPrivaciesUsersStatuses
+﻿@model MB.AgilePortfolio.BL.Project
 
 @{
     ViewBag.Title = "Details";
@@ -12,136 +12,136 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Project.Name)
+            @Html.DisplayNameFor(model => model.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Project.Name)
+            @Html.DisplayFor(model => model.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Project.Location)
+            @Html.DisplayNameFor(model => model.Location)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Project.Location)
+            @Html.DisplayFor(model => model.Location)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Project.Filepath)
+            @Html.DisplayNameFor(model => model.Filepath)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Project.Filepath)
+            @Html.DisplayFor(model => model.Filepath)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.privacyDescription)
+            @Html.DisplayNameFor(model => model.PrivacyDescription)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.privacyDescription)
+            @Html.DisplayFor(model => model.PrivacyDescription)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Project.Image)
+            @Html.DisplayNameFor(model => model.Image)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Project.Image)
+            @Html.DisplayFor(model => model.Image)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Project.Description)
+            @Html.DisplayNameFor(model => model.Description)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Project.Description)
+            @Html.DisplayFor(model => model.Description)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.userEmail)
+            @Html.DisplayNameFor(model => model.UserEmail)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.userEmail)
+            @Html.DisplayFor(model => model.UserEmail)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Project.DateCreated)
+            @Html.DisplayNameFor(model => model.DateCreated)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Project.DateCreated)
+            @Html.DisplayFor(model => model.DateCreated)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Project.Purpose)
+            @Html.DisplayNameFor(model => model.Purpose)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Project.Purpose)
+            @Html.DisplayFor(model => model.Purpose)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Project.Environment)
+            @Html.DisplayNameFor(model => model.Environment)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Project.Environment)
+            @Html.DisplayFor(model => model.Environment)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Project.Challenges)
+            @Html.DisplayNameFor(model => model.Challenges)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Project.Challenges)
+            @Html.DisplayFor(model => model.Challenges)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Project.FuturePlans)
+            @Html.DisplayNameFor(model => model.FuturePlans)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Project.FuturePlans)
+            @Html.DisplayFor(model => model.FuturePlans)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Project.Collaborators)
+            @Html.DisplayNameFor(model => model.Collaborators)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Project.Collaborators)
+            @Html.DisplayFor(model => model.Collaborators)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Project.LastUpdated)
+            @Html.DisplayNameFor(model => model.LastUpdated)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Project.LastUpdated)
+            @Html.DisplayFor(model => model.LastUpdated)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Project.SoftwareUsed)
+            @Html.DisplayNameFor(model => model.SoftwareUsed)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Project.SoftwareUsed)
+            @Html.DisplayFor(model => model.SoftwareUsed)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.statusDescription)
+            @Html.DisplayNameFor(model => model.StatusDescription)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.statusDescription)
+            @Html.DisplayFor(model => model.StatusDescription)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Project.Id }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

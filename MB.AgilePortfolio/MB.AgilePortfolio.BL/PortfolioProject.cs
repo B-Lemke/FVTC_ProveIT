@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,16 +11,25 @@ namespace MB.AgilePortfolio.BL
     public class PortfolioProject
     {
         public Guid Id { get; set; }
+        [DisplayName("Portfolio")]
         public Guid PortfolioId { get; set; }
+        [DisplayName("Project")]
         public Guid ProjectId { get; set; }
+        [DisplayName("Project Name")]
+        public string ProjectName { get; set; }
+        [DisplayName("Portfolio Name")]
+        public string PortfolioName { get; set; }
+
 
         public PortfolioProject() { }
         
-        public PortfolioProject(Guid id, Guid portfolioId, Guid projectId)
+        public PortfolioProject(Guid id, Guid portfolioId, Guid projectId, string portfolioName, string projectName)
         {
             Id = id;
             PortfolioId = portfolioId;
             ProjectId = projectId;
+            PortfolioName = portfolioName;
+            ProjectName = projectName;
         }
 
         public int Insert()
@@ -88,20 +98,24 @@ namespace MB.AgilePortfolio.BL
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
                     var portfolioProject = (from pp in dc.tblPortfolioProjects
-                                   //join p in dc.tblProjects on pp.ProjectId equals p.Id
-                                   //join po in dc.tblPortfolios on pp.PortfolioId equals po.Id
+                                   join pr in dc.tblProjects on pp.ProjectId equals pr.Id
+                                   join po in dc.tblPortfolios on pp.PortfolioId equals po.Id
                                    where pp.Id == id
                                    select new
                                    {
                                        pp.Id,
                                        pp.PortfolioId,
-                                       pp.ProjectId
+                                       pp.ProjectId,
+                                       ProjectName = pr.Name,
+                                       PortfolioName = po.Name
                                    }).FirstOrDefault();
                     if (portfolioProject != null)
                     {
                         Id = portfolioProject.Id;
                         PortfolioId = portfolioProject.PortfolioId;
                         ProjectId = portfolioProject.ProjectId;
+                        ProjectName = portfolioProject.ProjectName;
+                        PortfolioName = portfolioProject.PortfolioName;
                     }
                     else throw new Exception("Portfolio Project not found");
                 }
@@ -119,15 +133,19 @@ namespace MB.AgilePortfolio.BL
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
                     var portfolioProjects = (from p in dc.tblPortfolioProjects
+                                             join pr in dc.tblProjects on p.ProjectId equals pr.Id
+                                             join po in dc.tblPortfolios on p.PortfolioId equals po.Id
                                              select new
                                        {
                                            p.Id,
                                            p.PortfolioId,
-                                           p.ProjectId
-                                       }).ToList();
+                                           p.ProjectId,
+                                           ProjectName = pr.Name,
+                                           PortfolioName = po.Name
+                                             }).ToList();
                     foreach (var p in portfolioProjects)
                     {
-                        PortfolioProject portfolioProject = new PortfolioProject(p.Id, p.PortfolioId, p.ProjectId);
+                        PortfolioProject portfolioProject = new PortfolioProject(p.Id, p.PortfolioId, p.ProjectId, p.PortfolioName, p.ProjectName);
                         Add(portfolioProject);
                     }
                 }

@@ -24,25 +24,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: Project/Details/5
         public ActionResult Details(Guid id)
         {
-            ProjectPrivaciesUsersStatuses ppus = new ProjectPrivaciesUsersStatuses()
-            {
-                Project = new Project(),
-                Privacies = new PrivacyList(),
-                Users = new UserList(),
-                Statuses = new StatusList()
-            };
-            ppus.Project.LoadById(id);
-            ppus.Privacies.Load();
-            ppus.Users.Load();
-            ppus.Statuses.Load();
+
+            project = new Project();
+            project.LoadById(id);
 
 
-            //Set display properties
-            ppus.privacyDescription = ppus.Privacies.FirstOrDefault(p => p.Id == ppus.Project.PrivacyId).Description;
-            ppus.userEmail = ppus.Users.FirstOrDefault(u => u.Id == ppus.Project.UserId).Email;
-            ppus.statusDescription = ppus.Statuses.FirstOrDefault(s => s.Id == ppus.Project.StatusId).Description;
-
-            return View(ppus);
+            return View(project);
         }
 
         // GET: Project/Create
@@ -108,27 +95,10 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         public ActionResult Delete(Guid id)
         {
 
-
-            ProjectPrivaciesUsersStatuses ppus = new ProjectPrivaciesUsersStatuses()
-            {
-                Project = new Project(),
-                Privacies = new PrivacyList(),
-                Users = new UserList(),
-                Statuses = new StatusList()
-            };
-            ppus.Project.LoadById(id);
-            ppus.Privacies.Load();
-            ppus.Users.Load();
-            ppus.Statuses.Load();
-
-
-
-            //Set display properties
-            ppus.privacyDescription = ppus.Privacies.FirstOrDefault(p => p.Id == ppus.Project.PrivacyId).Description;
-            ppus.userEmail = ppus.Users.FirstOrDefault(u => u.Id == ppus.Project.UserId).Email;
-            ppus.statusDescription = ppus.Statuses.FirstOrDefault(s => s.Id == ppus.Project.StatusId).Description;
-
-            return View(ppus);
+            project = new Project();
+            project.LoadById(id);
+           
+            return View(project);
         }
 
         // POST: Project/Delete/5

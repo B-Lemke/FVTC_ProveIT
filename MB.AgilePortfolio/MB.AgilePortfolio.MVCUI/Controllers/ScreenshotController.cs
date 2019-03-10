@@ -32,7 +32,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             sp.Projects.Load();
             sp.Screenshot.LoadById(id);
 
-            sp.projectName = sp.Projects.FirstOrDefault(p => p.Id == sp.Screenshot.ProjectId).Name;
             return View(sp);
         }
 
@@ -98,7 +97,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             sp.Projects.Load();
             sp.Screenshot.LoadById(id);
 
-            sp.projectName = sp.Projects.FirstOrDefault(p => p.Id == sp.Screenshot.ProjectId).Name;
             return View(sp);
         }
 

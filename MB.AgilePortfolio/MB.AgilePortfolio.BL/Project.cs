@@ -16,10 +16,14 @@ namespace MB.AgilePortfolio.BL
         public string Filepath { get; set; }
         [DisplayName("Privacy")]
         public Guid PrivacyId { get; set; }
+        [DisplayName("Privacy")]
+        public string PrivacyDescription { get; set; }
         public string Image { get; set; }
         public string Description { get; set; }
         [DisplayName("User")]
         public Guid UserId { get; set; }
+        [DisplayName("User")]
+        public string UserEmail { get; set; }
         [DisplayName("Date Created")]
         public DateTime DateCreated { get; set; }
         public string Purpose { get; set; }
@@ -34,11 +38,13 @@ namespace MB.AgilePortfolio.BL
         public string SoftwareUsed { get; set; }
         [DisplayName("Status")]
         public Guid StatusId { get; set; }
+        [DisplayName("Status")]
+        public string StatusDescription { get; set; }
 
         public Project() { }
 
         public Project(Guid id, string name, string location, string filepath, Guid privacyId, string image, string description, Guid userId, DateTime dateCreated,
-                       string purpose, string environment, string challenges, string futurePlans, string collaborators, DateTime lastUpdated, string softwareUsed, Guid statusId)
+                       string purpose, string environment, string challenges, string futurePlans, string collaborators, DateTime lastUpdated, string softwareUsed, Guid statusId, string privacy, string status, string email)
         {
             Id = id;
             Name = name;
@@ -57,6 +63,9 @@ namespace MB.AgilePortfolio.BL
             LastUpdated = lastUpdated;
             SoftwareUsed = softwareUsed;
             StatusId = statusId;
+            PrivacyDescription = privacy;
+            StatusDescription = status;
+            UserEmail = email;
         }
 
         public int Insert()
@@ -154,9 +163,9 @@ namespace MB.AgilePortfolio.BL
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
                     var project = (from p in dc.tblProjects
-                                //join pr in dc.tblPrivacies on p.PrivacyId equals pr.Id
-                                //join u in dc.tblUsers on p.UserId equals u.Id
-                                //join s in dc.tblStatuses on p.StatusId equals s.Id
+                                join pr in dc.tblPrivacies on p.PrivacyId equals pr.Id
+                                join u in dc.tblUsers on p.UserId equals u.Id
+                                join s in dc.tblStatuses on p.StatusId equals s.Id
                                 where p.Id == id
                                 select new
                                 {
@@ -176,7 +185,10 @@ namespace MB.AgilePortfolio.BL
                                     p.Collaborators,
                                     p.LastUpdated,
                                     p.SoftwareUsed,
-                                    p.StatusId
+                                    p.StatusId,
+                                    Privacy = pr.Description,
+                                    Status = s.Description,
+                                    UserEmail = u.Email
                                 }).FirstOrDefault();
                     if (project != null)
                     {
@@ -197,6 +209,9 @@ namespace MB.AgilePortfolio.BL
                         LastUpdated = project.LastUpdated;
                         SoftwareUsed = project.SoftwareUsed;
                         StatusId = project.StatusId;
+                        UserEmail = project.UserEmail;
+                        StatusDescription = project.Status;
+                        PrivacyDescription = project.Privacy;
                     }
                     else throw new Exception("Project not found");
                 }
@@ -223,9 +238,9 @@ namespace MB.AgilePortfolio.BL
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
                     var projects = (from p in dc.tblProjects
-                                    //join pr in dc.tblPrivacies on p.PrivacyId equals pr.Id
-                                    //join u in dc.tblUsers on p.UserId equals u.Id
-                                    //join s in dc.tblStatuses on p.StatusId equals s.Id
+                                    join pr in dc.tblPrivacies on p.PrivacyId equals pr.Id
+                                    join u in dc.tblUsers on p.UserId equals u.Id
+                                    join s in dc.tblStatuses on p.StatusId equals s.Id
                                     where p.UserId == id || id == null
                                  select new
                                  {
@@ -245,12 +260,15 @@ namespace MB.AgilePortfolio.BL
                                      p.Collaborators,
                                      p.LastUpdated,
                                      p.SoftwareUsed,
-                                     p.StatusId
+                                     p.StatusId,
+                                     Privacy = pr.Description,
+                                     Status = s.Description,
+                                     UserEmail = u.Email
                                  }).OrderByDescending(p => p.LastUpdated).ToList();
                     foreach (var p in projects)
                     {
                         Project project = new Project(p.Id, p.Name, p.Location, p.Filepath, p.PrivacyId, p.Image, p.Description, p.UserId, p.DateCreated, p.Purpose,
-                                                      p.Environment, p.Challenges, p.FuturePlans, p.Collaborators, p.LastUpdated, p.SoftwareUsed, p.StatusId);
+                                                      p.Environment, p.Challenges, p.FuturePlans, p.Collaborators, p.LastUpdated, p.SoftwareUsed, p.StatusId, p.Privacy, p.Status, p.UserEmail);
                         Add(project);
                     }
                 }

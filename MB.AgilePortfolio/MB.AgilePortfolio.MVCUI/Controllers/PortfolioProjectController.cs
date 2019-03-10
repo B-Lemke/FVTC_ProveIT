@@ -33,12 +33,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             ppvm.Projects.Load();
             ppvm.Portfolios.Load();
 
-            //Set display names
-            Portfolio port = ppvm.Portfolios.FirstOrDefault(p => p.Id == ppvm.PortfolioProject.PortfolioId);
-            ppvm.portfolioName = (port != null) ? port.Name : ppvm.PortfolioProject.PortfolioId.ToString();
-            Project proj = ppvm.Projects.FirstOrDefault(p => p.Id == ppvm.PortfolioProject.ProjectId);
-            ppvm.portfolioName = (proj != null) ? proj.Name : ppvm.PortfolioProject.ProjectId.ToString();
-
 
             return View(ppvm);
         }
@@ -87,12 +81,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             ppvm.Projects.Load();
             ppvm.Portfolios.Load();
 
-            Portfolio port = ppvm.Portfolios.FirstOrDefault(p => p.Id == ppvm.PortfolioProject.PortfolioId);
-            ppvm.portfolioName = (port != null) ? port.Name : ppvm.PortfolioProject.PortfolioId.ToString();
-
-            Project proj = ppvm.Projects.FirstOrDefault(p => p.Id == ppvm.PortfolioProject.ProjectId);
-            ppvm.portfolioName = (proj != null) ? proj.Name : ppvm.PortfolioProject.ProjectId.ToString();
-
             return View(ppvm);
         }
 
@@ -124,12 +112,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             ppvm.PortfolioProject.LoadById(id);
             ppvm.Projects.Load();
             ppvm.Portfolios.Load();
-
-            //Set display names
-            Portfolio port = ppvm.Portfolios.FirstOrDefault(p => p.Id == ppvm.PortfolioProject.PortfolioId);
-            ppvm.portfolioName = (port != null) ? port.Name : ppvm.PortfolioProject.PortfolioId.ToString();
-            Project proj = ppvm.Projects.FirstOrDefault(p => p.Id == ppvm.PortfolioProject.ProjectId);
-            ppvm.portfolioName = (proj != null) ? proj.Name : ppvm.PortfolioProject.ProjectId.ToString();
 
             return View(ppvm);
         }

@@ -14,11 +14,5 @@ namespace MB.AgilePortfolio.MVCUI.ViewModels
         public UserList Users { get; set; }
         public StatusList Statuses { get; set; }
 
-        [DisplayName("Privacy")]
-        public string privacyDescription { get; set; }
-        [DisplayName("Email")]
-        public string userEmail { get; set; }
-        [DisplayName("Status")]
-        public string statusDescription { get; set; }
     }
 }

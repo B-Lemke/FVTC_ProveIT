@@ -11,8 +11,5 @@ namespace MB.AgilePortfolio.MVCUI.ViewModels
     {
         public Screenshot Screenshot { get; set; }
         public ProjectList Projects { get; set; }
-
-        [DisplayName("Project Name")]
-        public string projectName { get; set; }
     }
 }
