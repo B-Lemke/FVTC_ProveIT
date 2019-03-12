@@ -12,7 +12,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
     {
         User user;
         UserList users;
-        
+
         // GET: User
         public ActionResult Index()
         {
@@ -38,7 +38,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 UserTypes = new UserTypeList()
             };
             uut.UserTypes.LoadNonAdmin();
-            
+
             return View(uut);
         }
 
@@ -54,30 +54,33 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 //users = new UserList();
                 //if(uut.User.Email == null || users.e)
 
-                if(uut.User.Email == null)
+                if (uut.User.Email == null)
                 {
                     ModelState.AddModelError(string.Empty, "Email address is required");
                 }
 
-                else if(uut.User.CheckIfEmailExists(uut.User.Email) == true)
+                else if (uut.User.CheckIfEmailExists(uut.User.Email) == true)
                 {
                     ModelState.AddModelError(string.Empty, "Email Already Exists");
                 }
 
-                if(!ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
                     uut.UserTypes = new UserTypeList();
                     uut.UserTypes.LoadNonAdmin();
                     return View(uut);
                 }
-                
+
 
                 uut.User.Insert();
                 return RedirectToAction("Create");
             }
-            catch { return View(uut); }
+            catch
+            {
+                return View(uut);
+            }
         }
 
-       
+
     }
 }
