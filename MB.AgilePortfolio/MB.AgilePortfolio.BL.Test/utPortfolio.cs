@@ -8,29 +8,31 @@ namespace MB.AgilePortfolio.BL.Test
     [TestClass]
     public class utPortfolio
     {
-
-
+  
         [TestMethod]
         public void Load()
         {
             PortfolioList portfolios = new PortfolioList();
             portfolios.Load();
-
-            int expected = 8;
-
-            Assert.AreEqual(expected, portfolios.Count);
+ 
+            Assert.IsTrue(portfolios.Count > 0);
         }
 
         [TestMethod]
         public void Insert()
         {
+
+            UserList us = new UserList();
+            us.Load();
+            User user = us.FirstOrDefault(u => u.Email == "blemke4@gmail.com");
+
             Portfolio portfolio = new Portfolio()
             {
-                
+
                 Description = "Test",
                 Name = "Test",
                 PortfolioImage = "Test",
-                UserId = Guid.Parse("11112222-3333-4444-5555-666677778888")
+                UserId = user.Id
         };
 
             int rowsInserted = portfolio.Insert();
@@ -47,8 +49,7 @@ namespace MB.AgilePortfolio.BL.Test
             portfolios.Load();
             Portfolio portfolio = new Portfolio();
 
-            Guid userGuid = Guid.Parse("11112222-3333-4444-5555-666677778888");
-            portfolio.LoadById(portfolios.FirstOrDefault(p => p.UserId == userGuid).Id);
+            portfolio.LoadById(portfolios.FirstOrDefault(p => p.Description == "Test").Id);
 
             Assert.AreEqual("Test", portfolio.Name);
         }
@@ -60,8 +61,7 @@ namespace MB.AgilePortfolio.BL.Test
             portfolios.Load();
             Portfolio portfolio = new Portfolio();
 
-            Guid userGuid = Guid.Parse("11112222-3333-4444-5555-666677778888");
-            portfolio.LoadById(portfolios.FirstOrDefault(p => p.UserId == userGuid).Id);
+            portfolio.LoadById(portfolios.FirstOrDefault(p => p.Description == "Test").Id);
 
             portfolio.Name = "TestUpdate";
             int rowsAffected = portfolio.Update();
@@ -76,8 +76,7 @@ namespace MB.AgilePortfolio.BL.Test
             portfolios.Load();
             Portfolio portfolio = new Portfolio();
 
-            Guid userGuid = Guid.Parse("11112222-3333-4444-5555-666677778888");
-            portfolio.LoadById(portfolios.FirstOrDefault(p => p.UserId == userGuid).Id);
+            portfolio.LoadById(portfolios.FirstOrDefault(p => p.Description == "Test").Id);
 
             int rowsAffected = portfolio.Delete();
 

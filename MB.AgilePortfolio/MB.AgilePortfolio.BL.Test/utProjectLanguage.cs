@@ -15,18 +15,19 @@ namespace MB.AgilePortfolio.BL.Test
             ProjectLanguageList projectLanguages = new ProjectLanguageList();
             projectLanguages.Load();
 
-            int expected = 8;
-
-            Assert.AreEqual(expected, projectLanguages.Count);
+            Assert.IsTrue(projectLanguages.Count > 0);
         }
 
         [TestMethod]
         public void Insert()
         {
+            Language language = LoadLanguage("ABAP");
+            Project project = LoadProject();
+
             ProjectLanguage projectLanguage = new ProjectLanguage()
             {
-                LanguageId = Guid.Parse("11112222-3333-4444-5555-666677778888"),
-                ProjectId = Guid.Parse("11112222-3333-4444-5555-666677778888")
+                LanguageId = language.Id,
+                ProjectId = project.Id
             };
 
             int rowsInserted = projectLanguage.Insert();
@@ -36,30 +37,39 @@ namespace MB.AgilePortfolio.BL.Test
 
         }
 
+
+
         [TestMethod]
         public void LoadById()
         {
+            Language language = LoadLanguage("ABAP");
+            Project project = LoadProject();
+
+
             ProjectLanguageList projectLanguages = new ProjectLanguageList();
             projectLanguages.Load();
             ProjectLanguage projectLanguage = new ProjectLanguage();
 
-            Guid languageGuid = Guid.Parse("11112222-3333-4444-5555-666677778888");
-            projectLanguage.LoadById(projectLanguages.FirstOrDefault(p => p.LanguageId == languageGuid).Id);
+            projectLanguage.LoadById(projectLanguages.FirstOrDefault(p => p.LanguageId == language.Id && p.ProjectId == project.Id).Id);
 
-            Assert.AreEqual(languageGuid, projectLanguage.LanguageId);
+            Assert.IsNotNull(projectLanguage);
         }
 
         [TestMethod]
         public void Update()
         {
+            Language language = LoadLanguage("ABAP");
+            Language languageUpdate = LoadLanguage("MATLAB");
+            Project project = LoadProject();
+
             ProjectLanguageList projectLanguages = new ProjectLanguageList();
             projectLanguages.Load();
             ProjectLanguage projectLanguage = new ProjectLanguage();
 
-            Guid languageGuid = Guid.Parse("11112222-3333-4444-5555-666677778888");
-            projectLanguage.LoadById(projectLanguages.FirstOrDefault(p => p.LanguageId == languageGuid).Id);
 
-            projectLanguage.LanguageId = Guid.Parse("99999999-9999-9999-9999-999999999999");
+            projectLanguage.LoadById(projectLanguages.FirstOrDefault(p => p.LanguageId == language.Id && p.ProjectId == project.Id).Id);
+
+            projectLanguage.LanguageId = languageUpdate.Id;
             int rowsAffected = projectLanguage.Update();
 
             Assert.IsTrue(rowsAffected == 1);
@@ -68,16 +78,38 @@ namespace MB.AgilePortfolio.BL.Test
         [TestMethod]
         public void Delete()
         {
+            Language language = LoadLanguage("MATLAB");
+            Project project = LoadProject();
+
+
             ProjectLanguageList projectLanguages = new ProjectLanguageList();
             projectLanguages.Load();
             ProjectLanguage projectLanguage = new ProjectLanguage();
 
-            Guid languageGuid = Guid.Parse("99999999-9999-9999-9999-999999999999");
-            projectLanguage.LoadById(projectLanguages.FirstOrDefault(p => p.LanguageId == languageGuid).Id);
+            projectLanguage.LoadById(projectLanguages.FirstOrDefault(p => p.LanguageId == language.Id && p.ProjectId == project.Id).Id);
 
             int rowsAffected = projectLanguage.Delete();
 
             Assert.IsTrue(rowsAffected == 1);
+        }
+
+
+
+
+        private static Project LoadProject()
+        {
+            ProjectList projects = new ProjectList();
+            projects.Load();
+            Project project = projects.FirstOrDefault(p => p.Name == "ProveIT");
+            return project;
+        }
+
+        private Language LoadLanguage(string langName)
+        {
+            LanguageList languages = new LanguageList();
+            languages.Load();
+            Language language = languages.FirstOrDefault(l => l.Description == langName);
+            return language;
         }
     }
 }

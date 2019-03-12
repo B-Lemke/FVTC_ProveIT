@@ -16,14 +16,14 @@ namespace MB.AgilePortfolio.BL.Test
             UserList users = new UserList();
             users.Load();
 
-            int expected = 8;
-
-            Assert.AreEqual(expected, users.Count);
+            Assert.IsTrue(users.Count > 0);
         }
 
         [TestMethod]
         public void Insert()
         {
+            UserType userType = LoadUserType();
+
             User user = new User()
             {
                 Email = "Test@test.test",
@@ -31,7 +31,7 @@ namespace MB.AgilePortfolio.BL.Test
                 LastName = "Test",
                 Password = "Test",
                 ProfileImage = "Test",
-                UserTypeId = Guid.Parse("11112222-3333-4444-5555-666677778888")
+                UserTypeId = userType.Id
             };
 
             int rowsInserted = user.Insert();
@@ -48,8 +48,7 @@ namespace MB.AgilePortfolio.BL.Test
             users.Load();
             User user = new User();
 
-            Guid userTypeGuid = Guid.Parse("11112222-3333-4444-5555-666677778888");
-            user.LoadById(users.FirstOrDefault(u=>u.UserTypeId == userTypeGuid).Id);
+            user.LoadById(users.FirstOrDefault(u=>u.Email == "Test@test.test").Id);
 
             Assert.AreEqual("Test", user.FirstName);
         }
@@ -59,8 +58,10 @@ namespace MB.AgilePortfolio.BL.Test
         {
             UserList users = new UserList();
             users.Load();
-            Guid userTypeGuid = Guid.Parse("11112222-3333-4444-5555-666677778888");
-            User user = users.FirstOrDefault(u => u.UserTypeId == userTypeGuid);
+
+
+            User user = new User();
+            user.LoadById(users.FirstOrDefault(u => u.Email == "Test@test.test").Id);
 
             user.FirstName = "TestUpdate";
             int rowsAffected = user.Update();
@@ -73,12 +74,23 @@ namespace MB.AgilePortfolio.BL.Test
         {
             UserList users = new UserList();
             users.Load();
-            Guid userTypeGuid = Guid.Parse("11112222-3333-4444-5555-666677778888");
-            User user = users.FirstOrDefault(u => u.UserTypeId == userTypeGuid);
+
+            User user = new User();
+            user.LoadById(users.FirstOrDefault(u => u.Email == "Test@test.test").Id);
 
             int rowsAffected = user.Delete();
 
             Assert.IsTrue(rowsAffected == 1);
+        }
+
+
+
+        private static UserType LoadUserType()
+        {
+            UserTypeList uts = new UserTypeList();
+            uts.Load();
+            UserType ut = uts.FirstOrDefault(p => p.Description == "User");
+            return ut;
         }
     }
 }

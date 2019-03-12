@@ -16,14 +16,17 @@ namespace MB.AgilePortfolio.BL.Test
             ProjectList projects = new ProjectList();
             projects.Load();
 
-            int expected = 8;
-
-            Assert.AreEqual(expected, projects.Count);
+            Assert.IsTrue(projects.Count > 0);
         }
 
         [TestMethod]
         public void Insert()
         {
+            //Get guids for data in the database so that things load properly
+            Privacy privacy = LoadPrivacy();
+            Status status = LoadStatus();
+            User user = LoadUser();
+
             Project project = new Project()
             {
                 Id = Guid.Parse("11112222-3333-4444-5555-666677778888"),
@@ -40,9 +43,9 @@ namespace MB.AgilePortfolio.BL.Test
                 Location = "Test",
                 Purpose = "Test",
                 SoftwareUsed = "Test",
-                PrivacyId = Guid.Parse("11112222-3333-4444-5555-666677778888"),
-                StatusId = Guid.Parse("11112222-3333-4444-5555-666677778888"),
-                UserId = Guid.Parse("11112222-3333-4444-5555-666677778888"),
+                PrivacyId = privacy.Id,
+                StatusId = status.Id,
+                UserId = user.Id,
             };
 
             int rowsInserted = project.Insert();
@@ -52,6 +55,8 @@ namespace MB.AgilePortfolio.BL.Test
 
         }
 
+    
+
         [TestMethod]
         public void LoadById()
         {
@@ -59,10 +64,9 @@ namespace MB.AgilePortfolio.BL.Test
             projects.Load();
             Project project = new Project();
 
-            Guid userGuid = Guid.Parse("11112222-3333-4444-5555-666677778888");
-            project.LoadById(projects.FirstOrDefault(p => p.UserId == userGuid).Id);
+            project.LoadById(projects.FirstOrDefault(p => p.Name == "Test").Id);
 
-            Assert.AreEqual("Test", project.Name);
+            Assert.AreEqual("Test", project.Description);
         }
 
         [TestMethod]
@@ -72,10 +76,9 @@ namespace MB.AgilePortfolio.BL.Test
             projects.Load();
             Project project = new Project();
 
-            Guid userGuid = Guid.Parse("11112222-3333-4444-5555-666677778888");
-            project.LoadById(projects.FirstOrDefault(p => p.UserId == userGuid).Id);
+            project.LoadById(projects.FirstOrDefault(p => p.Name == "Test").Id);
 
-            project.Name = "TestUpdate";
+            project.Description = "TestUpdate";
             int rowsAffected = project.Update();
 
             Assert.IsTrue(rowsAffected == 1);
@@ -88,12 +91,41 @@ namespace MB.AgilePortfolio.BL.Test
             projects.Load();
             Project project = new Project();
 
-            Guid userGuid = Guid.Parse("11112222-3333-4444-5555-666677778888");
-            project.LoadById(projects.FirstOrDefault(p => p.UserId == userGuid).Id);
+            project.LoadById(projects.FirstOrDefault(p => p.Name == "Test").Id);
 
             int rowsAffected = project.Delete();
 
             Assert.IsTrue(rowsAffected == 1);
         }
+
+        private static User LoadUser()
+        {
+            UserList users = new UserList();
+            users.Load();
+            User user = users.FirstOrDefault(p => p.Email == "blemke4@gmail.com");
+            return user;
+        }
+
+        private static Status LoadStatus()
+        {
+            StatusList statuses = new StatusList();
+            statuses.Load();
+            Status status = statuses.FirstOrDefault(p => p.Description == "Completed");
+            return status;
+        }
+
+        private static Privacy LoadPrivacy()
+        {
+            PrivacyList privacies = new PrivacyList();
+            privacies.Load();
+            Privacy privacy = privacies.FirstOrDefault(p => p.Description == "Public");
+            return privacy;
+        }
     }
+
+
+
+
+
+
 }

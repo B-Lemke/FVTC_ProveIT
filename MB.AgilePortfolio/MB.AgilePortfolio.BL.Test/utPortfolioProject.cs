@@ -16,18 +16,25 @@ namespace MB.AgilePortfolio.BL.Test
             PortfolioProjectList portfolioProjects = new PortfolioProjectList();
             portfolioProjects.Load();
 
-            int expected = 8;
-
-            Assert.AreEqual(expected, portfolioProjects.Count);
+            Assert.IsTrue(portfolioProjects.Count > 1);
         }
 
         [TestMethod]
         public void Insert()
         {
+            ProjectList projects = new ProjectList();
+            projects.Load();
+            Project project = projects.FirstOrDefault(p => p.Name == "ProveIT");
+
+            PortfolioList portfolios = new PortfolioList();
+            portfolios.Load();
+            Portfolio portfolio = portfolios.FirstOrDefault(p => p.Name == "Brodys First Portfolio");
+
+
             PortfolioProject portfolioProject = new PortfolioProject()
             {
-                ProjectId = Guid.Parse("11112222-3333-4444-5555-666677778888"),
-                PortfolioId = Guid.Parse("11112222-3333-4444-5555-666677778888")
+                ProjectId = project.Id,
+                PortfolioId = portfolio.Id
             };
 
             int rowsInserted = portfolioProject.Insert();
@@ -40,27 +47,42 @@ namespace MB.AgilePortfolio.BL.Test
         [TestMethod]
         public void LoadById()
         {
+            ProjectList projects = new ProjectList();
+            projects.Load();
+            Project project = projects.FirstOrDefault(p => p.Name == "ProveIT");
+
+            PortfolioList portfolios = new PortfolioList();
+            portfolios.Load();
+            Portfolio portfolio = portfolios.FirstOrDefault(p => p.Name == "Brodys First Portfolio");
+
+
             PortfolioProjectList portfolioProjects = new PortfolioProjectList();
             portfolioProjects.Load();
             PortfolioProject portfolioProject = new PortfolioProject();
-
-            Guid projectGuid = Guid.Parse("11112222-3333-4444-5555-666677778888");
-            portfolioProject.LoadById(portfolioProjects.FirstOrDefault(p=>p.ProjectId == projectGuid).Id);
-
-            Assert.AreEqual(projectGuid, portfolioProject.PortfolioId);
+            
+            portfolioProject.LoadById(portfolioProjects.FirstOrDefault(p=>p.ProjectId == project.Id && p.PortfolioId == portfolio.Id).Id);
+            
+            Assert.AreEqual(portfolioProject.PortfolioId, portfolioProject.PortfolioId);
         }
 
         [TestMethod]
         public void Update()
         {
+            ProjectList projects = new ProjectList();
+            projects.Load();
+            Project project = projects.FirstOrDefault(p => p.Name == "ProveIT");
+            PortfolioList portfolios = new PortfolioList();
+            portfolios.Load();
+            Portfolio portfolio = portfolios.FirstOrDefault(p => p.Name == "Brodys First Portfolio");
+            Portfolio portfolioUpdate = portfolios.FirstOrDefault(p => p.Name == "Joes First Portfolio");
+
+
             PortfolioProjectList portfolioProjects = new PortfolioProjectList();
             portfolioProjects.Load();
             PortfolioProject portfolioProject = new PortfolioProject();
+            portfolioProject.LoadById(portfolioProjects.FirstOrDefault(p => p.ProjectId == project.Id && p.PortfolioId == portfolio.Id).Id);
 
-            Guid projectGuid = Guid.Parse("11112222-3333-4444-5555-666677778888");
-            portfolioProject.LoadById(portfolioProjects.FirstOrDefault(p => p.ProjectId == projectGuid).Id);
-
-            portfolioProject.ProjectId = Guid.Parse("99999999-9999-9999-9999-999999999999");
+            portfolioProject.PortfolioId = portfolioUpdate.Id;
             int rowsAffected = portfolioProject.Update();
 
             Assert.IsTrue(rowsAffected == 1);
@@ -69,10 +91,17 @@ namespace MB.AgilePortfolio.BL.Test
         [TestMethod]
         public void Delete()
         {
+            ProjectList projects = new ProjectList();
+            projects.Load();
+            Project project = projects.FirstOrDefault(p => p.Name == "ProveIT");
+            PortfolioList portfolios = new PortfolioList();
+            portfolios.Load();
+            Portfolio portfolio = portfolios.FirstOrDefault(p => p.Name == "Joes First Portfolio");
+
             PortfolioProjectList portfolioProjects = new PortfolioProjectList();
             portfolioProjects.Load();
-            Guid projectGuid = Guid.Parse("99999999-9999-9999-9999-999999999999");
-            PortfolioProject portfolioProject = portfolioProjects.FirstOrDefault(p => p.ProjectId == projectGuid);
+            PortfolioProject portfolioProject = new PortfolioProject();
+            portfolioProject.LoadById(portfolioProjects.FirstOrDefault(p => p.ProjectId == project.Id && p.PortfolioId == portfolio.Id).Id);
 
             int rowsAffected = portfolioProject.Delete();
 

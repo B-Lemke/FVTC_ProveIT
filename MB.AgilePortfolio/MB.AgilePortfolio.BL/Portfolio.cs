@@ -130,16 +130,8 @@ namespace MB.AgilePortfolio.BL
 
     public class PortfolioList : List<Portfolio>
     {
-        public void Load()
-        {
-            try
-            {
-                Load(null);
-            }
-            catch (Exception ex) { throw ex; }
-        }
 
-        public void Load(Guid? id)
+        public void Load()
         {
             try
             {

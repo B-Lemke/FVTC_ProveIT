@@ -16,18 +16,18 @@ namespace MB.AgilePortfolio.BL.Test
             ScreenshotList screenshots = new ScreenshotList();
             screenshots.Load();
 
-            int expected = 8;
-
-            Assert.AreEqual(expected, screenshots.Count);
+            Assert.IsTrue(screenshots.Count > 0);
         }
 
         [TestMethod]
         public void Insert()
         {
+            Project project = LoadProject();
+
             Screenshot screenshot = new Screenshot()
             {
                 Filepath = "Test",
-                ProjectId = Guid.Parse("11112222-3333-4444-5555-666677778888")
+                ProjectId = project.Id
             };
 
             int rowsInserted = screenshot.Insert();
@@ -44,23 +44,22 @@ namespace MB.AgilePortfolio.BL.Test
             screenshots.Load();
             Screenshot screenshot = new Screenshot();
 
-            Guid projectGuid = Guid.Parse("11112222-3333-4444-5555-666677778888");
-            screenshot.LoadById(screenshots.FirstOrDefault(s => s.ProjectId == projectGuid).Id);
+            screenshot.LoadById(screenshots.FirstOrDefault(s => s.Filepath == "Test").Id);
 
-            Assert.AreEqual("Test", screenshot.Filepath);
+            Assert.IsNotNull(screenshot);
         }
 
         [TestMethod]
         public void Update()
         {
+
             ScreenshotList screenshots = new ScreenshotList();
             screenshots.Load();
             Screenshot screenshot = new Screenshot();
 
-            Guid projectGuid = Guid.Parse("11112222-3333-4444-5555-666677778888");
-            screenshot.LoadById(screenshots.FirstOrDefault(s => s.ProjectId == projectGuid).Id);
+            screenshot.LoadById(screenshots.FirstOrDefault(s => s.Filepath == "Test").Id);
 
-            screenshot.Filepath = "NewPath";
+            screenshot.Filepath = "UpdateTest";
             int rowsAffected = screenshot.Update();
 
             Assert.IsTrue(rowsAffected == 1);
@@ -73,12 +72,21 @@ namespace MB.AgilePortfolio.BL.Test
             screenshots.Load();
             Screenshot screenshot = new Screenshot();
 
-            Guid projectGuid = Guid.Parse("11112222-3333-4444-5555-666677778888");
-            screenshot.LoadById(screenshots.FirstOrDefault(s => s.ProjectId == projectGuid).Id);
+            screenshot.LoadById(screenshots.FirstOrDefault(s => s.Filepath == "UpdateTest").Id);
 
             int rowsAffected = screenshot.Delete();
 
             Assert.IsTrue(rowsAffected == 1);
+        }
+
+
+
+        private static Project LoadProject()
+        {
+            ProjectList projects = new ProjectList();
+            projects.Load();
+            Project project = projects.FirstOrDefault(p => p.Name == "ProveIT");
+            return project;
         }
     }
 }
