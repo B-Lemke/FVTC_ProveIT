@@ -5,6 +5,6 @@
     [Password] VARCHAR(255) NOT NULL, 
     [FirstName] VARCHAR(255) NOT NULL, 
     [LastName] VARCHAR(255) NOT NULL, 
-    [ProfileImage] VARCHAR(255) NOT NULL, 
+    [ProfileImage] VARCHAR(255) NULL, 
     [UserTypeId] UNIQUEIDENTIFIER NOT NULL
 )

@@ -80,7 +80,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Description" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="tblUser">
           <Key>
@@ -91,7 +91,7 @@
           <Property Name="Password" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="FirstName" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="LastName" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="ProfileImage" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="ProfileImage" Type="varchar" MaxLength="255" />
           <Property Name="UserTypeId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="tblUserType">
@@ -205,7 +205,7 @@
           <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ProfileImage" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProfileImage" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="UserTypeId" Type="Guid" Nullable="false" />
         </EntityType>
         <EntityContainer Name="PortfolioEntities" annotation:LazyLoadingEnabled="true">
@@ -241,7 +241,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <ComplexType Name="Portfolio_ViewData_Result">
           <Property Type="Guid" Name="Id" Nullable="false" />

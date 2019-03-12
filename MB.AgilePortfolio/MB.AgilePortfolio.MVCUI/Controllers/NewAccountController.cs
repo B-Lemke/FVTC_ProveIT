@@ -59,7 +59,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     ModelState.AddModelError(string.Empty, "Email address is required");
                 }
 
-                else if(uut.User.CheckIfEmailExists(uut.User.Email) == false)
+                else if(uut.User.CheckIfEmailExists(uut.User.Email) == true)
                 {
                     ModelState.AddModelError(string.Empty, "Email Already Exists");
                 }

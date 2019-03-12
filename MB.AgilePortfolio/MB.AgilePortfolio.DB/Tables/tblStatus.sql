@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[tblStatus]
 (
 	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
-    [Description] VARCHAR(50) NULL
+    [Description] VARCHAR(50) NOT NULL
 )
