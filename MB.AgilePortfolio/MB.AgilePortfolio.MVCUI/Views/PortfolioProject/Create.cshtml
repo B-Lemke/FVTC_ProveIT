@@ -1,7 +1,7 @@
 ﻿@model MB.AgilePortfolio.MVCUI.ViewModels.PortfolioProjectViewModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "PortfolioProject";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>PortfolioProject</h4>
+        <h4>@ViewBag.Title</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">

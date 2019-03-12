@@ -1,18 +1,18 @@
 ﻿@model MB.AgilePortfolio.MVCUI.ViewModels.PortfolioProjectViewModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "PortfolioProject";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
+<h2>@ViewBag.Title</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
 <div class="form-horizontal">
-    <h4>PortfolioProjectViewModel</h4>
+
     <hr />
 
     @Html.HiddenFor(model => model.PortfolioProject.Id)
