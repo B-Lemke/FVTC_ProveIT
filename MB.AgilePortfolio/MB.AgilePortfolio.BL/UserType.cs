@@ -120,7 +120,7 @@ namespace MB.AgilePortfolio.BL
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
-                    var userTypes = dc.tblUserTypes.OrderBy(ut => ut.Description);
+                    var userTypes = dc.tblUserTypes.OrderByDescending(ut => ut.Description);
                     foreach (var ut in userTypes)
                     {
                         UserType userType = new UserType(ut.Id, ut.Description);
