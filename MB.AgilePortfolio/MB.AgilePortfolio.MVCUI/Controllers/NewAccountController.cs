@@ -49,11 +49,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
-                //uut.User.Email
-                //users = new UserList();
-                //if(uut.User.Email == null || users.e)
-
                 if(uut.User.Email == null)
                 {
                     ModelState.AddModelError(string.Empty, "Email address is required");
@@ -62,9 +57,35 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 else if(uut.User.CheckIfEmailExists(uut.User.Email) == true)
                 {
                     ModelState.AddModelError(string.Empty, "Email Already Exists");
+
+                    // TODO:
+                    // REDIRECT TO LOGIN SCREEN HERE?
                 }
 
-                if(!ModelState.IsValid)
+                if (uut.User.FirstName == null)
+                {
+                    ModelState.AddModelError(string.Empty, "First Name is required");
+                }
+
+                if (uut.User.LastName == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Last Name is required");
+                }
+
+                if (uut.User.Password == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Password is required");
+                }
+
+                if (uut.User.Password.Length < 8)
+                {
+                    ModelState.AddModelError(string.Empty, "Password needs to be at least 8 characters");
+                }
+
+                // TODO:
+                // ADD VALIDATION FOR EMPLOYER?
+
+                if (!ModelState.IsValid)
                 {
                     uut.UserTypes = new UserTypeList();
                     uut.UserTypes.LoadNonAdmin();
