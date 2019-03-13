@@ -1,0 +1,147 @@
+﻿@model MB.AgilePortfolio.BL.Project
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Project</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Filepath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Filepath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PrivacyDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrivacyDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Image)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Image)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserEmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateCreated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Purpose)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Purpose)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Environment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Environment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Challenges)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Challenges)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FuturePlans)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FuturePlans)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Collaborators)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Collaborators)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastUpdated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastUpdated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SoftwareUsed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoftwareUsed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StatusDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StatusDescription)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
