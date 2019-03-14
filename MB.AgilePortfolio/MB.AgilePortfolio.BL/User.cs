@@ -122,33 +122,17 @@ namespace MB.AgilePortfolio.BL
             catch (Exception ex) { throw ex; }
         }
 
-        private void Map(tblUser user)
-        {
-            // Set the properties on the datarow from the database
-            user.Id = Id;
-            user.FirstName = FirstName;
-            user.LastName = LastName;
-            user.Email = Email;
-            user.Password = Password;
-            user.ProfileImage = ProfileImage;
-            user.UserTypeId = UserTypeId;
-        }
-
-        public void Seed()
-        {
-            try
-            {
-                User user = new User();
-                user.Password = user.GetHash();
-                tblUser datarow = new tblUser();
-                user.Map(datarow);
-                user.Insert();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        //private void Map(tblUser user)
+        //{
+        //    // Set the properties on the datarow from the database
+        //    user.Id = Id;
+        //    user.FirstName = FirstName;
+        //    user.LastName = LastName;
+        //    user.Email = Email;
+        //    user.Password = Password;
+        //    user.ProfileImage = ProfileImage;
+        //    user.UserTypeId = UserTypeId;
+        //}
 
         public int Insert()
         {
