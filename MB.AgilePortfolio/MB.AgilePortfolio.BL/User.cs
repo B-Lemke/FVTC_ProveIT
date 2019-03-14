@@ -138,7 +138,7 @@ namespace MB.AgilePortfolio.BL
         {
             try
             {
-                User user = new User("", "", "", "");
+                User user = new User();
                 user.Password = user.GetHash();
                 tblUser datarow = new tblUser();
                 user.Map(datarow);

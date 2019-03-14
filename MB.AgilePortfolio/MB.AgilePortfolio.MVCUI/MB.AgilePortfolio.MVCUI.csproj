@@ -343,10 +343,12 @@
     <Content Include="Views\NewAccount\Index.cshtml" />
     <Content Include="Views\CreateNewProject\Create.cshtml" />
     <Content Include="Views\CreateNewProject\Index.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Login\Logout.cshtml" />
+    <Content Include="Views\Login\Seed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Login\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
