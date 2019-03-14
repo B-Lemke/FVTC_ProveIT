@@ -34,8 +34,14 @@ function checkPassword() {
     }
 
 
-
+    if (!validPass) {
+        console.log("Test");
+        $('#displayPasswordMsg').removeClass("d-none");
+    } else {
+        $('#displayPasswordMsg').addClass("d-none");
+    }
     return validPass;
+    
 }
 
 
@@ -58,6 +64,7 @@ function passMatch() {
     var confirmPass = $('#confirmPasswordInput').val();
 
     //Clear the matching password field
+    $('#confirmPassMatchMsg').addClass("d-hide");
     $("#confirmPassMatchMsg").empty();
 
     if (newPass !== confirmPass) {
@@ -67,9 +74,10 @@ function passMatch() {
             confirmPassErr.innerHTML = "Passwords must match";
             $("#confirmPassMatchMsg").append(confirmPassErr);
         }
-
+        $('#confirmPassMatchMsg').removeClass("d-none");
         return false;
     } else {
+        $('#confirmPassMatchMsg').removeClass("d-none");
         return true;
     }
 
