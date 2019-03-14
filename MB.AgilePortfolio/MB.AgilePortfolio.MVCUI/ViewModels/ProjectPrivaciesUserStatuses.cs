@@ -11,9 +11,9 @@ namespace MB.AgilePortfolio.MVCUI.ViewModels
     {
         public Project Project { get; set; }
         public PrivacyList Privacies { get; set; }
+        public Privacy Privacy { get; set; }
         public User User { get; set; }
         public UserList Users { get; set; }
         public StatusList Statuses { get; set; }
-
     }
 }
