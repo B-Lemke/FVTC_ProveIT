@@ -98,6 +98,8 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             }
             catch
             {
+                uut.UserTypes = new UserTypeList();
+                uut.UserTypes.LoadNonAdmin();
                 return View(uut);
             }
         }
