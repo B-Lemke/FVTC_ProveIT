@@ -1,7 +1,7 @@
 ﻿var formInvalid;
 
 function validateRegistration() {
-    console.log("Working!");
+    console.log("Working on validating!");
     //form is currently valid
     formInvalid = false;
 
@@ -21,13 +21,6 @@ function validateRegistration() {
     }
 
 
-    //Check the password
-    var passwordValid = checkPassword();
-    if (!passwordValid) {
-        addError("Password is invalid");
-        //Possibly highlight the password requirement box?
-    }
-
     //Check that first name isn't empty and less than 50 characters
     var firstNameVal = $("#firstName").val()
     if (firstNameVal == "") {
@@ -46,7 +39,8 @@ function validateRegistration() {
         addError("Last name must be 50 characters or less.");
     }
 
-    
+
+
 
 
     if (formInvalid) {
@@ -63,6 +57,7 @@ function addError(errorMsg) {
     var errorElement = document.createElement("li");
     errorElement.innerHTML = errorMsg;
     $("#errorMsgs").append(errorElement);
+    console.log(errorMsg);
 }
 
 

@@ -3,12 +3,12 @@
 function checkPassword() {
     validPass = true;
 
-    var passwordMessageBox = document.getElementById('displayPasswordMsg');
+    var passwordMessageBox = $('#displayPasswordMsg');
     //Clear out the box
     passwordMessageBox.innerHTML = '';
 
 
-    var newPassword = document.getElementById('passwordInput').value;
+    var newPassword = $('#passwordInput');
     var minNumberofChars = 6;
     var maxNumberofChars = 16;
 
