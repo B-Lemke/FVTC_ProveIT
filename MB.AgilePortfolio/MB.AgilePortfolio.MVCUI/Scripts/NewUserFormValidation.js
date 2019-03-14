@@ -1,6 +1,7 @@
 ﻿var formInvalid;
 
 function validateRegistration() {
+    console.log("Working!");
     //form is currently valid
     formInvalid = false;
 
