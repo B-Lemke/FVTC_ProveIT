@@ -3,12 +3,11 @@
 function checkPassword() {
     validPass = true;
 
-    var passwordMessageBox = $('#displayPasswordMsg');
-    //Clear out the box
-    passwordMessageBox.innerHTML = '';
+    //clear out errors
+    $('#displayPasswordMsg').empty();
 
 
-    var newPassword = $('#passwordInput');
+    var newPassword = $('#passwordInput').val();
     var minNumberofChars = 6;
     var maxNumberofChars = 16;
 
@@ -18,38 +17,46 @@ function checkPassword() {
     var regularExpressionLow = /.*[a-z].*/;
 
     if (newPassword.length < minNumberofChars || newPassword.length > maxNumberofChars) {
-        validPass = false;
-        var lengthP = document.createElement("p");
-        lengthP.innerHTML = "Password must be between 6 and 16 characters.";
-        passwordMessageBox.appendChild(lengthP);
+        addPasswordError("Password must be between 6 and 16 characters.");
     }
     if (!regularExpressionChar.test(newPassword)) {
-        validPass = false;
-        var specialCharactersP = document.createElement("p");
-        specialCharactersP.innerHTML = "Password must contain a special character !@#$%^&*.";
-        passwordMessageBox.appendChild(specialCharactersP);
+        addPasswordError("Password must contain a special character !@#$%^&*.");
     }
     if (!regularExpressionNum.test(newPassword)) {
-        validPass = false;
-        var numP = document.createElement("p");
-        numP.innerHTML = "Password must contain a number.";
-        passwordMessageBox.appendChild(numP);
+        addPasswordError("Password must contain a number.");
     }
     if (!regularExpressionCap.test(newPassword)) {
-        validPass = false;
-        var capP = document.createElement("p");
-        capP.innerHTML = "Password must contain an uppercase letter.";
-        passwordMessageBox.appendChild(capP);
+        addPasswordError("Password must contain an uppercase letter.");
     }
     if (!regularExpressionLow.test(newPassword)) {
-        validPass = false;
-        var lowP = document.createElement("p");
-        lowP.innerHTML = "Password must contain a lowercase letter.";
-        passwordMessageBox.appendChild(lowP);
+        addPasswordError("Password must contain a lowercase letter.");
     }
 
     return validPass;
-
 }
 
+function passMatch(){
+    var newPass = $('#passwordInput').val();
+    var confirmPass = $('#confirmPasswordInput').val();
 
+    //Clear the matching password field
+    $("#confirmPassMatchMsg").empty();
+
+    if (newPass === confirmPass) {
+        var confirmPassErr = document.createElement("p");
+        confirmPassErr.innerHTML = "Passwords must match";
+        $("#confirmPassMatchMsg").append(pswdErrorElement);
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function addPasswordError(errorMsg) {
+    validPass = false;
+
+    var pswdErrorElement = document.createElement("p");
+    pswdErrorElement.innerHTML = errorMsg;
+    $("#displayPasswordMsg").append(pswdErrorElement);
+
+}

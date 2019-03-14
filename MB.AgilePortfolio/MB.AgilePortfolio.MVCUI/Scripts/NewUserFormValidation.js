@@ -40,7 +40,15 @@ function validateRegistration() {
     }
 
 
+    //Check that passwordis valid
+    if (!checkPassword()) {
+        addError("Password is invalid.");
+    }
 
+    //Check that passwords match
+    if (!passMatch()) {
+        addError("Passwords must match.");
+    }
 
 
     if (formInvalid) {
