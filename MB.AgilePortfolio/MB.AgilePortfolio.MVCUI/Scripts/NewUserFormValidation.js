@@ -38,9 +38,10 @@ function validateRegistration() {
         addError("Last name must be 50 characters or less.");
     }
 
-
-    //Check that passwordis valid
-    if (!checkPassword()) {
+    if ($("#passwordInput").val() == "") {
+        addError("Password is required.");
+    } else if (!checkPassword()) {
+        //Check that passwordis valid
         addError("Password is invalid.");
     }
 

@@ -38,6 +38,20 @@ function checkPassword() {
     return validPass;
 }
 
+
+
+function addPasswordError(errorMsg) {
+    validPass = false;
+
+    //Only add the error messages on the page if there is a value entered, but throw the errors still even if empty.
+    if ($('#passwordInput').val() !== "") {
+        var pswdErrorElement = document.createElement("p");
+        pswdErrorElement.innerHTML = errorMsg;
+        $("#displayPasswordMsg").append(pswdErrorElement);
+    }
+}
+
+
 function passMatch() {
 
     var newPass = $('#passwordInput').val();
@@ -64,14 +78,5 @@ function passMatch() {
 
 
 
-
-}
-
-function addPasswordError(errorMsg) {
-    validPass = false;
-
-    var pswdErrorElement = document.createElement("p");
-    pswdErrorElement.innerHTML = errorMsg;
-    $("#displayPasswordMsg").append(pswdErrorElement);
 
 }
