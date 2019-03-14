@@ -13,7 +13,9 @@ namespace MB.AgilePortfolio.BL
         public Guid Id { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        [DisplayName("First Name")]
         public string FirstName { get; set; }
+        [DisplayName("Last Name")]
         public string LastName { get; set; }
         public string ProfileImage { get; set; }
         [DisplayName("User Type")]
@@ -33,6 +35,119 @@ namespace MB.AgilePortfolio.BL
             ProfileImage = profileImage;
             UserTypeId = userTypeId;
             UserTypeDescription = userTypeDescription;
+        }
+
+        // To use when adding a user
+        public User(string email, string password, string firstName, string lastName)
+        {
+            Email = email;
+            Password = password;
+            FirstName = firstName;
+            LastName = lastName;
+        }
+
+        // To use when updating a user
+        public User(Guid id, string email, string password, string firstName, string lastName)
+        {
+            Id = id;
+            Email = email;
+            Password = password;
+            FirstName = firstName;
+            LastName = lastName;
+        }
+
+        // To use when a user logs in
+        public User(string email, string password)
+        {
+            Email = email;
+            Password = password;
+        }
+
+        private string GetHash()
+        {
+            using (var hash = new System.Security.Cryptography.SHA1Managed())
+            {
+                var hashbytes = Encoding.UTF8.GetBytes(Password);
+                return Convert.ToBase64String(hash.ComputeHash(hashbytes));
+            }
+        }
+
+        public bool Login()
+        {
+            try
+            {
+                if (Email != null && Email != string.Empty)
+                {
+                    if (Password != null && Password != string.Empty)
+                    {
+                        PortfolioEntities dc = new PortfolioEntities();
+                        //tblUser user = dc.tblUsers.FirstOrDefault(u => u.Email == Email);
+                        var user = (from u in dc.tblUsers
+                                    join ut in dc.tblUserTypes on u.UserTypeId equals ut.Id
+                                    where u.Email == Email
+                                    select new
+                                    {
+                                        u.Id,
+                                        u.Email,
+                                        u.Password,
+                                        u.FirstName,
+                                        u.LastName,
+                                        u.ProfileImage,
+                                        u.UserTypeId,
+                                        ut.Description
+                                    }).FirstOrDefault();
+                        if (user != null)
+                        {
+                            if (user.Password == GetHash())
+                            {
+                                // Login successful
+                                FirstName = user.FirstName;
+                                LastName = user.LastName;
+                                Email = user.Email;
+                                Password = user.Password;
+                                Id = user.Id;
+                                ProfileImage = user.ProfileImage;
+                                UserTypeId = user.UserTypeId;
+                                UserTypeDescription = user.Description;
+                                return true;
+                            }
+                            else { return false; }
+                        }
+                        else { return false; }
+                    }
+                    else { return false; }
+                }
+                else { return false; }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        private void Map(tblUser user)
+        {
+            // Set the properties on the datarow from the database
+            user.Id = Id;
+            user.FirstName = FirstName;
+            user.LastName = LastName;
+            user.Email = Email;
+            user.Password = Password;
+            user.ProfileImage = ProfileImage;
+            user.UserTypeId = UserTypeId;
+        }
+
+        public void Seed()
+        {
+            try
+            {
+                User user = new User("", "", "", "");
+                user.Password = user.GetHash();
+                tblUser datarow = new tblUser();
+                user.Map(datarow);
+                user.Insert();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public int Insert()

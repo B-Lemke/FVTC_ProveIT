@@ -15,75 +15,56 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             return View();
         }
 
-        // GET: Login/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Logout()
         {
+            Session["user"] = null;
             return View();
         }
 
-        // GET: Login/Create
-        public ActionResult Create()
+        public ActionResult Seed()
         {
+            User user = new User();
+            user.Seed();
+            ViewBag.FullName = user.FirstName + " " + user.LastName;
             return View();
         }
 
-        // POST: Login/Create
+        public ActionResult Login(string returnurl)
+        {
+            // Specify the home page
+            if (returnurl == null)
+                returnurl = HttpContext.Request.UrlReferrer.AbsoluteUri;
+            User user = new User();
+            ViewBag.ReturnUrl = returnurl;
+            return View(user);
+        }
+
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Login(User user, string returnurl)
         {
             try
             {
-                // TODO: Add insert logic here
+                ViewBag.ReturnUrl = returnurl;
+                if (user.Login())
+                {
+                    ViewBag.Message = "Login successful";
+                    Session["user"] = user;
+                    return Redirect(returnurl);
+                }
+                else
+                {
+                    ViewBag.Message = "Wrong credentials...";
 
-                return RedirectToAction("Index");
+                    // Go back to the login screen again
+                    return View(user);
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
-            }
-        }
+                ViewBag.Message = ex.Message;
 
-        // GET: Login/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Login/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Login/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Login/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
+                // Go back to the login screen again
+                return View(user);
             }
         }
     }
