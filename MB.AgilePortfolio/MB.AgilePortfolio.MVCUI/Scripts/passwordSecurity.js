@@ -3,6 +3,7 @@
 function checkPassword() {
     validPass = true;
 
+
     //clear out errors
     $('#displayPasswordMsg').empty();
 
@@ -32,24 +33,38 @@ function checkPassword() {
         addPasswordError("Password must contain a lowercase letter.");
     }
 
+
+
     return validPass;
 }
 
-function passMatch(){
+function passMatch() {
+
     var newPass = $('#passwordInput').val();
     var confirmPass = $('#confirmPasswordInput').val();
 
     //Clear the matching password field
     $("#confirmPassMatchMsg").empty();
 
-    if (newPass === confirmPass) {
-        var confirmPassErr = document.createElement("p");
-        confirmPassErr.innerHTML = "Passwords must match";
-        $("#confirmPassMatchMsg").append(pswdErrorElement);
-        return true;
-    } else {
+    if (newPass !== confirmPass) {
+        //Don't put in the error message if the confirm password is cleared out, but still throw the error
+        if (confirmPass !== "") {
+            var confirmPassErr = document.createElement("p");
+            confirmPassErr.innerHTML = "Passwords must match";
+            $("#confirmPassMatchMsg").append(confirmPassErr);
+        }
+
         return false;
+    } else {
+        return true;
     }
+
+
+
+
+
+
+
 }
 
 function addPasswordError(errorMsg) {

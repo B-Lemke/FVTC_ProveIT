@@ -1,7 +1,6 @@
 ﻿var formInvalid;
 
 function validateRegistration() {
-    console.log("Working on validating!");
     //form is currently valid
     formInvalid = false;
 
@@ -56,7 +55,10 @@ function validateRegistration() {
         $("#jsErrorBox").show(1000);
         return false;
     }
-
+    else {
+        $("#jsErrorBox").addClass("d-none");
+        $("#jsErrorBox").hide();
+    } 
 }
 
 function addError(errorMsg) {
@@ -65,7 +67,7 @@ function addError(errorMsg) {
     var errorElement = document.createElement("li");
     errorElement.innerHTML = errorMsg;
     $("#errorMsgs").append(errorElement);
-    console.log(errorMsg);
+ 
 }
 
 
@@ -73,6 +75,5 @@ function addError(errorMsg) {
 
 function validateEmail(email) {
     var re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-    console.log(re.test(String(email).toLowerCase()));
     return re.test(String(email).toLowerCase());
 }
