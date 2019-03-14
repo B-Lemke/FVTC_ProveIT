@@ -342,9 +342,6 @@
     <Content Include="Views\NewAccount\Create.cshtml" />
     <Content Include="Views\NewAccount\Index.cshtml" />
     <Content Include="Views\CreateNewProject\Create.cshtml" />
-    <Content Include="Views\CreateNewProject\Delete.cshtml" />
-    <Content Include="Views\CreateNewProject\Details.cshtml" />
-    <Content Include="Views\CreateNewProject\Edit.cshtml" />
     <Content Include="Views\CreateNewProject\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

@@ -77,11 +77,18 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     ModelState.AddModelError(string.Empty, "Password is required");
                 }
 
-                if (uut.User.Password.Length < 6)
+                else if (uut.User.Password.Length < 6)
                 {
                     ModelState.AddModelError(string.Empty, "Password needs to be at least 6 characters");
                 }
-
+                else if (uut.User.Password.Length > 16)
+                {
+                    ModelState.AddModelError(string.Empty, "Password needs to be less than 16 characters");
+                }
+                else if (uut.ConfirmPassword != uut.User.Password)
+                {
+                    ModelState.AddModelError(string.Empty, "Passwords did not match");
+                }
                 // TODO:
                 // ADD VALIDATION FOR EMPLOYER?
 

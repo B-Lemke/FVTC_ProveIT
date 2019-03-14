@@ -34,16 +34,7 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.User.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.User.Password, new { htmlAttributes = new { @class = "form-control", @id = "passwordInput" } })
-                @Html.ValidationMessageFor(model => model.User.Password, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div id="displayPasswordMsg">
-        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.User.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -70,13 +61,35 @@
             </div>
         *@
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.User.UserTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.User.UserTypeId, new SelectList(Model.UserTypes, "Id", "Description", Model.User), null, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.User.UserTypeId, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.User.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.PasswordFor(model => model.User.Password, new { htmlAttributes = new { @class = "form-control", @id = "passwordInput", placeholder = "Password" } })
+            @Html.ValidationMessageFor(model => model.User.Password, "", new { @class = "text-danger" })
         </div>
+    </div>
+
+    <div id="displayPasswordMsg">
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ConfirmPassword, "Confirm Password", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.PasswordFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", @id = "confirmPasswordInput", placeholder = "Confirm Password" } })
+            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div id="displayPasswordMsg">
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.User.UserTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.User.UserTypeId, new SelectList(Model.UserTypes, "Id", "Description", Model.User), null, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.User.UserTypeId, "", new { @class = "text-danger" })
+        </div>
+    </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
