@@ -17,15 +17,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
         public ActionResult Logout()
         {
-            Session["user"] = null;
-            return View();
-        }
-
-        public ActionResult Seed()
-        {
-            User user = new User();
-            user.Seed();
-            ViewBag.FullName = user.FirstName + " " + user.LastName;
+            Session.Abandon();
             return View();
         }
 

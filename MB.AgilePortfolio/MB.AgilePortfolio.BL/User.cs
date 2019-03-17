@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace MB.AgilePortfolio.BL
     {
         public Guid Id { get; set; }
         public string Email { get; set; }
+        [DataType(DataType.Password)]
         public string Password { get; set; }
         [DisplayName("First Name")]
         public string FirstName { get; set; }
@@ -38,22 +40,13 @@ namespace MB.AgilePortfolio.BL
         }
 
         // To use when adding a user
-        public User(string email, string password, string firstName, string lastName)
+        public User(string email, string password, string firstName, string lastName, Guid userTypeId)
         {
             Email = email;
             Password = password;
             FirstName = firstName;
             LastName = lastName;
-        }
-
-        // To use when updating a user
-        public User(Guid id, string email, string password, string firstName, string lastName)
-        {
-            Id = id;
-            Email = email;
-            Password = password;
-            FirstName = firstName;
-            LastName = lastName;
+            UserTypeId = userTypeId;
         }
 
         // To use when a user logs in
@@ -81,7 +74,9 @@ namespace MB.AgilePortfolio.BL
                     if (Password != null && Password != string.Empty)
                     {
                         PortfolioEntities dc = new PortfolioEntities();
+
                         //tblUser user = dc.tblUsers.FirstOrDefault(u => u.Email == Email);
+
                         var user = (from u in dc.tblUsers
                                     join ut in dc.tblUserTypes on u.UserTypeId equals ut.Id
                                     where u.Email == Email
@@ -122,18 +117,6 @@ namespace MB.AgilePortfolio.BL
             catch (Exception ex) { throw ex; }
         }
 
-        //private void Map(tblUser user)
-        //{
-        //    // Set the properties on the datarow from the database
-        //    user.Id = Id;
-        //    user.FirstName = FirstName;
-        //    user.LastName = LastName;
-        //    user.Email = Email;
-        //    user.Password = Password;
-        //    user.ProfileImage = ProfileImage;
-        //    user.UserTypeId = UserTypeId;
-        //}
-
         public int Insert()
         {
             try
@@ -144,11 +127,11 @@ namespace MB.AgilePortfolio.BL
                     {
                         Id = Guid.NewGuid(),
                         Email = Email,
-                        Password = Password,
+                        Password = GetHash(),
                         FirstName = FirstName,
                         LastName = LastName,
                         ProfileImage = ProfileImage,
-                        UserTypeId = UserTypeId
+                        UserTypeId = UserTypeId,
                     };
                     //Save the Id
                     this.Id = user.Id;
@@ -188,7 +171,7 @@ namespace MB.AgilePortfolio.BL
                     if (user != null)
                     {
                         user.Email = Email;
-                        user.Password = Password;
+                        user.Password = GetHash();
                         user.FirstName = FirstName;
                         user.LastName = LastName;
                         user.ProfileImage = ProfileImage;
