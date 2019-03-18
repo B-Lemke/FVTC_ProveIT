@@ -9,25 +9,15 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 {
     public class LoginController : Controller
     {
-        // GET: Login
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         public ActionResult Logout()
         {
             Session.Abandon();
             return View();
         }
 
-        public ActionResult Login(string returnurl)
+        public ActionResult Login()
         {
-            // Specify the home page
-            if (returnurl == null)
-                returnurl = HttpContext.Request.UrlReferrer.AbsoluteUri;
             User user = new User();
-            ViewBag.ReturnUrl = returnurl;
             return View(user);
         }
 
@@ -36,26 +26,22 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         {
             try
             {
-                ViewBag.ReturnUrl = returnurl;
                 if (user.Login())
                 {
                     ViewBag.Message = "Login successful";
+                    ViewBag.FullName = user.FullName;
                     Session["user"] = user;
-                    return Redirect(returnurl);
+                    return RedirectToAction("Index", "Admin", new { returnurl = HttpContext.Request.Url });
                 }
                 else
                 {
                     ViewBag.Message = "Wrong credentials...";
-
-                    // Go back to the login screen again
                     return View(user);
                 }
             }
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
-
-                // Go back to the login screen again
                 return View(user);
             }
         }

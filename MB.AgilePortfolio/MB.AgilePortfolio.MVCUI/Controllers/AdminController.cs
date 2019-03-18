@@ -15,6 +15,5 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         {
             return View();
         }
-
     }
 }

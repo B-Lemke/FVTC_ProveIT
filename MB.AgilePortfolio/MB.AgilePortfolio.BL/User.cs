@@ -24,6 +24,10 @@ namespace MB.AgilePortfolio.BL
         public Guid UserTypeId { get; set; }
         [DisplayName("User Type")]
         public string UserTypeDescription { get; set; }
+        public string FullName
+        {
+            get { return FirstName + " " + LastName; }
+        }
 
         public User() { }
 

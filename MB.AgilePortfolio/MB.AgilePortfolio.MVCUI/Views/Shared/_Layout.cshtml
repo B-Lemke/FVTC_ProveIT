@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
-    
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
@@ -23,12 +23,21 @@
                     <li class="nav-item mx-0 mx-lg-1">
                         <a class="nav-link" runat="server" href="~/Admin">Admin</a>
                     </li>
-                    <li class="nav-item mx-0 mx-lg-1">
-                        <a class="nav-link" runat="server" href="~/NewAccount/Create">Create Account</a>
-                    </li>
-                    <li class="nav-item mx-0 mx-lg-1">
-                        <a class="nav-link" runat="server" href="~/Login/Login">Login</a>
-                    </li>
+                    @if (Session["user"] == null)
+                    {
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link" runat="server" href="~/NewAccount/Create">Sign Up</a>
+                        </li>
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link" runat="server" href="~/Login/Login">Login</a>
+                        </li>
+                    }
+                    @if (Session["user"] != null)
+                    {
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link" runat="server" href="~/Login/Logout">Logout</a>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
