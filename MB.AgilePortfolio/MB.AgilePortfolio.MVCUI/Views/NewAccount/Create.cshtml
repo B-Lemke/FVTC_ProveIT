@@ -108,11 +108,25 @@
 }
 <script>
     $(document).ready(function () {
+
+
         $('#passwordInput').on('input', function () {
-            checkPassword();
-            if ($('#confirmPasswordInput').val() !== "")
+            if ($('#passwordInput').val() == "")
+            {
+                $('#displayPasswordMsg').addClass("d-none");
                 passMatch();
+            }
+            else {
+                checkPassword();
+                if ($('#confirmPasswordInput').val() !== "") {
+                    passMatch();
+                } else {
+                    clearPassMatch();
+                }
+            }
+
         });
+
     });
 
     $(document).ready(function () {

@@ -35,10 +35,10 @@ function checkPassword() {
 
 
     if (!validPass) {
-        console.log("Test");
         $('#displayPasswordMsg').removeClass("d-none");
     } else {
         $('#displayPasswordMsg').addClass("d-none");
+        clearPassMatch();
     }
     return validPass;
     
@@ -63,9 +63,8 @@ function passMatch() {
     var newPass = $('#passwordInput').val();
     var confirmPass = $('#confirmPasswordInput').val();
 
-    //Clear the matching password field
-    $('#confirmPassMatchMsg').addClass("d-hide");
-    $("#confirmPassMatchMsg").empty();
+    clearPassMatch();
+
 
     if (newPass !== confirmPass) {
         //Don't put in the error message if the confirm password is cleared out, but still throw the error
@@ -73,18 +72,19 @@ function passMatch() {
             var confirmPassErr = document.createElement("p");
             confirmPassErr.innerHTML = "Passwords must match";
             $("#confirmPassMatchMsg").append(confirmPassErr);
+            $('#confirmPassMatchMsg').removeClass("d-none");
+        } else {
+            //pass doesn't match, but it's empty
         }
-        $('#confirmPassMatchMsg').removeClass("d-none");
+
         return false;
     } else {
-        $('#confirmPassMatchMsg').removeClass("d-none");
         return true;
     }
+}
 
-
-
-
-
-
-
+function clearPassMatch() {
+    //Clear the matching password field
+    $('#confirmPassMatchMsg').addClass("d-none");
+    $("#confirmPassMatchMsg").empty();
 }

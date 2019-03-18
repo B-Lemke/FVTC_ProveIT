@@ -61,16 +61,14 @@ namespace MB.AgilePortfolio.BL
             Password = password;
         }
 
-        private string GetHash()
-        {
-            return GetHash(Password);
-        }
-
-        private string GetHash(string input)
+        private string GetHash(string pass, Guid userId)
         {
             using (SHA1Managed sha1 = new SHA1Managed())
             {
-                var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(input));
+                //Take the userId and make it an uppercase string and concatenate it. This matches the HashBytes function in TransactSQL in our default data.
+                string concatPass = pass + userId.ToString().ToUpper();
+                byte[] saltedPass = Encoding.UTF8.GetBytes(concatPass);
+                var hash = sha1.ComputeHash(saltedPass);
                 var sb = new StringBuilder(hash.Length * 2);
 
                 foreach (byte b in hash)
@@ -110,7 +108,7 @@ namespace MB.AgilePortfolio.BL
                                     }).FirstOrDefault();
                         if (user != null)
                         {
-                            if (user.Password == GetHash())
+                            if (user.Password == GetHash(Password, user.Id))
                             {
                                 // Login successful
                                 FirstName = user.FirstName;
@@ -140,11 +138,12 @@ namespace MB.AgilePortfolio.BL
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
+                    Guid userId = Guid.NewGuid();
                     tblUser user = new tblUser()
                     {
-                        Id = Guid.NewGuid(),
+                        Id = userId,
                         Email = Email,
-                        Password = GetHash(),
+                        Password = GetHash(this.Password, userId),
                         FirstName = FirstName,
                         LastName = LastName,
                         ProfileImage = ProfileImage,
@@ -184,11 +183,11 @@ namespace MB.AgilePortfolio.BL
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
+                    //Removed password from the update...? That should be its own thing I think.
                     tblUser user = dc.tblUsers.Where(u => u.Id == Id).FirstOrDefault();
                     if (user != null)
                     {
                         user.Email = Email;
-                        user.Password = GetHash();
                         user.FirstName = FirstName;
                         user.LastName = LastName;
                         user.ProfileImage = ProfileImage;
