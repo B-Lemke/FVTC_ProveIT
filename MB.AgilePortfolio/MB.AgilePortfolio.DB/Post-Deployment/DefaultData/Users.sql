@@ -7,8 +7,8 @@
 
 	INSERT INTO [dbo].tblUser (Id, Email, [Password], FirstName, LastName, ProfileImage, UserTypeId)
 	VALUES
-	(newid(), 'sample@gmail.com', 'pa$$word', 'Sample', 'User', 'sampleimage.png', @UserTypeIdUser),
-	(newid(), 'joe@wetzel.com', 'pa$$word', 'Joe', 'Wetzel', 'JoeWetzel.png', @UserTypeIdUser),
-	(newid(), 'blemke4@gmail.com', 'pa$$word', 'Broderick', 'Lemke', 'broderickLemke.png', @UserTypeIdUser),
-	(newid(), 'Employer@fvtc.edu', 'pa$$word', 'Employer', 'Smith', 'FVTC.png', @UserTypeIdEmployer)
+	(newid(), 'sample@gmail.com', CONVERT(VARCHAR(40), HashBytes('SHA1', 'pa$$word'), 2), 'Sample', 'User', 'sampleimage.png', @UserTypeIdUser),
+	(newid(), 'joe@wetzel.com', CONVERT(VARCHAR(40), HashBytes('SHA1', 'pa$$word'), 2), 'Joe', 'Wetzel', 'JoeWetzel.png', @UserTypeIdUser),
+	(newid(), 'blemke4@gmail.com', CONVERT(VARCHAR(40), HashBytes('SHA1', 'pa$$word'), 2), 'Broderick', 'Lemke', 'broderickLemke.png', @UserTypeIdUser),
+	(newid(), 'Employer@fvtc.edu', CONVERT(VARCHAR(40), HashBytes('SHA1', 'pa$$word'), 2), 'Employer', 'Smith', 'FVTC.png', @UserTypeIdEmployer)
 END
