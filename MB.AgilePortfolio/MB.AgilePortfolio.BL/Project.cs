@@ -98,6 +98,7 @@ namespace MB.AgilePortfolio.BL
                     this.Id = project.Id;
 
                     dc.tblProjects.Add(project);
+
                     return dc.SaveChanges();
                 }
             }

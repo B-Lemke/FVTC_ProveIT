@@ -5,14 +5,12 @@ using System.Web;
 using System.Web.Mvc;
 using MB.AgilePortfolio.BL;
 using MB.AgilePortfolio.MVCUI.ViewModels;
+using MB.AgilePortfolio.MVCUI.Models;
 
 namespace MB.AgilePortfolio.MVCUI.Controllers
 {
     public class CreateNewProjectController : Controller
     {
-        User user;
-        //UserList users;
-        Project project;
         ProjectList projects;
 
         // GET: Project
@@ -23,26 +21,9 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             return View(projects);
         }
 
-        // GET: Project/Details/5
-        public ActionResult Details(Guid id)
-        {
-
-            project = new Project();
-            project.LoadById(id);
-
-
-            return View(project);
-        }
-
         // GET: Project/Create
-        public ActionResult Create(User user)
+        public ActionResult Create()
         {
-
-            // TODO: 
-            // NEEDS LOGIC IF USER IS LOGGED IN OR NOT HERE
-            // - If not logged in redirect to login page
-            // - else user = currently logged in user.... not entirely sure how to approach this part
-
             ProjectPrivaciesUserStatuses ppus = new ProjectPrivaciesUserStatuses()
             {
                 Project = new Project(),
@@ -51,51 +32,55 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 Statuses = new StatusList(),
                 Users = new UserList()
             };
-
-            //Test Setup
-            ppus.Users.Load();
-            ppus.User = ppus.Users.FirstOrDefault(u => u.Email == "joe@wetzel.com");
-            Guid uid = ppus.User.Id;
-            //END Test Setup
-
             ppus.Privacies.Load();
-            //ppus.User.LoadById(uid);
             ppus.Statuses.Load();
-            return View(ppus);
+            if (Authenticate.IsAuthenticated())
+            {
+                User userin = System.Web.HttpContext.Current.Session["user"] as User;
+                ppus.User.LoadById(userin.Id);
+                return View(ppus);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+            }
         }
 
         // POST: Project/Create
         [HttpPost]
         public ActionResult Create(ProjectPrivaciesUserStatuses ppus)
         {
-            try
+            //double check authentication
+            if (Authenticate.IsAuthenticated())
             {
-                // TODO: Add insert logic here
-                ProjectList Projects = new ProjectList();
-                Projects.Load(ppus.User.Id);
-                
-                foreach (Project p in Projects)
+                try
                 {
-                    if(ppus.Project.Name == p.Name)
+                    ProjectList Projects = new ProjectList();
+                    Projects.Load(ppus.Project.UserId);
+
+                    foreach (Project p in Projects)
                     {
-                        ModelState.AddModelError(string.Empty, "Project name already exists!");
+                        if (ppus.Project.Name == p.Name)
+                        {
+                            ModelState.AddModelError(string.Empty, "Project name already exists!");
+                        }
                     }
-                }
 
-                if (!ModelState.IsValid)
-                {
-                    ppus.Privacies.Load();
-                    ppus.Statuses.Load();
-                    return View(ppus);
-                }
-                // if projectname already exists in profile throw warning "Name already exists in Portfolio"
-                
-                // THIS BREAKS DUE TO NULL PRIVACIES YET
+                    if (!ModelState.IsValid)
+                    {
+                        return View(ppus);
+                    }
 
-                ppus.Project.Insert();
-                return RedirectToAction("Create");
+                    ppus.Project.Insert();
+                    return RedirectToAction("Index", "Admin", new { returnurl = HttpContext.Request.Url });
+                }
+                catch { return View(ppus); }
             }
-            catch { return View(ppus); }
+            else
+            {
+                return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+            }
+
         }
     }
 }
