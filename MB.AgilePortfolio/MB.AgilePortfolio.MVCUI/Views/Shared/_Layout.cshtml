@@ -20,10 +20,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item mx-0 mx-lg-1">
-                        <a class="nav-link" runat="server" href="~/Admin">Admin</a>
-                    </li>
-                    @if (Session["user"] == null)
+
+                    @if (Session["UserType"] == null)
                     {
                         <li class="nav-item mx-0 mx-lg-1">
                             <a class="nav-link" runat="server" href="~/NewAccount/Create">Sign Up</a>
@@ -34,6 +32,17 @@
                     }
                     @if (Session["user"] != null)
                     {
+                        if (Session["UserType"].ToString() == "Admin")
+                        {
+                            <li class="nav-item mx-0 mx-lg-1">
+                                <a class="nav-link" runat="server" href="~/Admin">Admin</a>
+                            </li>
+                        }
+
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link" runat="server" href="~/CreateNewProject/Create">New Project</a>
+                        </li>
+
                         <li class="nav-item mx-0 mx-lg-1">
                             <a class="nav-link" runat="server" href="~/Login/Logout">Logout</a>
                         </li>

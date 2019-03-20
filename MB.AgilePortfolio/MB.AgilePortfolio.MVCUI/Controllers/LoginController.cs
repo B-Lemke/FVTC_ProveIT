@@ -12,6 +12,8 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         public ActionResult Logout()
         {
             Session.Abandon();
+            Session.Contents.Abandon();
+            Session.Contents.RemoveAll();
             return View();
         }
 
@@ -31,6 +33,9 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     ViewBag.Message = "Login successful";
                     ViewBag.FullName = user.FullName;
                     Session["user"] = user;
+                    //Set UserType on login in a session
+                    Session["UserType"] = user.UserTypeDescription;
+ 
                     return RedirectToAction("Index", "Admin", new { returnurl = HttpContext.Request.Url });
                 }
                 else
