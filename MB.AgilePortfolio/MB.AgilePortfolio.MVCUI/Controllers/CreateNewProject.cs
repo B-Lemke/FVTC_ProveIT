@@ -28,9 +28,8 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             {
                 Project = new Project(),
                 Privacies = new PrivacyList(),
-                User = new User(),
                 Statuses = new StatusList(),
-                Users = new UserList()
+                User = new User()
             };
             ppus.Privacies.Load();
             ppus.Statuses.Load();
@@ -56,18 +55,43 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 try
                 {
                     ProjectList Projects = new ProjectList();
-                    Projects.Load(ppus.Project.UserId);
-
-                    foreach (Project p in Projects)
+                    User userin = System.Web.HttpContext.Current.Session["user"] as User;
+                    ppus.Project.UserId = userin.Id;
+                    ppus.Project.UserEmail = userin.Email;
+                    Projects.LoadbyUser(userin);
+                    if (ppus.Project.Name == null)
                     {
-                        if (ppus.Project.Name == p.Name)
+                        ModelState.AddModelError(string.Empty, "Project requires a name!");
+                    }
+                    else
+                    {
+                        foreach (Project p in Projects)
                         {
-                            ModelState.AddModelError(string.Empty, "Project name already exists!");
+                            if (ppus.Project.Name == p.Name)
+                            {
+                                ModelState.AddModelError(string.Empty, "Project name already exists!");
+                            }
+                        }
+
+                        if (ppus.DateCreated == null)
+                        {
+                            ModelState.AddModelError(string.Empty, "Date Created required!");
+                        }
+                        else if(ppus.LastUpdated == null)
+                        {
+                            ppus.LastUpdated = ppus.DateCreated;
                         }
                     }
 
                     if (!ModelState.IsValid)
                     {
+                        ppus.Project = new Project();
+                        ppus.Privacies = new PrivacyList();
+                        ppus.Statuses = new StatusList();
+                        ppus.User = new User();
+                        ppus.User.LoadById(userin.Id);
+                        ppus.Privacies.Load();
+                        ppus.Statuses.Load();
                         return View(ppus);
                     }
 
@@ -78,6 +102,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             }
             else
             {
+                // THIS NEEDS TO HAVE LOGIN RETURN TO CREATE PROJECT SCREEN UPON LOGIN YET
                 return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
             }
 
