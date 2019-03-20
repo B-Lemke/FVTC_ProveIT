@@ -31,8 +31,20 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Team Dead Pens</p>
+        <footer class="page-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col col-lg-3">
+                        <p>Navbar links go here</p>
+                    </div>
+                    <div class="col col-lg-3">
+                        <p>Login box?</p>
+                    </div>
+                    <div class="col col-lg-3">
+                        <p>&copy; @DateTime.Now.Year - Team Dead Pens</p>
+                    </div>
+                </div>
+            </div>
         </footer>
     </div>
 
