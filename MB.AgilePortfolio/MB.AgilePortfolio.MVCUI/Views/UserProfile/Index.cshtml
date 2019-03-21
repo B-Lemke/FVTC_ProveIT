@@ -1,124 +1,40 @@
-﻿@model IEnumerable<MB.AgilePortfolio.BL.Project>
+﻿@model MB.AgilePortfolio.MVCUI.ViewModels.UserProfile
 
 @{
-    ViewBag.Title = "Projects";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Model.User.FullName;
 }
 
-<h2>Projects</h2>
+<div class="mb-5">
+    <span class="h2">User Profile </span> | <span class="h2 small"> @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ })</span>
+</div>     
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Location)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Filepath)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PrivacyDescription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Image)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserEmail)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Purpose)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Environment)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Challenges)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FuturePlans)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Collaborators)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastUpdated)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SoftwareUsed)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StatusDescription)
-        </th>
-        <th></th>
-    </tr>
+<div>
+    <div class=" container-fluid">
+        <div class="row">
+            <div class="col-md-9">
+                <h1 class="display-2">@Model.User.FullName</h1>
+                <hr />
+                <h2 class="display-4 font-italic">@Model.User.Email</h2>
+                <dl class="dl-horizontal"></dl>
+                <br />
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Location)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Filepath)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PrivacyDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Image)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserEmail)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateCreated)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Purpose)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Environment)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Challenges)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FuturePlans)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Collaborators)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastUpdated)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SoftwareUsed)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StatusDescription)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+                <span class="">@Model.User.UserTypeDescription</span>
+            </div>
+            <div class="col-md-3">
+                <div>
+                    @if (Model.User.ProfileImage != null)
+                    {
+                        <img src="~/Assets/Images/UserProfiles/@Model.User.ProfileImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image" width="300px" class="rounded-circle" />
+                    }
+                    else 
+                    {
+                        <img src="~/Assets/Images/UserProfiles/Default.png" alt="Default Profile Image" width="300px" class="rounded-circle" />
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 
-</table>
+
+</div>
+

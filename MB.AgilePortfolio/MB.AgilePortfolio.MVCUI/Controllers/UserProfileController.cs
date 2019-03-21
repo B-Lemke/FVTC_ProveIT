@@ -16,7 +16,11 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: UserProfile
         public ActionResult Index()
         {
-            UserProfile up = new UserProfile();
+            UserProfile up = new UserProfile
+            {
+                Projects = new ProjectList(),
+                User = new User()
+            };
             if (Authenticate.IsAuthenticated())
             {
 
@@ -24,11 +28,20 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 // REDIRECT TO PROFILE EDIT PAGE
                 //return RedirectToAction("EditProfile", "UserProfile", new { returnurl = HttpContext.Request.Url });
                 User userin = System.Web.HttpContext.Current.Session["user"] as User;
-                return RedirectToAction("EditProfile", "UserProfile");
+                up.User.LoadById(userin.Id);
+                up.Projects.LoadbyUser(up.User);
+
+
+                // REDIRECT TO PROJECT EDIT PAGE AND REDIRECTION LOGIC HERE
+                return View(up);
+
             }
             else
             {
-                return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                return RedirectToAction("Login", "Login", new
+                {
+                    returnurl = HttpContext.Request.Url
+                });
             }
 
         }

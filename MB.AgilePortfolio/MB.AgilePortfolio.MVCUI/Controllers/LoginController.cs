@@ -42,9 +42,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                         && Request.UrlReferrer != null
                         && Request.UrlReferrer.ToString().Length > 0)
                     {
-                        // Debugging dump page (should be changed to home page when its added)
-                        return RedirectToAction("Index", "Admin",
-                            new { returnurl = Request.UrlReferrer.ToString() });
+                        return RedirectToAction("Index", "UserProfile");
                     }
 
                     return Redirect(returnurl);
