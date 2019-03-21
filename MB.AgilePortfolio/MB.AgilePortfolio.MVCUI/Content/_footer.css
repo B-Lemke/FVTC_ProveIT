@@ -2,14 +2,17 @@
   padding-top: 5rem;
   padding-bottom: 5rem;
   width: 100%;
-  position: absolute; }
+  height: 100%;
+  position: fixed;
+  left: 0px;
+  margin: 0; }
 
-.h2 {
-  margin-top: 1rem; }
+.h3 {
+  padding-top: 5rem; }
 
 .text-white {
   text-decoration: none; }
 
 .footer-copyright {
   width: 100%;
-  margin-top: 1rem; }
+  padding-top: 1rem; }
