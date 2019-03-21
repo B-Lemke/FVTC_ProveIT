@@ -12,9 +12,8 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
     public class UserProfileController : Controller
     {
         User user;
-        UserList users;
 
-        // GET: User
+        // GET: UserProfile
         public ActionResult Index()
         {
             UserProfile up = new UserProfile();
@@ -23,7 +22,9 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
 
                 // REDIRECT TO PROFILE EDIT PAGE
-                return RedirectToAction("EditProfile", "UserProfile", new { returnurl = HttpContext.Request.Url });
+                //return RedirectToAction("EditProfile", "UserProfile", new { returnurl = HttpContext.Request.Url });
+                User userin = System.Web.HttpContext.Current.Session["user"] as User;
+                return RedirectToAction("EditProfile", "UserProfile");
             }
             else
             {
@@ -31,9 +32,9 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             }
 
         }
-        
 
-        // GET: User/Details/5
+
+        // GET: UserProfile/Details/5
         public ActionResult Details(Guid id)
         {
             user = new User();
@@ -56,7 +57,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
 
                 // REDIRECT TO PROJECT EDIT PAGE AND REDIRECTION LOGIC HERE
-                //return RedirectToAction("EditProjects", "UserProfile", new { returnurl = HttpContext.Request.Url });
                 return View(up);
             }
             else
@@ -65,22 +65,23 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             }
         }
 
-        // GET: Edit User Profile Redirect (?/EditProject)
+        // GET: UserProfile/EditProject
         public ActionResult EditProject(Guid id)
         {
             UserProfile up = new UserProfile()
             {
                 Project = new Project(),
-                User = new User()
+                Privacies = new PrivacyList(),
+                User = new User(),
+                Statuses = new StatusList()
             };
             if (Authenticate.IsAuthenticated())
             {
+                up.Project.LoadById(id);
+                up.Privacies.Load();
                 User userin = System.Web.HttpContext.Current.Session["user"] as User;
                 up.User.LoadById(userin.Id);
-                up.Project.Id = id;
-
-
-                // REDIRECT TO PROJECT EDIT PAGE AND REDIRECTION LOGIC HERE
+                up.Statuses.Load();
                 return View(up);
             }
             else
@@ -89,6 +90,29 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             }
         }
 
+        // POST: UserProfile/EditProject
+        [HttpPost]
+        public ActionResult EditProject(Guid id, UserProfile up)
+        {
+            if (Authenticate.IsAuthenticated())
+            {
+                try
+                {
+                    // TODO: Add update logic here
+                    up.Project.Update();
+                    return RedirectToAction("EditProjects");
+                }
+                catch { return View(up); }
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+            }
+        }
+
+        //TODO NEEDS DELETE PROJECT ACTION HERE
+
+        // UserProfile/EditPortfolios
         public ActionResult EditPortfolios()
         {
             UserProfile up = new UserProfile()
@@ -104,7 +128,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
 
                 // REDIRECT TO PROJECT EDIT PAGE AND REDIRECTION LOGIC HERE
-                //return RedirectToAction("EditProjects", "UserProfile", new { returnurl = HttpContext.Request.Url });
                 return View(up);
             }
             else
@@ -113,7 +136,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             }
         }
 
-        // GET: Edit User Profile Redirect (?/EditProject)
+        // GET: Edit User Profile Redirect (UserProfile/EditPortfolio)
         public ActionResult EditPortfolio(Guid id)
         {
             UserProfile up = new UserProfile()
@@ -123,19 +146,38 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             };
             if (Authenticate.IsAuthenticated())
             {
+                up.Portfolio.LoadById(id);
                 User userin = System.Web.HttpContext.Current.Session["user"] as User;
                 up.User.LoadById(userin.Id);
-                up.Portfolio.Id = id;
 
-
-                // REDIRECT TO PORTFOLIO EDIT PAGE AND REDIRECTION LOGIC HERE
-                return RedirectToAction("Portfolio", "Edit", new { returnurl = HttpContext.Request.Url });
+                return View(up);
             }
             else
             {
                 return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
             }
         }
+
+        // POST: Edit User Profile Redirect (UserProfile/EditPortfolio)
+        [HttpPost]
+        public ActionResult EditPortfolio(Guid id, UserProfile up)
+        {
+            if (Authenticate.IsAuthenticated())
+            {
+                try
+                {
+                    // TODO: Add update logic here
+                    up.Portfolio.Update();
+                    return RedirectToAction("EditPortfolios");
+                }
+                catch { return View(up); }
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+            }
+        }
+        //TODO NEEDS DELETE PORTFOLIO ACTION HERE
 
         // GET: Edit User Profile (UserProfile/EditProfile)
         public ActionResult EditProfile()
@@ -144,15 +186,15 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             {
                 Projects = new ProjectList(),
                 Portfolios = new PortfolioList(),
-                User = new User()
+                User = new User(),
+                UserTypes = new UserTypeList()
             };
-            
+
             if (Authenticate.IsAuthenticated())
             {
                 User userin = System.Web.HttpContext.Current.Session["user"] as User;
                 up.User.LoadById(userin.Id);
-                up.Projects.LoadbyUser(up.User);
-                //up.Statuses.Load();
+                up.UserTypes.LoadNonAdmin();
                 return View(up);
             }
             else
@@ -168,30 +210,34 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         {
             try
             {
-                /*
-                if(up.User.Email == null)
+                User userin = System.Web.HttpContext.Current.Session["user"] as User;
+                string currentemail = userin.Email;
+                if (up.User.Email == null)
                 {
                     ModelState.AddModelError(string.Empty, "Email address is required");
                 }
 
-                else if (up.User.CheckIfEmailExists(uut.User.Email) == true)
+                else if (up.User.Email != currentemail)
                 {
-                    ModelState.AddModelError(string.Empty, "Email Already Exists");
-
-                    // TODO:
-                    // REDIRECT TO LOGIN SCREEN HERE?
+                    if (up.User.CheckIfEmailExists(up.User.Email) == true)
+                    {
+                        ModelState.AddModelError(string.Empty, "Email Already In Use");
+                    }
                 }
 
-                if (uut.User.FirstName == null)
+                if (up.User.FirstName == null)
                 {
                     ModelState.AddModelError(string.Empty, "First Name is required");
                 }
 
-                if (uut.User.LastName == null)
+                if (up.User.LastName == null)
                 {
                     ModelState.AddModelError(string.Empty, "Last Name is required");
                 }
 
+                // TODO: NEEDS UPDATE PASSWORD ACTION ADDED
+
+                /*
                 if (uut.User.Password == null)
                 {
                     ModelState.AddModelError(string.Empty, "Password is required");
@@ -201,10 +247,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 {
                     ModelState.AddModelError(string.Empty, "Password needs to be at least 6 characters");
                 }
+
                 else if (uut.User.Password.Length > 16)
                 {
                     ModelState.AddModelError(string.Empty, "Password needs to be less than 16 characters");
                 }
+
                 else if (uut.ConfirmPassword != uut.User.Password)
                 {
                     ModelState.AddModelError(string.Empty, "Passwords did not match");
@@ -212,18 +260,17 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 // TODO:
                 // ADD VALIDATION FOR EMPLOYER?
                 */
+
                 if (!ModelState.IsValid)
                 {
-                     
+                    up.UserTypes = new UserTypeList();
+                    up.UserTypes.LoadNonAdmin();
                     return View(up);
                 }
-
-
+                up.User.Id = userin.Id;
                 up.User.Update();
-                //needs to be moved to edit project action
-                //up.Project.Update();
-                //needs to be moved to edit portfolio action
-                //up.Portfolio.Update();
+
+                //TODO: Needs Redirect to confimration or Confirmation message of saved changes here!
                 return RedirectToAction("Index", "Admin", new { returnurl = HttpContext.Request.Url });
             }
             catch

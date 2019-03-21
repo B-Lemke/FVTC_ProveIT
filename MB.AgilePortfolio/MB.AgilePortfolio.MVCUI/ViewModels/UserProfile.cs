@@ -16,6 +16,7 @@ namespace MB.AgilePortfolio.MVCUI.ViewModels
         public Portfolio Portfolio { get; set; }
         public PortfolioList Portfolios { get; set; }
         public User User { get; set; }
+        public UserTypeList UserTypes { get; set; }
         public UserList Users { get; set; }
         public StatusList Statuses { get; set; }
 

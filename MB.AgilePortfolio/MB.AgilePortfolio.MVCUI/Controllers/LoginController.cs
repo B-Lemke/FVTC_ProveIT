@@ -35,8 +35,19 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     Session["user"] = user;
                     //Set UserType on login in a session
                     Session["UserType"] = user.UserTypeDescription;
- 
-                    return RedirectToAction("Index", "Admin", new { returnurl = HttpContext.Request.Url });
+
+                    // If no return url supplied, use referrer url.
+                    // Protect against endless loop by checking for empty referrer.
+                    if (String.IsNullOrEmpty(returnurl)
+                        && Request.UrlReferrer != null
+                        && Request.UrlReferrer.ToString().Length > 0)
+                    {
+                        // Debugging dump page (should be changed to home page when its added)
+                        return RedirectToAction("Index", "Admin",
+                            new { returnurl = Request.UrlReferrer.ToString() });
+                    }
+
+                    return Redirect(returnurl);
                 }
                 else
                 {
