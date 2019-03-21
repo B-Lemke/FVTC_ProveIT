@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using MB.AgilePortfolio.PL;
@@ -12,14 +14,21 @@ namespace MB.AgilePortfolio.BL
     {
         public Guid Id { get; set; }
         public string Email { get; set; }
+        [DataType(DataType.Password)]
         public string Password { get; set; }
+        [DisplayName("First Name")]
         public string FirstName { get; set; }
+        [DisplayName("Last Name")]
         public string LastName { get; set; }
         public string ProfileImage { get; set; }
         [DisplayName("User Type")]
         public Guid UserTypeId { get; set; }
         [DisplayName("User Type")]
         public string UserTypeDescription { get; set; }
+        public string FullName
+        {
+            get { return FirstName + " " + LastName; }
+        }
 
         public User() { }
 
@@ -35,21 +44,110 @@ namespace MB.AgilePortfolio.BL
             UserTypeDescription = userTypeDescription;
         }
 
+        // To use when adding a user
+        public User(string email, string password, string firstName, string lastName, Guid userTypeId)
+        {
+            Email = email;
+            Password = password;
+            FirstName = firstName;
+            LastName = lastName;
+            UserTypeId = userTypeId;
+        }
+
+        // To use when a user logs in
+        public User(string email, string password)
+        {
+            Email = email;
+            Password = password;
+        }
+
+        private string GetHash(string pass, Guid userId)
+        {
+            using (SHA1Managed sha1 = new SHA1Managed())
+            {
+                //Take the userId and make it an uppercase string and concatenate it. This matches the HashBytes function in TransactSQL in our default data.
+                string concatPass = pass + userId.ToString().ToUpper();
+                byte[] saltedPass = Encoding.UTF8.GetBytes(concatPass);
+                var hash = sha1.ComputeHash(saltedPass);
+                var sb = new StringBuilder(hash.Length * 2);
+
+                foreach (byte b in hash)
+                {
+                    // can be "x2" if you want lowercase
+                    sb.Append(b.ToString("X2"));
+                }
+                return sb.ToString();
+            }
+        }
+
+        public bool Login()
+        {
+            try
+            {
+                if (Email != null && Email != string.Empty)
+                {
+                    if (Password != null && Password != string.Empty)
+                    {
+                        PortfolioEntities dc = new PortfolioEntities();
+
+                        //tblUser user = dc.tblUsers.FirstOrDefault(u => u.Email == Email);
+
+                        var user = (from u in dc.tblUsers
+                                    join ut in dc.tblUserTypes on u.UserTypeId equals ut.Id
+                                    where u.Email == Email
+                                    select new
+                                    {
+                                        u.Id,
+                                        u.Email,
+                                        u.Password,
+                                        u.FirstName,
+                                        u.LastName,
+                                        u.ProfileImage,
+                                        u.UserTypeId,
+                                        ut.Description
+                                    }).FirstOrDefault();
+                        if (user != null)
+                        {
+                            if (user.Password == GetHash(Password, user.Id))
+                            {
+                                // Login successful
+                                FirstName = user.FirstName;
+                                LastName = user.LastName;
+                                Email = user.Email;
+                                Password = user.Password;
+                                Id = user.Id;
+                                ProfileImage = user.ProfileImage;
+                                UserTypeId = user.UserTypeId;
+                                UserTypeDescription = user.Description;
+                                return true;
+                            }
+                            else { return false; }
+                        }
+                        else { return false; }
+                    }
+                    else { return false; }
+                }
+                else { return false; }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
         public int Insert()
         {
             try
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
+                    Guid userId = Guid.NewGuid();
                     tblUser user = new tblUser()
                     {
-                        Id = Guid.NewGuid(),
+                        Id = userId,
                         Email = Email,
-                        Password = Password,
+                        Password = GetHash(this.Password, userId),
                         FirstName = FirstName,
                         LastName = LastName,
                         ProfileImage = ProfileImage,
-                        UserTypeId = UserTypeId
+                        UserTypeId = UserTypeId,
                     };
                     //Save the Id
                     this.Id = user.Id;
@@ -85,11 +183,11 @@ namespace MB.AgilePortfolio.BL
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
+                    //Removed password from the update...? That should be its own thing I think.
                     tblUser user = dc.tblUsers.Where(u => u.Id == Id).FirstOrDefault();
                     if (user != null)
                     {
                         user.Email = Email;
-                        user.Password = Password;
                         user.FirstName = FirstName;
                         user.LastName = LastName;
                         user.ProfileImage = ProfileImage;

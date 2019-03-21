@@ -64,9 +64,15 @@ namespace MB.AgilePortfolio.BL.Test
             projects.Load();
             Project project = new Project();
 
-            project.LoadById(projects.FirstOrDefault(p => p.Name == "Test").Id);
+            //DEFAULTS
+            //project.LoadById(projects.FirstOrDefault(p => p.Name == "Test").Id);
 
-            Assert.AreEqual("Test", project.Description);
+            // Assert.AreEqual("Test", project.Description);
+
+            //TESTING CREATE NEW PROJECT INSERT
+            project.LoadById(Guid.Parse("797c8d2b-d1ba-4bba-825d-eb28bab26cf8"));
+
+             Assert.AreEqual("111", project.Description);
         }
 
         [TestMethod]

@@ -12,7 +12,9 @@ namespace MB.AgilePortfolio.MVCUI.Models
             if (HttpContext.Current.Session == null)
                 return false;
             else
+
                 return HttpContext.Current.Session["user"] != null;
+
         }
     }
 }

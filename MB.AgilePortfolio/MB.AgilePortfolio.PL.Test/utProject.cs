@@ -20,6 +20,20 @@ namespace MB.AgilePortfolio.PL.Test
         }
 
         [TestMethod]
+        public void LoadById()
+        {
+            using (PortfolioEntities dc = new PortfolioEntities())
+            {
+                //This is Test guid from CreateNewProject (all string inputs are "111", user is joe@wetzel)
+                Guid projectGuid = Guid.Parse("797c8d2b-d1ba-4bba-825d-eb28bab26cf8");
+
+                tblProject project = dc.tblProjects.FirstOrDefault(p => p.Id == projectGuid);
+
+                Assert.AreEqual("111", project.Description);
+            }
+        }
+
+        [TestMethod]
         public void InsertTest()
         {
             using (PortfolioEntities dc = new PortfolioEntities())

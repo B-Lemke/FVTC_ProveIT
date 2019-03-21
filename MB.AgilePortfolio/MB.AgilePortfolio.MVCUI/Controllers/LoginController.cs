@@ -9,81 +9,56 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 {
     public class LoginController : Controller
     {
-        // GET: Login
-        public ActionResult Index()
+        public ActionResult Logout()
         {
+            Session.Abandon();
+            Session.Contents.Abandon();
+            Session.Contents.RemoveAll();
             return View();
         }
 
-        // GET: Login/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Login()
         {
-            return View();
+            User user = new User();
+            return View(user);
         }
 
-        // GET: Login/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Login/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Login(User user, string returnurl)
         {
             try
             {
-                // TODO: Add insert logic here
+                if (user.Login())
+                {
+                    ViewBag.Message = "Login successful";
+                    ViewBag.FullName = user.FullName;
+                    Session["user"] = user;
+                    //Set UserType on login in a session
+                    Session["UserType"] = user.UserTypeDescription;
 
-                return RedirectToAction("Index");
+                    // If no return url supplied, use referrer url.
+                    // Protect against endless loop by checking for empty referrer.
+                    if (String.IsNullOrEmpty(returnurl)
+                        && Request.UrlReferrer != null
+                        && Request.UrlReferrer.ToString().Length > 0)
+                    {
+                        // Debugging dump page (should be changed to home page when its added)
+                        return RedirectToAction("Index", "Admin",
+                            new { returnurl = Request.UrlReferrer.ToString() });
+                    }
+
+                    return Redirect(returnurl);
+                }
+                else
+                {
+                    ViewBag.Message = "Wrong credentials...";
+                    return View(user);
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
-            }
-        }
-
-        // GET: Login/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Login/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Login/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Login/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
+                ViewBag.Message = ex.Message;
+                return View(user);
             }
         }
     }

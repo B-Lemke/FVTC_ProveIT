@@ -20,10 +20,11 @@ namespace MB.AgilePortfolio.MVCUI
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
+                      "~/Scripts/popper.js",
                       "~/Scripts/contact_me.js",
                       "~/Scripts/jqBootstrapValidation.js",
                       "~/Scripts/jquery.magnific-popup.js",
+                      "~/Scripts/bootstrap.js",
                       "~/Scripts/freelancer.js"
 
                       ));

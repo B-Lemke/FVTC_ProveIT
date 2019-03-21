@@ -12,7 +12,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
     {
         User user;
         UserList users;
-        
+
         // GET: User
         public ActionResult Index()
         {
@@ -38,7 +38,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 UserTypes = new UserTypeList()
             };
             uut.UserTypes.LoadNonAdmin();
-            
+
             return View(uut);
         }
 
@@ -54,7 +54,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     ModelState.AddModelError(string.Empty, "Email address is required");
                 }
 
-                else if(uut.User.CheckIfEmailExists(uut.User.Email) == true)
+                else if (uut.User.CheckIfEmailExists(uut.User.Email) == true)
                 {
                     ModelState.AddModelError(string.Empty, "Email Already Exists");
 
@@ -77,11 +77,18 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     ModelState.AddModelError(string.Empty, "Password is required");
                 }
 
-                if (uut.User.Password.Length < 8)
+                else if (uut.User.Password.Length < 6)
                 {
-                    ModelState.AddModelError(string.Empty, "Password needs to be at least 8 characters");
+                    ModelState.AddModelError(string.Empty, "Password needs to be at least 6 characters");
                 }
-
+                else if (uut.User.Password.Length > 16)
+                {
+                    ModelState.AddModelError(string.Empty, "Password needs to be less than 16 characters");
+                }
+                else if (uut.ConfirmPassword != uut.User.Password)
+                {
+                    ModelState.AddModelError(string.Empty, "Passwords did not match");
+                }
                 // TODO:
                 // ADD VALIDATION FOR EMPLOYER?
 
@@ -91,14 +98,19 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     uut.UserTypes.LoadNonAdmin();
                     return View(uut);
                 }
-                
+
 
                 uut.User.Insert();
                 return RedirectToAction("Create");
             }
-            catch { return View(uut); }
+            catch
+            {
+                uut.UserTypes = new UserTypeList();
+                uut.UserTypes.LoadNonAdmin();
+                return View(uut);
+            }
         }
 
-       
+
     }
 }
