@@ -1,18 +1,19 @@
 .footer {
   padding-top: 5rem;
   padding-bottom: 5rem;
-  background-color: $primary;
-  color: $white;
+  width: 100%;
+  position: absolute;
 }
 
-.copyright {
-  background-color: darken($secondary, 10%);
+.h2{
+    margin-top: 1rem;
 }
 
-.footer-copyright {
-    background-color: $secondary;
+.text-white {
+    text-decoration: none;
 }
 
-.white-text{
-    text-decoration:none;
+.footer-copyright{
+    width: 100%; 
+    margin-top: 1rem;
 }

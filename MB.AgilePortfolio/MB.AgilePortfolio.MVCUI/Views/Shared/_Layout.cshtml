@@ -10,7 +10,7 @@
     @Scripts.Render("~/bundles/jquery")
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-secondary text-uppercase" id="mainNav">
+    <nav class="navbar navbar-expand-lg bg-primary text-uppercase" id="mainNav">
         <div class="container">
             <a class="navbar-brand" href="~/">ProveIT</a>
             <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
@@ -54,22 +54,27 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer class="page-footer">
+        <footer class="page-footer bg-primary">
             <div class="container">
                 <div class="row">
-                    <div class="col col-lg-3">
-                        <h3 class="white-text">Links</h3>
+                    <div class="col col-lg-6 text-center">
+                        <h3 class="text-white">Links</h3>
                         <ul class="list-unstyled">
-                            <li><a class="white-text" href="#!">Create Account</a></li>
-                            <li><a class="white-text" href="#!">Admin</a></li>
+                            <li><a class="text-white" href="#!">Home</a></li>
+                            <li><a class="text-white" href="#!">About</a></li>
+                            <li><a class="text-white" href="#!">Admin</a></li>
                         </ul>
                     </div>
-                    <div class="col col-lg-3">
-                        <h3 class="white-text">Login</h3>
+                    <div class="col col-lg-6 text-center">
+                        <h3 class="text-white">Your Account</h3>
+                        <ul class="list-unstyled">
+                            <li><a class="text-white" href="#!">Login</a></li>
+                            <li><a class="text-white" href="#!">Sign Up</a></li>
+                        </ul>
                     </div>
-                    <div class="footer-copyright">
+                    <div class="footer-copyright text-center bg-secondary">
                         <div class="container">
-                            <p>&copy; @DateTime.Now.Year - Team Dead Pens</p>
+                            <p class="text-white">&copy; @DateTime.Now.Year - Team Dead Pens</p>
                         </div>
                     </div>
                 </div>

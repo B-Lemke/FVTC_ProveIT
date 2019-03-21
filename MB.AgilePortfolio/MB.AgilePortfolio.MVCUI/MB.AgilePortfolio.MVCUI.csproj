@@ -195,6 +195,12 @@
     <Content Include="Content\freelancer.min.css">
       <DependentUpon>freelancer.css</DependentUpon>
     </Content>
+    <Content Include="Content\_footer.css">
+      <DependentUpon>_footer.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\_footer.min.css">
+      <DependentUpon>_footer.css</DependentUpon>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
