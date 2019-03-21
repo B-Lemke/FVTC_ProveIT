@@ -6,5 +6,9 @@
   {
     "outputFile": "Content/_variables.css",
     "inputFile": "Content/_variables.scss"
+  },
+  {
+    "outputFile": "Content/_footer.css",
+    "inputFile": "Content/_footer.scss"
   }
 ]
