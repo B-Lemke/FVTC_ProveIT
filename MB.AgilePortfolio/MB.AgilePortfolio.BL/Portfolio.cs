@@ -131,6 +131,34 @@ namespace MB.AgilePortfolio.BL
     public class PortfolioList : List<Portfolio>
     {
 
+        public void LoadbyUser(User user)
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    var portfolios = (from p in dc.tblPortfolios
+                                      join u in dc.tblUsers on p.UserId equals u.Id
+                                      where p.UserId == user.Id || user.Id == null
+                                      select new
+                                      {
+                                          p.Id,
+                                          p.Name,
+                                          p.Description,
+                                          p.PortfolioImage,
+                                          p.UserId,
+                                          u.Email
+                                      }).OrderByDescending(p => p.Name).ToList();
+                    foreach (var p in portfolios)
+                    {
+                        Portfolio portfolio = new Portfolio(p.Id, p.Name, p.Description, p.PortfolioImage, p.UserId, p.Email);
+                        Add(portfolio);
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
         public void Load()
         {
             try
