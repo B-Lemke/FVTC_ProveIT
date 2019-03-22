@@ -60,11 +60,8 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             {
                 up.User.LoadById(idOfUser);
             }
-            else
-            {
-                //TO DO: Add in logic for a profile that doesn't exist
-                return RedirectToAction("ProfileNotFound", "UserProfile");
-            }
+            //If the username doesn't exist, it's sent into the view with an invalid user with an empty guid and it will trigger a profile not found message.
+
             up.Projects.LoadbyUser(up.User);
 
             return View(up);

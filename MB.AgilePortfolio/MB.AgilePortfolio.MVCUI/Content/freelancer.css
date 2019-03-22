@@ -126,6 +126,9 @@ section {
     #mainNav.navbar-shrink .navbar-brand {
       font-size: 1.5em; } }
 
+.navbar-menu-button:hover, .navbar-menu-button:active, .navbar-menu-button:focus {
+  background: #F26230 !important; }
+
 header.masthead {
   padding-top: calc(6rem + 72px);
   padding-bottom: 6rem; }

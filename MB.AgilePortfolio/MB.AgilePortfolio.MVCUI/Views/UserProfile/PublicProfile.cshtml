@@ -1,40 +1,64 @@
 ﻿@model MB.AgilePortfolio.MVCUI.ViewModels.UserProfile
 
 @{
-    ViewBag.Title = Model.User.FullName;
+    if (Model.User.Id != Guid.Empty)
+    {
+        ViewBag.Title = Model.User.FullName;
+    }
+    else
+    {
+        ViewBag.Title = "Profile Not Found";
+    }
 }
 
-<div class="mb-5">
-    <span class="h2">User Profile </span>
-</div>     
 
-<div>
+@if (Model.User.Id == Guid.Empty)
+{
+    //Profile not found.
     <div class=" container-fluid">
         <div class="row">
-            <div class="col-md-9">
-                <h1 class="display-2">@Model.User.FullName</h1>
-                <hr />
-                <h2 class="display-4 font-italic">@Model.User.Email</h2>
-                <dl class="dl-horizontal"></dl>
-                <br />
+            <div class="col-md-12">
+                <h1 class="display-2 text-center">- Profile Not Found -</h1>
 
-                <span class="">@Model.User.UserTypeDescription</span>
-            </div>
-            <div class="col-md-3">
-                <div>
-                    @if (Model.User.ProfileImage != null)
-                    {
-                        <img src="~/Assets/Images/UserProfiles/@Model.User.ProfileImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image" width="300px" class="rounded-circle" />
-                    }
-                    else 
-                    {
-                        <img src="~/Assets/Images/UserProfiles/Default.png" alt="Default Profile Image" width="300px" class="rounded-circle" />
-                    }
-                </div>
             </div>
         </div>
     </div>
+}
+else
+{
+    //Profile found
+    <div class="mb-5">
+        <span class="h2">User Profile </span>
+    </div>
+
+    <div>
+        <div class=" container">
+            <div class="row">
+                <div class="col-md-9">
+                    <h1 class="display-2">@Model.User.FullName</h1>
+                    <hr />
+                    <h2 class="display-4 font-italic">@Model.User.Email</h2>
+                    <dl class="dl-horizontal"></dl>
+                    <br />
+
+                    <span class="">@Model.User.UserTypeDescription</span>
+                </div>
+                <div class="col-md-3">
+                    <div>
+                        @if (Model.User.ProfileImage != null)
+                        {
+                            <img src="~/Assets/Images/UserProfiles/@Model.User.ProfileImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image" width="300px" class="rounded-circle" />
+                        }
+                        else
+                        {
+                            <img src="~/Assets/Images/UserProfiles/Default.png" alt="Default Profile Image" width="300px" class="rounded-circle" />
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
-</div>
+    </div>
 
+}

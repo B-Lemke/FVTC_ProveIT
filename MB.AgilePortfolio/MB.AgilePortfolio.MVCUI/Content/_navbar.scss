@@ -65,3 +65,8 @@
     }
   }
 }
+
+
+.navbar-menu-button:hover, .navbar-menu-button:active, .navbar-menu-button:focus {
+    background: $secondary !important;
+}
