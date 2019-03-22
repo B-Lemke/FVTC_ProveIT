@@ -62,7 +62,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     // REDIRECT TO LOGIN SCREEN HERE?
                 }
 
-                else if (uut.User.CheckIfUsernameExists(uut.User.Username) == true)
+                if (uut.User.CheckIfUsernameExists(uut.User.Username) != Guid.Empty)
                 {
                     ModelState.AddModelError(string.Empty, "Username Already Exists");
 

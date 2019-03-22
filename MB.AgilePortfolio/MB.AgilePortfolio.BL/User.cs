@@ -214,20 +214,25 @@ namespace MB.AgilePortfolio.BL
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
                     bool exists = dc.tblUsers.Any(u => u.Email == email);
-                        return exists;
+                    return exists;
                 }
             }
             catch (Exception ex) { throw ex; }
         }
 
-        public bool CheckIfUsernameExists(string username)
+        public Guid CheckIfUsernameExists(string username)
         {
             try
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
-                    bool exists = dc.tblUsers.Any(u => u.Username == username);
-                    return exists;
+                    var user = dc.tblUsers.FirstOrDefault(u => u.Username == username);
+                    if (user == null)
+                    {
+                        return Guid.Empty;
+                    }
+                    else return user.Id;
+         
                 }
             }
             catch (Exception ex) { throw ex; }
@@ -241,19 +246,19 @@ namespace MB.AgilePortfolio.BL
                 {
                     var user = (from u in dc.tblUsers
                                 join ut in dc.tblUserTypes on u.UserTypeId equals ut.Id
-                                  where u.Id == id
-                                  select new
-                                  {
-                                      u.Id,
-                                      u.Email,
-                                      u.Password,
-                                      u.FirstName,
-                                      u.LastName,
-                                      u.ProfileImage,
-                                      u.UserTypeId,
-                                      u.Username,
-                                      ut.Description
-                                  }).FirstOrDefault();
+                                where u.Id == id
+                                select new
+                                {
+                                    u.Id,
+                                    u.Email,
+                                    u.Password,
+                                    u.FirstName,
+                                    u.LastName,
+                                    u.ProfileImage,
+                                    u.UserTypeId,
+                                    u.Username,
+                                    ut.Description
+                                }).FirstOrDefault();
                     if (user != null)
                     {
                         Id = user.Id;
@@ -272,6 +277,10 @@ namespace MB.AgilePortfolio.BL
             catch (Exception ex) { throw ex; }
         }
     }
+
+
+
+
     public class UserList : List<User>
     {
         public void Load()
@@ -281,19 +290,19 @@ namespace MB.AgilePortfolio.BL
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
                     var users = (from u in dc.tblUsers
-                                   join ut in dc.tblUserTypes on u.UserTypeId equals ut.Id
-                                   select new
-                                   {
-                                       u.Id,
-                                       u.Email,
-                                       u.Password,
-                                       u.FirstName,
-                                       u.LastName,
-                                       u.ProfileImage,
-                                       u.UserTypeId,
-                                       u.Username,
-                                       ut.Description
-                                   }).OrderByDescending(u => u.LastName).ToList();
+                                 join ut in dc.tblUserTypes on u.UserTypeId equals ut.Id
+                                 select new
+                                 {
+                                     u.Id,
+                                     u.Email,
+                                     u.Password,
+                                     u.FirstName,
+                                     u.LastName,
+                                     u.ProfileImage,
+                                     u.UserTypeId,
+                                     u.Username,
+                                     ut.Description
+                                 }).OrderByDescending(u => u.LastName).ToList();
                     foreach (var u in users)
                     {
                         User user = new User(u.Id, u.Email, u.Password, u.FirstName, u.LastName, u.ProfileImage, u.UserTypeId, u.Description, u.Username);

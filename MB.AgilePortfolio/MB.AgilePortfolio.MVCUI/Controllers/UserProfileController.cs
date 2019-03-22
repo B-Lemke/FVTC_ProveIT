@@ -46,6 +46,30 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
         }
 
+        //Public facing profile page
+        public ActionResult PublicProfile(string username)
+        {
+            UserProfile up = new UserProfile
+            {
+                Projects = new ProjectList(),
+                User = new User()
+            };
+
+            Guid idOfUser = up.User.CheckIfUsernameExists(username);
+            if ( idOfUser != Guid.Empty)
+            {
+                up.User.LoadById(idOfUser);
+            }
+            else
+            {
+                //TO DO: Add in logic for a profile that doesn't exist
+                return RedirectToAction("ProfileNotFound", "UserProfile");
+            }
+            up.Projects.LoadbyUser(up.User);
+
+            return View(up);
+        }
+
 
         // GET: UserProfile/Details/5
         public ActionResult Details(Guid id)
@@ -221,6 +245,11 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             {
                 return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
             }
+        }
+
+        public ActionResult ProfileNotFound()
+        {
+            return View();
         }
 
         // GET: Edit User Protfolio Redirect (UserProfile/EditPortfolio)
@@ -440,6 +469,8 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 return View(up);
             }
         }
+
+
 
 
     }

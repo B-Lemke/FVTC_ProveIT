@@ -363,6 +363,8 @@
     <Content Include="Views\UserProfile\DeletePortfolio.cshtml" />
     <Content Include="Views\UserProfile\ProjectDeleted.cshtml" />
     <Content Include="Views\UserProfile\PortfolioDeleted.cshtml" />
+    <Content Include="Views\UserProfile\PublicProfile.cshtml" />
+    <Content Include="Views\UserProfile\ProfileNotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

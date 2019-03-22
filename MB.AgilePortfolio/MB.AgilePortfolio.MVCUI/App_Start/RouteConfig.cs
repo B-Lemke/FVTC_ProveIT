@@ -14,6 +14,25 @@ namespace MB.AgilePortfolio.MVCUI
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
 
+            routes.MapRoute(
+                name: "AdminUserList",
+                url: "User/",
+                defaults: new { controller = "User", action = "Index" }
+            );
+
+            routes.MapRoute(
+                name: "AdminUserCreate",
+                url: "User/Create",
+                defaults: new { controller = "User", action = "Create" }
+            );
+
+
+            routes.MapRoute(
+                name: "PublicProfile",
+                url: "User/{username}",
+                defaults: new { controller = "UserProfile", action = "PublicProfile", username = UrlParameter.Optional }
+            );
+
 
             routes.MapRoute(
                 name: "Default",
