@@ -79,27 +79,43 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         }
 
         // GET: UserProfile/EditProject
-        public ActionResult EditProject(Guid id)
+        public ActionResult EditProject(Guid? id)
         {
-            UserProfile up = new UserProfile()
+            Guid ID = id.GetValueOrDefault();
+            if (ID == Guid.Empty)
             {
-                Project = new Project(),
-                Privacies = new PrivacyList(),
-                User = new User(),
-                Statuses = new StatusList()
-            };
-            if (Authenticate.IsAuthenticated())
-            {
-                up.Project.LoadById(id);
-                up.Privacies.Load();
-                User userin = System.Web.HttpContext.Current.Session["user"] as User;
-                up.User.LoadById(userin.Id);
-                up.Statuses.Load();
-                return View(up);
+                if (Authenticate.IsAuthenticated())
+                {
+
+                    return RedirectToAction("EditProjects", "UserProfile", new { returnurl = HttpContext.Request.Url });
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                }
             }
             else
             {
-                return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                UserProfile up = new UserProfile()
+                {
+                    Project = new Project(),
+                    Privacies = new PrivacyList(),
+                    User = new User(),
+                    Statuses = new StatusList()
+                };
+                if (Authenticate.IsAuthenticated())
+                {
+                    up.Project.LoadById(ID);
+                    up.Privacies.Load();
+                    User userin = System.Web.HttpContext.Current.Session["user"] as User;
+                    up.User.LoadById(userin.Id);
+                    up.Statuses.Load();
+                    return View(up);
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                }
             }
         }
 
@@ -123,7 +139,68 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             }
         }
 
-        //TODO NEEDS DELETE PROJECT ACTION HERE
+        // GET: UserProfile/DeleteProject
+        public ActionResult DeleteProject(Guid? id)
+        {
+            Guid ID = id.GetValueOrDefault();
+            if (ID == Guid.Empty)
+            {
+                if (Authenticate.IsAuthenticated())
+                {
+
+                    return RedirectToAction("EditProjects", "UserProfile", new { returnurl = HttpContext.Request.Url });
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                }
+            }
+            else
+            {
+                UserProfile up = new UserProfile()
+                {
+                    Project = new Project(),
+                    Privacies = new PrivacyList(),
+                    User = new User(),
+                    Statuses = new StatusList()
+                };
+                if (Authenticate.IsAuthenticated())
+                {
+                    up.Project.LoadById(ID);
+                    up.Privacies.Load();
+                    User userin = System.Web.HttpContext.Current.Session["user"] as User;
+                    up.User.LoadById(userin.Id);
+                    up.Statuses.Load();
+                    return View(up);
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                }
+            }
+        }
+
+        // POST: UserProfile/DeleteProject
+        [HttpPost]
+        public ActionResult DeleteProject(Guid id, UserProfile up)
+        {
+            if (Authenticate.IsAuthenticated())
+            {
+                try
+                {
+                    Project Project = new Project();
+                    Project.LoadById(id);
+                    up.Project = Project;
+                    up.Project.Delete();
+                    return RedirectToAction("ProjectDeleted");
+                }
+                catch { return View(up); }
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+            }
+        }
 
         // UserProfile/EditPortfolios
         public ActionResult EditPortfolios()
@@ -138,9 +215,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 User userin = System.Web.HttpContext.Current.Session["user"] as User;
                 up.User.LoadById(userin.Id);
                 up.Portfolios.LoadbyUser(up.User);
-
-
-                // REDIRECT TO PROJECT EDIT PAGE AND REDIRECTION LOGIC HERE
                 return View(up);
             }
             else
@@ -149,25 +223,41 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             }
         }
 
-        // GET: Edit User Profile Redirect (UserProfile/EditPortfolio)
-        public ActionResult EditPortfolio(Guid id)
+        // GET: Edit User Protfolio Redirect (UserProfile/EditPortfolio)
+        public ActionResult EditPortfolio(Guid? id)
         {
-            UserProfile up = new UserProfile()
+            Guid ID = id.GetValueOrDefault();
+            if (ID == Guid.Empty)
             {
-                Portfolio = new Portfolio(),
-                User = new User()
-            };
-            if (Authenticate.IsAuthenticated())
-            {
-                up.Portfolio.LoadById(id);
-                User userin = System.Web.HttpContext.Current.Session["user"] as User;
-                up.User.LoadById(userin.Id);
+                if (Authenticate.IsAuthenticated())
+                {
 
-                return View(up);
+                    return RedirectToAction("EditPortfolios", "UserProfile", new { returnurl = HttpContext.Request.Url });
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                }
             }
             else
             {
-                return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                UserProfile up = new UserProfile()
+                {
+                    Portfolio = new Portfolio(),
+                    User = new User()
+                };
+                if (Authenticate.IsAuthenticated())
+                {
+                    up.Portfolio.LoadById(ID);
+                    User userin = System.Web.HttpContext.Current.Session["user"] as User;
+                    up.User.LoadById(userin.Id);
+
+                    return View(up);
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                }
             }
         }
 
@@ -179,7 +269,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             {
                 try
                 {
-                    // TODO: Add update logic here
                     up.Portfolio.Update();
                     return RedirectToAction("EditPortfolios");
                 }
@@ -190,7 +279,67 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
             }
         }
-        //TODO NEEDS DELETE PORTFOLIO ACTION HERE
+
+        // GET: UserProfile/DeleteProject
+        public ActionResult DeletePortfolio(Guid? id)
+        {
+            Guid ID = id.GetValueOrDefault();
+            if (ID == Guid.Empty)
+            {
+                if (Authenticate.IsAuthenticated())
+                {
+
+                    return RedirectToAction("EditPortfolios", "UserProfile", new { returnurl = HttpContext.Request.Url });
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                }
+            }
+            else
+            {
+                UserProfile up = new UserProfile()
+                {
+                    Portfolio = new Portfolio(),
+                    User = new User()
+                };
+                if (Authenticate.IsAuthenticated())
+                {
+                    up.Project.LoadById(ID);
+                    up.Privacies.Load();
+                    User userin = System.Web.HttpContext.Current.Session["user"] as User;
+                    up.User.LoadById(userin.Id);
+                    up.Statuses.Load();
+                    return View(up);
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                }
+            }
+        }
+
+        // POST: UserProfile/DeletePortfolio
+        [HttpPost]
+        public ActionResult DeletePortfolio(Guid id, UserProfile up)
+        {
+            if (Authenticate.IsAuthenticated())
+            {
+                try
+                {
+                    Portfolio Portfolio = new Portfolio();
+                    Portfolio.LoadById(id);
+                    up.Portfolio = Portfolio;
+                    up.Portfolio.Delete();
+                    return RedirectToAction("PortfolioDeleted");
+                }
+                catch { return View(up); }
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+            }
+        }
 
         // GET: Edit User Profile (UserProfile/EditProfile)
         public ActionResult EditProfile()
@@ -284,7 +433,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 up.User.Update();
 
                 //TODO: Needs Redirect to confimration or Confirmation message of saved changes here!
-                return RedirectToAction("Index", "Admin", new { returnurl = HttpContext.Request.Url });
+                return RedirectToAction("Index", "UserProfile", new { returnurl = HttpContext.Request.Url });
             }
             catch
             {
