@@ -19,11 +19,11 @@
 	SELECT @UserTypeIdEmployer = Id FROM [dbo].tblUserType WHERE [Description] = 'Employer';
 	SELECT @UserTypeIdAdmin = Id FROM [dbo].tblUserType WHERE [Description] = 'Admin';
 
-	INSERT INTO [dbo].tblUser (Id, Email, [Password], FirstName, LastName, ProfileImage, UserTypeId)
+	INSERT INTO [dbo].tblUser (Id, Email, [Password], FirstName, LastName, ProfileImage, UserTypeId, Username)
 	VALUES
-	(@UserId1, 'sample@gmail.com', CONVERT(VARCHAR(40), HashBytes('SHA1', Concat('pa$$word',@UserId1)), 2), 'Sample', 'User', 'sampleimage.png', @UserTypeIdUser),
-	(@UserId2, 'joe@wetzel.com', CONVERT(VARCHAR(40), HashBytes('SHA1', Concat('pa$$word',@UserId2)), 2), 'Joe', 'Wetzel', 'JoeWetzel.png', @UserTypeIdUser),
-	(@UserId3, 'blemke4@gmail.com', CONVERT(VARCHAR(40), HashBytes('SHA1', Concat('pa$$word',@UserId3)), 2), 'Broderick', 'Lemke', 'broderickLemke.png', @UserTypeIdUser),
-	(@UserId4, 'Employer@fvtc.edu', CONVERT(VARCHAR(40), HashBytes('SHA1', Concat('pa$$word',@UserId4)), 2), 'Employer', 'Smith', 'FVTC.png', @UserTypeIdEmployer),
-	(@UserId5, 'admin', CONVERT(VARCHAR(40), HashBytes('SHA1', Concat('pa$$word',@UserId5)), 2), 'Dead', 'Pen', 'FVTC.png', @UserTypeIdAdmin)
+	(@UserId1, 'sample@gmail.com', CONVERT(VARCHAR(40), HashBytes('SHA1', Concat('pa$$word',@UserId1)), 2), 'Sample', 'User', 'sampleimage.png', @UserTypeIdUser, 'SampleUser'),
+	(@UserId2, 'joe@wetzel.com', CONVERT(VARCHAR(40), HashBytes('SHA1', Concat('pa$$word',@UserId2)), 2), 'Joe', 'Wetzel', 'JoeWetzel.png', @UserTypeIdUser, 'JoeWetzel'),
+	(@UserId3, 'blemke4@gmail.com', CONVERT(VARCHAR(40), HashBytes('SHA1', Concat('pa$$word',@UserId3)), 2), 'Broderick', 'Lemke', 'broderickLemke.png', @UserTypeIdUser, 'B-Lemke'),
+	(@UserId4, 'Employer@fvtc.edu', CONVERT(VARCHAR(40), HashBytes('SHA1', Concat('pa$$word',@UserId4)), 2), 'Employer', 'Smith', 'FVTC.png', @UserTypeIdEmployer, 'Employer'),
+	(@UserId5, 'admin', CONVERT(VARCHAR(40), HashBytes('SHA1', Concat('pa$$word',@UserId5)), 2), 'Dead', 'Pen', 'FVTC.png', @UserTypeIdAdmin, 'Admin')
 END

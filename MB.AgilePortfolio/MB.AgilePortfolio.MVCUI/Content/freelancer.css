@@ -91,7 +91,7 @@ section {
     #mainNav .navbar-nav li.nav-item a.nav-link {
       color: #fff; }
       #mainNav .navbar-nav li.nav-item a.nav-link:hover {
-        color: #262E43; }
+        color: #F26230; }
       #mainNav .navbar-nav li.nav-item a.nav-link:active, #mainNav .navbar-nav li.nav-item a.nav-link:focus {
         color: #fff; }
       #mainNav .navbar-nav li.nav-item a.nav-link.active {
@@ -257,12 +257,6 @@ form .row:first-child .floating-label-form-group {
 .footer-copyright {
   width: 100%;
   padding-top: 1rem; }
-
-.footer-copyright {
-  background-color: #f58025; }
-
-.white-text {
-  text-decoration: none; }
 
 a {
   color: #262E43; }

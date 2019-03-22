@@ -19,6 +19,14 @@ function validateRegistration() {
         addError("This is not a valid email. Please try another.");
     }
 
+    //Check that username isn't empty and less than 50 characters 
+    var usernameVal = $("#username").val()
+    if (usernameVal == "") {
+        addError("Username is required.");
+    } else if (usernameVal.length > 50) {
+        addError("Username must be 50 characters or less.");
+    } 
+
 
     //Check that first name isn't empty and less than 50 characters
     var firstNameVal = $("#firstName").val()

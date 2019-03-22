@@ -62,6 +62,14 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     // REDIRECT TO LOGIN SCREEN HERE?
                 }
 
+                else if (uut.User.CheckIfUsernameExists(uut.User.Username) == true)
+                {
+                    ModelState.AddModelError(string.Empty, "Username Already Exists");
+
+                    // TODO:
+                    // REDIRECT TO LOGIN SCREEN HERE?
+                }
+
                 if (uut.User.FirstName == null)
                 {
                     ModelState.AddModelError(string.Empty, "First Name is required");
@@ -99,9 +107,9 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     return View(uut);
                 }
 
-
+                //Success, insert and redirect to the login!
                 uut.User.Insert();
-                return RedirectToAction("Create");
+                return RedirectToAction("Login", "Login");
             }
             catch
             {

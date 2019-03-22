@@ -25,6 +25,7 @@ namespace MB.AgilePortfolio.BL
         public Guid UserTypeId { get; set; }
         [DisplayName("User Type")]
         public string UserTypeDescription { get; set; }
+        public string Username { get; set; }
         public string FullName
         {
             get { return FirstName + " " + LastName; }
@@ -32,7 +33,7 @@ namespace MB.AgilePortfolio.BL
 
         public User() { }
 
-        public User(Guid id, string email, string password, string firstName, string lastName, string profileImage, Guid userTypeId, string userTypeDescription)
+        public User(Guid id, string email, string password, string firstName, string lastName, string profileImage, Guid userTypeId, string userTypeDescription, string username)
         {
             Id = id;
             Email = email;
@@ -42,16 +43,18 @@ namespace MB.AgilePortfolio.BL
             ProfileImage = profileImage;
             UserTypeId = userTypeId;
             UserTypeDescription = userTypeDescription;
+            Username = username;
         }
 
         // To use when adding a user
-        public User(string email, string password, string firstName, string lastName, Guid userTypeId)
+        public User(string email, string password, string firstName, string lastName, Guid userTypeId, string username)
         {
             Email = email;
             Password = password;
             FirstName = firstName;
             LastName = lastName;
             UserTypeId = userTypeId;
+            Username = username;
         }
 
         // To use when a user logs in
@@ -104,6 +107,7 @@ namespace MB.AgilePortfolio.BL
                                         u.LastName,
                                         u.ProfileImage,
                                         u.UserTypeId,
+                                        u.Username,
                                         ut.Description
                                     }).FirstOrDefault();
                         if (user != null)
@@ -118,6 +122,7 @@ namespace MB.AgilePortfolio.BL
                                 Id = user.Id;
                                 ProfileImage = user.ProfileImage;
                                 UserTypeId = user.UserTypeId;
+                                Username = user.Username;
                                 UserTypeDescription = user.Description;
                                 return true;
                             }
@@ -148,6 +153,7 @@ namespace MB.AgilePortfolio.BL
                         LastName = LastName,
                         ProfileImage = ProfileImage,
                         UserTypeId = UserTypeId,
+                        Username = Username
                     };
                     //Save the Id
                     this.Id = user.Id;
@@ -192,6 +198,7 @@ namespace MB.AgilePortfolio.BL
                         user.LastName = LastName;
                         user.ProfileImage = ProfileImage;
                         user.UserTypeId = UserTypeId;
+                        user.Username = Username;
                         return dc.SaveChanges();
                     }
                     else throw new Exception("User not found");
@@ -208,6 +215,19 @@ namespace MB.AgilePortfolio.BL
                 {
                     bool exists = dc.tblUsers.Any(u => u.Email == email);
                         return exists;
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        public bool CheckIfUsernameExists(string username)
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    bool exists = dc.tblUsers.Any(u => u.Username == username);
+                    return exists;
                 }
             }
             catch (Exception ex) { throw ex; }
@@ -231,6 +251,7 @@ namespace MB.AgilePortfolio.BL
                                       u.LastName,
                                       u.ProfileImage,
                                       u.UserTypeId,
+                                      u.Username,
                                       ut.Description
                                   }).FirstOrDefault();
                     if (user != null)
@@ -242,6 +263,7 @@ namespace MB.AgilePortfolio.BL
                         LastName = user.LastName;
                         ProfileImage = user.ProfileImage;
                         UserTypeId = user.UserTypeId;
+                        Username = user.Username;
                         UserTypeDescription = user.Description;
                     }
                     else throw new Exception("User not found");
@@ -269,11 +291,12 @@ namespace MB.AgilePortfolio.BL
                                        u.LastName,
                                        u.ProfileImage,
                                        u.UserTypeId,
+                                       u.Username,
                                        ut.Description
                                    }).OrderByDescending(u => u.LastName).ToList();
                     foreach (var u in users)
                     {
-                        User user = new User(u.Id, u.Email, u.Password, u.FirstName, u.LastName, u.ProfileImage, u.UserTypeId, u.Description);
+                        User user = new User(u.Id, u.Email, u.Password, u.FirstName, u.LastName, u.ProfileImage, u.UserTypeId, u.Description, u.Username);
                         Add(user);
                     }
                 }

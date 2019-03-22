@@ -88,11 +88,12 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="Password" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="FirstName" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="LastName" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="ProfileImage" Type="varchar" MaxLength="255" />
           <Property Name="UserTypeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="tblUserType">
           <Key>
@@ -202,11 +203,12 @@
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ProfileImage" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="UserTypeId" Type="Guid" Nullable="false" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityContainer Name="PortfolioEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tblLanguages" EntityType="Self.tblLanguage" />
@@ -218,7 +220,7 @@
           <EntitySet Name="tblScreenshots" EntityType="Self.tblScreenshot" />
           <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
           <EntitySet Name="tblUserTypes" EntityType="brouchouddbModel.tblUserType" />
-          <EntitySet Name="tblStatus1" EntityType="brouchouddbModel.tblStatus" />
+          <EntitySet Name="tblStatus" EntityType="brouchouddbModel.tblStatus" />
           <FunctionImport Name="Portfolio_ViewData" ReturnType="Collection(brouchouddbModel.Portfolio_ViewData_Result)">
           <Parameter Name="ProjectId" Mode="In" Type="Guid" />
           </FunctionImport>
@@ -391,6 +393,7 @@
           <EntitySetMapping Name="tblUsers">
             <EntityTypeMapping TypeName="brouchouddbModel.tblUser">
               <MappingFragment StoreEntitySet="tblUser">
+                <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
@@ -409,7 +412,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblStatus1">
+          <EntitySetMapping Name="tblStatus">
             <EntityTypeMapping TypeName="brouchouddbModel.tblStatus">
               <MappingFragment StoreEntitySet="tblStatus">
                 <ScalarProperty Name="Description" ColumnName="Description" />
