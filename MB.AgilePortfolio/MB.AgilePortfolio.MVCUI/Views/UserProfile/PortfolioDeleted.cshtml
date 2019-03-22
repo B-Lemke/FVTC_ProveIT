@@ -1,0 +1,31 @@
+﻿@model MB.AgilePortfolio.MVCUI.ViewModels.UserProfile
+
+@{
+    /**/
+
+    ViewBag.Title = "PortfolioDeleted";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete Porfolio</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h2 style="text-align:center; color:red;">Project has been Deleted</h2>
+
+    </div>
+
+}
+
+
+<div>
+    @Html.ActionLink("Back to Portfolios", "EditPortfolios")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
