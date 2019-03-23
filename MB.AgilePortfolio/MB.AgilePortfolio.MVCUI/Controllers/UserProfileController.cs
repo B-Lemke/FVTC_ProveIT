@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Net.Mail;
 using MB.AgilePortfolio.BL;
 using MB.AgilePortfolio.MVCUI.Models;
 using MB.AgilePortfolio.MVCUI.ViewModels;
@@ -421,6 +422,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     {
                         ModelState.AddModelError(string.Empty, "Password is required");
                     }
+                   
 
                     else if (up.User.Password.Length < 6)
                     {
@@ -463,6 +465,35 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             Session.Contents.Abandon();
             Session.Contents.RemoveAll();
             return View(up);
+        }
+
+
+        //TODO THIS NEEDS TO GO TO LOGINyo
+        public ActionResult EmailSent()
+        {
+            User up = new User();
+            return View(up);
+        }
+
+        // GET: UserProfile/ForgotPassword
+        public ActionResult ForgotPassword()
+        {
+            UserProfile up = new UserProfile();
+            return View(up);
+
+        }
+
+        // POST: UserProfile/ForgotPassword
+        [HttpPost]
+        public ActionResult ForgotPassword(Guid id, UserProfile up)
+        {
+            try
+            {
+                up.User.SendMail(up.User.Email, "Password Reset", "http://testinglink.com");
+                return RedirectToAction("EmailSent", "UserProfile", new { returnurl = HttpContext.Request.Url });
+            }
+            catch { return View(up); }
+
         }
 
         // GET: Edit User Profile (UserProfile/EditProfile)
