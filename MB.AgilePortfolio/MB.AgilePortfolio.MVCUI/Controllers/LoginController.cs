@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MB.AgilePortfolio.BL;
+using MB.AgilePortfolio.MVCUI.ViewModels;
 
 namespace MB.AgilePortfolio.MVCUI.Controllers
 {
@@ -58,6 +59,35 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 ViewBag.Message = ex.Message;
                 return View(user);
             }
+        }
+
+        //TODO THIS NEEDS TO GO TO LOGINyo
+        public ActionResult EmailSent()
+        {
+            return View();
+        }
+
+        // GET: UserProfile/ForgotPassword
+        public ActionResult ForgotPassword()
+        {
+            UserProfile lc = new UserProfile();
+
+            
+            return View(lc);
+
+        }
+
+        // POST: UserProfile/ForgotPassword
+        [HttpPost]
+        public ActionResult ForgotPassword(UserProfile lc)
+        {
+            try
+            {
+                lc.SendPasswordReset(lc.Email, "ProveIT Account Password Reset", "http://testinglink.com");
+                return RedirectToAction("EmailSent", "Login", new { returnurl = HttpContext.Request.Url });
+            }
+            catch { return View(lc); }
+
         }
     }
 }

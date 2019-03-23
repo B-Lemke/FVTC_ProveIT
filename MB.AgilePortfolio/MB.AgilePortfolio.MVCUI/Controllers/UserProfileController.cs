@@ -7,12 +7,15 @@ using System.Net.Mail;
 using MB.AgilePortfolio.BL;
 using MB.AgilePortfolio.MVCUI.Models;
 using MB.AgilePortfolio.MVCUI.ViewModels;
+using System.Net;
 
 namespace MB.AgilePortfolio.MVCUI.Controllers
 {
     public class UserProfileController : Controller
     {
         User user;
+        public string Email;
+
 
         // GET: UserProfile
         public ActionResult Index()
@@ -128,6 +131,10 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 if (Authenticate.IsAuthenticated())
                 {
                     up.Project.LoadById(ID);
+                    Project project = new Project();
+                    project.LoadById(up.Project.Id);
+                    up.DateCreated = project.DateCreated;
+                    up.LastUpdated = project.LastUpdated;
                     up.Privacies.Load();
                     User userin = System.Web.HttpContext.Current.Session["user"] as User;
                     up.User.LoadById(userin.Id);
@@ -143,17 +150,60 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
         // POST: UserProfile/EditProject
         [HttpPost]
-        public ActionResult EditProject(Guid id, UserProfile up)
+        public ActionResult EditProject(Guid id, UserProfile ppus)
         {
             if (Authenticate.IsAuthenticated())
             {
                 try
                 {
-                    // TODO: Add update logic here
-                    up.Project.Update();
+                    
+                    User userin = System.Web.HttpContext.Current.Session["user"] as User;
+                    ProjectList Projects = new ProjectList();
+                    Projects.LoadbyUser(userin);
+                    if (ppus.Project.Name == null)
+                    {
+                        ModelState.AddModelError(string.Empty, "Project requires a name!");
+                    }
+                    else
+                    {
+                        foreach (Project p in Projects)
+                        {
+                            if (ppus.Project.Name == p.Name)
+                            {
+                                if(ppus.Project.Id != p.Id)
+                                {
+                                    ModelState.AddModelError(string.Empty, "Another project already exists with this name!");
+                                }
+                                
+                            }
+                        }
+
+                        if (ppus.DateCreated == null)
+                        {
+                            ModelState.AddModelError(string.Empty, "Date Created required!");
+                        }
+                        else if(ppus.LastUpdated == null)
+                        {
+                            ppus.LastUpdated = ppus.DateCreated;
+                        }
+                    }
+
+                    if (!ModelState.IsValid)
+                    {
+                        //ppus.Project = new Project();
+                        ppus.Privacies = new PrivacyList();
+                        ppus.Statuses = new StatusList();
+                        ppus.User = new User();
+                        ppus.User.LoadById(userin.Id);
+                        ppus.Privacies.Load();
+                        ppus.Statuses.Load();
+                        return View(ppus);
+                    }
+
+                    ppus.Project.Update();
                     return RedirectToAction("EditProjects");
                 }
-                catch { return View(up); }
+                catch { return View(ppus); }
             }
             else
             {
@@ -224,7 +274,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             }
         }
 
-        // UserProfile/EditPortfolios
+        //GET: UserProfile/EditPortfolios
         public ActionResult EditPortfolios()
         {
             UserProfile up = new UserProfile()
@@ -465,35 +515,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             Session.Contents.Abandon();
             Session.Contents.RemoveAll();
             return View(up);
-        }
-
-
-        //TODO THIS NEEDS TO GO TO LOGINyo
-        public ActionResult EmailSent()
-        {
-            User up = new User();
-            return View(up);
-        }
-
-        // GET: UserProfile/ForgotPassword
-        public ActionResult ForgotPassword()
-        {
-            UserProfile up = new UserProfile();
-            return View(up);
-
-        }
-
-        // POST: UserProfile/ForgotPassword
-        [HttpPost]
-        public ActionResult ForgotPassword(Guid id, UserProfile up)
-        {
-            try
-            {
-                up.User.SendMail(up.User.Email, "Password Reset", "http://testinglink.com");
-                return RedirectToAction("EmailSent", "UserProfile", new { returnurl = HttpContext.Request.Url });
-            }
-            catch { return View(up); }
-
         }
 
         // GET: Edit User Profile (UserProfile/EditProfile)

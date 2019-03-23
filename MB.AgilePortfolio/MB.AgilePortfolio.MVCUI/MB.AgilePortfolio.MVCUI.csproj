@@ -370,7 +370,8 @@
     <Content Include="Views\CreateNewPortfolio\Index.cshtml" />
     <Content Include="Views\UserProfile\EditProfilePassword.cshtml" />
     <Content Include="Views\UserProfile\PasswordUpdated.cshtml" />
-    <Content Include="Views\UserProfile\EmailSent.cshtml" />
+    <Content Include="Views\Login\EmailSent.cshtml" />
+    <Content Include="Views\Login\ForgotPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
