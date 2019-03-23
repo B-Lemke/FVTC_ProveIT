@@ -207,6 +207,29 @@ namespace MB.AgilePortfolio.BL
             catch (Exception ex) { throw ex; }
         }
 
+        public int UpdatePassword(string password, string oldpassword, Guid userId)
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    tblUser user = dc.tblUsers.Where(u => u.Id == Id).FirstOrDefault();
+                    if (user != null)
+                    {
+                        if(user.Password == GetHash(oldpassword, user.Id))
+                        {
+                            user.Password = GetHash(password, user.Id);
+                            return dc.SaveChanges();
+                        }
+                        else throw new Exception("Incorrect Password");
+
+                    }
+                    else throw new Exception("User not found");
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
         public bool CheckIfEmailExists(string email)
         {
             try

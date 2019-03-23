@@ -19,6 +19,9 @@ namespace MB.AgilePortfolio.MVCUI.ViewModels
         public UserTypeList UserTypes { get; set; }
         public UserList Users { get; set; }
         public StatusList Statuses { get; set; }
+        public string ConfirmPassword { get; set; } //Used for EditProfilePassword
+        public string OldPassword { get; set; } //Used for EditProfilePassword
+
 
     }
 }

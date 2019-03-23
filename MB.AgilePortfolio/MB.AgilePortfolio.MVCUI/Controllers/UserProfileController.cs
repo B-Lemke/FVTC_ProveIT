@@ -359,12 +359,110 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     up.Portfolio.Delete();
                     return RedirectToAction("PortfolioDeleted");
                 }
-                catch { return View(up); }
+                catch { return View(up); } //NEEDS A WAY TO SHOW ERROR MESSAGE RETURN OF WRONG OLD PASSWORD ENTERED
             }
             else
             {
                 return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
             }
+        }
+
+        // GET: UserProfile/EditProfilePassword
+        public ActionResult EditProfilePassword(Guid? id)
+        {
+            Guid ID = id.GetValueOrDefault();
+            if (ID == Guid.Empty)
+            {
+                if (Authenticate.IsAuthenticated())
+                {
+
+                    return RedirectToAction("EditProfile", "UserProfile", new { returnurl = HttpContext.Request.Url });
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                }
+            }
+            else
+            {
+                UserProfile up = new UserProfile()
+                {
+                    Portfolio = new Portfolio(),
+                    User = new User()
+                };
+                if (Authenticate.IsAuthenticated())
+                {
+                    User userin = System.Web.HttpContext.Current.Session["user"] as User;
+                    up.User.LoadById(userin.Id);
+                    return View(up);
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                }
+            }
+        }
+
+        // POST: UserProfile/EditProfilePassword
+        [HttpPost]
+        public ActionResult EditProfilePassword(Guid id, UserProfile up)
+        {
+            ModelState.Clear();
+            if (Authenticate.IsAuthenticated())
+            {
+                try
+                {
+                    if (up.User.Password == null)
+                    {
+                        ModelState.AddModelError(string.Empty, "Password is required");
+                    }
+
+                    if (up.User.Password == null)
+                    {
+                        ModelState.AddModelError(string.Empty, "Password is required");
+                    }
+
+                    else if (up.User.Password.Length < 6)
+                    {
+                        ModelState.AddModelError(string.Empty, "Password needs to be at least 6 characters");
+                    }
+                    else if (up.User.Password.Length > 16)
+                    {
+                        ModelState.AddModelError(string.Empty, "Password needs to be less than 16 characters");
+                    }
+                    else if (up.ConfirmPassword != up.User.Password)
+                    {
+                        ModelState.AddModelError(string.Empty, "Passwords did not match");
+                    }
+
+                    if (!ModelState.IsValid)
+                    {
+                        return View(up);
+                    }
+
+                    User userin = System.Web.HttpContext.Current.Session["user"] as User;
+                    userin.UpdatePassword(up.User.Password, up.OldPassword, userin.Id);
+                    ModelState.Clear();
+                    return RedirectToAction("PasswordUpdated");
+                }
+                catch {
+                    ModelState.AddModelError("Password", "Incorrect Password");
+                    return RedirectToAction("EditProfilePassword");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+            }
+        }
+        // Get: UserProfile/PasswordUpdated
+        public ActionResult PasswordUpdated()
+        {
+            UserProfile up = new UserProfile();
+            Session.Abandon();
+            Session.Contents.Abandon();
+            Session.Contents.RemoveAll();
+            return View(up);
         }
 
         // GET: Edit User Profile (UserProfile/EditProfile)
@@ -422,32 +520,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 {
                     ModelState.AddModelError(string.Empty, "Last Name is required");
                 }
-
-                // TODO: NEEDS UPDATE PASSWORD ACTION ADDED
-
-                /*
-                if (uut.User.Password == null)
-                {
-                    ModelState.AddModelError(string.Empty, "Password is required");
-                }
-
-                else if (uut.User.Password.Length < 6)
-                {
-                    ModelState.AddModelError(string.Empty, "Password needs to be at least 6 characters");
-                }
-
-                else if (uut.User.Password.Length > 16)
-                {
-                    ModelState.AddModelError(string.Empty, "Password needs to be less than 16 characters");
-                }
-
-                else if (uut.ConfirmPassword != uut.User.Password)
-                {
-                    ModelState.AddModelError(string.Empty, "Passwords did not match");
-                }
-                // TODO:
-                // ADD VALIDATION FOR EMPLOYER?
-                */
 
                 if (!ModelState.IsValid)
                 {

@@ -102,7 +102,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             }
             else
             {
-                // THIS NEEDS TO HAVE LOGIN RETURN TO CREATE PROJECT SCREEN UPON LOGIN YET
                 return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
             }
 
