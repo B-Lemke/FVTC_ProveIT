@@ -158,6 +158,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\CreateNewPortfolio.cs" />
     <Compile Include="Controllers\UserProfileController.cs" />
     <Compile Include="Controllers\PortfolioController.cs" />
     <Compile Include="Controllers\PortfolioProjectController.cs" />
@@ -364,6 +365,13 @@
     <Content Include="Views\UserProfile\ProjectDeleted.cshtml" />
     <Content Include="Views\UserProfile\PortfolioDeleted.cshtml" />
     <Content Include="Views\UserProfile\PublicProfile.cshtml" />
+    <Content Include="Views\UserProfile\ProfileNotFound.cshtml" />
+    <Content Include="Views\CreateNewPortfolio\Create.cshtml" />
+    <Content Include="Views\CreateNewPortfolio\Index.cshtml" />
+    <Content Include="Views\UserProfile\EditProfilePassword.cshtml" />
+    <Content Include="Views\UserProfile\PasswordUpdated.cshtml" />
+    <Content Include="Views\Login\EmailSent.cshtml" />
+    <Content Include="Views\Login\ForgotPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

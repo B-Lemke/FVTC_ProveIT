@@ -6,7 +6,11 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Mail;
 using MB.AgilePortfolio.PL;
+using System.Web;
+using System.Net.Mime;
+using System.Net;
 
 namespace MB.AgilePortfolio.BL
 {
@@ -80,6 +84,34 @@ namespace MB.AgilePortfolio.BL
                     sb.Append(b.ToString("X2"));
                 }
                 return sb.ToString();
+            }
+        }
+
+        public void SendMail(string Email, string Subject, string ResetLink)
+        {
+            string text = string.Format("Please click on this link to {0}: {1}", Subject, ResetLink);
+            string html = "Please confirm your account by clicking this link: <a href=\"" + ResetLink + "\">link</a><br/>";
+            html += HttpUtility.HtmlEncode(@"Or click on the copy the following link on the browser:" + ResetLink);
+            MailMessage msg = new MailMessage();
+            msg.From = new MailAddress("ProveITConfirmation@gmail.com", "ProveIT");
+            msg.To.Add(new MailAddress(Email));
+            msg.Subject = Subject;
+            msg.Body = string.Format(html, msg.From.DisplayName, msg.From.Address, msg);
+            msg.IsBodyHtml = true;
+
+
+            using (var smtp = new SmtpClient())
+            {
+                var credential = new NetworkCredential
+                {
+                    UserName = "ProveITConfirmation@gmail.com",
+                    Password = "Pa$$word1"
+                };
+                smtp.Credentials = credential;
+                smtp.Host = "smtp-relay.gmail.com";
+                smtp.Port = 587;
+                smtp.EnableSsl = true;
+                smtp.SendMailAsync(msg);
             }
         }
 
@@ -200,6 +232,29 @@ namespace MB.AgilePortfolio.BL
                         user.UserTypeId = UserTypeId;
                         user.Username = Username;
                         return dc.SaveChanges();
+                    }
+                    else throw new Exception("User not found");
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        public int UpdatePassword(string password, string oldpassword, Guid userId)
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    tblUser user = dc.tblUsers.Where(u => u.Id == Id).FirstOrDefault();
+                    if (user != null)
+                    {
+                        if(user.Password == GetHash(oldpassword, user.Id))
+                        {
+                            user.Password = GetHash(password, user.Id);
+                            return dc.SaveChanges();
+                        }
+                        else throw new Exception("Incorrect Password");
+
                     }
                     else throw new Exception("User not found");
                 }

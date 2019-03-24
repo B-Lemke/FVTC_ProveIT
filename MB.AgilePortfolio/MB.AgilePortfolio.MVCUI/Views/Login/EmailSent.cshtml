@@ -1,0 +1,31 @@
+﻿@model MB.AgilePortfolio.MVCUI.ViewModels.UserProfile
+
+@{
+    /**/
+
+    ViewBag.Title = "ProjectDeleted";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete Project</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h2 style="text-align:center; color:red;">Password reset email has been sent</h2>
+
+    </div>
+
+}
+
+
+<div>
+    @Html.ActionLink("Back to Login", "Login", "Login")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
