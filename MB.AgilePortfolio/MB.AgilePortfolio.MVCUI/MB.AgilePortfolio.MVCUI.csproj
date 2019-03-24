@@ -365,7 +365,6 @@
     <Content Include="Views\UserProfile\ProjectDeleted.cshtml" />
     <Content Include="Views\UserProfile\PortfolioDeleted.cshtml" />
     <Content Include="Views\UserProfile\PublicProfile.cshtml" />
-    <Content Include="Views\UserProfile\ProfileNotFound.cshtml" />
     <Content Include="Views\CreateNewPortfolio\Create.cshtml" />
     <Content Include="Views\CreateNewPortfolio\Index.cshtml" />
     <Content Include="Views\UserProfile\EditProfilePassword.cshtml" />
