@@ -18,14 +18,14 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             return View();
         }
 
-        public ActionResult Login()
+        public ActionResult Index()
         {
             User user = new User();
             return View(user);
         }
 
         [HttpPost]
-        public ActionResult Login(User user, string returnurl)
+        public ActionResult Index(User user, string returnurl)
         {
             try
             {
@@ -113,7 +113,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 else
                 {
                     //Invalid Id
-                    return RedirectToAction("Login", "Login");
+                    return RedirectToAction("Index", "Login");
                 }
             }
             catch (Exception ex)
@@ -134,7 +134,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                {
                     lc.User.ChangeForgottenPassword(lc.User.Password);
                     //Password reset. TO DO, display the message here
-                    return RedirectToAction("Login", "Login");
+                    return RedirectToAction("Index", "Login");
                 }
                 else
                 {

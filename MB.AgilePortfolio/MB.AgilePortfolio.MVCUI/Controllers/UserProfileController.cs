@@ -42,7 +42,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Login", new
+                return RedirectToAction("Index", "Login", new
                 {
                     returnurl = HttpContext.Request.Url
                 });
@@ -99,7 +99,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
             }
         }
 
@@ -116,7 +116,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                    return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
                 }
             }
             else
@@ -143,7 +143,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                    return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
                 }
             }
         }
@@ -207,7 +207,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
             }
         }
 
@@ -224,7 +224,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                    return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
                 }
             }
             else
@@ -247,7 +247,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                    return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
                 }
             }
         }
@@ -270,7 +270,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
             }
         }
 
@@ -291,7 +291,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
             }
         }
 
@@ -313,7 +313,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                    return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
                 }
             }
             else
@@ -333,7 +333,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                    return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
                 }
             }
         }
@@ -353,7 +353,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
             }
         }
 
@@ -370,7 +370,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                    return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
                 }
             }
             else
@@ -391,7 +391,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                    return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
                 }
             }
         }
@@ -414,7 +414,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
             }
         }
 
@@ -431,7 +431,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                    return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
                 }
             }
             else
@@ -449,7 +449,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                    return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
                 }
             }
         }
@@ -504,7 +504,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
             }
         }
         // Get: UserProfile/PasswordUpdated
@@ -537,7 +537,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
             }
         }
 

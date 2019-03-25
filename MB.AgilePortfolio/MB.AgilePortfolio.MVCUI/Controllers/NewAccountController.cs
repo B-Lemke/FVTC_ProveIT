@@ -13,7 +13,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         User user;
         UserList users;
 
-        // GET: User
+        /* GET: User
         public ActionResult Index()
         {
             users = new UserList();
@@ -28,9 +28,10 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             user.LoadById(id);
             return View(user);
         }
+        */
 
         // GET: User/Create
-        public ActionResult Create()
+        public ActionResult Index()
         {
             UserUserTypes uut = new UserUserTypes()
             {
@@ -45,7 +46,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
         // POST: User/Create
         [HttpPost]
-        public ActionResult Create(UserUserTypes uut)
+        public ActionResult Index(UserUserTypes uut)
         {
             try
             {
@@ -109,7 +110,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
                 //Success, insert and redirect to the login!
                 uut.User.Insert();
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("Index", "Login");
             }
             catch
             {

@@ -24,10 +24,10 @@
                     @if (Session["UserType"] == null)
                     {
                         <li class="nav-item mx-0 mx-lg-1">
-                            <a class="nav-link" runat="server" href="~/NewAccount/Create">Sign Up</a>
+                            <a class="nav-link" runat="server" href="~/NewAccount">Sign Up</a>
                         </li>
                         <li class="nav-item mx-0 mx-lg-1">
-                            <a class="nav-link" runat="server" href="~/Login/Login">Login</a>
+                            <a class="nav-link" runat="server" href="~/Login">Login</a>
                         </li>
                     }
                     @if (Session["user"] != null)
@@ -70,8 +70,8 @@
                 <div class="col col-lg-6">
                     <h3 class="text-white">Your Account</h3>
                     <ul class="list-unstyled">
-                        <li><a class="text-white" href="~/Login/Login">Login</a></li>
-                        <li><a class="text-white" href="~/NewAccount/Create">Sign Up</a></li>
+                        <li><a class="text-white" href="~/Login">Login</a></li>
+                        <li><a class="text-white" href="~/NewAccount">Sign Up</a></li>
                     </ul>
                 </div>
 

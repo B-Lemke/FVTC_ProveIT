@@ -41,7 +41,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
             }
         }
 
@@ -102,7 +102,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Login", new { returnurl = HttpContext.Request.Url });
+                return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
             }
 
         }
