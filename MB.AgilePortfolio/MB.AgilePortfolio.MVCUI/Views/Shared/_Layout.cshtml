@@ -57,35 +57,36 @@
     </nav>
     <div class="container body-content">
         @RenderBody()
-        <hr class="footer-bar"/>
-        <footer class="page-footer font-small text-center bg-primary">
-            <div class="container">
-                <div class="row">
-                    <div class="col col-lg-6">
-                        <h3 class="text-white">Links</h3>
-                        <ul class="list-unstyled">
-                            <li><a class="text-white" href="#!">Home</a></li>
-                            <li><a class="text-white" href="#!">About</a></li>
-                            <li><a class="text-white" href="#!">Admin</a></li>
-                        </ul>
-                    </div>
-                    <div class="col col-lg-6">
-                        <h3 class="text-white">Your Account</h3>
-                        <ul class="list-unstyled">
-                            <li><a class="text-white" href="#!">Login</a></li>
-                            <li><a class="text-white" href="#!">Sign Up</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-copyright text-center font-small bg-secondary">
-                        <div class="container">
-                            <p class="text-white">&copy; @DateTime.Now.Year - Team Dead Pens</p>
-                        </div>
-                    </div>
+
+    </div>
+    <hr class="footer-bar" />
+    <footer class="page-footer font-small text-center bg-primary">
+        <div class="container-fluid">
+            <div class="footer-link-block row">
+                <div class="col col-lg-6">
+                    <h3 class="text-white">Links</h3>
+                    <ul class="list-unstyled">
+                        <li><a class="text-white" href="#!">Home</a></li>
+                        <li><a class="text-white" href="#!">About</a></li>
+                        <li><a class="text-white" href="#!">Admin</a></li>
+                    </ul>
+                </div>
+                <div class="col col-lg-6">
+                    <h3 class="text-white">Your Account</h3>
+                    <ul class="list-unstyled">
+                        <li><a class="text-white" href="~/Login/Login">Login</a></li>
+                        <li><a class="text-white" href="~/NewAccount/Create">Sign Up</a></li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="row footer-copyright text-center font-small bg-secondary">
+                <div class="container">
+                    <p class="text-white">&copy; @DateTime.Now.Year - Team Dead Pens</p>
                 </div>
             </div>
-        </footer>
-    </div>
-
+        </div>
+    </footer>
 
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
