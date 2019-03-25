@@ -29,8 +29,10 @@ namespace MB.AgilePortfolio.MVCUI.ViewModels
         public DateTime LastUpdated { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DateCreated { get; set; }
+
         public void SendPasswordReset(string Email, string Subject, string ResetLink)
         {
+
             string html = "To reset your ProveIT account password click this link: <a href=\"" + ResetLink + "\">Reset Password</a><br/>If you did not attempt to reset your password please report this";
             html += HttpUtility.HtmlEncode(@"Or click on the copy the following link on the browser:" + ResetLink + "<br/> If you did not attempt to reset your password please report this");
             

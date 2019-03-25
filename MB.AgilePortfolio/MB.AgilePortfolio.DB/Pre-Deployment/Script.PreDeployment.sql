@@ -18,4 +18,5 @@ DROP TABLE IF EXISTS [dbo].tblProjectLanguage
 DROP TABLE IF EXISTS [dbo].tblScreenshot
 DROP TABLE IF EXISTS [dbo].tblUser
 DROP TABLE IF EXISTS [dbo].tblUserType
-DROP TABLE IF EXISTS [dbo].tblStatus
+DROP TABLE IF EXISTS [dbo].tblStatus 
+DROP TABLE IF EXISTS [dbo].tblForgotPassword

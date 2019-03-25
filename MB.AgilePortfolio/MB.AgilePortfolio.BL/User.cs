@@ -50,6 +50,33 @@ namespace MB.AgilePortfolio.BL
             Username = username;
         }
 
+        public Guid ForgotPasswordKeyGen(string email)
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    
+
+                    //Create a new row in the table for this forgotten password request
+                    tblForgotPassword fp = new tblForgotPassword();
+                    fp.Id = Guid.NewGuid();
+                    fp.UserId = dc.tblUsers.FirstOrDefault(u => u.Email == email).Id;
+                    fp.ExpirationDate = DateTime.Now.AddHours(2);
+
+                    dc.tblForgotPasswords.Add(fp);
+                    dc.SaveChanges();
+
+                    return fp.Id;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
         // To use when adding a user
         public User(string email, string password, string firstName, string lastName, Guid userTypeId, string username)
         {
@@ -262,6 +289,25 @@ namespace MB.AgilePortfolio.BL
             catch (Exception ex) { throw ex; }
         }
 
+        public int ChangeForgottenPassword(string password)
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    tblUser user = dc.tblUsers.Where(u => u.Id == Id).FirstOrDefault();
+                    if (user != null)
+                    {
+                            user.Password = GetHash(password, user.Id);
+                            return dc.SaveChanges();
+                    }
+                    else throw new Exception("User not found");
+                }
+            }
+            catch (Exception ex) { throw ex; }
+
+        }
+
         public bool CheckIfEmailExists(string email)
         {
             try
@@ -291,6 +337,34 @@ namespace MB.AgilePortfolio.BL
                 }
             }
             catch (Exception ex) { throw ex; }
+        }
+
+        public void LoadByForgottenPassRequestId(Guid forgottenPassId)
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    var forgotPasswordRow = dc.tblForgotPasswords.FirstOrDefault(fp => fp.Id == forgottenPassId);
+                    if (forgotPasswordRow != null)
+                    {
+                        //TO DO: EXPIRE TIMES
+
+                        this.Id = forgotPasswordRow.UserId;
+
+                    }
+                    else
+                    {
+                        //No user requested a password reset with this ID.
+                        this.Id = Guid.Empty;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                { throw ex; }
+            }
         }
 
         public void LoadById(Guid id)
@@ -367,5 +441,8 @@ namespace MB.AgilePortfolio.BL
             }
             catch (Exception ex) { throw ex; }
         }
+
+
+
     }
 }

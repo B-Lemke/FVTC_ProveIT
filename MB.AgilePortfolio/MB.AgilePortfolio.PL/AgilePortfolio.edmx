@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="brouchouddbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblForgotPassword">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ExpirationDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblLanguage">
           <Key>
             <PropertyRef Name="Id" />
@@ -112,6 +120,7 @@
         <Function Name="Screenshots_ViewData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="User_ViewData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="brouchouddbModelStoreContainer">
+          <EntitySet Name="tblForgotPassword" EntityType="Self.tblForgotPassword" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblLanguage" EntityType="Self.tblLanguage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblPortfolio" EntityType="Self.tblPortfolio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblPortfolioProject" EntityType="Self.tblPortfolioProject" Schema="dbo" store:Type="Tables" />
@@ -230,6 +239,7 @@
           <FunctionImport Name="ProtfolioProjects_ViewData" ReturnType="Collection(brouchouddbModel.ProtfolioProjects_ViewData_Result)" />
           <FunctionImport Name="Screenshots_ViewData" ReturnType="Collection(brouchouddbModel.Screenshots_ViewData_Result)" />
           <FunctionImport Name="User_ViewData" ReturnType="Collection(brouchouddbModel.User_ViewData_Result)" />
+          <EntitySet Name="tblForgotPasswords" EntityType="brouchouddbModel.tblForgotPassword" />
         </EntityContainer>
         <EntityType Name="tblUserType">
           <Key>
@@ -307,6 +317,14 @@
           <Property Type="String" Name="ProfileImage" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="Description" Nullable="false" MaxLength="255" />
         </ComplexType>
+        <EntityType Name="tblForgotPassword">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -510,6 +528,15 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="tblForgotPasswords">
+            <EntityTypeMapping TypeName="brouchouddbModel.tblForgotPassword">
+              <MappingFragment StoreEntitySet="tblForgotPassword">
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

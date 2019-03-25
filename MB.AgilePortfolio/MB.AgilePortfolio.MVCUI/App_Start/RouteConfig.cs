@@ -34,6 +34,13 @@ namespace MB.AgilePortfolio.MVCUI
             );
 
 
+
+            routes.MapRoute(
+                name: "ResetPassword",
+                url: "ResetPassword/{passwordResetId}",
+                defaults: new { controller = "Login", action = "ResetPassword", passwordResetId = UrlParameter.Optional }
+            );
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

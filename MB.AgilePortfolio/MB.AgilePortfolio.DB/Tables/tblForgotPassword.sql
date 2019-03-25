@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[tblForgotPassword]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [UserId] UNIQUEIDENTIFIER NOT NULL, 
+    [ExpirationDate] DATETIME NOT NULL
+)

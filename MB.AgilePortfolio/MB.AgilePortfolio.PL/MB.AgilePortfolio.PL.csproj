@@ -90,6 +90,9 @@
     <Compile Include="Screenshots_ViewData_Result.cs">
       <DependentUpon>AgilePortfolio.tt</DependentUpon>
     </Compile>
+    <Compile Include="tblForgotPassword.cs">
+      <DependentUpon>AgilePortfolio.tt</DependentUpon>
+    </Compile>
     <Compile Include="tblLanguage.cs">
       <DependentUpon>AgilePortfolio.tt</DependentUpon>
     </Compile>

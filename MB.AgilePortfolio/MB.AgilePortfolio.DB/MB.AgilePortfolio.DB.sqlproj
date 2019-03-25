@@ -84,6 +84,7 @@
     <Build Include="StoredProcedures\ProtfolioProjects_ViewData.sql" />
     <Build Include="StoredProcedures\ProjectLanguages_ViewData.sql" />
     <Build Include="StoredProcedures\Screenshots_ViewData.sql" />
+    <Build Include="Tables\tblForgotPassword.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="MB.AgilePortfolio.DB.refactorlog" />

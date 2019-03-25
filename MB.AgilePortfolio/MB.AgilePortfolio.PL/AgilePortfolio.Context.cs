@@ -37,6 +37,7 @@ namespace MB.AgilePortfolio.PL
         public virtual DbSet<tblUser> tblUsers { get; set; }
         public virtual DbSet<tblUserType> tblUserTypes { get; set; }
         public virtual DbSet<tblStatus> tblStatuses { get; set; }
+        public virtual DbSet<tblForgotPassword> tblForgotPasswords { get; set; }
     
         public virtual ObjectResult<Portfolio_ViewData_Result> Portfolio_ViewData(Nullable<System.Guid> projectId)
         {

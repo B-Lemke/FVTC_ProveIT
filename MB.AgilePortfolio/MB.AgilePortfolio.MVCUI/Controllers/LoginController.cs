@@ -77,14 +77,69 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
         }
 
+
         // POST: UserProfile/ForgotPassword
         [HttpPost]
         public ActionResult ForgotPassword(UserProfile lc)
         {
             try
             {
-                lc.SendPasswordReset(lc.Email, "ProveIT Account Password Reset", "http://testinglink.com");
+                lc.User = new User();
+                Guid linkId = lc.User.ForgotPasswordKeyGen(lc.Email);
+
+
+                lc.SendPasswordReset(lc.Email, "ProveIT Account Password Reset", "http://localhost:58140/ResetPassword/"+linkId.ToString());
                 return RedirectToAction("EmailSent", "Login", new { returnurl = HttpContext.Request.Url });
+            }
+            catch { return View(lc); }
+
+        }
+
+
+
+        public ActionResult ResetPassword(Guid passwordResetId)
+        {
+            try
+            {
+                UserProfile up = new UserProfile();
+                up.User = new User();
+                up.User.LoadByForgottenPassRequestId(passwordResetId);
+
+                if (up.User.Id != Guid.Empty)
+                {
+
+                    return View(up);
+                }
+                else
+                {
+                    //Invalid Id
+                    return RedirectToAction("Login", "Login");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
+        // POST: UserProfile/ForgotPassword
+        [HttpPost]
+        public ActionResult ResetPassword(UserProfile lc)
+        {
+            try
+            {
+               if(lc.ConfirmPassword == lc.User.Password)
+               {
+                    lc.User.ChangeForgottenPassword(lc.User.Password);
+                    //Password reset. TO DO, display the message here
+                    return RedirectToAction("Login", "Login");
+                }
+                else
+                {
+                    return View(lc);
+                }
             }
             catch { return View(lc); }
 
