@@ -19,5 +19,6 @@ namespace MB.AgilePortfolio.PL
         public string Description { get; set; }
         public string PortfolioImage { get; set; }
         public System.Guid UserId { get; set; }
+        public System.Guid PrivacyId { get; set; }
     }
 }
