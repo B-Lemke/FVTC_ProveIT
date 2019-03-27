@@ -29,6 +29,7 @@
           <Property Name="Description" Type="varchar" MaxLength="255" />
           <Property Name="PortfolioImage" Type="varchar" MaxLength="255" />
           <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PrivacyId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="tblPortfolioProject">
           <Key>
@@ -152,6 +153,7 @@
           <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="PortfolioImage" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="PrivacyId" Type="Guid" Nullable="false" />
         </EntityType>
         <EntityType Name="tblPortfolioProject">
           <Key>
@@ -342,6 +344,7 @@
           <EntitySetMapping Name="tblPortfolios">
             <EntityTypeMapping TypeName="brouchouddbModel.tblPortfolio">
               <MappingFragment StoreEntitySet="tblPortfolio">
+                <ScalarProperty Name="PrivacyId" ColumnName="PrivacyId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Description" ColumnName="Description" />

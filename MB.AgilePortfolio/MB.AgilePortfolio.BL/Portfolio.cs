@@ -18,6 +18,7 @@ namespace MB.AgilePortfolio.BL
         public Guid UserId { get; set; }
         [DisplayName("User")]
         public string UserEmail { get; set; }
+        public Guid PrivacyId { get; set; }
 
         public Portfolio() { }
 
