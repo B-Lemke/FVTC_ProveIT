@@ -30,6 +30,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 Portfolio = new Portfolio(),
                 User = new User()
             };
+
             if (Authenticate.IsAuthenticated())
             {
                 User userin = System.Web.HttpContext.Current.Session["user"] as User;
@@ -55,14 +56,15 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     User userin = System.Web.HttpContext.Current.Session["user"] as User;
                     pu.Portfolio.UserId = userin.Id;
                     pu.Portfolio.UserEmail = userin.Email;
-                    Portfolios.LoadbyUser(userin);
+                    portfolios.LoadbyUser(userin);
+
                     if (pu.Portfolio.Name == null)
                     {
                         ModelState.AddModelError(string.Empty, "Portfolio requires a name!");
                     }
                     else
                     {
-                        foreach (Portfolio p in Portfolios)
+                        foreach (Portfolio p in portfolios)
                         {
                             if (pu.Portfolio.Name == p.Name)
                             {
@@ -78,8 +80,9 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                         pu.User.LoadById(userin.Id);
                         return View(pu);
                     }
+
                     pu.Portfolio.Insert();
-                    return RedirectToAction("Index", "Admin", new { returnurl = HttpContext.Request.Url });
+                    return RedirectToAction("EditPortfolios", "UserProfile", new { returnurl = HttpContext.Request.Url });
                 }
             catch { return View(pu); }
             }

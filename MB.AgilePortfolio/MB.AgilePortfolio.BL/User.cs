@@ -56,18 +56,27 @@ namespace MB.AgilePortfolio.BL
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
-                    
-
                     //Create a new row in the table for this forgotten password request
+                    tblUser user = dc.tblUsers.Where(u => u.Email == email).FirstOrDefault();
                     tblForgotPassword fp = new tblForgotPassword();
-                    fp.Id = Guid.NewGuid();
-                    fp.UserId = dc.tblUsers.FirstOrDefault(u => u.Email == email).Id;
-                    fp.ExpirationDate = DateTime.Now.AddHours(2);
+                    ForgotPasswordList previouslinks = new ForgotPasswordList();
+                    previouslinks.ClearForgottenPasswordsByUser(user);
 
-                    dc.tblForgotPasswords.Add(fp);
-                    dc.SaveChanges();
+                    try
+                    {
+                            //User doesnt have reset link in DB currently
+                            fp.Id = Guid.NewGuid();
+                            fp.UserId = dc.tblUsers.FirstOrDefault(u => u.Email == email).Id;
+                            fp.ExpirationDate = DateTime.Now.AddHours(2);
 
-                    return fp.Id;
+                            dc.tblForgotPasswords.Add(fp);
+                            dc.SaveChanges();
+                            return fp.Id;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
                 }
             }
             catch (Exception ex)
@@ -275,7 +284,7 @@ namespace MB.AgilePortfolio.BL
                     tblUser user = dc.tblUsers.Where(u => u.Id == Id).FirstOrDefault();
                     if (user != null)
                     {
-                        if(user.Password == GetHash(oldpassword, user.Id))
+                        if (user.Password == GetHash(oldpassword, user.Id))
                         {
                             user.Password = GetHash(password, user.Id);
                             return dc.SaveChanges();
@@ -295,13 +304,18 @@ namespace MB.AgilePortfolio.BL
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
-                    tblUser user = dc.tblUsers.Where(u => u.Id == Id).FirstOrDefault();
-                    if (user != null)
+                    tblForgotPassword forgottenpass = dc.tblForgotPasswords.Where(u => u.UserId == Id).FirstOrDefault();
+                    if(DateTime.Now > forgottenpass.ExpirationDate)
                     {
+                        tblUser user = dc.tblUsers.Where(u => u.Id == Id).FirstOrDefault();
+                        if (user != null)
+                        {
                             user.Password = GetHash(password, user.Id);
                             return dc.SaveChanges();
+                        }
+                        else throw new Exception("User not found");
                     }
-                    else throw new Exception("User not found");
+                    else throw new Exception("Password Reset Link Expired");
                 }
             }
             catch (Exception ex) { throw ex; }
@@ -333,7 +347,7 @@ namespace MB.AgilePortfolio.BL
                         return Guid.Empty;
                     }
                     else return user.Id;
-         
+
                 }
             }
             catch (Exception ex) { throw ex; }
@@ -441,8 +455,6 @@ namespace MB.AgilePortfolio.BL
             }
             catch (Exception ex) { throw ex; }
         }
-
-
-
     }
 }
+

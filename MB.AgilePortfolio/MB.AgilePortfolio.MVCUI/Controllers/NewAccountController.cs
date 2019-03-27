@@ -13,23 +13,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         User user;
         UserList users;
 
-        /* GET: User
-        public ActionResult Index()
-        {
-            users = new UserList();
-            users.Load();
-            return View(users);
-        }
-
-        // GET: User/Details/5
-        public ActionResult Details(Guid id)
-        {
-            user = new User();
-            user.LoadById(id);
-            return View(user);
-        }
-        */
-
         // GET: User/Create
         public ActionResult Index()
         {
@@ -42,7 +25,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
             return View(uut);
         }
-
 
         // POST: User/Create
         [HttpPost]
@@ -58,17 +40,11 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 else if (uut.User.CheckIfEmailExists(uut.User.Email) == true)
                 {
                     ModelState.AddModelError(string.Empty, "Email Already Exists");
-
-                    // TODO:
-                    // REDIRECT TO LOGIN SCREEN HERE?
                 }
 
                 if (uut.User.CheckIfUsernameExists(uut.User.Username) != Guid.Empty)
                 {
                     ModelState.AddModelError(string.Empty, "Username Already Exists");
-
-                    // TODO:
-                    // REDIRECT TO LOGIN SCREEN HERE?
                 }
 
                 if (uut.User.FirstName == null)

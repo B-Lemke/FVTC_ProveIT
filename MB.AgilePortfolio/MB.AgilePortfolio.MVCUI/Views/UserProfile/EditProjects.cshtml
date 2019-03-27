@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit Projects</h2>
+<h2>View Projects</h2>
 
 
 @using (Html.BeginForm())
@@ -17,21 +17,29 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @foreach (var prj in Model.Projects)
+            @if (Model.Projects.Count < 1)
             {
-                <div class="form-group" align="center">
-                    <div class="col-md-10">
-                        @Html.ActionLink(
-                       prj.Name,
-                       "EditProject",
-                       "UserProfile",
-                       new { id = prj.Id },
-                       new { @class = "btn btn-primary"}
-                       )
-                        @Html.ValidationMessageFor(model => prj.Name, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+                <p align="center" style="font-style:italic">You have no projects currently</p>
             }
+            else
+            {
+                foreach (var prj in Model.Projects.OrderBy(i => i.Name))
+                {
+                    <div class="form-group" align="center">
+                        <div class="col-md-10">
+                            @Html.ActionLink(
+                           prj.Name,
+                           "EditProject",
+                           "UserProfile",
+                           new { id = prj.Id },
+                           new { @class = "btn btn-primary"}
+                           )
+                            @Html.ValidationMessageFor(model => prj.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                }
+            }
+
         </div>
     </div>
 }

@@ -15,25 +15,24 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h2>Are You Sure You Want to Delete @Model.Portfolio.Name?</h2>
-
+        <h2 align="center">Are You Sure You Want to Delete <span style="color:red">@Model.Portfolio.Name?</span></h2>
     </div>
-
 }
-@using (Html.BeginForm("DeletePortfolio", "UserProfile"))
+
+@using (Html.BeginForm("DeletePortfolio", "UserProfile")
 {
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Yes" class="btn btn-default" />
+    <div class="form-group" align="center">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-12">
+                <input type="submit" value="Yes" class="btn btn-primary" />
+                @using (Html.BeginForm())
+                {
+                    @Html.ActionLink("No", "EditPortfolio", null, null, new { @class = "btn btn-primary", @style = "margin-left:60px" })
+                }
+            </div>
         </div>
     </div>
-}
-@using (Html.BeginForm())
-{
-    <div>
-        @Html.ActionLink("No", "EditPortfolio")
-    </div>
-}
+ }
 
 <div>
     @Html.ActionLink("Back to Projects", "DeletePortfolio")

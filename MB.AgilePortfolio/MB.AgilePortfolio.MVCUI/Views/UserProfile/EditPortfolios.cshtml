@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit Portfolios</h2>
+<h2>View Portfolios</h2>
 
 
 @using (Html.BeginForm())
@@ -17,21 +17,29 @@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
-        @foreach (var portfolio in Model.Portfolios)
+        @if (Model.Portfolios.Count < 1)
         {
-            <div class="form-group" align="center">
-                <div class="col-md-10">
-                    @Html.ActionLink(
-                   portfolio.Name,
-                   "EditPortfolio",
-                   "UserProfile",
-                   new { id = portfolio.Id },
-                   new { @class = "btn btn-primary"}
-                   )
-                    @Html.ValidationMessageFor(model => portfolio.Name, "", new { @class = "text-danger" })
-                </div>
-            </div>
+            <p align="center" style="font-style:italic">You have no portfolios currently</p>
         }
+        else
+        {
+            foreach (var portfolio in Model.Portfolios.OrderBy(i => i.Name))
+            {
+                <div class="form-group" align="center">
+                    <div class="col-md-10">
+                        @Html.ActionLink(
+                       portfolio.Name,
+                       "EditPortfolio",
+                       "UserProfile",
+                       new { id = portfolio.Id },
+                       new { @class = "btn btn-primary"}
+                       )
+                        @Html.ValidationMessageFor(model => portfolio.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            }
+        }
+
 
     </div>
 

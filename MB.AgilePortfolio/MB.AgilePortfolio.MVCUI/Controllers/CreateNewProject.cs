@@ -33,6 +33,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             };
             ppus.Privacies.Load();
             ppus.Statuses.Load();
+
             if (Authenticate.IsAuthenticated())
             {
                 User userin = System.Web.HttpContext.Current.Session["user"] as User;
@@ -47,7 +48,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
         // POST: Project/Create
         [HttpPost]
-        public ActionResult Create(ProjectPrivaciesUserStatuses ppus)
+        public ActionResult Create(ProjectPrivaciesUserStatuses ppus, string returnurl)
         {
             //double check authentication
             if (Authenticate.IsAuthenticated())
@@ -59,6 +60,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     ppus.Project.UserId = userin.Id;
                     ppus.Project.UserEmail = userin.Email;
                     Projects.LoadbyUser(userin);
+
                     if (ppus.Project.Name == null)
                     {
                         ModelState.AddModelError(string.Empty, "Project requires a name!");
@@ -96,7 +98,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     }
 
                     ppus.Project.Insert();
-                    return RedirectToAction("Index", "Admin", new { returnurl = HttpContext.Request.Url });
+                    return RedirectToAction("EditProjects", "UserProfile", new { returnurl = HttpContext.Request.Url });
                 }
                 catch { return View(ppus); }
             }

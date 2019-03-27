@@ -25,18 +25,14 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 Projects = new ProjectList(),
                 User = new User()
             };
+
             if (Authenticate.IsAuthenticated())
             {
-
-
-                // REDIRECT TO PROFILE EDIT PAGE
-                //return RedirectToAction("EditProfile", "UserProfile", new { returnurl = HttpContext.Request.Url });
                 User userin = System.Web.HttpContext.Current.Session["user"] as User;
                 up.User.LoadById(userin.Id);
                 up.Projects.LoadbyUser(up.User);
 
-
-                // REDIRECT TO PROJECT EDIT PAGE AND REDIRECTION LOGIC HERE
+                // REDIRECT TO PROJECT EDIT PROFILE GET
                 return View(up);
 
             }
@@ -60,6 +56,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             };
 
             Guid idOfUser = up.User.CheckIfUsernameExists(username);
+
             if ( idOfUser != Guid.Empty)
             {
                 up.User.LoadById(idOfUser);
@@ -69,15 +66,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             up.Projects.LoadbyUser(up.User);
 
             return View(up);
-        }
-
-
-        // GET: UserProfile/Details/5
-        public ActionResult Details(Guid id)
-        {
-            user = new User();
-            user.LoadById(id);
-            return View(user);
         }
 
         public ActionResult EditProjects()
@@ -93,8 +81,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 up.User.LoadById(userin.Id);
                 up.Projects.LoadbyUser(up.User);
 
-
-                // REDIRECT TO PROJECT EDIT PAGE AND REDIRECTION LOGIC HERE
+                // REDIRECT TO PROJECT EDIT PAGE
                 return View(up);
             }
             else
@@ -128,6 +115,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     User = new User(),
                     Statuses = new StatusList()
                 };
+
                 if (Authenticate.IsAuthenticated())
                 {
                     up.Project.LoadById(ID);
@@ -190,7 +178,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
                     if (!ModelState.IsValid)
                     {
-                        //ppus.Project = new Project();
                         ppus.Privacies = new PrivacyList();
                         ppus.Statuses = new StatusList();
                         ppus.User = new User();
@@ -236,6 +223,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     User = new User(),
                     Statuses = new StatusList()
                 };
+
                 if (Authenticate.IsAuthenticated())
                 {
                     up.Project.LoadById(ID);
@@ -282,6 +270,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 Portfolios = new PortfolioList(),
                 User = new User()
             };
+
             if (Authenticate.IsAuthenticated())
             {
                 User userin = System.Web.HttpContext.Current.Session["user"] as User;
@@ -300,7 +289,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             return View();
         }
 
-        // GET: Edit User Protfolio Redirect (UserProfile/EditPortfolio)
+        // GET: Edit User Portfolio Redirect (UserProfile/EditPortfolio)
         public ActionResult EditPortfolio(Guid? id)
         {
             Guid ID = id.GetValueOrDefault();
@@ -323,6 +312,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     Portfolio = new Portfolio(),
                     User = new User()
                 };
+
                 if (Authenticate.IsAuthenticated())
                 {
                     up.Portfolio.LoadById(ID);
@@ -346,6 +336,35 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             {
                 try
                 {
+
+                    User userin = System.Web.HttpContext.Current.Session["user"] as User;
+                    PortfolioList Portfolios = new PortfolioList();
+                    Portfolios.LoadbyUser(userin);
+
+                    if (up.Portfolio.Name == null)
+                    {
+                        ModelState.AddModelError(string.Empty, "Portfolio requires a name!");
+                    }
+                    else
+                    {
+                        foreach (Portfolio p in Portfolios)
+                        {
+                            if (up.Portfolio.Name == p.Name)
+                            {
+                                if (up.Portfolio.Id != p.Id)
+                                {
+                                    ModelState.AddModelError(string.Empty, "Another portfolio already exists with this name!");
+                                }
+                            }
+                        }
+                    }
+
+                    if (!ModelState.IsValid)
+                    {
+                        up.User = new User();
+                        up.User.LoadById(userin.Id);
+                        return View(up);
+                    }
                     up.Portfolio.Update();
                     return RedirectToAction("EditPortfolios");
                 }
@@ -380,6 +399,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     Portfolio = new Portfolio(),
                     User = new User()
                 };
+
                 if (Authenticate.IsAuthenticated())
                 {
                     up.Project.LoadById(ID);
@@ -418,6 +438,38 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             }
         }
 
+        public ActionResult PortfolioDeleted(UserProfile up)
+        {
+            if (Authenticate.IsAuthenticated())
+            {
+                try
+                {
+                    return View(up);
+                }
+                catch { return View(up); } //NEEDS A WAY TO SHOW ERROR MESSAGE RETURN OF WRONG OLD PASSWORD ENTERED
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
+            }
+        }
+
+        public ActionResult ProjectDeleted(UserProfile up)
+        {
+            if (Authenticate.IsAuthenticated())
+            {
+                try
+                {
+                    return View(up);
+                }
+                catch { return View(up); } //NEEDS A WAY TO SHOW ERROR MESSAGE RETURN OF WRONG OLD PASSWORD ENTERED
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
+            }
+        }
+
         // GET: UserProfile/EditProfilePassword
         public ActionResult EditProfilePassword(Guid? id)
         {
@@ -441,6 +493,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     Portfolio = new Portfolio(),
                     User = new User()
                 };
+
                 if (Authenticate.IsAuthenticated())
                 {
                     User userin = System.Web.HttpContext.Current.Session["user"] as User;
@@ -472,16 +525,17 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     {
                         ModelState.AddModelError(string.Empty, "Password is required");
                     }
-                   
 
                     else if (up.User.Password.Length < 6)
                     {
                         ModelState.AddModelError(string.Empty, "Password needs to be at least 6 characters");
                     }
+
                     else if (up.User.Password.Length > 16)
                     {
                         ModelState.AddModelError(string.Empty, "Password needs to be less than 16 characters");
                     }
+
                     else if (up.ConfirmPassword != up.User.Password)
                     {
                         ModelState.AddModelError(string.Empty, "Passwords did not match");
@@ -550,6 +604,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             {
                 User userin = System.Web.HttpContext.Current.Session["user"] as User;
                 string currentemail = userin.Email;
+
                 if (up.User.Email == null)
                 {
                     ModelState.AddModelError(string.Empty, "Email address is required");
@@ -562,6 +617,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                         ModelState.AddModelError(string.Empty, "Email Already In Use");
                     }
                 }
+                //POSSIBLE ADD EMAIL VERIFICATION ON CHANGE EMAIL OR RELOGIN HERE
 
                 if (up.User.FirstName == null)
                 {
