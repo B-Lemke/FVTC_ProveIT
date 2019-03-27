@@ -1,0 +1,92 @@
+﻿body, html, body-content {
+    height: 100%;
+    margin: 0 !important;
+    width: 100%;
+
+}
+
+
+body {
+    background: #262e43;
+    background: linear-gradient(0deg, rgba(38,46,67,1) 0%, rgba(13,18,28,1) 100%, rgba(242,98,48,1) 100%);
+}
+.home-header {
+    background: url("/Assets//Images//Home/organizedWorkstationFancy.jpg");
+    min-height: 100%;
+    width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+.container.body-content {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    max-width: 100% !important;
+}
+
+.welcome-message {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 2rem;
+    transform: translate(-50%, -50%);
+    opacity: 0.9;
+}
+
+
+.what-we-do {
+    margin-top: 20px;
+    background: #262E43;
+}
+
+.welcome-text {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: 900;
+    font-size: 3rem;
+    text-transform: uppercase;
+}
+
+
+.footer-bar {
+    margin-top: 0px;
+}
+
+.home-screen-icon{
+    font-size: 8rem;
+    margin: 40px;
+
+}
+
+
+.section-header {
+    padding: 10px;
+    font-size: 2.4rem;
+    border-radius: 5px 5px 0px 0px;
+}
+
+.description-text {
+    font-size: 1.1rem;
+    margin-top: 0px;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.get-started {
+    margin-top: 20px;
+    background: #262E43;
+
+}
+
+.get-start-btn{
+    margin: 20px;
+}
+
+footer{
+    margin-top: 30px;
+}

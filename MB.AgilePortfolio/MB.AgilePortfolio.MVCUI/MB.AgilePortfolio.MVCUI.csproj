@@ -185,6 +185,16 @@
     <Compile Include="ViewModels\UserUserTypes.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Images\Home\board.jpg" />
+    <Content Include="Assets\Images\Home\calculators.jpg" />
+    <Content Include="Assets\Images\Home\fixingComputer.jpg" />
+    <Content Include="Assets\Images\Home\laptop.jpg" />
+    <Content Include="Assets\Images\Home\organizedWorkstationFancy.jpg" />
+    <Content Include="Assets\Images\Home\SEOPage.jpg" />
+    <Content Include="Assets\Images\Home\server.jpg" />
+    <Content Include="Assets\Images\Home\smartphones.jpg" />
+    <Content Include="Assets\Images\Home\spaceWithCode.jpg" />
+    <Content Include="Assets\Images\Home\twitter.jpg" />
     <Content Include="Assets\Images\UserProfiles\BroderickLemke.png" />
     <Content Include="Assets\Images\UserProfiles\Default.png" />
     <Content Include="Assets\Images\UserProfiles\fvtc.png" />
@@ -201,6 +211,7 @@
     <Content Include="Content\freelancer.min.css">
       <DependentUpon>freelancer.css</DependentUpon>
     </Content>
+    <Content Include="Content\HomePage.css" />
     <Content Include="Content\_footer.css">
       <DependentUpon>_footer.scss</DependentUpon>
     </Content>

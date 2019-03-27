@@ -1,9 +1,116 @@
-﻿
+﻿@section Styles
+{
+    <link href="~/Content/HomePage.css" type="text/css" rel="stylesheet" />
+}
+
+
 @{
     ViewBag.Title = "ProveIt";
 }
 
-<h2>ProveIt - Home</h2>
 
-This is our homepage.
 
+
+<div class="home-header">
+
+    <div class="container-fluid  text-light welcome-message">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="text-center col-md-8 bg-primary">
+                <h1 class="welcome-text">Welcome to <span class="text-secondary">ProveIT</span></h1>
+
+                <p>This is our homepage. Where's yours?</p>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Information about what you can do -->
+<div class="container text-center what-we-do">
+    <div class="row">
+        <div class="col-md-12 section-header text-primary bg-light"><h2 class="">What We Do</h2></div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <i class="fa fa-desktop home-screen-icon text-secondary"></i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 description-text ">
+                    Give IT Student and Professionals a Place to Showcase Projects
+                </div>
+                <hr />
+            </div>
+        </div>
+
+        <div class="col-md-4 container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <i class="fa fa-folder-open home-screen-icon text-secondary"></i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 description-text">
+                    Allow Users to Organize Projects into Portfolios
+                </div>
+                <hr />
+            </div>
+        </div>
+
+
+        <div class="col-md-4 container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <i class="fa fa-users home-screen-icon text-secondary"></i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 description-text">
+                    Create Connections Between Employers and Users to Get Them Jobs!
+                </div>
+                <hr />
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--Link out to the about page or to create account-->
+<div class="container get-started text-center ">
+    <div class="row">
+        <div class="col-md-12 section-header text-primary bg-light"><h2 class="">Ready to Get Started?</h2></div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <a href="~/Home/About" role="button">
+                <div class="btn-secondary btn-outline-light btn-lg get-start-btn" >
+                    I Want to Learn More
+                </div>
+            </a>
+        </div>
+        <div class="col-md-6">
+            <a href="~/NewAccount" role="button">
+                <div class="btn-secondary btn-outline-light btn-lg get-start-btn">
+                    Sign Me Up!
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div id="footerholder">
+
+</div>
+
+<script>
+    //Move the footer to the proper location on the screen because it wasn't working any other way, my god. Some day come back and fix this properly.
+    $(document).ready(function () {
+
+        $("#footerholder").append($("footer"));
+        console.log("ready!");
+    });
+</script>

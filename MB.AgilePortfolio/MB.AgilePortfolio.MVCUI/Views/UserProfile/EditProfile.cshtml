@@ -40,6 +40,9 @@
         </div>
     </div>
 
+    <!--
+        
+    Hide for our current deploy
     <div class="form-group">
         @Html.LabelFor(model => model.User.ProfileImage, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -47,6 +50,8 @@
             @Html.ValidationMessageFor(model => model.User.ProfileImage, "", new { @class = "text-danger" })
         </div>
     </div>
+    -->
+
 
     <div class="form-group">
         @Html.LabelFor(model => model.User.UserTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -55,7 +60,10 @@
             @Html.ValidationMessageFor(model => model.User.UserTypeId, "", new { @class = "text-danger" })
         </div>
     </div>
+    <!--
 
+
+    Hidden for the release
     <div class="form-group">
         @Html.ActionLink("Edit Projects", "EditProjects", null, null, new { @class = "btn btn-primary" })
         <div class="col-md-10">
@@ -70,6 +78,8 @@
         </div>
     </div>
 
+
+        -->
     <div class="form-group">
         @Html.ActionLink("Change Password", "EditProfilePassword", "UserProfile", new { id = Model.User.Id }, new { @class = "btn btn-primary" })
         <div class="col-md-10">
