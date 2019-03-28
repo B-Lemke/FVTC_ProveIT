@@ -88,7 +88,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 Guid linkId = lc.User.ForgotPasswordKeyGen(lc.Email);
 
 
-                lc.SendPasswordReset(lc.Email, "ProveIT Account Password Reset", "http://localhost:58140/ResetPassword/" + linkId.ToString());
+                lc.SendPasswordReset(lc.Email, "ProveIT Account Password Reset", "http://proveit.azurewebsites.net/ResetPassword/" + linkId.ToString());
                 return RedirectToAction("EmailSent", "Login", new { returnurl = HttpContext.Request.Url });
             }
             catch { return View(lc); }
