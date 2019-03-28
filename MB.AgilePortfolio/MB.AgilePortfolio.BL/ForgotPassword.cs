@@ -28,6 +28,53 @@ namespace MB.AgilePortfolio.BL
             ExpirationDate = expirationdate;
         }
 
+        public void LoadByUserId(Guid id)
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    var fg = (from f in dc.tblForgotPasswords
+                                join u in dc.tblUsers on f.UserId equals u.Id
+                                where u.Id == id
+                                select new
+                                {
+                                    f.Id,
+                                    f.ExpirationDate,
+                                    f.UserId,
+                                }).FirstOrDefault();
+                    if (fg != null)
+                    {
+                        Id = fg.Id;
+                        ExpirationDate = fg.ExpirationDate;
+                        UserId= fg.UserId;
+                    }
+                    else throw new Exception("Reset Link not found");
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+    
+
+    public int Delete()
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    tblForgotPassword fg = dc.tblForgotPasswords.Where(u => u.Id == Id).FirstOrDefault();
+                    if (fg != null)
+                    {
+                        dc.tblForgotPasswords.Remove(fg);
+                        return dc.SaveChanges();
+                    }
+                    else throw new Exception("User not found");
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+
     }
     public class ForgotPasswordList : List<ForgotPassword>
     {

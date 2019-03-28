@@ -42,8 +42,10 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             PortfolioUsers pu = new PortfolioUsers()
             {
                 Portfolio = new Portfolio(),
+                Privacies = new PrivacyList(),
                 Users = new UserList()
             };
+            pu.Privacies.Load();
             pu.Users.Load();
             return View(pu);
         }
@@ -67,9 +69,11 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             PortfolioUsers pu = new PortfolioUsers()
             {
                 Portfolio = new Portfolio(),
+                Privacies = new PrivacyList(),
                 Users = new UserList()
             };
             pu.Portfolio.LoadById(id);
+            pu.Privacies.Load();
             pu.Users.Load();
             return View(pu);
         }

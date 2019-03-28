@@ -3,7 +3,7 @@
 @{
     /**/
 
-    ViewBag.Title = "DeletePortfolio";
+    ViewBag.Title = "Delete Portfolio " + @Model.Portfolio.Name;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -19,7 +19,7 @@
     </div>
 }
 
-@using (Html.BeginForm("DeletePortfolio", "UserProfile")
+@using (Html.BeginForm("DeletePortfolio", "UserProfile"))
 {
     <div class="form-group" align="center">
         <div class="row">

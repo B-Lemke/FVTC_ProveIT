@@ -26,7 +26,7 @@
                     {
                         <img src="~/Assets/Images/UserProfiles/@Model.User.ProfileImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image" width="300px" class="rounded-circle" />
                     }
-                    else 
+                    else
                     {
                         <img src="~/Assets/Images/UserProfiles/Default.png" alt="Default Profile Image" width="300px" class="rounded-circle" />
                     }
@@ -35,6 +35,14 @@
         </div>
     </div>
 
+    <div class="form-group" align="center">
+        <div class="form-group">
+            @Html.ActionLink("View Projects", "EditProjects", null, null, new { @class = "btn btn-primary" })
+            @Html.ValidationMessageFor(model => model.Project.Name, "", new { @class = "text-danger" })
+            @Html.ActionLink("View Portfolios", "EditPortfolios", null, null, new { @class = "btn btn-primary" })
+            @Html.ValidationMessageFor(model => model.Portfolio.Name, "", new { @class = "text-danger" })
+        </div>
 
-</div>
+
+    </div>
 

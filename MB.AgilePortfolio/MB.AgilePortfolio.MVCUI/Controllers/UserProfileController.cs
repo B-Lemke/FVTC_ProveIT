@@ -8,6 +8,7 @@ using MB.AgilePortfolio.BL;
 using MB.AgilePortfolio.MVCUI.Models;
 using MB.AgilePortfolio.MVCUI.ViewModels;
 using System.Net;
+using System.ComponentModel.DataAnnotations;
 
 namespace MB.AgilePortfolio.MVCUI.Controllers
 {
@@ -15,6 +16,18 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
     {
         User user;
         public string Email;
+        public string FirstName;
+        public string LastName;
+        public string FullName;
+        public string ProfileImage;
+        public string Username;
+        public string UserTypesDescription;
+        public Guid UserTypesID;
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime LastUpdated { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime DateCreated { get; set; }
 
 
         // GET: UserProfile
@@ -186,7 +199,8 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                         ppus.Statuses.Load();
                         return View(ppus);
                     }
-
+                    ppus.Project.DateCreated = ppus.DateCreated;
+                    ppus.Project.LastUpdated = ppus.LastUpdated;
                     ppus.Project.Update();
                     return RedirectToAction("EditProjects");
                 }
@@ -268,6 +282,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             UserProfile up = new UserProfile()
             {
                 Portfolios = new PortfolioList(),
+                Privacies = new PrivacyList(),
                 User = new User()
             };
 
@@ -310,15 +325,19 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 UserProfile up = new UserProfile()
                 {
                     Portfolio = new Portfolio(),
+                    Privacies = new PrivacyList(),
                     User = new User()
                 };
 
                 if (Authenticate.IsAuthenticated())
                 {
+
                     up.Portfolio.LoadById(ID);
+                    Portfolio portfolio = new Portfolio();
+                    portfolio.LoadById(up.Portfolio.Id);
+                    up.Privacies.Load();
                     User userin = System.Web.HttpContext.Current.Session["user"] as User;
                     up.User.LoadById(userin.Id);
-
                     return View(up);
                 }
                 else
@@ -361,8 +380,10 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
                     if (!ModelState.IsValid)
                     {
+                        up.Privacies = new PrivacyList();
                         up.User = new User();
                         up.User.LoadById(userin.Id);
+                        up.Privacies.Load();
                         return View(up);
                     }
                     up.Portfolio.Update();
@@ -376,7 +397,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             }
         }
 
-        // GET: UserProfile/DeleteProject
+        // GET: UserProfile/DeletePortfolio
         public ActionResult DeletePortfolio(Guid? id)
         {
             Guid ID = id.GetValueOrDefault();
@@ -397,16 +418,16 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 UserProfile up = new UserProfile()
                 {
                     Portfolio = new Portfolio(),
+                    Privacies = new PrivacyList(),
                     User = new User()
                 };
 
                 if (Authenticate.IsAuthenticated())
                 {
-                    up.Project.LoadById(ID);
+                    up.Portfolio.LoadById(ID);
                     up.Privacies.Load();
                     User userin = System.Web.HttpContext.Current.Session["user"] as User;
                     up.User.LoadById(userin.Id);
-                    up.Statuses.Load();
                     return View(up);
                 }
                 else
@@ -603,7 +624,40 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             try
             {
                 User userin = System.Web.HttpContext.Current.Session["user"] as User;
+                FirstName = up.User.FirstName;
+                LastName = up.User.LastName;
+                Email = up.User.Email;
+                UserTypesID = up.User.UserTypeId;
+                UserTypesDescription = up.User.UserTypeDescription;
+                ProfileImage = up.User.ProfileImage;
+                Username = up.User.Username;
+                User user = new User();
+                user.LoadById(userin.Id);
+                up.User = user;
+                up.User.ProfileImage = ProfileImage;
+                up.User.Username = Username;
+                up.User.Email = Email;
+                up.User.FirstName = FirstName;
+                up.User.LastName = LastName;
+                up.User.UserTypeId = UserTypesID;
+                up.User.UserTypeDescription = UserTypesDescription;
                 string currentemail = userin.Email;
+                string currentUsername = userin.Username;
+
+
+
+                if (up.User.Username == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Username is required");
+                }
+
+                else if (up.User.Username != currentUsername)
+                {
+                    if (up.User.CheckIfUsernameExists(up.User.Username) != Guid.Empty)
+                    {
+                        ModelState.AddModelError(string.Empty, "Username Already Exists");
+                    }
+                }
 
                 if (up.User.Email == null)
                 {
@@ -635,10 +689,9 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     up.UserTypes.LoadNonAdmin();
                     return View(up);
                 }
-                up.User.Id = userin.Id;
                 up.User.Update();
 
-                //TODO: Needs Redirect to confimration or Confirmation message of saved changes here!
+                //TODO: Possible Redirect to confimration or Confirmation message of saved changes here!
                 return RedirectToAction("Index", "UserProfile", new { returnurl = HttpContext.Request.Url });
             }
             catch

@@ -64,14 +64,14 @@ namespace MB.AgilePortfolio.BL
 
                     try
                     {
-                            //User doesnt have reset link in DB currently
-                            fp.Id = Guid.NewGuid();
-                            fp.UserId = dc.tblUsers.FirstOrDefault(u => u.Email == email).Id;
-                            fp.ExpirationDate = DateTime.Now.AddHours(2);
+                        //User doesnt have reset link in DB currently
+                        fp.Id = Guid.NewGuid();
+                        fp.UserId = dc.tblUsers.FirstOrDefault(u => u.Email == email).Id;
+                        fp.ExpirationDate = DateTime.Now.AddHours(2);
 
-                            dc.tblForgotPasswords.Add(fp);
-                            dc.SaveChanges();
-                            return fp.Id;
+                        dc.tblForgotPasswords.Add(fp);
+                        dc.SaveChanges();
+                        return fp.Id;
                     }
                     catch (Exception ex)
                     {
@@ -305,7 +305,7 @@ namespace MB.AgilePortfolio.BL
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
                     tblForgotPassword forgottenpass = dc.tblForgotPasswords.Where(u => u.UserId == Id).FirstOrDefault();
-                    if(DateTime.Now > forgottenpass.ExpirationDate)
+                    if ((DateTime.Now) < (forgottenpass.ExpirationDate))
                     {
                         tblUser user = dc.tblUsers.Where(u => u.Id == Id).FirstOrDefault();
                         if (user != null)

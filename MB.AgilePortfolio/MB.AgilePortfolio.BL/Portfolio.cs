@@ -18,11 +18,14 @@ namespace MB.AgilePortfolio.BL
         public Guid UserId { get; set; }
         [DisplayName("User")]
         public string UserEmail { get; set; }
+        [DisplayName("Privacy")]
         public Guid PrivacyId { get; set; }
+        [DisplayName("Privacy")]
+        public string PrivacyDescription { get; set; }
 
         public Portfolio() { }
 
-        public Portfolio(Guid id, string name, string description, string portfolioImage, Guid userId, string email)
+        public Portfolio(Guid id, string name, string description, string portfolioImage, Guid userId, string email, string privacy, Guid privacyId)
         {
             Id = id;
             Name = name;
@@ -30,6 +33,8 @@ namespace MB.AgilePortfolio.BL
             PortfolioImage = portfolioImage;
             UserId = userId;
             UserEmail = email;
+            PrivacyDescription = privacy;
+            PrivacyId = privacyId;
         }
 
         public int Insert()
@@ -44,7 +49,9 @@ namespace MB.AgilePortfolio.BL
                         Name = Name,
                         Description = Description,
                         PortfolioImage = PortfolioImage,
+                        PrivacyId = PrivacyId,
                         UserId = UserId
+
                     };
                     //Save the Id
                     this.Id = portfolio.Id;
@@ -85,8 +92,10 @@ namespace MB.AgilePortfolio.BL
                     {
                         portfolio.Name = Name;
                         portfolio.Description = Description;
+                        portfolio.PrivacyId = PrivacyId;
                         portfolio.PortfolioImage = PortfolioImage;
                         portfolio.UserId = UserId;
+
                         return dc.SaveChanges();
                     }
                     else throw new Exception("Portfolio not found");
@@ -102,7 +111,8 @@ namespace MB.AgilePortfolio.BL
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
                     var portfolio = (from p in dc.tblPortfolios
-                                join u in dc.tblUsers on p.UserId equals u.Id
+                                     join pr in dc.tblPrivacies on p.PrivacyId equals pr.Id
+                                     join u in dc.tblUsers on p.UserId equals u.Id
                                 where p.Id == id
                                 select new
                                 {
@@ -111,6 +121,8 @@ namespace MB.AgilePortfolio.BL
                                     p.Description,
                                     p.PortfolioImage,
                                     p.UserId,
+                                    p.PrivacyId,
+                                    Privacy = pr.Description,
                                     u.Email
                                 }).FirstOrDefault();
                     if (portfolio != null)
@@ -118,9 +130,11 @@ namespace MB.AgilePortfolio.BL
                         Id = portfolio.Id;
                         Name = portfolio.Name;
                         Description = portfolio.Description;
+                        PrivacyId = portfolio.PrivacyId;
                         PortfolioImage = portfolio.PortfolioImage;
                         UserId = portfolio.UserId;
                         UserEmail = portfolio.Email;
+                        PrivacyDescription = portfolio.Privacy;
                     }
                     else throw new Exception("Portfolio not found");
                 }
@@ -139,20 +153,23 @@ namespace MB.AgilePortfolio.BL
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
                     var portfolios = (from p in dc.tblPortfolios
+                                      join pr in dc.tblPrivacies on p.PrivacyId equals pr.Id
                                       join u in dc.tblUsers on p.UserId equals u.Id
                                       where p.UserId == user.Id || user.Id == null
                                       select new
                                       {
                                           p.Id,
                                           p.Name,
+                                          p.PrivacyId,
                                           p.Description,
                                           p.PortfolioImage,
                                           p.UserId,
-                                          u.Email
+                                          u.Email,
+                                          Privacy = pr.Description
                                       }).OrderByDescending(p => p.Name).ToList();
                     foreach (var p in portfolios)
                     {
-                        Portfolio portfolio = new Portfolio(p.Id, p.Name, p.Description, p.PortfolioImage, p.UserId, p.Email);
+                        Portfolio portfolio = new Portfolio(p.Id, p.Name, p.Description, p.PortfolioImage, p.UserId, p.Email, p.Privacy, p.PrivacyId);
                         Add(portfolio);
                     }
                 }
@@ -167,7 +184,8 @@ namespace MB.AgilePortfolio.BL
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
                     var portfolios = (from p in dc.tblPortfolios
-                                 join u in dc.tblUsers on p.UserId equals u.Id
+                                      join pr in dc.tblPrivacies on p.PrivacyId equals pr.Id
+                                      join u in dc.tblUsers on p.UserId equals u.Id
                                  //where p.UserId == id || id == null
                                  select new
                                  {
@@ -176,11 +194,13 @@ namespace MB.AgilePortfolio.BL
                                      p.Description,
                                      p.PortfolioImage,
                                      p.UserId,
+                                     p.PrivacyId,
+                                     Privacy = pr.Description,
                                      u.Email
                                  }).OrderByDescending(p => p.Name).ToList();
                     foreach (var p in portfolios)
                     {
-                        Portfolio portfolio = new Portfolio(p.Id, p.Name, p.Description, p.PortfolioImage, p.UserId, p.Email);
+                        Portfolio portfolio = new Portfolio(p.Id, p.Name, p.Description, p.PortfolioImage, p.UserId, p.Email, p.Privacy, p.PrivacyId);
                         Add(portfolio);
                     }
                 }

@@ -28,9 +28,10 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             PortfolioUsers pu = new PortfolioUsers()
             {
                 Portfolio = new Portfolio(),
+                Privacies = new PrivacyList(),
                 User = new User()
             };
-
+            pu.Privacies.Load();
             if (Authenticate.IsAuthenticated())
             {
                 User userin = System.Web.HttpContext.Current.Session["user"] as User;
@@ -77,6 +78,8 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     {
                         pu.Portfolio = new Portfolio();
                         pu.User = new User();
+                        pu.Privacies = new PrivacyList();
+                        pu.Privacies.Load();
                         pu.User.LoadById(userin.Id);
                         return View(pu);
                     }

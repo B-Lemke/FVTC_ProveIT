@@ -72,7 +72,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         {
             UserProfile lc = new UserProfile();
 
-            
+
             return View(lc);
 
         }
@@ -88,7 +88,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 Guid linkId = lc.User.ForgotPasswordKeyGen(lc.Email);
 
 
-                lc.SendPasswordReset(lc.Email, "ProveIT Account Password Reset", "http://localhost:58140/ResetPassword/"+linkId.ToString());
+                lc.SendPasswordReset(lc.Email, "ProveIT Account Password Reset", "http://localhost:58140/ResetPassword/" + linkId.ToString());
                 return RedirectToAction("EmailSent", "Login", new { returnurl = HttpContext.Request.Url });
             }
             catch { return View(lc); }
@@ -97,13 +97,18 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
 
 
-        public ActionResult ResetPassword(Guid passwordResetId)
+        public ActionResult ResetPassword(Guid? passwordResetId)
         {
+            Guid ID = passwordResetId.GetValueOrDefault();
+            if (ID == Guid.Empty)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             try
             {
                 UserProfile up = new UserProfile();
                 up.User = new User();
-                up.User.LoadByForgottenPassRequestId(passwordResetId);
+                up.User.LoadByForgottenPassRequestId(ID);
 
                 if (up.User.Id != Guid.Empty)
                 {
@@ -113,7 +118,8 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 else
                 {
                     //Invalid Id
-                    return RedirectToAction("Index", "Login");
+                    ViewBag.Message = "Reset Link was Invalid";
+                    return RedirectToAction("ResetPasswordInvalid", "Login");
                 }
             }
             catch (Exception ex)
@@ -130,19 +136,109 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         {
             try
             {
-               if(lc.ConfirmPassword == lc.User.Password)
-               {
-                    lc.User.ChangeForgottenPassword(lc.User.Password);
-                    //Password reset. TO DO, display the message here
-                    return RedirectToAction("Index", "Login");
+                ForgotPassword fg = new ForgotPassword();
+                fg.LoadByUserId(lc.User.Id);
+
+                if (fg != null)
+                {
+                    if (DateTime.Now > fg.ExpirationDate)
+                    {
+                        ViewBag.Message = "Reset Link has Expired";
+                        fg.Delete();
+                        return View(lc);
+                    }
+                    else
+                    {
+                        if (lc.User.Password == null)
+                        {
+                            ModelState.AddModelError(string.Empty, "Password is required");
+                        }
+
+                        if (lc.User.Password == null)
+                        {
+                            ModelState.AddModelError(string.Empty, "Password is required");
+                        }
+
+                        else if (lc.User.Password.Length < 6)
+                        {
+                            ModelState.AddModelError(string.Empty, "Password needs to be at least 6 characters");
+                        }
+
+                        else if (lc.User.Password.Length > 16)
+                        {
+                            ModelState.AddModelError(string.Empty, "Password needs to be less than 16 characters");
+                        }
+
+                        else if (lc.ConfirmPassword != lc.User.Password)
+                        {
+                            ModelState.AddModelError(string.Empty, "Passwords did not match");
+                        }
+
+                        if (!ModelState.IsValid)
+                        {
+                            return View(lc);
+                        }
+                        else
+                        {
+                            if (lc.ConfirmPassword == lc.User.Password)
+                            {
+                                lc.User.ChangeForgottenPassword(lc.User.Password);
+
+                                //DELETE ON SUCCESSFUL USE
+                                fg.Delete();
+
+                                return RedirectToAction("ResetPasswordSuccess", "Login");
+                            }
+                            else
+                            {
+                                ViewBag.Message = "Passwords need to match";
+                                return View(lc);
+                            }
+                        }
+                    }
                 }
                 else
                 {
+                    ViewBag.Message = "Reset Link Doesn't Exist";
                     return View(lc);
                 }
-            }
-            catch { return View(lc); }
 
+
+            }
+            catch
+            {
+                ViewBag.Message = "Error Occured While Attempted to Reset Password";
+                return View(lc);
+            }
+
+        }
+
+        public ActionResult ResetPasswordSuccess()
+        {
+            try
+            {
+                UserProfile up = new UserProfile();
+                return View(up);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public ActionResult ResetPasswordInvalid()
+        {
+            try
+            {
+                UserProfile up = new UserProfile();
+                return View(up);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
     }
 }
