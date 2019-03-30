@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using MB.AgilePortfolio.BL;
 using MB.AgilePortfolio.MVCUI.ViewModels;
+using MB.AgilePortfolio.MVCUI.Models;
+using System.IO;
 
 namespace MB.AgilePortfolio.MVCUI.Controllers
 {
@@ -12,7 +14,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
     {
         Screenshot screenshot;
         ScreenshotList screenshots;
-        
+
         // GET: Screenshot
         public ActionResult Index()
         {
@@ -106,11 +108,72 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
+                Screenshot ss = new Screenshot();
+                ss.LoadById(s.Id);
                 s.Delete();
-                return RedirectToAction("Index");
+                return RedirectToAction("UploadProjectSliderImage", new { id = ss.ProjectId });
             }
             catch { return View(s); }
+        }
+
+        // GET: Admin
+        public ActionResult UploadProjectSliderImage(Guid? id)
+        {
+            if (Authenticate.IsAuthenticated())
+            {
+                Guid ID = id.GetValueOrDefault();
+                if (ID == Guid.Empty)
+                {
+                    if (Authenticate.IsAuthenticated())
+                    {
+                        return RedirectToAction("EditProjects", "UserProfile", new { returnurl = HttpContext.Request.Url });
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
+                    }
+                }
+
+                ScreenshotList sliderimages = new ScreenshotList();
+                sliderimages.LoadbyProjectID(ID);
+
+                return View(sliderimages);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+
+        [HttpPost]
+        public ActionResult UploadProjectSliderImage(Guid id, HttpPostedFileBase fileupload)
+        {
+
+            if (fileupload != null)
+            {
+                User userin = System.Web.HttpContext.Current.Session["user"] as User;
+                string username = userin.Username;
+                string fileName = Path.GetFileName(fileupload.FileName);
+                if (Directory.Exists("~/Images/ScreenShots/" + username))
+                {
+
+                }
+                else
+                {
+                    //THIS IS HAVING ISSUES  LOCALLY
+                    Directory.CreateDirectory(Server.MapPath("~/Images/ScreenShots/" + username));
+                }
+                fileupload.SaveAs(Server.MapPath("~/Images/ScreenShots/" + username + "/" + fileName));
+                Screenshot ss = new Screenshot();
+
+                ss.ProjectId = id;
+                // ss.FilePath = Server.MapPath(~/Images/ScreenShots/" + username + "/" + fileName);
+
+                ss.FilePath = "Images/ScreenShots/" + username + "/" + fileName;
+                ss.Insert();
+            }
+            return RedirectToAction("UploadProjectSliderImage");
         }
     }
 }

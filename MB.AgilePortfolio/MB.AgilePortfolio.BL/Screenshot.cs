@@ -11,7 +11,8 @@ namespace MB.AgilePortfolio.BL
     public class Screenshot
     {
         public Guid Id { get; set; }
-        public string Filepath { get; set; }
+        [DisplayName( "File Name")]
+        public string FilePath { get; set; }
         [DisplayName("Project")]
         public Guid ProjectId { get; set; }
         [DisplayName("Project Name")]
@@ -22,7 +23,7 @@ namespace MB.AgilePortfolio.BL
         public Screenshot(Guid id, string filepath, Guid projectId, string projectName)
         {
             Id = id;
-            Filepath = filepath;
+            FilePath = filepath;
             ProjectId = projectId;
             ProjectName = projectName;
         }
@@ -36,7 +37,7 @@ namespace MB.AgilePortfolio.BL
                     tblScreenshot screenshot = new tblScreenshot()
                     {
                         Id = Guid.NewGuid(),
-                        Filepath = Filepath,
+                        Filepath = FilePath,
                         ProjectId = ProjectId
                     };
                     //Save the Id
@@ -76,7 +77,7 @@ namespace MB.AgilePortfolio.BL
                     tblScreenshot screenshot = dc.tblScreenshots.Where(s => s.Id == Id).FirstOrDefault();
                     if (screenshot != null)
                     {
-                        screenshot.Filepath = Filepath;
+                        screenshot.Filepath = FilePath;
                         screenshot.ProjectId = ProjectId;
                         return dc.SaveChanges();
                     }
@@ -94,18 +95,18 @@ namespace MB.AgilePortfolio.BL
                 {
                     var screenshot = (from s in dc.tblScreenshots
                                       join p in dc.tblProjects on s.ProjectId equals p.Id
-                                     where s.Id == id
-                                     select new
-                                     {
-                                         s.Id,
-                                         s.Filepath,
-                                         s.ProjectId,
-                                         p.Name
-                                     }).FirstOrDefault();
+                                      where s.Id == id
+                                      select new
+                                      {
+                                          s.Id,
+                                          s.Filepath,
+                                          s.ProjectId,
+                                          p.Name
+                                      }).FirstOrDefault();
                     if (screenshot != null)
                     {
                         Id = screenshot.Id;
-                        Filepath = screenshot.Filepath;
+                        FilePath = screenshot.Filepath;
                         ProjectId = screenshot.ProjectId;
                         ProjectName = screenshot.Name;
                     }
@@ -119,6 +120,72 @@ namespace MB.AgilePortfolio.BL
     public class ScreenshotList : List<Screenshot>
     {
 
+        public void LoadbyUserID(Guid id)
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    var screenshots = (from s in dc.tblScreenshots
+                                    join p in dc.tblProjects on s.ProjectId equals p.Id
+                                    join u in dc.tblUsers on p.UserId equals u.Id
+                                    //join pr in dc.tblPrivacies on p.PrivacyId equals pr.Id
+                                    where p.UserId == id || id == null
+                                    select new
+                                    {
+                                        s.Id,
+                                        s.Filepath,
+                                        s.ProjectId,
+                                        p.Name
+
+                                        // p.PrivacyId,
+
+                                        // Privacy = pr.Description,
+
+                                    }).OrderByDescending(p => p.Id).ToList();
+                    foreach (var s in screenshots)
+                    {
+                        Screenshot screenshot = new Screenshot(s.Id, s.Filepath, s.ProjectId, s.Name);
+                        Add(screenshot);
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        public void LoadbyProjectID(Guid id)
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    var screenshots = (from s in dc.tblScreenshots
+                                       join p in dc.tblProjects on s.ProjectId equals p.Id
+                                       join u in dc.tblUsers on p.UserId equals u.Id
+                                       //join pr in dc.tblPrivacies on p.PrivacyId equals pr.Id
+                                       where p.Id == id || id == null
+                                       select new
+                                       {
+                                           s.Id,
+                                           s.Filepath,
+                                           s.ProjectId,
+                                           p.Name
+
+                                           // p.PrivacyId,
+
+                                           // Privacy = pr.Description,
+
+                                       }).OrderByDescending(p => p.Id).ToList();
+                    foreach (var s in screenshots)
+                    {
+                        Screenshot screenshot = new Screenshot(s.Id, s.Filepath, s.ProjectId, s.Name);
+                        Add(screenshot);
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
         public void Load()
         {
             try
@@ -126,15 +193,15 @@ namespace MB.AgilePortfolio.BL
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
                     var screenshots = (from s in dc.tblScreenshots
-                                      join p in dc.tblProjects on s.ProjectId equals p.Id
-                                      //where s.ProjectId == id || id == null
-                                      select new
-                                      {
-                                          s.Id,
-                                          s.Filepath,
-                                          s.ProjectId,
-                                          p.Name
-                                      }).OrderByDescending(p => p.Filepath).ToList();
+                                       join p in dc.tblProjects on s.ProjectId equals p.Id
+                                       //where s.ProjectId == id || id == null
+                                       select new
+                                       {
+                                           s.Id,
+                                           s.Filepath,
+                                           s.ProjectId,
+                                           p.Name
+                                       }).OrderByDescending(p => p.Filepath).ToList();
                     foreach (var s in screenshots)
                     {
                         Screenshot screenshot = new Screenshot(s.Id, s.Filepath, s.ProjectId, s.Name);

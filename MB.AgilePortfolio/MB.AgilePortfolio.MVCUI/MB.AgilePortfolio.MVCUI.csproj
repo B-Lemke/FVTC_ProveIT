@@ -391,9 +391,11 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Login\ResetPasswordSuccess.cshtml" />
     <Content Include="Views\Login\ResetPasswordInvalid.cshtml" />
+    <Content Include="Views\Screenshot\UploadProjectSliderImage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Assets\Images\ScreenShots\" />
     <Folder Include="Views\PublicPages\" />
   </ItemGroup>
   <ItemGroup>
