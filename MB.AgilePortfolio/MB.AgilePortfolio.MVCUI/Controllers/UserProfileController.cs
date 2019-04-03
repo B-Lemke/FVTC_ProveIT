@@ -70,7 +70,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
             Guid idOfUser = up.User.CheckIfUsernameExists(username);
 
-            if ( idOfUser != Guid.Empty)
+            if (idOfUser != Guid.Empty)
             {
                 up.User.LoadById(idOfUser);
             }
@@ -96,6 +96,47 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
                 // REDIRECT TO PROJECT EDIT PAGE
                 return View(up);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
+            }
+        }
+        // GET: UserProfile/PublicProject
+        public ActionResult PublicProject(Guid? id)
+        {
+            Guid ID = id.GetValueOrDefault();
+
+            ScreenshotProjects sp = new ScreenshotProjects()
+            {
+                Project = new Project(),
+                Privacy = new Privacy(),
+                ScreenshotList = new ScreenshotList(),
+                User = new User(),
+                Status = new Status()
+            };
+
+            sp.Project.LoadById(ID);
+            sp.ScreenshotList.LoadbyProjectID(ID);
+
+            return View(sp);
+
+
+        }
+
+        // POST: UserProfile/PublicProject
+        [HttpPost]
+        public ActionResult PublicProject(Guid id, ScreenshotProjects ppus)
+        {
+            if (Authenticate.IsAuthenticated())
+            {
+                try
+                {
+                    return View(ppus);
+
+
+                }
+                catch { return View(ppus); }
             }
             else
             {
@@ -157,7 +198,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             {
                 try
                 {
-                    
+
                     User userin = System.Web.HttpContext.Current.Session["user"] as User;
                     ProjectList Projects = new ProjectList();
                     Projects.LoadbyUser(userin);
@@ -171,11 +212,11 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                         {
                             if (ppus.Project.Name == p.Name)
                             {
-                                if(ppus.Project.Id != p.Id)
+                                if (ppus.Project.Id != p.Id)
                                 {
                                     ModelState.AddModelError(string.Empty, "Another project already exists with this name!");
                                 }
-                                
+
                             }
                         }
 
@@ -183,7 +224,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                         {
                             ModelState.AddModelError(string.Empty, "Date Created required!");
                         }
-                        else if(ppus.LastUpdated == null)
+                        else if (ppus.LastUpdated == null)
                         {
                             ppus.LastUpdated = ppus.DateCreated;
                         }
@@ -572,7 +613,8 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     ModelState.Clear();
                     return RedirectToAction("PasswordUpdated");
                 }
-                catch {
+                catch
+                {
                     ModelState.AddModelError("Password", "Incorrect Password");
                     return RedirectToAction("EditProfilePassword");
                 }

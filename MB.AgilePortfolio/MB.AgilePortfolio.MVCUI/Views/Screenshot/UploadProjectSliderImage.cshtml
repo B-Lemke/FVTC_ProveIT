@@ -1,4 +1,4 @@
-﻿@model MB.AgilePortfolio.BL.ScreenshotList
+﻿@model MB.AgilePortfolio.MVCUI.ViewModels.ScreenshotProjects
 @{
     ViewBag.Title = "Upload Project Images";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -9,11 +9,8 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Upload Project Images</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <script src="~/scripts/jquery-3.3.1.min.js"></script>
     <script src="~/scripts/bootstrap.min.js"></script>
-    <link href="~/Content/dataTables.bootstrap4.min.css" rel="stylesheet" />
     <script src="~/scripts/jquery.dataTables.min.js"></script>
     <script src="~/scripts/dataTables.bootstrap4.min.js"></script>
     <script type="text/javascript">
@@ -33,15 +30,15 @@
 
     <div class="container py-4">
         @{ string title = "";}
-        @foreach (var item in Model)
+        @foreach (var item in Model.ScreenshotList)
         {
             title = item.ProjectName;
         }
-        
+
         <div id="demo" class="carousel slide" data-ride="carousel">
             <ul class="carousel-indicators">
 
-                @foreach (var item in Model.Select((value, a) => new { a, value }))
+                @foreach (var item in Model.ScreenshotList.Select((value, a) => new { a, value }))
                 {
                     if (item.a == 0)
                     {
@@ -56,7 +53,7 @@
             </ul>
             <div class="carousel-inner" role="listbox">
                 @{int i = 0; }
-                @foreach (var item in Model)
+                @foreach (var item in Model.ScreenshotList)
                 {
                     i++;
                     var active = i == 1 ? "active" : "";
@@ -92,13 +89,11 @@
                                 <div class="modal-body">
                                     @using (Html.BeginForm("UploadProjectSliderImage", "Screenshot", FormMethod.Post, new { enctype = "multipart/form-data" }))
                                     {
-
                                         <div class="form-group">
                                             <label>Choose File:</label>
                                             <div class="input-group">
                                                 <div class="custom-file">
-                                                    <input type="file" id="fileupload" name="fileupload" class="custom-file-input" />
-                                                    <label class="custom-file-label"></label>
+                                                    @Html.TextBoxFor(model => model.Fileupload, new { type = "file", id = "fileupload", name = "fileupload", accept = ".jpg, .jpeg, .gif, .png" })
                                                 </div>
                                                 <div class="input-group-append">
                                                     <input type="submit" id="btnUpload" class="btn btn-secondary" value="Upload" />
@@ -123,13 +118,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
+                        @foreach (var item in Model.ScreenshotList)
                         {
                             string[] pathArr = item.FilePath.Split('/');
                             string Fp = pathArr.Last().ToString();
                             <tr>
                                 <td>@Fp</td>
-                                <td>@item.ProjectName</td>
                                 <td>
                                     <img src="@Url.Content("~/" + @item.FilePath)" alt="" width="80" height="60" class="img-thumbnail" />
                                 </td>

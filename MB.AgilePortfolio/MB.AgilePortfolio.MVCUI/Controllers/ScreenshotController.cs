@@ -133,11 +133,13 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                         return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
                     }
                 }
-
-                ScreenshotList sliderimages = new ScreenshotList();
-                sliderimages.LoadbyProjectID(ID);
-
-                return View(sliderimages);
+                ScreenshotProjects sp = new ScreenshotProjects()
+                {
+                    Screenshot = new Screenshot(),
+                    ScreenshotList = new ScreenshotList()
+                };
+                sp.ScreenshotList.LoadbyProjectID(ID);
+                return View( sp);
             }
             else
             {
@@ -147,9 +149,10 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
 
         [HttpPost]
-        public ActionResult UploadProjectSliderImage(Guid id, HttpPostedFileBase fileupload)
+        public ActionResult UploadProjectSliderImage(Guid id, ScreenshotProjects sp)
         {
 
+            HttpPostedFileBase fileupload= sp.Fileupload;
             if (fileupload != null)
             {
                 User userin = System.Web.HttpContext.Current.Session["user"] as User;

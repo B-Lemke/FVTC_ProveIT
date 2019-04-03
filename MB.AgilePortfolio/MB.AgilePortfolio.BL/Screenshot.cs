@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using MB.AgilePortfolio.PL;
 
 namespace MB.AgilePortfolio.BL
@@ -17,7 +18,6 @@ namespace MB.AgilePortfolio.BL
         public Guid ProjectId { get; set; }
         [DisplayName("Project Name")]
         public string ProjectName { get; set; }
-
         public Screenshot() { }
 
         public Screenshot(Guid id, string filepath, Guid projectId, string projectName)
