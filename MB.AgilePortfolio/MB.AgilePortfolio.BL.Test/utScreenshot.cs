@@ -26,7 +26,7 @@ namespace MB.AgilePortfolio.BL.Test
 
             Screenshot screenshot = new Screenshot()
             {
-                Filepath = "Test",
+                FilePath = "Test",
                 ProjectId = project.Id
             };
 
@@ -44,7 +44,7 @@ namespace MB.AgilePortfolio.BL.Test
             screenshots.Load();
             Screenshot screenshot = new Screenshot();
 
-            screenshot.LoadById(screenshots.FirstOrDefault(s => s.Filepath == "Test").Id);
+            screenshot.LoadById(screenshots.FirstOrDefault(s => s.FilePath == "Test").Id);
 
             Assert.IsNotNull(screenshot);
         }
@@ -57,9 +57,9 @@ namespace MB.AgilePortfolio.BL.Test
             screenshots.Load();
             Screenshot screenshot = new Screenshot();
 
-            screenshot.LoadById(screenshots.FirstOrDefault(s => s.Filepath == "Test").Id);
+            screenshot.LoadById(screenshots.FirstOrDefault(s => s.FilePath == "Test").Id);
 
-            screenshot.Filepath = "UpdateTest";
+            screenshot.FilePath = "UpdateTest";
             int rowsAffected = screenshot.Update();
 
             Assert.IsTrue(rowsAffected == 1);
@@ -72,7 +72,7 @@ namespace MB.AgilePortfolio.BL.Test
             screenshots.Load();
             Screenshot screenshot = new Screenshot();
 
-            screenshot.LoadById(screenshots.FirstOrDefault(s => s.Filepath == "UpdateTest").Id);
+            screenshot.LoadById(screenshots.FirstOrDefault(s => s.FilePath == "UpdateTest").Id);
 
             int rowsAffected = screenshot.Delete();
 

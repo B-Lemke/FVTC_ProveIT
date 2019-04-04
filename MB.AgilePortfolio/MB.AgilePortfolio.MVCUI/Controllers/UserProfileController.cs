@@ -14,7 +14,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 {
     public class UserProfileController : Controller
     {
-        User user;
         public string Email;
         public string FirstName;
         public string LastName;
