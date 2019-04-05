@@ -277,6 +277,53 @@ namespace MB.AgilePortfolio.BL
             catch (Exception ex) { throw ex; }
         }
 
+        public void LoadbyPortfolioID(Guid id)
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    var projects = (from p in dc.tblProjects
+                                    join pr in dc.tblPrivacies on p.PrivacyId equals pr.Id
+                                    join u in dc.tblUsers on p.UserId equals u.Id
+                                    join pp in dc.tblPortfolioProjects on p.Id equals pp.ProjectId
+                                    join pf in dc.tblPortfolios on pp.PortfolioId equals pf.Id
+                                    join s in dc.tblStatuses on p.StatusId equals s.Id
+                                    where pf.Id == id || pf.Id == null
+                                    select new
+                                    {
+                                        p.Id,
+                                        p.Name,
+                                        p.Location,
+                                        p.Filepath,
+                                        p.PrivacyId,
+                                        p.Image,
+                                        p.Description,
+                                        p.UserId,
+                                        p.DateCreated,
+                                        p.Purpose,
+                                        p.Environment,
+                                        p.Challenges,
+                                        p.FuturePlans,
+                                        p.Collaborators,
+                                        p.LastUpdated,
+                                        p.SoftwareUsed,
+                                        p.StatusId,
+                                        Privacy = pr.Description,
+                                        Status = s.Description,
+                                        UserEmail = u.Email
+                                    }).OrderByDescending(p => p.LastUpdated).ToList();
+                    foreach (var p in projects)
+                    {
+                        Project project = new Project(p.Id, p.Name, p.Location, p.Filepath, p.PrivacyId, p.Image, p.Description, p.UserId, p.DateCreated, p.Purpose,
+                                                      p.Environment, p.Challenges, p.FuturePlans, p.Collaborators, p.LastUpdated, p.SoftwareUsed, p.StatusId, p.Privacy, p.Status, p.UserEmail);
+                        Add(project);
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
         public void Load(Guid? id)
         {
             try

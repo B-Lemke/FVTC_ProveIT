@@ -105,7 +105,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         public ActionResult PublicProject(Guid? id)
         {
             Guid ID = id.GetValueOrDefault();
-
             ScreenshotProjects sp = new ScreenshotProjects()
             {
                 Project = new Project(),
@@ -366,6 +365,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 {
                     Portfolio = new Portfolio(),
                     Privacies = new PrivacyList(),
+                    Projects = new ProjectList(),
                     User = new User()
                 };
 
@@ -377,6 +377,14 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     portfolio.LoadById(up.Portfolio.Id);
                     up.Privacies.Load();
                     User userin = System.Web.HttpContext.Current.Session["user"] as User;
+                    up.Projects.LoadbyPortfolioID(up.Portfolio.Id);
+                    foreach (Project p in up.Projects)
+                    {
+                        if(p.Image == string.Empty)
+                        {
+                            p.Image = "Images/UserProfiles/Default.png";
+                        }
+                    }
                     up.User.LoadById(userin.Id);
                     return View(up);
                 }
@@ -424,6 +432,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                         up.User = new User();
                         up.User.LoadById(userin.Id);
                         up.Privacies.Load();
+                        up.Projects.LoadbyPortfolioID(up.Portfolio.Id);
                         return View(up);
                     }
                     up.Portfolio.Update();

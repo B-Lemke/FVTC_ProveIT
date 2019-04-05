@@ -24,11 +24,11 @@ namespace MB.AgilePortfolio.BL.Test
         {
             ProjectList projects = new ProjectList();
             projects.Load();
-            Project project = projects.FirstOrDefault(p => p.Name == "ProveIT");
+            Project project = projects.FirstOrDefault(p => p.Name == "TestName2");
 
             PortfolioList portfolios = new PortfolioList();
             portfolios.Load();
-            Portfolio portfolio = portfolios.FirstOrDefault(p => p.Name == "Brodys First Portfolio");
+            Portfolio portfolio = portfolios.FirstOrDefault(p => p.Name == "testprofile");
 
 
             PortfolioProject portfolioProject = new PortfolioProject()
