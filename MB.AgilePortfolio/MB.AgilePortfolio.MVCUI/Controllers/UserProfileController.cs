@@ -9,6 +9,7 @@ using MB.AgilePortfolio.MVCUI.Models;
 using MB.AgilePortfolio.MVCUI.ViewModels;
 using System.Net;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 
 namespace MB.AgilePortfolio.MVCUI.Controllers
 {
@@ -95,6 +96,35 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
                 // REDIRECT TO PROJECT EDIT PAGE
                 return View(up);
+                //return RedirectToAction("EditProject", "Screenshot");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult EditProjects(Guid id, UserProfile ppus)
+        {
+            ScreenshotProjects up = new ScreenshotProjects()
+            {
+                Project = new Project(),
+                Privacy = new Privacy(),
+                ScreenshotList = new ScreenshotList(),
+                User = new User(),
+                Status = new Status()
+            };
+            if (Authenticate.IsAuthenticated())
+            {
+                User userin = System.Web.HttpContext.Current.Session["user"] as User;
+                up.User.LoadById(userin.Id);
+                up.Project.LoadById(id);
+                up.ScreenshotList.LoadbyProjectID(id);
+
+                // REDIRECT TO PROJECT EDIT PAGE
+                //return View(up);
+                return RedirectToAction("EditProject", "Screenshot", new { id = id });
             }
             else
             {
@@ -196,10 +226,20 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             {
                 try
                 {
-
+                    PrivacyList plist = new PrivacyList();
+                    plist.Load();
+                    ppus.Privacies = plist;
+                    StatusList slist = new StatusList();
+                    slist.Load();
+                    ppus.Statuses = slist;
+                    HttpPostedFileBase fileupload = ppus.Fileupload;
                     User userin = System.Web.HttpContext.Current.Session["user"] as User;
                     ProjectList Projects = new ProjectList();
                     Projects.LoadbyUser(userin);
+                    string username = userin.Username;
+                    string strUserID = userin.Id.ToString();
+                    string fileName = Path.GetFileName(fileupload.FileName);
+                    string savepath = "";
                     if (ppus.Project.Name == null)
                     {
                         ModelState.AddModelError(string.Empty, "Project requires a name!");
@@ -226,6 +266,48 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                         {
                             ppus.LastUpdated = ppus.DateCreated;
                         }
+                    }
+
+                    if (ppus.Project.Image == string.Empty)
+                    {
+                        ppus.Project.Image = "Assets/Images/UserProfiles/Default.png";
+
+
+                    }
+                    else
+                    {
+                        if (Directory.Exists("~/Images/ScreenShots"))
+                        {
+                            savepath = "Assets/Images/ScreenShots";
+                        }
+                        else
+                        {
+                            Directory.CreateDirectory(Server.MapPath("~/Assets/Images/ScreenShots"));
+                            savepath = "Assets/Images/ScreenShots";
+                        }
+
+                        if (Directory.Exists("~/Assets/Images/ScreenShots/" + username))
+                        {
+                            savepath = "Assets/Images/ScreenShots/" + username;
+                        }
+                        else
+                        {
+                            Directory.CreateDirectory(Server.MapPath("~/Assets/Images/ScreenShots/" + username));
+                            savepath = "Assets/Images/ScreenShots/" + username;
+                        }
+
+                        if (savepath == "Assets/Images/ScreenShots")
+                        {
+                            fileupload.SaveAs(Server.MapPath("~/" + savepath + "/" + strUserID + "_" + fileName));
+                            ppus.Project.Image = savepath + "/" + strUserID + "_" + fileName;
+                        }
+                        else
+                        {
+                            fileupload.SaveAs(Server.MapPath("~/" + savepath + "/" + fileName));
+                            ppus.Project.Image = savepath + "/" + fileName;
+                        }
+
+                        //ppus.Project.Image = savepath;
                     }
 
                     if (!ModelState.IsValid)

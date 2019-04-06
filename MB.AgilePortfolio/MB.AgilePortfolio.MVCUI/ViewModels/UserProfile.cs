@@ -31,6 +31,7 @@ namespace MB.AgilePortfolio.MVCUI.ViewModels
         public DateTime LastUpdated { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DateCreated { get; set; }
+        public HttpPostedFileBase Fileupload { get; set; }
 
         public void SendPasswordReset(string Email, string Subject, string ResetLink)
         {

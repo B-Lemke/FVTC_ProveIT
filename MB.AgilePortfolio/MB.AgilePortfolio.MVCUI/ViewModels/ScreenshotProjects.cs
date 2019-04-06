@@ -16,8 +16,10 @@ namespace MB.AgilePortfolio.MVCUI.ViewModels
         public ScreenshotList ScreenshotList { get; set; }
         public HttpPostedFileBase Fileupload { get; set; }
         public Project Project { get; set; }
+        public PrivacyList Privacies { get; set; }
         public Privacy Privacy { get; set; }
         public Status Status { get; set; }
+        public StatusList Statuses { get; set; }
         public User User { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]

@@ -1,4 +1,4 @@
-﻿@model MB.AgilePortfolio.MVCUI.ViewModels.UserProfile
+﻿@model MB.AgilePortfolio.MVCUI.ViewModels.ScreenshotProjects
 
 @{
     ViewBag.Title = "Edit Project";
@@ -8,12 +8,181 @@
 <h2>Edit Project</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("EditProject", "Screenshot", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
+    <!DOCTYPE html>
+
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <script src="~/scripts/jquery-3.3.1.min.js"></script>
+        <script src="~/scripts/bootstrap.min.js"></script>
+        <script src="~/scripts/jquery.dataTables.min.js"></script>
+        <script src="~/scripts/dataTables.bootstrap4.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#dataTable").dataTable();
+            });
+        </script>
+        <style>
+            .carousel-inner img {
+                width: 100px;
+                height: 100px;
+            }
+
+            .carousel-inner {
+                padding-left: 10%;
+                padding-right: 10%;
+                width: 100%;
+            }
+        </style>
+
+
+    </head>
+
+    <body>
+        <h2 align="center">@Model.Project.Name</h2>
+        <div class="container py-4">
+            <div id="demo2" class="carousel slide" data-ride="carousel">
+                <ul class="carousel-indicators">
+                    <li data-target="#demo2" data-slide-to="@Model.Project.Image" class="active"></li>
+                </ul>
+                <div class="carousel-inner" role="listbox">
+                    <div class="carousel-item active" style="width:100%;height:350px;">
+                        @* <img src="@Url.Content(@item.FilePath)" alt="">*@
+                        <img src="~/@Model.Project.Image" alt="" style="width:100%;height:350px;">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <hr />
+        <h4 align="center">Screenshots</h4>
+
+
+
+        <div id="demo" class="carousel slide" data-ride="carousel">
+            <ul class="carousel-indicators">
+
+                @{
+                    int i = 0;
+                    int imgleft = Model.ScreenshotList.Count;
+                    int ImagesPerTransition = 8;
+                }
+
+            </ul>
+            <div class="carousel-inner" role="listbox">
+
+                @if (Model.ScreenshotList?.Count > 0)
+                {
+
+                    int modssi = Model.ScreenshotList.Count % ImagesPerTransition;
+                    int iterations = 0;
+                    imgleft = Model.ScreenshotList.Count;
+
+                    if (modssi > 0)
+                    {
+                        if (Model.ScreenshotList.Count > ImagesPerTransition - 1)
+                        {
+                            iterations = (int)Math.Ceiling(((double)Model.ScreenshotList.Count) / ImagesPerTransition);
+
+                        }
+                        else
+                        {
+                            iterations = 1;
+                        }
+                    }
+                    else
+                    {
+                        iterations = (Model.ScreenshotList.Count) / ImagesPerTransition;
+                    }
+                    var active = iterations == 1 ? "active" : "";
+
+                    for (int ssi = 0; ssi < iterations; ssi++)
+                    {
+                        if (ssi == 0)
+                        {
+                            if (iterations > 1)
+                            {
+                                <div class="carousel-item active">
+                                    @for (int y = 0; y < ImagesPerTransition; y++)
+                                    {
+
+                                        @*<p>@Model.ScreenshotList[y].Name</p>*@
+                                        string imgpath = "~/" + Model.ScreenshotList[y].FilePath;
+                                        @*<a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y].Id})'>*@
+                                        <img src='@Url.Content(@imgpath)' />
+                                        @*</a>*@
+                                        imgleft--;
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="carousel-item active">
+                                    @for (int y = 0; y < modssi; y++)
+                                    {
+                                        @*<p>@Model.ScreenshotList[y].Name</p>*@
+                                        string imgpath = "~/" + Model.ScreenshotList[y].FilePath;
+                                        @*<a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.ScreenshotList[y].Id})'>*@
+                                        <img src='@Url.Content(@imgpath)' />
+                                        @*</a>*@
+                                        imgleft--;
+                                    }
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            if (imgleft >= ImagesPerTransition)
+                            {
+                                <div class="carousel-item">
+                                    @for (int y = 0; y < ImagesPerTransition; y++)
+                                    {
+                                        @*<p>@Model.Projects[y + ssi * ImagesPerTransition].Name</p>*@
+                                        string imgpath = "~/" + Model.ScreenshotList[y + ssi * ImagesPerTransition].FilePath;
+                                        @*<a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.ScreenshotList[y + ssi * ImagesPerTransition].Id})'>*@
+                                        <img src='@Url.Content(@imgpath)' />
+                                        @*</a>*@
+
+                                        imgleft--;
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                string width = ((Math.Floor((double)(99 / modssi)))).ToString() + "%";
+                                <div class="carousel-item">
+
+                                    @for (int y = 0; y < modssi; y++)
+                                    {
+                                        @*<p>@Model.Projects[y + ssi * ImagesPerTransition].Name</p>*@
+                                        string imgpath = "~/" + Model.ScreenshotList[y + ssi * ImagesPerTransition].FilePath;
+                                        @*<a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y + ssi * ImagesPerTransition].Id})'>*@
+                                        <img src='@Url.Content(@imgpath)' />
+                                        @*</a>*@
+                                        imgleft--;
+                                    }
+                                </div>
+                            }
+                        }
+                    }
+                }
+
+            </div>
+            <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a class="carousel-control-next" href="#demo" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </a>
+
+        </div>
+    </body>
+</html>
 
 <div class="form-horizontal">
-    <h4>@Model.Project.Name</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.Project.Id)
@@ -143,10 +312,34 @@
 
     <div class="form-group">
         <div class="col-md-10">
-            @Html.HiddenFor(model => model.Project.UserId, new { htmlAttributes = new { @class = "form-control", @Value = Model.User.Email, disabled = "disabled", @readonly = "readonly" } })
+            @Html.HiddenFor(model => model.Project.UserId, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
             @Html.ValidationMessageFor(model => model.Project.UserId, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    <div class="form-group">
+        <div class="col-md-10">
+
+            <label>Upload Display Image</label>
+            <div class="input-group">
+                <div class="custom-file">
+                    @Html.TextBoxFor(model => model.Fileupload, new { type = "file", id = "fileupload", name = "fileupload", accept = ".jpg, .jpeg, .gif, .png" })
+                </div>
+                @*
+                    <div class="input-group-append">
+                        <input type="submit" id="btnUpload" class="btn btn-secondary" value="Upload" />
+                    </div>
+                *@
+            </div>
+        </div>
+
+        <div class="col-md-10">
+            @Html.HiddenFor(model => model.Project.Image, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Fileupload, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
     <div class="form-group" align="center">
         <div class="col-md-10">
             @Html.ActionLink(
@@ -197,7 +390,7 @@
         </div>
     </div>
     <div class="col-md-offset-2 col-md-12">
-        @Html.ActionLink("Back to Projects", "EditProjects")
+        @Html.ActionLink("Back to Projects", "EditProjects", "UserProfile")
     </div>
 </div>
 }

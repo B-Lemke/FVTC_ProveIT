@@ -17,6 +17,7 @@ namespace MB.AgilePortfolio.MVCUI.ViewModels
         public UserList Users { get; set; }
         public StatusList Statuses { get; set; }
         public UserTypeList UserTypes { get; set; }
+        public HttpPostedFileBase Fileupload { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime LastUpdated {get;set;}

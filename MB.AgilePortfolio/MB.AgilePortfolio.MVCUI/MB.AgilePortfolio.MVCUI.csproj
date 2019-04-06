@@ -371,7 +371,6 @@
     <Content Include="Views\UserProfile\EditProfile.cshtml" />
     <Content Include="Views\UserProfile\EditProjects.cshtml" />
     <Content Include="Views\UserProfile\EditPortfolios.cshtml" />
-    <Content Include="Views\UserProfile\EditProject.cshtml" />
     <Content Include="Views\UserProfile\EditPortfolio.cshtml" />
     <Content Include="Views\UserProfile\Index.cshtml" />
     <Content Include="Views\UserProfile\DeleteProject.cshtml" />
@@ -393,10 +392,11 @@
     <Content Include="Views\Login\ResetPasswordInvalid.cshtml" />
     <Content Include="Views\Screenshot\UploadProjectSliderImage.cshtml" />
     <Content Include="Views\UserProfile\PublicProject.cshtml" />
+    <Content Include="Views\Screenshot\EditProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Assets\Images\ScreenShots\" />
+    <Folder Include="Assets\Images\ScreenShots\bwienkes\" />
     <Folder Include="Views\PublicPages\" />
   </ItemGroup>
   <ItemGroup>

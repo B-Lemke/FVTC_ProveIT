@@ -6,12 +6,14 @@ using System.Web.Mvc;
 using MB.AgilePortfolio.BL;
 using MB.AgilePortfolio.MVCUI.ViewModels;
 using MB.AgilePortfolio.MVCUI.Models;
+using System.IO;
 
 namespace MB.AgilePortfolio.MVCUI.Controllers
 {
     public class CreateNewProjectController : Controller
     {
         ProjectList projects;
+        HttpPostedFileBase Fileupload;
 
         // GET: Project
         public ActionResult Index()
@@ -50,15 +52,29 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         [HttpPost]
         public ActionResult Create(ProjectPrivaciesUserStatuses ppus, string returnurl)
         {
+
             //double check authentication
             if (Authenticate.IsAuthenticated())
             {
                 try
                 {
+                    HttpPostedFileBase fileupload = ppus.Fileupload;
+                    PrivacyList plist = new PrivacyList();
+                    plist.Load();
+                    ppus.Privacies = plist;
+                    StatusList slist = new StatusList();
+                    slist.Load();
+                    ppus.Statuses = slist;
+
                     ProjectList Projects = new ProjectList();
                     User userin = System.Web.HttpContext.Current.Session["user"] as User;
+                    string username = userin.Username;
+                    string strUserID = userin.Id.ToString();
+                    string savepath = "";
                     ppus.Project.UserId = userin.Id;
                     ppus.Project.UserEmail = userin.Email;
+                    string fileName = Path.GetFileName(fileupload.FileName);
+
                     Projects.LoadbyUser(userin);
 
                     if (ppus.Project.Name == null)
@@ -79,21 +95,58 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                         {
                             ModelState.AddModelError(string.Empty, "Date Created required!");
                         }
-                        else if(ppus.LastUpdated == null)
+                        else if (ppus.LastUpdated == null)
                         {
                             ppus.LastUpdated = ppus.DateCreated;
                         }
                     }
 
+                    if (ppus.Project.Image == string.Empty)
+                    {
+                        ppus.Project.Image = "Assets/Images/UserProfiles/Default.png";
+
+
+                    }
+                    else
+                    {
+                        if (Directory.Exists("~/Images/ScreenShots"))
+                        {
+                            savepath = "Assets/Images/ScreenShots";
+                        }
+                        else
+                        {
+                            Directory.CreateDirectory(Server.MapPath("~/Assets/Images/ScreenShots"));
+                            savepath = "Assets/Images/ScreenShots";
+                        }
+
+                        if (Directory.Exists("~/Assets/Images/ScreenShots/" + username))
+                        {
+                            savepath = "Assets/Images/ScreenShots/" + username;
+                        }
+                        else
+                        {
+                            Directory.CreateDirectory(Server.MapPath("~/Assets/Images/ScreenShots/" + username));
+                            savepath = "Assets/Images/ScreenShots/" + username;
+                        }
+
+                        if (savepath == "Assets/Images/ScreenShots")
+                        {
+                            fileupload.SaveAs(Server.MapPath("~/" + savepath + "/" + strUserID + "_" + fileName));
+                            ppus.Project.Image = savepath + "/" + strUserID + "_" + fileName;
+                        }
+                        else
+                        {
+                            fileupload.SaveAs(Server.MapPath("~/" + savepath + "/" + fileName));
+                            ppus.Project.Image = savepath + "/" + fileName;
+                        }
+
+                        //ppus.Project.Image = savepath;
+                    }
+
                     if (!ModelState.IsValid)
                     {
-                        ppus.Project = new Project();
-                        ppus.Privacies = new PrivacyList();
-                        ppus.Statuses = new StatusList();
                         ppus.User = new User();
                         ppus.User.LoadById(userin.Id);
-                        ppus.Privacies.Load();
-                        ppus.Statuses.Load();
                         return View(ppus);
                     }
 
