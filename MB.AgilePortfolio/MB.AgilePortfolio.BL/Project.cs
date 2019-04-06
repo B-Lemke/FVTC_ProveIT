@@ -44,6 +44,28 @@ namespace MB.AgilePortfolio.BL
         public Project() { }
 
         public Project(Guid id, string name, string location, string filepath, Guid privacyId, string image, string description, Guid userId, DateTime dateCreated,
+                       string purpose, string environment, string challenges, string futurePlans, string collaborators, DateTime lastUpdated, string softwareUsed, Guid statusId)
+        {
+            Id = id;
+            Name = name;
+            Location = location;
+            Filepath = filepath;
+            PrivacyId = privacyId;
+            Image = image;
+            Description = description;
+            UserId = userId;
+            DateCreated = dateCreated;
+            Purpose = purpose;
+            Environment = environment;
+            Challenges = challenges;
+            FuturePlans = futurePlans;
+            Collaborators = collaborators;
+            LastUpdated = lastUpdated;
+            SoftwareUsed = softwareUsed;
+            StatusId = statusId;
+        }
+
+        public Project(Guid id, string name, string location, string filepath, Guid privacyId, string image, string description, Guid userId, DateTime dateCreated,
                        string purpose, string environment, string challenges, string futurePlans, string collaborators, DateTime lastUpdated, string softwareUsed, Guid statusId, string privacy, string status, string email)
         {
             Id = id;
@@ -68,6 +90,7 @@ namespace MB.AgilePortfolio.BL
             UserEmail = email;
         }
 
+        // Old insert
         public int Insert()
         {
             try
@@ -104,6 +127,122 @@ namespace MB.AgilePortfolio.BL
             }
             catch (Exception ex) { throw ex; }
         }
+
+        // Inserts project without portfolio
+        public void Insert(Guid userId)
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    tblProject project = new tblProject()
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = Name,
+                        Location = Location,
+                        Filepath = Filepath,
+                        PrivacyId = PrivacyId,
+                        Image = Image,
+                        Description = Description,
+                        UserId = userId,
+                        DateCreated = DateCreated,
+                        Purpose = Purpose,
+                        Environment = Environment,
+                        Challenges = Challenges,
+                        FuturePlans = FuturePlans,
+                        Collaborators = Collaborators,
+                        LastUpdated = LastUpdated,
+                        SoftwareUsed = SoftwareUsed,
+                        StatusId = StatusId
+                    };
+                    dc.tblProjects.Add(project);
+                    dc.SaveChanges();
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        // Insert project with portfolio
+        public void Insert(Guid userId, Guid portfolioId)
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    tblProject project = new tblProject()
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = Name,
+                        Location = Location,
+                        Filepath = Filepath,
+                        PrivacyId = PrivacyId,
+                        Image = Image,
+                        Description = Description,
+                        UserId = userId,
+                        DateCreated = DateCreated,
+                        Purpose = Purpose,
+                        Environment = Environment,
+                        Challenges = Challenges,
+                        FuturePlans = FuturePlans,
+                        Collaborators = Collaborators,
+                        LastUpdated = LastUpdated,
+                        SoftwareUsed = SoftwareUsed,
+                        StatusId = StatusId
+                    };
+                    dc.tblProjects.Add(project);
+                    tblPortfolioProject portProj = new tblPortfolioProject()
+                    {
+                        Id = Guid.NewGuid(),
+                        ProjectId = project.Id,
+                        PortfolioId = portfolioId
+                    };
+                    dc.tblPortfolioProjects.Add(portProj);
+                    dc.SaveChanges();
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        // Adds project to porfolio
+        public void AddToPortfolio(Guid portfolioId)
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    tblProject project = dc.tblProjects.Where(p => p.Id == Id).FirstOrDefault();
+                    tblPortfolioProject portProj = new tblPortfolioProject()
+                    {
+                        Id = Guid.NewGuid(),
+                        PortfolioId = portfolioId,
+                        ProjectId = project.Id
+                    };
+                    dc.tblPortfolioProjects.Add(portProj);
+                    dc.SaveChanges();
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        // Deletes project from portfolio
+        public void DeleteFromPortfolio(Guid portProjId)
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    tblPortfolioProject portProj = dc.tblPortfolioProjects.Where(pp => pp.Id == portProjId).FirstOrDefault();
+                    if (portProj != null)
+                    {
+                        dc.tblPortfolioProjects.Remove(portProj);
+                        dc.SaveChanges();
+                    }
+                    else throw new Exception("Project not found in portfolio");
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
 
         public int Delete()
         {
