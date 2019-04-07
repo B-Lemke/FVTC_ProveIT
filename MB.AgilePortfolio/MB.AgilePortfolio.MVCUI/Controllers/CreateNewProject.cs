@@ -8,6 +8,7 @@ using MB.AgilePortfolio.MVCUI.ViewModels;
 using MB.AgilePortfolio.MVCUI.Models;
 using System.IO;
 
+
 namespace MB.AgilePortfolio.MVCUI.Controllers
 {
     public class CreateNewProjectController : Controller
@@ -129,18 +130,26 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                             savepath = "Assets/Images/ScreenShots/" + username;
                         }
 
-                        if (savepath == "Assets/Images/ScreenShots")
+                        if (Directory.Exists("~/Assets/Images/ScreenShots/" + username + "/" + ppus.Project.Name))
                         {
-                            fileupload.SaveAs(Server.MapPath("~/" + savepath + "/" + strUserID + "_" + fileName));
-                            ppus.Project.Image = savepath + "/" + strUserID + "_" + fileName;
+                            savepath = "Assets/Images/ScreenShots/" + username + "/" + ppus.Project.Name;
                         }
                         else
                         {
-                            fileupload.SaveAs(Server.MapPath("~/" + savepath + "/" + fileName));
-                            ppus.Project.Image = savepath + "/" + fileName;
+                            Directory.CreateDirectory(Server.MapPath("~/Assets/Images/ScreenShots/" + username + "/" + ppus.Project.Name));
+                            savepath = "Assets/Images/ScreenShots/" + username + "/" + ppus.Project.Name;
                         }
 
-                        //ppus.Project.Image = savepath;
+                        var fullPath = Server.MapPath("~/Assets/Images/ScreenShots/" + username + "/" + ppus.Project.Name + "/" + fileName);
+
+                        if (System.IO.File.Exists(fullPath))
+                        {
+                            System.IO.File.Delete(fullPath);
+                            ViewBag.deleteSuccess = "true";
+                        }
+
+                        fileupload.SaveAs(Server.MapPath("~/" + savepath + "/" + fileName));
+                        ppus.Project.Image = savepath + "/" + fileName;
                     }
 
                     if (!ModelState.IsValid)
