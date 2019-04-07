@@ -740,6 +740,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 User userin = System.Web.HttpContext.Current.Session["user"] as User;
                 up.User.LoadById(userin.Id);
                 up.UserTypes.LoadNonAdmin();
+                up.Portfolios.LoadbyUser(userin);
                 return View(up);
             }
             else
@@ -773,6 +774,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 up.User.LastName = LastName;
                 up.User.UserTypeId = UserTypesID;
                 up.User.UserTypeDescription = UserTypesDescription;
+                
                 string currentemail = userin.Email;
                 string currentUsername = userin.Username;
 

@@ -3,45 +3,53 @@
     ViewBag.Title = "Delete";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using (Html.BeginForm())
+{
+    <h2>Delete</h2>
 
-<h2>Delete</h2>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>Screenshot</h4>
+        <hr />
+        <dl class="dl-horizontal">
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Screenshot</h4>
-    <hr />
-    <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Screenshot.FilePath)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Screenshot.FilePath)
-        </dt>
+            <dd>
+                @{string fp = Model.Screenshot.FilePath.Split('/').Last().ToString();}
+                @Html.DisplayFor(model => fp)
+                <img src="@Url.Content("~/" + Model.Screenshot.FilePath)" alt="" width="80" height="60" class="img-thumbnail" />
+            </dd>
 
-        <dd>
-            @{string fp = Model.Screenshot.FilePath.Split('/').Last().ToString();}
-            @Html.DisplayFor(model => fp)
-        <dd><img src="@Url.Content("~/" + Model.Screenshot.FilePath)" alt="" width="80" height="60" class="img-thumbnail" /></dd>
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Screenshot.ProjectName)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Screenshot.ProjectName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Screenshot.ProjectName)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Screenshot.ProjectName)
+            </dd>
 
 
-    </dl>
+        </dl>
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" />
+            @*@Html.HiddenFor(m => m.Screenshot.ScreenshotId, new { name = "ScreenshotId" })
+            @Html.HiddenFor(m => m.Screenshot.ProjectId, new { name = "ProjectId" })*@
+
+            @Html.Hidden("screenshotId", Model.Screenshot.Id)
+            @Html.Hidden("projectId", Model.Screenshot.ProjectId)
 
         </div>
-        <div align="center">@Html.ActionLink("Back to Project Images", "UploadProjectSliderImage", new { id = Model.Screenshot.ProjectId })</div>
-        
-    }
-</div>
+
+            <div align="center">@Html.ActionLink("Back to Project Images", "UploadProjectSliderImage", new { id = Model.Screenshot.ProjectId })</div>
+
+        }
+    </div>
+}

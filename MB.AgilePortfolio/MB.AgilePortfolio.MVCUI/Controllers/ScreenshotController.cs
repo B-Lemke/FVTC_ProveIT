@@ -88,42 +88,72 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             catch { return View(sp); }
         }
 
+        
         // GET: Screenshot/Delete/5
         public ActionResult Delete(Guid id)
         {
             ScreenshotProjects sp = new ScreenshotProjects()
             {
-                Screenshot = new Screenshot(),
-                Projects = new ProjectList()
+                Projects = new ProjectList(),
+                Screenshot = new Screenshot()
             };
-            sp.Projects.Load();
-            sp.Screenshot.LoadById(id);
+            ProjectList pl = new ProjectList();
+            pl.Load();
+
+            sp.Projects = pl;
+            Screenshot ss = new Screenshot();
+            ss.LoadById(id);
+            sp.Screenshot=ss;
 
             return View(sp);
         }
 
         // POST: Screenshot/Delete/5
         [HttpPost]
-        public ActionResult Delete(Guid id, Screenshot s)
+        //public ActionResult Delete(Guid screenShotId, ScreenshotProjects sp)
+        public ActionResult Delete(Guid screenShotId, Guid projectId)
         {
-            try
-            {
-                Screenshot ss = new Screenshot();
-                ss.LoadById(s.Id);
-                Project p = new Project();
-                p.LoadById(s.ProjectId);
-                User userin = System.Web.HttpContext.Current.Session["user"] as User;
-                var fullPath = Server.MapPath("~/" + p.Image);
+            //try
+            //{
+            //    ProjectList projects = new ProjectList();
+            //    projects.Load();
+
+            //    sp.Projects = projects;
+
+            //    Screenshot ss = new Screenshot();
+            //    ss.LoadById(sp.Screenshot.Id);
+            //    Project p = new Project();
+            //    p.LoadById(sp.ProjectId);
+            //    sp.Screenshot = ss;
+            //    User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            //    var fullPath = Server.MapPath("~/" + ss.FilePath);
+
+            //    if (System.IO.File.Exists(fullPath))
+            //    {
+            //        System.IO.File.Delete(fullPath);
+            //        ViewBag.deleteSuccess = "true";
+            //    }
+            //    ss.Delete();
+            //    return RedirectToAction("UploadProjectSliderImage", new { id = ss.ProjectId });
+            //}
+            //catch { return View(sp); }
+            try{
+
+                var screenShot = Screenshot.StaticLoadById(screenShotId);
+                var fullPath = Server.MapPath("~/" + screenShot.FilePath);
+
+                Screenshot.Delete(screenShotId);
 
                 if (System.IO.File.Exists(fullPath))
                 {
                     System.IO.File.Delete(fullPath);
                     ViewBag.deleteSuccess = "true";
                 }
-                s.Delete();
-                return RedirectToAction("UploadProjectSliderImage", new { id = ss.ProjectId });
             }
-            catch { return View(s); }
+            catch (Exception e){
+                
+            }
+            return RedirectToAction("UploadProjectSliderImage", new { id = projectId });
         }
 
         // GET: Admin
@@ -179,15 +209,17 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                         Directory.CreateDirectory(Server.MapPath("~/Assets/Images/ScreenShots/" + username));
                         savepath = "Assets/Images/ScreenShots/" + username;
                 }
-
-                if (Directory.Exists("~/Assets/Images/ScreenShots/" + username +  "/" + sp.Project.Name))
+                Project p = new Project();
+                p.LoadById(id);
+                sp.Project = p;
+                if (Directory.Exists("~/Assets/Images/ScreenShots/{username}/{sp.Project.Name}"))
                 {
-                    savepath = "Assets/Images/ScreenShots/" + username + "/" + sp.Project.Name;
+                    savepath = $"Assets/Images/ScreenShots/{username}/{sp.Project.Name}";
                 }
                 else
                 {
-                        Directory.CreateDirectory(Server.MapPath("~/Assets/Images/ScreenShots/" + username + "/" + sp.Project.Name));
-                        savepath = "Assets/Images/ScreenShots/" + username + "/" + sp.Project.Name;
+                        Directory.CreateDirectory(Server.MapPath($"~/Assets/Images/ScreenShots/{username}/{sp.Project.Name}"));
+                        savepath = $"Assets/Images/ScreenShots/{username}/{sp.Project.Name}";
                 }
                 
                 

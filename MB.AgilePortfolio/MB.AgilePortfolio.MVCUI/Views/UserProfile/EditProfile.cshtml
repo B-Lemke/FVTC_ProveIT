@@ -11,6 +11,79 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+    <div class="navbar navbar-default">
+        <div class="container">
+            <div class="nav navbar-nav">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Portfolios</a>
+                        <ul class="dropdown-menu" role="menu">
+                            @if (Model.Portfolios.Count < 1)
+                            {
+                                <p align="center" style="font-style:italic">You have no portfolios currently</p>
+                            }
+                            else
+                            {
+                                foreach (var portfolio in Model.Portfolios.OrderBy(i => i.Name))
+                                {
+                                    //carousel 1 portfolio images
+                                    <li>
+
+                                        <div class="navbar navbar-default">
+                                            <div class="container">
+                                                <a class="nav navbar-nav">
+                                                    <ul class="nav navbar-nav">
+                                                        <li class="dropdown">
+                                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Projects</a>
+                                                            <ul class="dropdown-menu active" role="menu">
+                                                                @if (portfolio.Projects.Count < 1)
+                                                                {
+                                                                    <p align="center" style="font-style:italic">You have no projects currently</p>
+                                                                }
+                                                                else
+                                                                {
+                                                                    foreach (var project in portfolio.Projects.OrderBy(i => i.Name))
+                                                                    {
+                                                                        //carousel 1 portfolio images
+                                                                        <li>
+                                                                            @Html.ActionLink(
+                                                                            portfolio.Name,
+                                                                            "EditProject",
+                                                                            "Screenshot",
+                                                                            new { id = portfolio.Id },
+                                                                            new { @class = "btn btn-primary" }
+                                                                            )
+                                                                        </li>
+                                                                    }
+                                                                }
+                                                                <li><a href="#">Test Sub1</a></li>
+                                                                <li><a href="#">Test Sub2</a></li>
+                                                                <li class="divider"></li>
+                                                                <li class="dropdown-header">test subheader</li>
+                                                                <li><a href="#">Test sub1</a></li>
+                                                                <li><a href="#">Test sub2</a></li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                            }
+                            <li><a href="#">Test menu1</a></li>
+                            <li><a href="#">Test menu2</a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown-header">test subheader</li>
+                            <li><a href="#">Test sub1</a></li>
+                            <li><a href="#">Test sub2</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
 
     <div class="form-horizontal">
         <hr />
