@@ -4,7 +4,31 @@
     ViewBag.Title = "Edit Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/scripts/bootstrap.min.js"></script>
+    <script src="~/scripts/jquery.dataTables.min.js"></script>
+    <script src="~/scripts/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#dataTable").dataTable();
+        });
+    </script>
+    <style>
+        .carousel-inner img {
+            width: 100px;
+            height: 100px;
+        }
 
+        .carousel-inner {
+            padding-left: 10%;
+            padding-right: 10%;
+            width: 100%;
+            height: 200px;
+        }
+    </style>
+</head>
 <h2>Edit Profile</h2>
 
 
@@ -14,7 +38,7 @@
     <div class="navbar navbar-default">
         <div class="container">
             <div class="nav navbar-nav">
-                <ul class="nav navbar-nav">
+                <ul class="nav">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Portfolios</a>
                         <ul class="dropdown-menu" role="menu">
@@ -26,56 +50,35 @@
                             {
                                 foreach (var portfolio in Model.Portfolios.OrderBy(i => i.Name))
                                 {
-                                    //carousel 1 portfolio images
-                                    <li>
+                                    // this should be a carousel with portfolio images
 
-                                        <div class="navbar navbar-default">
-                                            <div class="container">
-                                                <a class="nav navbar-nav">
-                                                    <ul class="nav navbar-nav">
-                                                        <li class="dropdown">
-                                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Projects</a>
-                                                            <ul class="dropdown-menu active" role="menu">
-                                                                @if (portfolio.Projects.Count < 1)
-                                                                {
-                                                                    <p align="center" style="font-style:italic">You have no projects currently</p>
-                                                                }
-                                                                else
-                                                                {
-                                                                    foreach (var project in portfolio.Projects.OrderBy(i => i.Name))
-                                                                    {
-                                                                        //carousel 1 portfolio images
-                                                                        <li>
-                                                                            @Html.ActionLink(
-                                                                            portfolio.Name,
-                                                                            "EditProject",
-                                                                            "Screenshot",
-                                                                            new { id = portfolio.Id },
-                                                                            new { @class = "btn btn-primary" }
-                                                                            )
-                                                                        </li>
-                                                                    }
-                                                                }
-                                                                <li><a href="#">Test Sub1</a></li>
-                                                                <li><a href="#">Test Sub2</a></li>
-                                                                <li class="divider"></li>
-                                                                <li class="dropdown-header">test subheader</li>
-                                                                <li><a href="#">Test sub1</a></li>
-                                                                <li><a href="#">Test sub2</a></li>
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
-                                            </div>
-                                        </div>
+
+                                    <li class="dropdown">
+                                        @portfolio.Name
+                                        <hr />
+                                        <ul class="nav">
+                                            <li>
+                                                @if (portfolio.Projects.Count < 1)
+                                                {
+
+                                                    <p align="center" style="font-style:italic">You have no projects currently</p>
+                                                }
+                                                else
+                                                {
+                                                    //this should be a menu image carousel of images of projects in portfolio menu itemrtfolio images
+                                                    foreach (var project in portfolio.Projects.OrderBy(i => i.Name))
+                                                    {
+                                                        string imgpath = "~/" + project.Image;
+                                                        <a href='@Url.Action("EditProject", "Screenshot",new { id = project.Id})'>
+                                                            <img src='@Url.Content(@imgpath)' style="width:100px;height:100px;" />
+                                                        </a>
+                                                    }
+                                                }
+                                            </li>
+                                        </ul>
                                     </li>
                                 }
                             }
-                            <li><a href="#">Test menu1</a></li>
-                            <li><a href="#">Test menu2</a></li>
-                            <li class="divider"></li>
-                            <li class="dropdown-header">test subheader</li>
-                            <li><a href="#">Test sub1</a></li>
-                            <li><a href="#">Test sub2</a></li>
                         </ul>
                     </li>
                 </ul>

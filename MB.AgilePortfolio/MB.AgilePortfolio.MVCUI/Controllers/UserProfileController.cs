@@ -741,6 +741,11 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 up.User.LoadById(userin.Id);
                 up.UserTypes.LoadNonAdmin();
                 up.Portfolios.LoadbyUser(userin);
+                foreach (Portfolio p in up.Portfolios)
+                {
+                    p.Projects.LoadbyPortfolioID(p.Id);
+
+                }
                 return View(up);
             }
             else
@@ -774,6 +779,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 up.User.LastName = LastName;
                 up.User.UserTypeId = UserTypesID;
                 up.User.UserTypeDescription = UserTypesDescription;
+                
                 
                 string currentemail = userin.Email;
                 string currentUsername = userin.Username;
