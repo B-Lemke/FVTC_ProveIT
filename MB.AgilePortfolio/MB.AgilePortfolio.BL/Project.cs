@@ -19,6 +19,7 @@ namespace MB.AgilePortfolio.BL
         [DisplayName("Privacy")]
         public string PrivacyDescription { get; set; }
         public string Image { get; set; }
+        public string ShortDescription => Description == null ? string.Empty : new string(Description.Take(100).ToArray());
         public string Description { get; set; }
         [DisplayName("User")]
         public Guid UserId { get; set; }

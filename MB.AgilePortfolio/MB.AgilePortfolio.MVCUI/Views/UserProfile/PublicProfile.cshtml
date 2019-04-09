@@ -59,6 +59,104 @@ else
         </div>
 
 
+
+        <h3 class="mt-5">Projects:</h3>
+        <div class="container-fluid mt-4">
+            <div class="row">
+                @if (Model.Projects.Count == 0 || Model.Projects == null)
+                {
+                    <div class="col-md-4 mt-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title" style="width: 90%;">No Projects Yet</h5>
+                                <p class="card-text">But that doesn't mean you can't add one!</p>
+                                <a href="#" class="card-link">Add a project!</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    int count = 0;
+                    foreach (var item in Model.Projects)
+                    {
+                        if (count < 5)
+                        {
+                            <div class="col-md-4">
+                                <div class="card mt-2">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="width: 90%;">@item.Name</h5>
+                                        <h6 class="card-subtitle mb-2 text-muted">Language Badges Go Here</h6>
+                                        <p class="card-text">@item.ShortDescription...</p>
+                                        <a href="#" class="card-link">View Project</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        count++;
+                    }
+                    <div class="col-md-4 mt-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title" style="width: 90%;">There's Even More!</h5>
+                                <a href="#" class="card-link">View All of @Model.User.FirstName's Projects</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+
+
+        <h3 class="mt-5">Portfolios:</h3>
+        <div class="container-fluid mt-4">
+            <div class="row">
+                @if (Model.Portfolios.Count == 0 || Model.Portfolios == null)
+                {
+                    <div class="col-md-4 mt-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title" style="width: 90%;">No Portfolios Yet</h5>
+                                <p class="card-text">But that doesn't mean you can't add one!</p>
+                                <a href="#" class="card-link">Add a portfolio!</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    int count = 0;
+                    foreach (var item in Model.Portfolios)
+                    {
+                        if (count < 5)
+                        {
+                            <div class="col-md-4">
+                                <div class="card mt-2">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="width: 90%;">@item.Name</h5>
+                                        <h6 class="card-subtitle mb-2 text-muted">Language Badges Go Here</h6>
+                                        <p class="card-text">@item.ShortDescription...</p>
+                                        <a href="#" class="card-link">View Portfolio</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        count++;
+                    }
+                    <div class="col-md-4">
+                        <div class="card mt-2">
+                            <div class="card-body">
+                                <h5 class="card-title" style="width: 90%;">But Wait... There's More</h5>
+                                <a href="#" class="card-link">View All of @Model.User.FirstName's Portfolios</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+
     </div>
 
 }

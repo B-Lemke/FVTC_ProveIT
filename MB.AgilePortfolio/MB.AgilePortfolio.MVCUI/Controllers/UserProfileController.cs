@@ -36,6 +36,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             UserProfile up = new UserProfile
             {
                 Projects = new ProjectList(),
+                Portfolios = new PortfolioList(),
                 User = new User()
             };
 
@@ -44,7 +45,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 User userin = System.Web.HttpContext.Current.Session["user"] as User;
                 up.User.LoadById(userin.Id);
                 up.Projects.LoadbyUser(up.User);
-
+                up.Portfolios.LoadbyUser(up.User);
                 // REDIRECT TO PROJECT EDIT PROFILE GET
                 return View(up);
 
@@ -65,6 +66,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             UserProfile up = new UserProfile
             {
                 Projects = new ProjectList(),
+                Portfolios = new PortfolioList(),
                 User = new User()
             };
 
@@ -77,6 +79,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             //If the username doesn't exist, it's sent into the view with an invalid user with an empty guid and it will trigger a profile not found message.
 
             up.Projects.LoadbyUser(up.User);
+            up.Portfolios.LoadbyUser(up.User);
 
             return View(up);
         }

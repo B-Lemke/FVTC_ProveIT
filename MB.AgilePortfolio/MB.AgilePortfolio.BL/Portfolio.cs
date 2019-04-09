@@ -12,6 +12,7 @@ namespace MB.AgilePortfolio.BL
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public string ShortDescription => Description == null ? "test" : new string(Description.Take(100).ToArray());
         public string Description { get; set; }
         [DisplayName("Portfolio Image")]
         public string PortfolioImage { get; set; }
