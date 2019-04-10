@@ -43,7 +43,10 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                         && Request.UrlReferrer != null
                         && Request.UrlReferrer.ToString().Length > 0)
                     {
-                        return RedirectToAction("Index", "UserProfile");
+                        if (Session["UserType"].ToString() == "User")
+                            return RedirectToAction("UserIndex", "UserProfile");
+                        if (Session["UserType"].ToString() == "Employer")
+                            return RedirectToAction("EmployerIndex", "UserProfile");
                     }
 
                     return Redirect(returnurl);

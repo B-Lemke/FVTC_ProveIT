@@ -31,7 +31,37 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
 
         // GET: UserProfile
-        public ActionResult Index()
+        public ActionResult UserIndex()
+        {
+            UserProfile up = new UserProfile
+            {
+                Projects = new ProjectList(),
+                Portfolios = new PortfolioList(),
+                User = new User()
+            };
+
+            if (Authenticate.IsAuthenticated())
+            {
+                User userin = System.Web.HttpContext.Current.Session["user"] as User;
+                up.User.LoadById(userin.Id);
+                up.Projects.LoadbyUser(up.User);
+                up.Portfolios.LoadbyUser(up.User);
+
+                // REDIRECT TO PROJECT EDIT PROFILE GET
+                return View(up);
+
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login", new
+                {
+                    returnurl = HttpContext.Request.Url
+                });
+            }
+
+        }
+
+        public ActionResult EmployerIndex()
         {
             UserProfile up = new UserProfile
             {

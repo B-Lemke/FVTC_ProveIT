@@ -372,7 +372,7 @@
     <Content Include="Views\UserProfile\EditProjects.cshtml" />
     <Content Include="Views\UserProfile\EditPortfolios.cshtml" />
     <Content Include="Views\UserProfile\EditPortfolio.cshtml" />
-    <Content Include="Views\UserProfile\Index.cshtml" />
+    <Content Include="Views\UserProfile\UserIndex.cshtml" />
     <Content Include="Views\UserProfile\DeleteProject.cshtml" />
     <Content Include="Views\UserProfile\DeletePortfolio.cshtml" />
     <Content Include="Views\UserProfile\ProjectDeleted.cshtml" />
@@ -394,6 +394,7 @@
     <Content Include="Views\UserProfile\PublicProject.cshtml" />
     <Content Include="Views\Screenshot\EditProject.cshtml" />
     <Content Include="Views\UserProfile\PublicPortfolio.cshtml" />
+    <Content Include="Views\UserProfile\EmployerIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
