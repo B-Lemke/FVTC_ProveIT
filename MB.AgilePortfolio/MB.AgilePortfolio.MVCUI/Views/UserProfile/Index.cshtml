@@ -57,17 +57,23 @@
             {
                 if (count < 5)
                 {
+                    if (item.Image == null)
+                    {
+                        item.Image = "Assets/Images/UserProfiles/Default.png";
+                    }
                     <div class="col-md-4">
                         <div class="card mt-2">
+
+                            <img class="card-img-top project-image" src="@Url.Content("~/" + @item.Image)" alt="Card image cap" >
                             <div class="card-body" style="text-align:center">
+
                                 <h5 class="card-title" style="width: 90%;text-align:left">@item.Name</h5>
                                 <h6 class="card-subtitle mb-2 text-muted" style="text-align:left">Language Badges Go Here</h6>
                                 <p class="card-text" style="text-align:left">@item.ShortDescription...</p>
-                                    <a href="~/UserProfile/PublicProject/@item.Id" class="card-link" style="text-align:center">
-                                        <img src='@Url.Content("~/" + @item.Image)' style="width: 100px; height:100px; text-align:center; object-fit:contain;" />
-                                        <br />
-                                        View Project
-                                    </a>
+                                <a href="~/UserProfile/PublicProject/@item.Id" class="card-link" style="text-align:center">
+                                    <br />
+                                    View Project
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -110,14 +116,18 @@
             {
                 if (count < 5)
                 {
+                    if(item.PortfolioImage == null)
+                    {
+                        item.PortfolioImage = "Assets/Images/UserProfiles/Default.png";
+                    }
                     <div class="col-md-4">
                         <div class="card mt-2">
                             <div class="card-body" style="text-align:center">
+                                <img class="card-img-top project-image" src="@Url.Content("~/" + @item.PortfolioImage)" alt="Card image cap">
                                 <h5 class="card-title" style="width: 90%;text-align:left">@item.Name</h5>
                                 <h6 class="card-subtitle mb-2 text-muted" style="text-align:left">Language Badges Go Here</h6>
                                 <p class="card-text" style="text-align:left">@item.ShortDescription...</p>
                                 <a href="~/UserProfile/PublicPortfolio/@item.Id" class="card-link" style="text-align:center">
-                                    <img src='@Url.Content("~/" + @item.PortfolioImage)' style="width: 100px; height:100px; text-align:center; object-fit:contain;" />
                                     <br />
                                     View Portfolio
                                 </a>
