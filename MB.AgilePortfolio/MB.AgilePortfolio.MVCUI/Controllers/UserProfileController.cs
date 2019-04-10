@@ -46,6 +46,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 up.User.LoadById(userin.Id);
                 up.Projects.LoadbyUser(up.User);
                 up.Portfolios.LoadbyUser(up.User);
+
                 // REDIRECT TO PROJECT EDIT PROFILE GET
                 return View(up);
 
@@ -80,6 +81,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
             up.Projects.LoadbyUser(up.User);
             up.Portfolios.LoadbyUser(up.User);
+
 
             return View(up);
         }
@@ -428,6 +430,44 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             return View();
         }
 
+        // GET: UserProfile/PublicPortfolio
+        public ActionResult PublicPortfolio(Guid? id)
+        {
+            Guid ID = id.GetValueOrDefault();
+            UserProfile up = new UserProfile()
+            {
+                Portfolio = new Portfolio(),
+                Portfolios = new PortfolioList(),
+                Projects = new ProjectList(),
+                Privacies = new PrivacyList(),
+                User = new User()
+            };
+            if (ID != Guid.Empty)
+            {
+                up.Portfolio.LoadById(ID);
+                up.Projects.LoadbyPortfolioID(ID);
+            }
+            else
+            {
+
+            }
+            return View(up);
+        }
+
+        // POST: UserProfile/PublicPortfolio
+        [HttpPost]
+        public ActionResult PublicPortfolio(Guid id, UserProfile up)
+        {
+
+            try
+            {
+                return View(up);
+
+
+            }
+            catch { return View(up); }
+        }
+
         // GET: Edit User Portfolio Redirect (UserProfile/EditPortfolio)
         public ActionResult EditPortfolio(Guid? id)
         {
@@ -465,7 +505,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     up.Projects.LoadbyPortfolioID(up.Portfolio.Id);
                     foreach (Project p in up.Projects)
                     {
-                        if(p.Image == string.Empty)
+                        if (p.Image == string.Empty)
                         {
                             p.Image = "Images/UserProfiles/Default.png";
                         }
@@ -488,10 +528,18 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             {
                 try
                 {
-
                     User userin = System.Web.HttpContext.Current.Session["user"] as User;
                     PortfolioList Portfolios = new PortfolioList();
                     Portfolios.LoadbyUser(userin);
+                    up.Portfolios = Portfolios;
+                    ProjectList projects = new ProjectList();
+                    projects.LoadbyPortfolioID(id);
+                    PrivacyList privacies = new PrivacyList();
+                    privacies.Load();
+                    up.Privacies = privacies;
+                    up.Projects = projects;
+                    string username = userin.Username;
+                    string savepath = "";
 
                     if (up.Portfolio.Name == null)
                     {
@@ -509,6 +557,83 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                                 }
                             }
                         }
+                    }
+                    string fileName = "";
+                    HttpPostedFileBase fileupload = null;
+
+                    if (up.Portfolio.PortfolioImage == string.Empty)
+                    {
+                        up.Portfolio.PortfolioImage = "Assets/Images/UserProfiles/Default.png";
+                    }
+                    else
+                    {
+                        if (up.Fileupload != null)
+                        {
+                            fileupload = up.Fileupload;
+                            fileName = Path.GetFileName(fileupload.FileName);
+
+                            var fullPath = Server.MapPath("~/" + up.Portfolio.PortfolioImage);
+
+                            if (System.IO.File.Exists(fullPath))
+                            {
+
+                            }
+                            else
+                            {
+                                up.Portfolio.PortfolioImage = "Assets/Images/UserProfiles/Default.png";
+                            }
+
+                            if (Directory.Exists("~/Images/PortfolioImages"))
+                            {
+                                savepath = "Assets/Images/PortfolioImages";
+                            }
+                            else
+                            {
+                                Directory.CreateDirectory(Server.MapPath("~/Assets/Images/PortfolioImages"));
+                                savepath = "Assets/Images/PortfolioImages";
+                            }
+
+                            if (Directory.Exists("~/Assets/Images/PortfolioImages/" + username))
+                            {
+                                savepath = "Assets/Images/PortfolioImages/" + username;
+                            }
+                            else
+                            {
+                                Directory.CreateDirectory(Server.MapPath("~/Assets/Images/PortfolioImages/" + username));
+                                savepath = "Assets/Images/PortfolioImages/" + username;
+                            }
+
+                            if (Directory.Exists("~/Assets/Images/PortfolioImages/" + username + "/" + up.Portfolio.Name))
+                            {
+                                savepath = "Assets/Images/PortfolioImages/" + username + "/" + up.Portfolio.Name;
+                            }
+                            else
+                            {
+                                Directory.CreateDirectory(Server.MapPath("~/Assets/Images/PortfolioImages/" + username + "/" + up.Portfolio.Name));
+                                savepath = "Assets/Images/PortfolioImages/" + username + "/" + up.Portfolio.Name;
+                            }
+
+                            fullPath = Server.MapPath("~/Assets/Images/PortfolioImages/" + username + "/" + up.Portfolio.Name + "/" + fileName);
+
+                            if (System.IO.File.Exists(fullPath))
+                            {
+                                System.IO.File.Delete(fullPath);
+                                ViewBag.deleteSuccess = "true";
+                            }
+                        }
+                        else
+                        {
+                            fileName = "Default.png";
+                            savepath = "Assets/Images/UserProfiles";
+                        }
+
+
+                        if (fileupload != null)
+                        {
+                            fileupload.SaveAs(Server.MapPath("~/" + savepath + "/" + fileName));
+                        }
+
+                        up.Portfolio.PortfolioImage = savepath + "/" + fileName;
                     }
 
                     if (!ModelState.IsValid)
@@ -782,8 +907,8 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 up.User.LastName = LastName;
                 up.User.UserTypeId = UserTypesID;
                 up.User.UserTypeDescription = UserTypesDescription;
-                
-                
+
+
                 string currentemail = userin.Email;
                 string currentUsername = userin.Username;
 

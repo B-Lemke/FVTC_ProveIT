@@ -88,7 +88,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             catch { return View(sp); }
         }
 
-        
+
         // GET: Screenshot/Delete/5
         public ActionResult Delete(Guid id)
         {
@@ -103,7 +103,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             sp.Projects = pl;
             Screenshot ss = new Screenshot();
             ss.LoadById(id);
-            sp.Screenshot=ss;
+            sp.Screenshot = ss;
 
             return View(sp);
         }
@@ -137,7 +137,8 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             //    return RedirectToAction("UploadProjectSliderImage", new { id = ss.ProjectId });
             //}
             //catch { return View(sp); }
-            try{
+            try
+            {
 
                 var screenShot = Screenshot.StaticLoadById(screenShotId);
                 var fullPath = Server.MapPath("~/" + screenShot.FilePath);
@@ -150,8 +151,9 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     ViewBag.deleteSuccess = "true";
                 }
             }
-            catch (Exception e){
-                
+            catch (Exception e)
+            {
+
             }
             return RedirectToAction("UploadProjectSliderImage", new { id = projectId });
         }
@@ -179,7 +181,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     ScreenshotList = new ScreenshotList()
                 };
                 sp.ScreenshotList.LoadbyProjectID(ID);
-                return View( sp);
+                return View(sp);
             }
             else
             {
@@ -192,7 +194,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         public ActionResult UploadProjectSliderImage(Guid id, ScreenshotProjects sp)
         {
 
-            HttpPostedFileBase fileupload= sp.Fileupload;
+            HttpPostedFileBase fileupload = sp.Fileupload;
             if (fileupload != null)
             {
                 User userin = System.Web.HttpContext.Current.Session["user"] as User;
@@ -206,8 +208,8 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 }
                 else
                 {
-                        Directory.CreateDirectory(Server.MapPath("~/Assets/Images/ScreenShots/" + username));
-                        savepath = "Assets/Images/ScreenShots/" + username;
+                    Directory.CreateDirectory(Server.MapPath("~/Assets/Images/ScreenShots/" + username));
+                    savepath = "Assets/Images/ScreenShots/" + username;
                 }
                 Project p = new Project();
                 p.LoadById(id);
@@ -218,11 +220,11 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 }
                 else
                 {
-                        Directory.CreateDirectory(Server.MapPath($"~/Assets/Images/ScreenShots/{username}/{sp.Project.Name}"));
-                        savepath = $"Assets/Images/ScreenShots/{username}/{sp.Project.Name}";
+                    Directory.CreateDirectory(Server.MapPath($"~/Assets/Images/ScreenShots/{username}/{sp.Project.Name}"));
+                    savepath = $"Assets/Images/ScreenShots/{username}/{sp.Project.Name}";
                 }
-                
-                
+
+
                 Screenshot ss = new Screenshot();
 
                 ss.ProjectId = id;
@@ -232,7 +234,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
 
                 fileupload.SaveAs(Server.MapPath("~/" + savepath + "/" + fileName));
-                ss.FilePath = savepath +  "/" + fileName;
+                ss.FilePath = savepath + "/" + fileName;
                 ss.Insert();
             }
             return RedirectToAction("UploadProjectSliderImage");
@@ -303,15 +305,14 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     ppus.Statuses = slist;
                     ScreenshotList screenshots = new ScreenshotList();
                     screenshots.LoadbyProjectID(id);
-                    
-                    HttpPostedFileBase fileupload = ppus.Fileupload;
+
                     User userin = System.Web.HttpContext.Current.Session["user"] as User;
                     ProjectList Projects = new ProjectList();
                     Projects.LoadbyUser(userin);
                     string username = userin.Username;
                     string strUserID = userin.Id.ToString();
                     ppus.ScreenshotList = screenshots;
-                    string fileName = Path.GetFileName(fileupload.FileName);
+
                     string savepath = "";
                     ppus.ScreenshotList = screenshots;
                     if (ppus.Project.Name == null)
@@ -341,6 +342,8 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                             ppus.LastUpdated = ppus.DateCreated;
                         }
                     }
+                    string fileName = "";
+                    HttpPostedFileBase fileupload = null;
 
                     if (ppus.Project.Image == string.Empty)
                     {
@@ -348,56 +351,71 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     }
                     else
                     {
-                        var fullPath = Server.MapPath("~/" + ppus.Project.Image);
-
-                        if (System.IO.File.Exists(fullPath))
+                        if (ppus.Fileupload != null)
                         {
-                            
+                            fileupload = ppus.Fileupload;
+                            fileName = Path.GetFileName(fileupload.FileName);
+
+                            var fullPath = Server.MapPath("~/" + ppus.Project.Image);
+
+                            if (System.IO.File.Exists(fullPath))
+                            {
+
+                            }
+                            else
+                            {
+                                ppus.Project.Image = "Assets/Images/UserProfiles/Default.png";
+                            }
+
+                            if (Directory.Exists("~/Images/ScreenShots"))
+                            {
+                                savepath = "Assets/Images/ScreenShots";
+                            }
+                            else
+                            {
+                                Directory.CreateDirectory(Server.MapPath("~/Assets/Images/ScreenShots"));
+                                savepath = "Assets/Images/ScreenShots";
+                            }
+
+                            if (Directory.Exists("~/Assets/Images/ScreenShots/" + username))
+                            {
+                                savepath = "Assets/Images/ScreenShots/" + username;
+                            }
+                            else
+                            {
+                                Directory.CreateDirectory(Server.MapPath("~/Assets/Images/ScreenShots/" + username));
+                                savepath = "Assets/Images/ScreenShots/" + username;
+                            }
+
+                            if (Directory.Exists("~/Assets/Images/ScreenShots/" + username + "/" + ppus.Project.Name))
+                            {
+                                savepath = "Assets/Images/ScreenShots/" + username + "/" + ppus.Project.Name;
+                            }
+                            else
+                            {
+                                Directory.CreateDirectory(Server.MapPath("~/Assets/Images/ScreenShots/" + username + "/" + ppus.Project.Name));
+                                savepath = "Assets/Images/ScreenShots/" + username + "/" + ppus.Project.Name;
+                            }
+
+                            fullPath = Server.MapPath("~/Assets/Images/ScreenShots/" + username + "/" + ppus.Project.Name + "/" + fileName);
+
+                            if (System.IO.File.Exists(fullPath))
+                            {
+                                System.IO.File.Delete(fullPath);
+                                ViewBag.deleteSuccess = "true";
+                            }
                         }
                         else
                         {
-                            ppus.Project.Image = "Assets/Images/UserProfiles/Default.png";
+                            fileName = "Default.png";
+                            savepath = "Assets/Images/UserProfiles";
                         }
 
-                        if (Directory.Exists("~/Images/ScreenShots"))
+                        if (fileupload != null)
                         {
-                            savepath = "Assets/Images/ScreenShots";
-                        }
-                        else
-                        {
-                            Directory.CreateDirectory(Server.MapPath("~/Assets/Images/ScreenShots"));
-                            savepath = "Assets/Images/ScreenShots";
+                            fileupload.SaveAs(Server.MapPath("~/" + savepath + "/" + fileName));
                         }
 
-                        if (Directory.Exists("~/Assets/Images/ScreenShots/" + username))
-                        {
-                            savepath = "Assets/Images/ScreenShots/" + username;
-                        }
-                        else
-                        {
-                            Directory.CreateDirectory(Server.MapPath("~/Assets/Images/ScreenShots/" + username));
-                            savepath = "Assets/Images/ScreenShots/" + username;
-                        }
-
-                        if (Directory.Exists("~/Assets/Images/ScreenShots/" + username + "/" + ppus.Project.Name))
-                        {
-                            savepath = "Assets/Images/ScreenShots/" + username + "/" + ppus.Project.Name;
-                        }
-                        else
-                        {
-                            Directory.CreateDirectory(Server.MapPath("~/Assets/Images/ScreenShots/" + username + "/" + ppus.Project.Name));
-                            savepath = "Assets/Images/ScreenShots/" + username + "/" + ppus.Project.Name;
-                        }
-
-                        fullPath = Server.MapPath("~/Assets/Images/ScreenShots/" + username + "/" + ppus.Project.Name + "/" + fileName);
-
-                        if (System.IO.File.Exists(fullPath))
-                        {
-                            System.IO.File.Delete(fullPath);
-                            ViewBag.deleteSuccess = "true";
-                        }
-
-                        fileupload.SaveAs(Server.MapPath("~/" + savepath + "/" + fileName));
                         ppus.Project.Image = savepath + "/" + fileName;
                     }
 

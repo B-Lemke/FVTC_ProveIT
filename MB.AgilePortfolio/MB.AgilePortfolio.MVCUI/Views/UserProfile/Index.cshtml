@@ -59,11 +59,15 @@
                 {
                     <div class="col-md-4">
                         <div class="card mt-2">
-                            <div class="card-body">
-                                <h5 class="card-title" style="width: 90%;">@item.Name</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Language Badges Go Here</h6>
-                                <p class="card-text">@item.ShortDescription...</p>
-                                <a href="#" class="card-link">View Project</a>
+                            <div class="card-body" style="text-align:center">
+                                <h5 class="card-title" style="width: 90%;text-align:left">@item.Name</h5>
+                                <h6 class="card-subtitle mb-2 text-muted" style="text-align:left">Language Badges Go Here</h6>
+                                <p class="card-text" style="text-align:left">@item.ShortDescription...</p>
+                                    <a href="~/UserProfile/PublicProject/@item.Id" class="card-link" style="text-align:center">
+                                        <img src='@Url.Content("~/" + @item.Image)' style="width: 100px; height:100px; text-align:center; object-fit:contain;" />
+                                        <br />
+                                        View Project
+                                    </a>
                             </div>
                         </div>
                     </div>
@@ -108,11 +112,15 @@
                 {
                     <div class="col-md-4">
                         <div class="card mt-2">
-                            <div class="card-body">
-                                <h5 class="card-title" style="width: 90%;">@item.Name</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Language Badges Go Here</h6>
-                                <p class="card-text">@item.ShortDescription...</p>
-                                <a href="#" class="card-link">View Portfolio</a>
+                            <div class="card-body" style="text-align:center">
+                                <h5 class="card-title" style="width: 90%;text-align:left">@item.Name</h5>
+                                <h6 class="card-subtitle mb-2 text-muted" style="text-align:left">Language Badges Go Here</h6>
+                                <p class="card-text" style="text-align:left">@item.ShortDescription...</p>
+                                <a href="~/UserProfile/PublicPortfolio/@item.Id" class="card-link" style="text-align:center">
+                                    <img src='@Url.Content("~/" + @item.PortfolioImage)' style="width: 100px; height:100px; text-align:center; object-fit:contain;" />
+                                    <br />
+                                    View Portfolio
+                                </a>
                             </div>
                         </div>
                     </div>

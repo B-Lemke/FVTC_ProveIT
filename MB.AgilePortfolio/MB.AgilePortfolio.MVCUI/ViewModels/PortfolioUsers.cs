@@ -13,5 +13,6 @@ namespace MB.AgilePortfolio.MVCUI.ViewModels
         public UserList Users { get; set; }
         public User User { get; set; }
         public PrivacyList Privacies { get; set; }
+        public HttpPostedFileBase Fileupload { get; set; }
     }
 }
