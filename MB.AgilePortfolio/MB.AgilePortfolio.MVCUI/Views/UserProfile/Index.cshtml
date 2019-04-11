@@ -68,7 +68,22 @@
                             <div class="card-body" style="text-align:center">
 
                                 <h5 class="card-title" style="width: 90%;text-align:left">@item.Name</h5>
-                                <h6 class="card-subtitle mb-2 text-muted" style="text-align:left">Language Badges Go Here</h6>
+                                <h6 class="card-subtitle mb-2 text-muted" style="text-align:left">
+                                    @if (item.Languages != null)
+                                    {
+                                        int badgeCount = 0;
+
+                                        foreach (var lang in item.Languages)
+                                        {
+                                            if (badgeCount < 5)
+                                            {
+                                                <span class="badge badge-pill badge-@lang.BadgeName">@lang.Description</span>
+                                                badgeCount++;
+                                            }
+                                        }
+                                    }
+
+                                </h6>
                                 <p class="card-text" style="text-align:left">@item.ShortDescription...</p>
                                 <a href="~/UserProfile/PublicProject/@item.Id" class="card-link" style="text-align:center">
                                     <br />
@@ -124,8 +139,6 @@
                         <div class="card mt-2">
                             <div class="card-body" style="text-align:center">
                                 <img class="card-img-top project-image" src="@Url.Content("~/" + @item.PortfolioImage)" alt="Card image cap">
-                                <h5 class="card-title" style="width: 90%;text-align:left">@item.Name</h5>
-                                <h6 class="card-subtitle mb-2 text-muted" style="text-align:left">Language Badges Go Here</h6>
                                 <p class="card-text" style="text-align:left">@item.ShortDescription...</p>
                                 <a href="~/UserProfile/PublicPortfolio/@item.Id" class="card-link" style="text-align:center">
                                     <br />

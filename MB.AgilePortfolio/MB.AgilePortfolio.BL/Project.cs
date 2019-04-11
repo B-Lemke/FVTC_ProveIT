@@ -41,6 +41,8 @@ namespace MB.AgilePortfolio.BL
         public Guid StatusId { get; set; }
         [DisplayName("Status")]
         public string StatusDescription { get; set; }
+        public LanguageList Languages { get; set; }
+
 
         public Project() { }
 
@@ -297,6 +299,41 @@ namespace MB.AgilePortfolio.BL
             catch (Exception ex) { throw ex; }
         }
 
+        public void LoadLanguages()
+        {
+            //Load languages for a project with this Id
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    //Instantiate the language list
+                    this.Languages = new LanguageList();
+
+                    var ProjectLanguages = (from pl in dc.tblProjectLanguages
+                                            join l in dc.tblLanguages on pl.LanguageId equals l.Id
+                                            where pl.ProjectId == this.Id
+                                            select new
+                                            {
+                                                l.Id,
+                                                l.Description
+                                            }).ToList();
+
+                    foreach(var language in ProjectLanguages)
+                    {
+                        Language lang = new Language();
+                        lang.Id = language.Id;
+                        lang.Description = language.Description;
+                        this.Languages.Add(lang);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
         public void LoadById(Guid id)
         {
             try
@@ -355,6 +392,9 @@ namespace MB.AgilePortfolio.BL
                         PrivacyDescription = project.Privacy;
                     }
                     else throw new Exception("Project not found");
+
+                    //Load the langauges on this project
+                    this.LoadLanguages();
                 }
             }
             catch (Exception ex) { throw ex; }
@@ -411,6 +451,7 @@ namespace MB.AgilePortfolio.BL
                     {
                         Project project = new Project(p.Id, p.Name, p.Location, p.Filepath, p.PrivacyId, p.Image, p.Description, p.UserId, p.DateCreated, p.Purpose,
                                                       p.Environment, p.Challenges, p.FuturePlans, p.Collaborators, p.LastUpdated, p.SoftwareUsed, p.StatusId, p.Privacy, p.Status, p.UserEmail);
+                        project.LoadLanguages();
                         Add(project);
                     }
                 }
@@ -458,6 +499,8 @@ namespace MB.AgilePortfolio.BL
                     {
                         Project project = new Project(p.Id, p.Name, p.Location, p.Filepath, p.PrivacyId, p.Image, p.Description, p.UserId, p.DateCreated, p.Purpose,
                                                       p.Environment, p.Challenges, p.FuturePlans, p.Collaborators, p.LastUpdated, p.SoftwareUsed, p.StatusId, p.Privacy, p.Status, p.UserEmail);
+                        //Load languages on the project
+                        project.LoadLanguages();
                         Add(project);
                     }
                 }
@@ -503,6 +546,8 @@ namespace MB.AgilePortfolio.BL
                     {
                         Project project = new Project(p.Id, p.Name, p.Location, p.Filepath, p.PrivacyId, p.Image, p.Description, p.UserId, p.DateCreated, p.Purpose,
                                                       p.Environment, p.Challenges, p.FuturePlans, p.Collaborators, p.LastUpdated, p.SoftwareUsed, p.StatusId, p.Privacy, p.Status, p.UserEmail);
+                        //Load languages on the project
+                        project.LoadLanguages();
                         Add(project);
                     }
                 }

@@ -35,279 +35,328 @@
                 padding-right: 10%;
                 width: 100%;
             }
+
+            html {
+                width: 100%;
+            }
+
+            body {
+                width: 100%;
+                word-wrap: break-word;
+            }
+
+            .container {
+                max-width: none;
+                width: 100% !important;
+                padding-right: 15px;
+                padding-left: 15px;
+                margin-right: 0;
+                margin-left: 0;
+            }
+
+            .sidebar{
+                padding: 5px;
+            }
         </style>
 
-        
+
     </head>
 
     <body>
-        <h2 align="center">@Model.Project.Name</h2>
-        <div class="container py-4" style="text-align:center">
-            <img src="~/@Model.Project.Image" alt="" style="width:100%;height:350px; text-align:center; object-fit:contain;">
-        </div>
-        <hr />
-        <h4 align="center">Screenshots</h4>
-
-
-
-        <div id="demo" class="carousel slide" data-ride="carousel">
-            <ul class="carousel-indicators">
-
-                @{
-                    int i = 0;
-                    int imgleft = Model.ScreenshotList.Count;
-                    int ImagesPerTransition = 8;
-                }
-
-            </ul>
-            <div class="carousel-inner" role="listbox">
-
-                @if (Model.ScreenshotList?.Count > 0)
-                {
-
-                    int modssi = Model.ScreenshotList.Count % ImagesPerTransition;
-                    int iterations = 0;
-                    imgleft = Model.ScreenshotList.Count;
-
-                    if (modssi > 0)
-                    {
-                        if (Model.ScreenshotList.Count > ImagesPerTransition - 1)
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2 border" id="sidebar">
+                    <h2>@Model.User.Username</h2>
+                    <div>
+                        @if (Model.User.ProfileImage != null)
                         {
-                            iterations = (int)Math.Ceiling(((double)Model.ScreenshotList.Count) / ImagesPerTransition);
-
+                            <img src="~/Assets/Images/UserProfiles/@Model.User.ProfileImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image" width="100%" class="rounded" />
                         }
                         else
                         {
-                            iterations = 1;
+                            <img src="~/Assets/Images/UserProfiles/Default.png" alt="Default Profile Image" width="100%" class="rounded-circle" />
                         }
-                    }
-                    else
-                    {
-                        iterations = (Model.ScreenshotList.Count) / ImagesPerTransition;
-                    }
-                    var active = iterations == 1 ? "active" : "";
+                        <h4 class="font-weight-normal">@Model.User.FullName</h4>
+                        <h4 class="font-weight-light">@Model.User.Email</h4>
+                        <hr />
+                        <p>View @Model.User.Username's other projects</p>
+                        <p>View @Model.User.Username's portfolios</p>
 
-                    for (int ssi = 0; ssi < iterations; ssi++)
-                    {
-                        if (ssi == 0)
-                        {
-                            if (iterations > 1)
-                            {
-                <div class="carousel-item active">
-                    @for (int y = 0; y < ImagesPerTransition; y++)
-                    {
+                    </div>
 
-                        @*<p>@Model.ScreenshotList[y].Name</p>*@
-                        string imgpath = "~/" + Model.ScreenshotList[y].FilePath;
-                        @*<a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y].Id})'>*@
-                        <img src='@Url.Content(@imgpath)' />
-                        @*</a>*@
-                        imgleft--;
-                    }
+
                 </div>
-                            }
-                            else
-                            {
-                                <div class="carousel-item active">
-                                    @for (int y = 0; y < modssi; y++)
-                                    {
-                                        @*<p>@Model.ScreenshotList[y].Name</p>*@
-                                        string imgpath = "~/" + Model.ScreenshotList[y].FilePath;
-                                        @*<a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.ScreenshotList[y].Id})'>*@
-                                            <img src='@Url.Content(@imgpath)' />
-                                        @*</a>*@
-                                        imgleft--;
-                                    }
-                                </div>
-                            }
-                        }
-                        else
+                <div class="col-md-10 pl-2 border">
+                    <h2 class="text-left">@Model.Project.Name</h2>
+                    @if (Model.Project.Languages != null)
+                    {
+                        int badgeCount = 0;
+
+                        foreach (var lang in Model.Project.Languages)
                         {
-                            if (imgleft >= ImagesPerTransition)
+                            if (badgeCount < 5)
                             {
-                                <div class="carousel-item">
-                                    @for (int y = 0; y < ImagesPerTransition; y++)
-                                    {
-                                        @*<p>@Model.Projects[y + ssi * ImagesPerTransition].Name</p>*@
-                                        string imgpath = "~/" + Model.ScreenshotList[y + ssi * ImagesPerTransition].FilePath;
-                                        @*<a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.ScreenshotList[y + ssi * ImagesPerTransition].Id})'>*@
-                                            <img src='@Url.Content(@imgpath)' />
-                                        @*</a>*@
-
-                                        imgleft--;
-                                    }
-                                </div>
-                            }
-                            else
-                            {
-                                string width = ((Math.Floor((double)(99 / modssi)))).ToString() + "%";
-                                <div class="carousel-item">
-
-                                    @for (int y = 0; y < modssi; y++)
-                                    {
-                                        @*<p>@Model.Projects[y + ssi * ImagesPerTransition].Name</p>*@
-                                        string imgpath = "~/" + Model.ScreenshotList[y + ssi * ImagesPerTransition].FilePath;
-                                        @*<a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y + ssi * ImagesPerTransition].Id})'>*@
-                                            <img src='@Url.Content(@imgpath)' />
-                                        @*</a>*@
-                                        imgleft--;
-                                    }
-                                </div>
+                                <span class="badge badge-pill badge-@lang.BadgeName">@lang.Description</span>
+                                badgeCount++;
                             }
                         }
                     }
-                }
 
+                    <hr />
+                    <p class="project-description">
+                        @Html.DisplayFor(model => model.Project.Description)
+                    </p>
+
+
+
+
+                    <div class="container py-4" style="text-align:center">
+                        <img src="~/@Model.Project.Image" alt="" style="width:100%;height:350px; text-align:center; object-fit:contain;">
+                    </div>
+                    <hr />
+                    <h4 align="center">Screenshots</h4>
+
+
+
+                    <div id="demo" class="carousel slide" data-ride="carousel">
+                        <ul class="carousel-indicators">
+
+                            @{
+                                int i = 0;
+                                int imgleft = Model.ScreenshotList.Count;
+                                int ImagesPerTransition = 8;
+                            }
+
+                        </ul>
+                        <div class="carousel-inner" role="listbox">
+
+                            @if (Model.ScreenshotList?.Count > 0)
+                            {
+
+                                int modssi = Model.ScreenshotList.Count % ImagesPerTransition;
+                                int iterations = 0;
+                                imgleft = Model.ScreenshotList.Count;
+
+                                if (modssi > 0)
+                                {
+                                    if (Model.ScreenshotList.Count > ImagesPerTransition - 1)
+                                    {
+                                        iterations = (int)Math.Ceiling(((double)Model.ScreenshotList.Count) / ImagesPerTransition);
+
+                                    }
+                                    else
+                                    {
+                                        iterations = 1;
+                                    }
+                                }
+                                else
+                                {
+                                    iterations = (Model.ScreenshotList.Count) / ImagesPerTransition;
+                                }
+                                var active = iterations == 1 ? "active" : "";
+
+                                for (int ssi = 0; ssi < iterations; ssi++)
+                                {
+                                    if (ssi == 0)
+                                    {
+                                        if (iterations > 1)
+                                        {
+                                            <div class="carousel-item active">
+                                                @for (int y = 0; y < ImagesPerTransition; y++)
+                                                {
+
+                                                    @*<p>@Model.ScreenshotList[y].Name</p>*@
+                                                    string imgpath = "~/" + Model.ScreenshotList[y].FilePath;
+                                                    @*<a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y].Id})'>*@
+                                                    <img src='@Url.Content(@imgpath)' />
+                                                    @*</a>*@
+                                                    imgleft--;
+                                                }
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="carousel-item active">
+                                                @for (int y = 0; y < modssi; y++)
+                                                {
+                                                    @*<p>@Model.ScreenshotList[y].Name</p>*@
+                                                    string imgpath = "~/" + Model.ScreenshotList[y].FilePath;
+                                                    @*<a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.ScreenshotList[y].Id})'>*@
+                                                    <img src='@Url.Content(@imgpath)' />
+                                                    @*</a>*@
+                                                    imgleft--;
+                                                }
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (imgleft >= ImagesPerTransition)
+                                        {
+                                            <div class="carousel-item">
+                                                @for (int y = 0; y < ImagesPerTransition; y++)
+                                                {
+                                                    @*<p>@Model.Projects[y + ssi * ImagesPerTransition].Name</p>*@
+                                                    string imgpath = "~/" + Model.ScreenshotList[y + ssi * ImagesPerTransition].FilePath;
+                                                    @*<a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.ScreenshotList[y + ssi * ImagesPerTransition].Id})'>*@
+                                                    <img src='@Url.Content(@imgpath)' />
+                                                    @*</a>*@
+
+                                                    imgleft--;
+                                                }
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            string width = ((Math.Floor((double)(99 / modssi)))).ToString() + "%";
+                                            <div class="carousel-item">
+
+                                                @for (int y = 0; y < modssi; y++)
+                                                {
+                                                    @*<p>@Model.Projects[y + ssi * ImagesPerTransition].Name</p>*@
+                                                    string imgpath = "~/" + Model.ScreenshotList[y + ssi * ImagesPerTransition].FilePath;
+                                                    @*<a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y + ssi * ImagesPerTransition].Id})'>*@
+                                                    <img src='@Url.Content(@imgpath)' />
+                                                    @*</a>*@
+                                                    imgleft--;
+                                                }
+                                            </div>
+                                        }
+                                    }
+                                }
+                            }
+
+                        </div>
+                        <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </a>
+                        <a class="carousel-control-next" href="#demo" data-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </a>
+
+                    </div>
+                    <hr />
+                    <dl class="dl-horizontal">
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Project.Location)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Project.Location)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Project.Filepath)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Project.Filepath)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Project.PrivacyDescription)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Project.PrivacyDescription)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Project.Image)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Project.Image)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Project.DateCreated)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Project.DateCreated)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Project.Purpose)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Project.Purpose)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Project.Environment)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Project.Environment)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Project.Challenges)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Project.Challenges)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Project.FuturePlans)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Project.FuturePlans)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Project.Collaborators)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Project.Collaborators)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Project.LastUpdated)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Project.LastUpdated)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Project.SoftwareUsed)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Project.SoftwareUsed)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Project.StatusDescription)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Project.StatusDescription)
+                        </dd>
+
+                    </dl>
+                </div>
             </div>
-            <a class="carousel-control-prev" href="#demo" data-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-            </a>
-            <a class="carousel-control-next" href="#demo" data-slide="next">
-                <span class="carousel-control-next-icon"></span>
-            </a>
+        </div>
 
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-12">
+                @Html.ActionLink("Back to Projects", "EditProjects", "UserProfile")
+            </div>
         </div>
     </body>
-    </html>
-<div class="form-horizontal">
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.Project.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Project.Name, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
-            @Html.ValidationMessageFor(model => model.Project.Name, "", new { @class = "text-danger" })
-        </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Project.Location, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Project.Location, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
-            @Html.ValidationMessageFor(model => model.Project.Location, "", new { @class = "text-danger" })
-        </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Project.Filepath, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Project.Filepath, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
-            @Html.ValidationMessageFor(model => model.Project.Filepath, "", new { @class = "text-danger" })
-        </div>
-    </div>
+</html>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Project.PrivacyDescription, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Project.PrivacyDescription, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
-            @Html.ValidationMessageFor(model => model.Project.PrivacyId, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @*
-            @Html.LabelFor(model => model.Project.Image, htmlAttributes: new { @class = "control-label col-md-2" })
-        *@
-        <div class="col-md-10">
-            @Html.HiddenFor(model => model.Project.Image, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Project.Image, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Project.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Project.Description, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
-            @Html.ValidationMessageFor(model => model.Project.Description, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-10">
-            @Html.HiddenFor(model => model.Project.UserId, new { htmlAttributes = new { @class = "form-control", @value = Model.User.FullName, disabled = "disabled", @readonly = "readonly" } })
-            @Html.ValidationMessageFor(model => model.Project.UserId, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Project.DateCreated, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Project.DateCreated, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
-            @Html.ValidationMessageFor(model => model.Project.DateCreated, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Project.Purpose, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Project.Purpose, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
-            @Html.ValidationMessageFor(model => model.Project.Purpose, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Project.Environment, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Project.Environment, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
-            @Html.ValidationMessageFor(model => model.Project.Environment, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Project.Challenges, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Project.Challenges, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
-            @Html.ValidationMessageFor(model => model.Project.Challenges, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Project.FuturePlans, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Project.FuturePlans, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
-            @Html.ValidationMessageFor(model => model.Project.FuturePlans, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Project.Collaborators, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Project.Collaborators, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
-            @Html.ValidationMessageFor(model => model.Project.Collaborators, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Project.LastUpdated, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Project.LastUpdated, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
-            @Html.ValidationMessageFor(model => model.Project.LastUpdated, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Project.SoftwareUsed, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Project.SoftwareUsed, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
-            @Html.ValidationMessageFor(model => model.Project.SoftwareUsed, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Project.StatusDescription, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Project.StatusDescription, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
-            @Html.ValidationMessageFor(model => model.Project.StatusDescription, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-</div>
-
-<div class="form-group">
-    <div class="col-md-offset-2 col-md-12">
-        @Html.ActionLink("Back to Projects", "EditProjects", "UserProfile")
-    </div>
-</div>
 
 }
 

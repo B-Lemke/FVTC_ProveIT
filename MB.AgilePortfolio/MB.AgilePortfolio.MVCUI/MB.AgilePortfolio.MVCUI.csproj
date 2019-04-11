@@ -212,6 +212,7 @@
       <DependentUpon>freelancer.css</DependentUpon>
     </Content>
     <Content Include="Content\HomePage.css" />
+    <Content Include="Content\languageBadge.css" />
     <Content Include="Content\_footer.css">
       <DependentUpon>_footer.scss</DependentUpon>
     </Content>
@@ -372,7 +373,7 @@
     <Content Include="Views\UserProfile\EditProjects.cshtml" />
     <Content Include="Views\UserProfile\EditPortfolios.cshtml" />
     <Content Include="Views\UserProfile\EditPortfolio.cshtml" />
-    <Content Include="Views\UserProfile\UserIndex.cshtml" />
+    <Content Include="Views\UserProfile\Index.cshtml" />
     <Content Include="Views\UserProfile\DeleteProject.cshtml" />
     <Content Include="Views\UserProfile\DeletePortfolio.cshtml" />
     <Content Include="Views\UserProfile\ProjectDeleted.cshtml" />

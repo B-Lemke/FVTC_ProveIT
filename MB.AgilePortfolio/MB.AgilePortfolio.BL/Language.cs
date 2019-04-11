@@ -12,6 +12,18 @@ namespace MB.AgilePortfolio.BL
         public Guid Id { get; set; }
         public string Description { get; set; }
 
+        //Returns a cleaned up version of the language name for css class when making badges.
+        public string BadgeName
+        {
+            get
+            {
+                var name = Description.ToLower();
+                var cleanedName = name.Replace("#", "sharp").Replace(".", "dot").Replace(" ", "").Replace("+", "plus").Replace("/","slash");
+                return cleanedName;
+            }
+        }
+
+
         public Language() { }
 
         public Language(Guid id, string description)

@@ -31,7 +31,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
 
         // GET: UserProfile
-        public ActionResult UserIndex()
+        public ActionResult Index()
         {
             UserProfile up = new UserProfile
             {
@@ -179,33 +179,17 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 Status = new Status()
             };
 
+
             sp.Project.LoadById(ID);
+            sp.User.LoadById(sp.Project.UserId); 
+            
             sp.ScreenshotList.LoadbyProjectID(ID);
 
             return View(sp);
 
 
         }
-
-        // POST: UserProfile/PublicProject
-        [HttpPost]
-        public ActionResult PublicProject(Guid id, ScreenshotProjects ppus)
-        {
-            if (Authenticate.IsAuthenticated())
-            {
-                try
-                {
-                    return View(ppus);
-
-
-                }
-                catch { return View(ppus); }
-            }
-            else
-            {
-                return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
-            }
-        }
+        
 
         // GET: UserProfile/EditProject
         public ActionResult EditProject(Guid? id)
