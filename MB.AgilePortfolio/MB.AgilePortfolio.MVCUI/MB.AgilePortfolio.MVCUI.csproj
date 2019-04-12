@@ -177,6 +177,7 @@
     <Compile Include="Models\Authenticate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\PortfolioUsers.cs" />
+    <Compile Include="ViewModels\UploadedImages.cs" />
     <Compile Include="ViewModels\UserProfile.cs" />
     <Compile Include="ViewModels\ProjectPrivaciesUserStatuses.cs" />
     <Compile Include="ViewModels\ProjectPrivaciesUsersStatuses.cs" />
@@ -396,6 +397,8 @@
     <Content Include="Views\Screenshot\EditProject.cshtml" />
     <Content Include="Views\UserProfile\PublicPortfolio.cshtml" />
     <Content Include="Views\UserProfile\EmployerIndex.cshtml" />
+    <Content Include="Views\UploadedImage\UploadProjectSliderImage.cshtml" />
+    <Content Include="Views\UploadedImage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

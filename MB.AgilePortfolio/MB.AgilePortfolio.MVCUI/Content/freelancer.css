@@ -1,4 +1,8 @@
-﻿body {
+﻿.left-margin {
+    margin-left: 50px;
+}
+
+body {
   font-family: 'Lato'; }
 
 h1,
@@ -276,24 +280,46 @@ a {
   background-color: #262E43 !important; }
 
 .bg-secondary {
-  background-color: #F26230 !important; }
+    background-color: #D63542 !important;
+}
 
 .text-primary {
   color: #262E43 !important; }
 
 .text-secondary {
-  color: #F26230 !important; }
+    color: #FF4454 !important;
+}
 
 .btn-primary {
-  background-color: #262E43;
-  border-color: #262E43; }
+    background-color: #D63542;
+    border-color: #262E43;
+}
   .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
     background-color: #141822;
     border-color: #141822; }
 
 .btn-secondary {
-  background-color: #F26230;
-  border-color: #F26230; }
-  .btn-secondary:hover, .btn-secondary:focus, .btn-secondary:active {
-    background-color: #e1440e;
-    border-color: #e1440e; }
+    background-color: #D63542;
+    border-color: #D63542;
+}
+    .btn-secondary:hover, .btn-secondary:focus, .btn-secondary:active {
+        background-color: #D63542;
+        border-color: #D63542;
+    }
+
+
+
+.carousel-inner img {
+    width: 100px;
+    height: 100px;
+}
+
+.carousel-inner {
+    padding-left: 10%;
+    padding-right: 10%;
+    width: 100%;
+}
+
+.carousel-control-prev, .carousel-control-next {
+    width: auto !important;
+}

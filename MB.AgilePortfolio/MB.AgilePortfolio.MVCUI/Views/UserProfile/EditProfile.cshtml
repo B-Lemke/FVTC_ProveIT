@@ -146,6 +146,18 @@
         </div>
 
         <div class="form-group">
+            <div class="col-md-10">
+
+                <label>Upload New Display Image</label>
+                <div class="input-group">
+                    <div class="custom-file">
+                        @Html.TextBoxFor(model => model.Fileupload, new { type = "file", id = "fileupload", name = "fileupload", accept = ".jpg, .jpeg, .gif, .png" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-primary" onclick="return validateRegistration()" />
             </div>

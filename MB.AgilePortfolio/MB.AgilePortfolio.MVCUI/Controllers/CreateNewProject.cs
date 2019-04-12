@@ -14,7 +14,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
     public class CreateNewProjectController : Controller
     {
         ProjectList projects;
-        HttpPostedFileBase Fileupload;
 
         // GET: Project
         public ActionResult Index()
@@ -59,7 +58,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             {
                 try
                 {
-                    HttpPostedFileBase fileupload = ppus.Fileupload;
+
                     PrivacyList plist = new PrivacyList();
                     plist.Load();
                     ppus.Privacies = plist;
@@ -71,10 +70,8 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     User userin = System.Web.HttpContext.Current.Session["user"] as User;
                     string username = userin.Username;
                     string strUserID = userin.Id.ToString();
-                    string savepath = "";
                     ppus.Project.UserId = userin.Id;
                     ppus.Project.UserEmail = userin.Email;
-                    string fileName = Path.GetFileName(fileupload.FileName);
 
                     Projects.LoadbyUser(userin);
 
@@ -102,54 +99,26 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                         }
                     }
 
-                    if (ppus.Project.Image == string.Empty)
+                    UploadedImage ui = new UploadedImage
                     {
-                        ppus.Project.Image = "Assets/Images/UserProfiles/Default.png";
+                        FilePath = ppus.Project.Image,
+                        Fileupload = ppus.Fileupload,
+                        UserName = username,
+                        ObjectType = "Project",
+                        ObjectName = ppus.Project.Name
+                    };
 
-
+                    
+                    string fp = ui.Upload();
+                    // fp will return null if no upload file was choosen else use upload file to save to database
+                    if (fp != null)
+                    {
+                        ppus.Project.Image = fp;
                     }
                     else
                     {
-                        if (Directory.Exists("~/Images/ScreenShots"))
-                        {
-                            savepath = "Assets/Images/ScreenShots";
-                        }
-                        else
-                        {
-                            Directory.CreateDirectory(Server.MapPath("~/Assets/Images/ScreenShots"));
-                            savepath = "Assets/Images/ScreenShots";
-                        }
-
-                        if (Directory.Exists("~/Assets/Images/ScreenShots/" + username))
-                        {
-                            savepath = "Assets/Images/ScreenShots/" + username;
-                        }
-                        else
-                        {
-                            Directory.CreateDirectory(Server.MapPath("~/Assets/Images/ScreenShots/" + username));
-                            savepath = "Assets/Images/ScreenShots/" + username;
-                        }
-
-                        if (Directory.Exists("~/Assets/Images/ScreenShots/" + username + "/" + ppus.Project.Name))
-                        {
-                            savepath = "Assets/Images/ScreenShots/" + username + "/" + ppus.Project.Name;
-                        }
-                        else
-                        {
-                            Directory.CreateDirectory(Server.MapPath("~/Assets/Images/ScreenShots/" + username + "/" + ppus.Project.Name));
-                            savepath = "Assets/Images/ScreenShots/" + username + "/" + ppus.Project.Name;
-                        }
-
-                        var fullPath = Server.MapPath("~/Assets/Images/ScreenShots/" + username + "/" + ppus.Project.Name + "/" + fileName);
-
-                        if (System.IO.File.Exists(fullPath))
-                        {
-                            System.IO.File.Delete(fullPath);
-                            ViewBag.deleteSuccess = "true";
-                        }
-
-                        fileupload.SaveAs(Server.MapPath("~/" + savepath + "/" + fileName));
-                        ppus.Project.Image = savepath + "/" + fileName;
+                        // I honestly don't know when this would happen but just in case
+                        ModelState.AddModelError(string.Empty, "Portfolio Image could not found");
                     }
 
                     if (!ModelState.IsValid)

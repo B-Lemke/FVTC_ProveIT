@@ -191,167 +191,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         }
         
 
-        // GET: UserProfile/EditProject
-        public ActionResult EditProject(Guid? id)
-        {
-            Guid ID = id.GetValueOrDefault();
-            if (ID == Guid.Empty)
-            {
-                if (Authenticate.IsAuthenticated())
-                {
-
-                    return RedirectToAction("EditProjects", "UserProfile", new { returnurl = HttpContext.Request.Url });
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
-                }
-            }
-            else
-            {
-                UserProfile up = new UserProfile()
-                {
-                    Project = new Project(),
-                    Privacies = new PrivacyList(),
-                    User = new User(),
-                    Statuses = new StatusList()
-                };
-
-                if (Authenticate.IsAuthenticated())
-                {
-                    up.Project.LoadById(ID);
-                    Project project = new Project();
-                    project.LoadById(up.Project.Id);
-                    up.DateCreated = project.DateCreated;
-                    up.LastUpdated = project.LastUpdated;
-                    up.Privacies.Load();
-                    User userin = System.Web.HttpContext.Current.Session["user"] as User;
-                    up.User.LoadById(userin.Id);
-                    up.Statuses.Load();
-                    return View(up);
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
-                }
-            }
-        }
-
-        // POST: UserProfile/EditProject
-        [HttpPost]
-        public ActionResult EditProject(Guid id, UserProfile ppus)
-        {
-            if (Authenticate.IsAuthenticated())
-            {
-                try
-                {
-                    PrivacyList plist = new PrivacyList();
-                    plist.Load();
-                    ppus.Privacies = plist;
-                    StatusList slist = new StatusList();
-                    slist.Load();
-                    ppus.Statuses = slist;
-                    HttpPostedFileBase fileupload = ppus.Fileupload;
-                    User userin = System.Web.HttpContext.Current.Session["user"] as User;
-                    ProjectList Projects = new ProjectList();
-                    Projects.LoadbyUser(userin);
-                    string username = userin.Username;
-                    string strUserID = userin.Id.ToString();
-                    string fileName = Path.GetFileName(fileupload.FileName);
-                    string savepath = "";
-                    if (ppus.Project.Name == null)
-                    {
-                        ModelState.AddModelError(string.Empty, "Project requires a name!");
-                    }
-                    else
-                    {
-                        foreach (Project p in Projects)
-                        {
-                            if (ppus.Project.Name == p.Name)
-                            {
-                                if (ppus.Project.Id != p.Id)
-                                {
-                                    ModelState.AddModelError(string.Empty, "Another project already exists with this name!");
-                                }
-
-                            }
-                        }
-
-                        if (ppus.DateCreated == null)
-                        {
-                            ModelState.AddModelError(string.Empty, "Date Created required!");
-                        }
-                        else if (ppus.LastUpdated == null)
-                        {
-                            ppus.LastUpdated = ppus.DateCreated;
-                        }
-                    }
-
-                    if (ppus.Project.Image == string.Empty)
-                    {
-                        ppus.Project.Image = "Assets/Images/UserProfiles/Default.png";
-
-
-                    }
-                    else
-                    {
-                        if (Directory.Exists("~/Images/ScreenShots"))
-                        {
-                            savepath = "Assets/Images/ScreenShots";
-                        }
-                        else
-                        {
-                            Directory.CreateDirectory(Server.MapPath("~/Assets/Images/ScreenShots"));
-                            savepath = "Assets/Images/ScreenShots";
-                        }
-
-                        if (Directory.Exists("~/Assets/Images/ScreenShots/" + username))
-                        {
-                            savepath = "Assets/Images/ScreenShots/" + username;
-                        }
-                        else
-                        {
-                            Directory.CreateDirectory(Server.MapPath("~/Assets/Images/ScreenShots/" + username));
-                            savepath = "Assets/Images/ScreenShots/" + username;
-                        }
-
-                        if (savepath == "Assets/Images/ScreenShots")
-                        {
-                            fileupload.SaveAs(Server.MapPath("~/" + savepath + "/" + strUserID + "_" + fileName));
-                            ppus.Project.Image = savepath + "/" + strUserID + "_" + fileName;
-                        }
-                        else
-                        {
-                            fileupload.SaveAs(Server.MapPath("~/" + savepath + "/" + fileName));
-                            ppus.Project.Image = savepath + "/" + fileName;
-                        }
-
-                        //ppus.Project.Image = savepath;
-                    }
-
-                    if (!ModelState.IsValid)
-                    {
-                        ppus.Privacies = new PrivacyList();
-                        ppus.Statuses = new StatusList();
-                        ppus.User = new User();
-                        ppus.User.LoadById(userin.Id);
-                        ppus.Privacies.Load();
-                        ppus.Statuses.Load();
-                        return View(ppus);
-                    }
-                    ppus.Project.DateCreated = ppus.DateCreated;
-                    ppus.Project.LastUpdated = ppus.LastUpdated;
-                    ppus.Project.Update();
-                    return RedirectToAction("EditProjects");
-                }
-                catch { return View(ppus); }
-            }
-            else
-            {
-                return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
-            }
-        }
-
         // GET: UserProfile/DeleteProject
         public ActionResult DeleteProject(Guid? id)
         {
@@ -459,6 +298,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             if (ID != Guid.Empty)
             {
                 up.Portfolio.LoadById(ID);
+                up.User.LoadById(up.Portfolio.UserId);
                 up.Projects.LoadbyPortfolioID(ID);
             }
             else
@@ -553,7 +393,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     up.Privacies = privacies;
                     up.Projects = projects;
                     string username = userin.Username;
-                    string savepath = "";
 
                     if (up.Portfolio.Name == null)
                     {
@@ -572,82 +411,26 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                             }
                         }
                     }
-                    string fileName = "";
-                    HttpPostedFileBase fileupload = null;
-
-                    if (up.Portfolio.PortfolioImage == string.Empty)
+                    UploadedImage ui = new UploadedImage
                     {
-                        up.Portfolio.PortfolioImage = "Assets/Images/UserProfiles/Default.png";
+                        FilePath = up.Portfolio.PortfolioImage,
+                        Fileupload = up.Fileupload,
+                        UserName = username,
+                        ObjectType = "Portfolio",
+                        ObjectName = up.Portfolio.Name
+                    };
+
+                    string fp = ui.Upload();
+
+                    // fp will return null if no upload file was choosen else use upload file to save to database
+                    if (fp != null)
+                    {
+                        up.Portfolio.PortfolioImage = fp;
                     }
                     else
                     {
-                        if (up.Fileupload != null)
-                        {
-                            fileupload = up.Fileupload;
-                            fileName = Path.GetFileName(fileupload.FileName);
-
-                            var fullPath = Server.MapPath("~/" + up.Portfolio.PortfolioImage);
-
-                            if (System.IO.File.Exists(fullPath))
-                            {
-
-                            }
-                            else
-                            {
-                                up.Portfolio.PortfolioImage = "Assets/Images/UserProfiles/Default.png";
-                            }
-
-                            if (Directory.Exists("~/Images/PortfolioImages"))
-                            {
-                                savepath = "Assets/Images/PortfolioImages";
-                            }
-                            else
-                            {
-                                Directory.CreateDirectory(Server.MapPath("~/Assets/Images/PortfolioImages"));
-                                savepath = "Assets/Images/PortfolioImages";
-                            }
-
-                            if (Directory.Exists("~/Assets/Images/PortfolioImages/" + username))
-                            {
-                                savepath = "Assets/Images/PortfolioImages/" + username;
-                            }
-                            else
-                            {
-                                Directory.CreateDirectory(Server.MapPath("~/Assets/Images/PortfolioImages/" + username));
-                                savepath = "Assets/Images/PortfolioImages/" + username;
-                            }
-
-                            if (Directory.Exists("~/Assets/Images/PortfolioImages/" + username + "/" + up.Portfolio.Name))
-                            {
-                                savepath = "Assets/Images/PortfolioImages/" + username + "/" + up.Portfolio.Name;
-                            }
-                            else
-                            {
-                                Directory.CreateDirectory(Server.MapPath("~/Assets/Images/PortfolioImages/" + username + "/" + up.Portfolio.Name));
-                                savepath = "Assets/Images/PortfolioImages/" + username + "/" + up.Portfolio.Name;
-                            }
-
-                            fullPath = Server.MapPath("~/Assets/Images/PortfolioImages/" + username + "/" + up.Portfolio.Name + "/" + fileName);
-
-                            if (System.IO.File.Exists(fullPath))
-                            {
-                                System.IO.File.Delete(fullPath);
-                                ViewBag.deleteSuccess = "true";
-                            }
-                        }
-                        else
-                        {
-                            fileName = "Default.png";
-                            savepath = "Assets/Images/UserProfiles";
-                        }
-
-
-                        if (fileupload != null)
-                        {
-                            fileupload.SaveAs(Server.MapPath("~/" + savepath + "/" + fileName));
-                        }
-
-                        up.Portfolio.PortfolioImage = savepath + "/" + fileName;
+                        // I honestly don't know when this would happen but just in case
+                        ModelState.AddModelError(string.Empty, "Portfolio Image could not found");
                     }
 
                     if (!ModelState.IsValid)

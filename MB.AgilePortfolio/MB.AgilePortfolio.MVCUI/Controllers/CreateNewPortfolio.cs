@@ -54,9 +54,10 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             {
                 try
             {
-                    HttpPostedFileBase fileupload = pu.Fileupload;
-                    string fileName = Path.GetFileName(fileupload.FileName);
-                    string savepath = "";
+                    pu.Privacies = new PrivacyList();
+                    pu.Privacies.Load();
+
+                    
                     PortfolioList portfolios = new PortfolioList();
                     User userin = System.Web.HttpContext.Current.Session["user"] as User;
                     string username = userin.Username;
@@ -79,64 +80,28 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                         }
                     }
 
-                    if (pu.Portfolio.PortfolioImage == string.Empty)
+                    UploadedImage ui = new UploadedImage
                     {
-                        pu.Portfolio.PortfolioImage = "Assets/Images/UserProfiles/Default.png";
+                        FilePath = pu.Portfolio.PortfolioImage,
+                        Fileupload = pu.Fileupload,
+                        UserName = username,
+                        ObjectType = "Portfolio",
+                        ObjectName = pu.Portfolio.Name
+                    };
+
+                    string fp = ui.Upload();
+
+                    // fp will return null if no upload file was choosen else use upload file to save to database
+                    if (fp != null)
+                    {
+                        pu.Portfolio.PortfolioImage = fp;
                     }
                     else
                     {
-                        var fullPath = Server.MapPath("~/" + pu.Portfolio.PortfolioImage);
-
-                        if (System.IO.File.Exists(fullPath))
-                        {
-
-                        }
-                        else
-                        {
-                            pu.Portfolio.PortfolioImage = "Assets/Images/UserProfiles/Default.png";
-                        }
-
-                        if (Directory.Exists("~/Images/PortfolioImages"))
-                        {
-                            savepath = "Assets/Images/PortfolioImages";
-                        }
-                        else
-                        {
-                            Directory.CreateDirectory(Server.MapPath("~/Assets/Images/PortfolioImages"));
-                            savepath = "Assets/Images/PortfolioImages";
-                        }
-
-                        if (Directory.Exists("~/Assets/Images/PortfolioImages/" + username))
-                        {
-                            savepath = "Assets/Images/PortfolioImages/" + username;
-                        }
-                        else
-                        {
-                            Directory.CreateDirectory(Server.MapPath("~/Assets/Images/PortfolioImages/" + username));
-                            savepath = "Assets/Images/PortfolioImages/" + username;
-                        }
-
-                        if (Directory.Exists("~/Assets/Images/PortfolioImages/" + username + "/" + pu.Portfolio.Name))
-                        {
-                            savepath = "Assets/Images/PortfolioImages/" + username + "/" + pu.Portfolio.Name;
-                        }
-                        else
-                        {
-                            Directory.CreateDirectory(Server.MapPath("~/Assets/Images/PortfolioImages/" + username + "/" + pu.Portfolio.Name));
-                            savepath = "Assets/Images/PortfolioImages/" + username + "/" + pu.Portfolio.Name;
-                        }
-
-                        fullPath = Server.MapPath("~/Assets/Images/PortfolioImages/" + username + "/" + pu.Portfolio.Name + "/" + fileName);
-
-                        if (System.IO.File.Exists(fullPath))
-                        {
-                            System.IO.File.Delete(fullPath);
-                            ViewBag.deleteSuccess = "true";
-                        }
-
-                        fileupload.SaveAs(Server.MapPath("~/" + savepath + "/" + fileName));
-                        pu.Portfolio.PortfolioImage = savepath + "/" + fileName;
+                        // I honestly don't know when this would happen but just in case
+                        ModelState.AddModelError(string.Empty, "Portfolio Image could not found");
                     }
+                    
 
                     if (!ModelState.IsValid)
                     {

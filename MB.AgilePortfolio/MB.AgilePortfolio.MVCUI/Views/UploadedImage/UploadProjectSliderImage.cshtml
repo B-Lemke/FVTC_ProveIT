@@ -1,0 +1,148 @@
+﻿@model MB.AgilePortfolio.MVCUI.ViewModels.ScreenshotProjects
+@{
+    ViewBag.Title = "Upload Project Images";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Upload Project Images</title>
+    <script src="~/scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/scripts/bootstrap.min.js"></script>
+    <script src="~/scripts/jquery.dataTables.min.js"></script>
+    <script src="~/scripts/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#dataTable").dataTable();
+        });
+    </script>
+    <style>
+        .carousel-inner img {
+            width: 100%;
+            height: 350px;
+        }
+    </style>
+</head>
+<body>
+
+
+    <div class="container py-4">
+        @{ string title = "";}
+        @foreach (var item in Model.ScreenshotList)
+        {
+            title = item.ProjectName;
+        }
+
+        <div id="demo" class="carousel slide" data-ride="carousel">
+            <ul class="carousel-indicators">
+
+                @foreach (var item in Model.ScreenshotList.Select((value, a) => new { a, value }))
+                {
+                    if (item.a == 0)
+                    {
+                        <li data-target="#demo" data-slide-to="@item.a" class="active"></li>
+                    }
+                    else
+                    {
+                        <li data-target="#demo" data-slide-to="@item.a"></li>
+                    }
+
+                }
+            </ul>
+            <div class="carousel-inner" role="listbox">
+                @{int i = 0; }
+                @foreach (var item in Model.ScreenshotList)
+                {
+                    i++;
+                    var active = i == 1 ? "active" : "";
+                    <div class="carousel-item @active">
+                        @* <img src="@Url.Content(@item.FilePath)" alt="">*@
+                        <img src="~/@item.FilePath" alt="">
+                    </div>
+                }
+            </div>
+            <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a class="carousel-control-next" href="#demo" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </a>
+        </div>
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h6 class="text-uppercase">@title Images</h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <button style="margin-left: 27px;margin-bottom:10px;" type="button" class="btn btn-primary rounded-0" data-toggle="modal" data-target="#myModal">
+                        <i class="fa fa-plus-circle"></i> Add New
+                    </button>
+                    <div class="modal fade" id="myModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Upload New Image</h4>
+                                    <button type="button" class="close" data-dismiss="modal">×</button>
+                                </div>
+                                <div class="modal-body">
+                                    @using (Html.BeginForm("UploadProjectSliderImage", "Screenshot", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                    {
+                                        <div class="form-group">
+                                            <label>Choose File:</label>
+                                            <div class="input-group">
+                                                <div class="custom-file">
+                                                    @Html.TextBoxFor(model => model.Fileupload, new { type = "file", id = "fileupload", name = "fileupload", accept = ".jpg, .jpeg, .gif, .png" })
+                                                </div>
+                                                <div class="input-group-append">
+                                                    <input type="submit" id="btnUpload" class="btn btn-secondary" value="Upload" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table id="dataTable" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Image Path</th>
+                            <th>Thumbnail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ScreenshotList)
+                        {
+                            string[] pathArr = item.FilePath.Split('/');
+                            string Fp = pathArr.Last().ToString();
+                            <tr>
+                                <td>@Fp</td>
+                                <td>
+                                    <img src="@Url.Content("~/" + @item.FilePath)" alt="" width="80" height="60" class="img-thumbnail" />
+                                </td>
+                                <td>
+                                    @Html.ActionLink(
+                                       "Delete",
+                                       "Delete",
+                                       "Screenshot",
+
+                                       new { id = item.Id },
+                                       new { @class = "btn btn-primary"}
+                                       )
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>  
