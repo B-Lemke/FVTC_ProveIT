@@ -716,8 +716,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     }
                     else
                     {
-                        // I honestly don't know when this would happen but just in case
-                        ModelState.AddModelError(string.Empty, "Portfolio Image could not found");
+                        up.Portfolio.PortfolioImage = null;
                     }
 
                     if (!ModelState.IsValid)
@@ -795,7 +794,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     UploadedImage ui = new UploadedImage();
 
                     // THIS DOESNT WORK LOCALLY IF THE DIRECTORY WAS MADE BEFORE IT WAS PUSHED
-                    ui.DeleteProjectUploadFolder(userin.Username, up.Portfolio.Name);
+                    ui.DeletePortfolioUploadFolder(userin.Username, up.Portfolio.Name);
                     up.Portfolio.Delete();
                     return RedirectToAction("PortfolioDeleted");
                 }
@@ -1002,25 +1001,39 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 string currentUsername = userin.Username;
 
 
-
+                UploadedImage ui = new UploadedImage();
                 if (up.User.Username == null)
                 {
                     ModelState.AddModelError(string.Empty, "Username is required");
                 }
-
                 else if (up.User.Username != currentUsername)
                 {
                     if (up.User.CheckIfUsernameExists(up.User.Username) != Guid.Empty)
                     {
                         ModelState.AddModelError(string.Empty, "Username Already Exists");
                     }
+                    else
+                    {
+                        ui.FilePath = up.User.ProfileImage;
+                        ui.Fileupload = up.Fileupload;
+                        ui.UserName = up.User.Username;
+                        ui.ObjectType = "Profile";
+                        ui.ObjectName = null;
+                    }
+                }
+                else
+                {
+                    ui.FilePath = up.User.ProfileImage;
+                    ui.Fileupload = up.Fileupload;
+                    ui.UserName = up.User.Username;
+                    ui.ObjectType = "Profile";
+                    ui.ObjectName = null;
                 }
 
                 if (up.User.Email == null)
                 {
                     ModelState.AddModelError(string.Empty, "Email address is required");
                 }
-
                 else if (up.User.Email != currentemail)
                 {
                     if (up.User.CheckIfEmailExists(up.User.Email) == true)
@@ -1045,6 +1058,19 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     up.UserTypes = new UserTypeList();
                     up.UserTypes.LoadNonAdmin();
                     return View(up);
+                }
+
+                //Uploads image and returns string value entered in database for image
+                string fp = ui.Upload();
+
+                // fp will return null if no upload file was choosen else use upload file to save to database
+                if (fp != null)
+                {
+                    up.User.ProfileImage = fp;
+                }
+                else
+                {
+                    up.User.ProfileImage = null;
                 }
                 up.User.Update();
 

@@ -11,5 +11,6 @@ namespace MB.AgilePortfolio.MVCUI.ViewModels
         public User User { get; set; }
         public UserTypeList UserTypes { get; set; }
         public string ConfirmPassword { get; set; } //Used for create new account
+        public HttpPostedFileBase Fileupload { get; set; } //Used for display profile picture
     }
 }

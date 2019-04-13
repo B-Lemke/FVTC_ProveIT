@@ -32,6 +32,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         {
             try
             {
+                UploadedImage ui = new UploadedImage();
                 if(uut.User.Email == null)
                 {
                     ModelState.AddModelError(string.Empty, "Email address is required");
@@ -45,6 +46,14 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 if (uut.User.CheckIfUsernameExists(uut.User.Username) != Guid.Empty)
                 {
                     ModelState.AddModelError(string.Empty, "Username Already Exists");
+                }
+                else
+                {
+                    ui.FilePath = uut.User.ProfileImage;
+                    ui.Fileupload = uut.Fileupload;
+                    ui.UserName = uut.User.Username;
+                    ui.ObjectType = "Profile";
+                    ui.ObjectName = null;
                 }
 
                 if (uut.User.FirstName == null)
@@ -83,6 +92,20 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     uut.UserTypes.LoadNonAdmin();
                     return View(uut);
                 }
+
+                //Uploads image and returns string value entered in database for image
+                string fp = ui.Upload();
+
+                // fp will return null if no upload file was choosen else use upload file to save to database
+                if (fp != null)
+                {
+                    uut.User.ProfileImage = fp;
+                }
+                else
+                {
+                    uut.User.ProfileImage = null;
+                }
+
 
                 //Success, insert and redirect to the login!
                 uut.User.Insert();

@@ -370,6 +370,17 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                         ObjectName = ppus.Project.Name
                     };
 
+                    
+                    if (!ModelState.IsValid)
+                    {
+                        ppus.Privacies = new PrivacyList();
+                        ppus.Statuses = new StatusList();
+                        ppus.User = new User();
+                        ppus.User.LoadById(userin.Id);
+                        ppus.Privacies.Load();
+                        ppus.Statuses.Load();
+                        return View(ppus);
+                    }
                     string fp = ui.Upload();
 
                     // fp will return null if no upload file was choosen else use upload file to save to database
@@ -382,16 +393,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                         ppus.Project.Image = null;
                     }
 
-                    if (!ModelState.IsValid)
-                    {
-                        ppus.Privacies = new PrivacyList();
-                        ppus.Statuses = new StatusList();
-                        ppus.User = new User();
-                        ppus.User.LoadById(userin.Id);
-                        ppus.Privacies.Load();
-                        ppus.Statuses.Load();
-                        return View(ppus);
-                    }
                     ppus.Project.DateCreated = ppus.DateCreated;
                     ppus.Project.LastUpdated = ppus.LastUpdated;
                     ppus.Project.Update();
