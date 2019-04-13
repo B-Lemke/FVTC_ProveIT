@@ -20,6 +20,11 @@ namespace MB.AgilePortfolio.MVCUI.ViewModels
         public Privacy Privacy { get; set; }
         public Status Status { get; set; }
         public StatusList Statuses { get; set; }
+        public Language Language { get; set; }
+        public LanguageList Languages { get; set; }
+        public ProjectLanguageList ProjectLanguages { get; set; }
+        public ProjectLanguage ProjectLanguage { get; set; }
+        public string InputLanguages { get; set; }
         public User User { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]

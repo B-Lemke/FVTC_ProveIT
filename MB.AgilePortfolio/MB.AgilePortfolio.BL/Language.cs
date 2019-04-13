@@ -18,8 +18,15 @@ namespace MB.AgilePortfolio.BL
             get
             {
                 var name = Description.ToLower();
-                var cleanedName = name.Replace("#", "sharp").Replace(".", "dot").Replace(" ", "").Replace("+", "plus").Replace("/","slash");
-                return cleanedName;
+                if(name.Contains("#") || name.Contains(".") || name.Contains(" ") || name.Contains("+") || name.Contains("/"))
+                {
+                    var cleanedName = name.Replace("#", "sharp").Replace(".", "dot").Replace(" ", "").Replace("+", "plus").Replace("/", "slash");
+                    return cleanedName;
+                }
+                else
+                {
+                    return name;
+                }
             }
         }
 
@@ -102,6 +109,31 @@ namespace MB.AgilePortfolio.BL
                         Description = language.Description;
                     }
                     else throw new Exception("Language not found");
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        /// <summary>
+        /// Loads Language by the Description string
+        /// </summary>
+        /// <param name="Description"> The description as a string </param>
+        public void LoadByDescription(string Description)
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    tblLanguage language = dc.tblLanguages.Where(l => l.Description == Description).FirstOrDefault();
+                    if (language != null)
+                    {
+                        Id = language.Id;
+                        Description = language.Description;
+                    }
+                    else
+                    {
+                        // not found
+                    }
                 }
             }
             catch (Exception ex) { throw ex; }

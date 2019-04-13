@@ -22,6 +22,8 @@ namespace MB.AgilePortfolio.MVCUI.ViewModels
         public UserList Users { get; set; }
         public UserType UserType { get; set; }
         public StatusList Statuses { get; set; }
+        public Language Language { get; set; }
+        public LanguageList Languages { get; set; }
         public string ConfirmPassword { get; set; } //Used for EditProfilePassword
         [DisplayName("Current Password")]
         public string OldPassword { get; set; } //Used for EditProfilePassword\

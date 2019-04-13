@@ -456,6 +456,84 @@ namespace MB.AgilePortfolio.BL
             }
             catch (Exception ex) { throw ex; }
         }
+
+        /// <summary>
+        /// Loads UserList by a User's Username as a string
+        /// 
+        /// DOESNT LOAD  PROJECTS OR PORTFOLIOS CURRENTLY FOR EACH USER
+        /// 
+        /// </summary>
+        /// <param name="UserName"> The Username of the User as string </param>
+        public void LoadByUserName(string UserName)
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    var users = (from u in dc.tblUsers
+                                 join ut in dc.tblUserTypes on u.UserTypeId equals ut.Id
+                                 where u.Username == UserName || UserName == null
+                                 select new
+                                 {
+                                     u.Id,
+                                     u.Email,
+                                     u.Password,
+                                     u.FirstName,
+                                     u.LastName,
+                                     u.ProfileImage,
+                                     u.UserTypeId,
+                                     u.Username,
+                                     ut.Description
+                                 }).OrderByDescending(u => u.LastName).ToList();
+                    foreach (var u in users)
+                    {
+                        User user = new User(u.Id, u.Email, u.Password, u.FirstName, u.LastName, u.ProfileImage, u.UserTypeId, u.Description, u.Username);
+                        //POSSIBLY ADD LOAD PROJECTS AND LOAD PORTFOLIOS HERE
+                        Add(user);
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        /// <summary>
+        /// Loads UserList by a partial User's Username as a string
+        /// 
+        /// DOESNT LOAD  PROJECTS OR PORTFOLIOS CURRENTLY FOR EACH USER
+        /// 
+        /// </summary>
+        /// <param name="PartialUserName"> The partial Username of the User as string </param>
+        public void LoadByPartialUserName(string PartialUserName)
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    var users = (from u in dc.tblUsers
+                                 join ut in dc.tblUserTypes on u.UserTypeId equals ut.Id
+                                 where u.Username.Contains(PartialUserName) || PartialUserName == null
+                                 select new
+                                 {
+                                     u.Id,
+                                     u.Email,
+                                     u.Password,
+                                     u.FirstName,
+                                     u.LastName,
+                                     u.ProfileImage,
+                                     u.UserTypeId,
+                                     u.Username,
+                                     ut.Description
+                                 }).OrderByDescending(u => u.LastName).ToList();
+                    foreach (var u in users)
+                    {
+                        User user = new User(u.Id, u.Email, u.Password, u.FirstName, u.LastName, u.ProfileImage, u.UserTypeId, u.Description, u.Username);
+                        //POSSIBLY ADD LOAD PROJECTS AND LOAD PORTFOLIOS HERE
+                        Add(user);
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
     }
 }
 

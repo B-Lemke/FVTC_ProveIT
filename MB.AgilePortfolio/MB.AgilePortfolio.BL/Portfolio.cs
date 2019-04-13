@@ -69,7 +69,12 @@ namespace MB.AgilePortfolio.BL
             catch (Exception ex) { throw ex; }
         }
 
-        // Insert project into portfolio
+
+        /// <summary>
+        /// Insert project into portfolio
+        /// </summary>
+        /// <param name="projectId"> Id of Project to add to Portfolio object </param>
+        /// <returns> bool for success status </returns>
         public bool AddProject(Guid projectId)
         {
             try
@@ -106,7 +111,7 @@ namespace MB.AgilePortfolio.BL
             catch (Exception ex) { throw ex; }
         }
 
-        // Delete project from portfolio
+        /// Delete project from portfolio
         public void RemoveProject(Guid portProjId)
         {
             try
@@ -125,7 +130,11 @@ namespace MB.AgilePortfolio.BL
             catch (Exception ex) { throw ex; }
         }
 
-        // Delete project from portfolio by passing projectid and portfolioid
+        /// <summary>
+        /// Delete project from portfolio by passing projectid and portfolioid
+        /// </summary>
+        /// <param name="ProjectId"> The Id of Project to Remove</param>
+        /// <param name="PortfolioId">The Id of Portfolio to remove Project from</param>
         public void RemoveProjectByPortProj(Guid ProjectId, Guid PortfolioId)
         {
             try
@@ -181,6 +190,7 @@ namespace MB.AgilePortfolio.BL
                     {
                         Project project = new Project(p.ProjectId, p.Name, p.Location, p.Filepath, p.PrivacyId, p.Image, p.Description, p.UserId, p.DateCreated, p.Purpose,
                             p.Environment, p.Challenges, p.FuturePlans, p.Collaborators, p.LastUpdated, p.SoftwareUsed, p.StatusId);
+                        project.LoadLanguages();
                         Projects.Add(project);
                     }
                     return Projects;
@@ -230,6 +240,10 @@ namespace MB.AgilePortfolio.BL
             catch (Exception ex) { throw ex; }
         }
 
+        /// <summary>
+        /// Load Portfolio by the Portfolio Id
+        /// </summary>
+        /// <param name="id"> The Id of the Portfolio </param>
         public void LoadById(Guid id)
         {
             try
@@ -263,15 +277,60 @@ namespace MB.AgilePortfolio.BL
                         PrivacyDescription = portfolio.Privacy;
                     }
                     else throw new Exception("Portfolio not found");
+                    //Load the Projects on this Portfolio
+                    this.LoadProjectsInPortFolio();
                 }
             }
             catch (Exception ex) { throw ex; }
+        }
+
+        /// <summary>
+        /// Loads Projects in a Portfolio (should also load languages in Project)
+        /// </summary>
+        public void LoadProjectsInPortFolio()
+        {
+            //Load Projects for a portfolio with portfolio ojbects Id
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    //Instantiate the Projects list
+                    this.Projects = new ProjectList();
+
+                    var PortfolioProjects = (from pp in dc.tblPortfolioProjects
+                                            join p in dc.tblProjects on pp.ProjectId equals p.Id
+                                            where pp.PortfolioId == this.Id
+                                            select new
+                                            {
+                                                p.Id
+                                            }).ToList();
+
+                    foreach (var project in PortfolioProjects)
+                    {
+                        //Instantiate Project
+                        Project proj = new Project();
+                        // Load Project (this should also populate languages in project then)
+                        proj.LoadById(project.Id);
+                        // Add Project to Projects
+                        this.Projects.Add(proj);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
     }
 
     public class PortfolioList : List<Portfolio>
     {
 
+        /// <summary>
+        /// Loads PortfolioList by user object (THIS IS BEING TRANSISTIONED USE LoadByUserID INSTEAD!)
+        /// </summary>
+        /// <param name="user"> The User object </param>
         public void LoadbyUser(User user)
         {
             try
@@ -296,6 +355,7 @@ namespace MB.AgilePortfolio.BL
                     foreach (var p in portfolios)
                     {
                         Portfolio portfolio = new Portfolio(p.Id, p.Name, p.Description, p.PortfolioImage, p.UserId, p.Email, p.Privacy, p.PrivacyId);
+                        portfolio.LoadProjectsInPortFolio();
                         Add(portfolio);
                     }
                 }
@@ -303,6 +363,10 @@ namespace MB.AgilePortfolio.BL
             catch (Exception ex) { throw ex; }
         }
 
+        /// <summary>
+        /// Loads PortfolioList by User Id
+        /// </summary>
+        /// <param name="userId"> The User Id to load Portfolios for</param>
         public void LoadbyUserID(Guid userId)
         {
             try
@@ -327,6 +391,79 @@ namespace MB.AgilePortfolio.BL
                     foreach (var p in portfolios)
                     {
                         Portfolio portfolio = new Portfolio(p.Id, p.Name, p.Description, p.PortfolioImage, p.UserId, p.Email, p.Privacy, p.PrivacyId);
+                        portfolio.LoadProjectsInPortFolio();
+                        Add(portfolio);
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        /// <summary>
+        /// Loads PortfolioList by exact Name of Portfolio
+        /// </summary>
+        /// <param name="PortfolioName"> The Name of the Portfolio as string</param>
+        public void LoadByPortfolioName(string PortfolioName)
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    var portfolios = (from p in dc.tblPortfolios
+                                      join pr in dc.tblPrivacies on p.PrivacyId equals pr.Id
+                                      join u in dc.tblUsers on p.UserId equals u.Id
+                                      where p.Name == PortfolioName || PortfolioName == null
+                                      select new
+                                      {
+                                          p.Id,
+                                          p.Name,
+                                          p.PrivacyId,
+                                          p.Description,
+                                          p.PortfolioImage,
+                                          p.UserId,
+                                          u.Email,
+                                          Privacy = pr.Description
+                                      }).OrderByDescending(p => p.Name).ToList();
+                    foreach (var p in portfolios)
+                    {
+                        Portfolio portfolio = new Portfolio(p.Id, p.Name, p.Description, p.PortfolioImage, p.UserId, p.Email, p.Privacy, p.PrivacyId);
+                        portfolio.LoadProjectsInPortFolio();
+                        Add(portfolio);
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        /// <summary>
+        /// Loads PortfolioList by partial Name of Portfolio
+        /// </summary>
+        /// <param name="PartialPortfolioName"> The Partial Name of the Portfolio as string</param>
+        public void LoadByPartialPortfolioName(string PartialPortfolioName)
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    var portfolios = (from p in dc.tblPortfolios
+                                      join pr in dc.tblPrivacies on p.PrivacyId equals pr.Id
+                                      join u in dc.tblUsers on p.UserId equals u.Id
+                                      where p.Name.Contains(PartialPortfolioName) || PartialPortfolioName == null
+                                      select new
+                                      {
+                                          p.Id,
+                                          p.Name,
+                                          p.PrivacyId,
+                                          p.Description,
+                                          p.PortfolioImage,
+                                          p.UserId,
+                                          u.Email,
+                                          Privacy = pr.Description
+                                      }).OrderByDescending(p => p.Name).ToList();
+                    foreach (var p in portfolios)
+                    {
+                        Portfolio portfolio = new Portfolio(p.Id, p.Name, p.Description, p.PortfolioImage, p.UserId, p.Email, p.Privacy, p.PrivacyId);
+                        portfolio.LoadProjectsInPortFolio();
                         Add(portfolio);
                     }
                 }
@@ -358,6 +495,7 @@ namespace MB.AgilePortfolio.BL
                     foreach (var p in portfolios)
                     {
                         Portfolio portfolio = new Portfolio(p.Id, p.Name, p.Description, p.PortfolioImage, p.UserId, p.Email, p.Privacy, p.PrivacyId);
+                        portfolio.LoadProjectsInPortFolio();
                         Add(portfolio);
                     }
                 }
