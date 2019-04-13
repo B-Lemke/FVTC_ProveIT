@@ -181,15 +181,15 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
 
             sp.Project.LoadById(ID);
-            sp.User.LoadById(sp.Project.UserId); 
-            
+            sp.User.LoadById(sp.Project.UserId);
+
             sp.ScreenshotList.LoadbyProjectID(ID);
 
             return View(sp);
 
 
         }
-        
+
 
         // GET: UserProfile/DeleteProject
         public ActionResult DeleteProject(Guid? id)
@@ -288,6 +288,72 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             return View();
         }
 
+        // GET: UserProfile/PublicProjects
+        public ActionResult PublicProjects(Guid? id)
+        {
+            Guid ID = id.GetValueOrDefault();
+            UserProfile up = new UserProfile()
+            {
+                Projects = new ProjectList(),
+                User = new User()
+            };
+
+            if (ID != Guid.Empty)
+            {
+                up.Projects.LoadbyUserID(ID);
+                up.User.LoadById(ID); //IDK if this is needed yet
+            }
+            else
+            {
+                //No user id was passed in!
+            }
+            return View(up);
+        }
+
+        // POST: UserProfile/PublicProjects
+        [HttpPost]
+        public ActionResult PublicProjects(Guid id, UserProfile up)
+        {
+            try
+            {
+                return View(up);
+            }
+            catch { return View(up); }
+        }
+
+        // GET: UserProfile/PublicPortfolios
+        public ActionResult PublicPortfolios(Guid? id)
+        {
+            Guid ID = id.GetValueOrDefault();
+            UserProfile up = new UserProfile()
+            {
+                Portfolio = new Portfolio(),
+                Portfolios = new PortfolioList(),
+                User = new User()
+            };
+            if (ID != Guid.Empty)
+            {
+                up.User.LoadById(ID);
+                up.Portfolios.LoadbyUser(up.User);
+            }
+            else
+            {
+
+            }
+            return View(up);
+        }
+
+        // POST: UserProfile/PublicPortfolios
+        [HttpPost]
+        public ActionResult PublicPortfolios(Guid id, UserProfile up)
+        {
+            try
+            {
+                return View(up);
+            }
+            catch { return View(up); }
+        }
+
         // GET: UserProfile/PublicPortfolio
         public ActionResult PublicPortfolio(Guid? id)
         {
@@ -326,6 +392,222 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             }
             catch { return View(up); }
         }
+
+        // GET: DeleteProjectPortfolio (UserProfile/DeleteProjectPortfolio)
+        public ActionResult DeleteProjectPortfolio(Guid? id)
+        {
+
+            Guid ID = id.GetValueOrDefault();
+            if (ID == Guid.Empty)
+            {
+                if (Authenticate.IsAuthenticated())
+                {
+
+                    return RedirectToAction("EditPortfolios", "UserProfile", new { returnurl = HttpContext.Request.Url });
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
+                }
+            }
+            else
+            {
+
+                if (Authenticate.IsAuthenticated())
+                {
+                    UserProfile up = new UserProfile()
+                    {
+                        Portfolio = new Portfolio(),
+                        Portfolios = new PortfolioList(),
+                        Projects = new ProjectList(),
+                        Privacies = new PrivacyList(),
+                        User = new User()
+                    };
+                    up.Portfolio.LoadById(ID);
+                    up.Privacies.Load();
+                    User userin = System.Web.HttpContext.Current.Session["user"] as User;
+                    ProjectList portProjects = new ProjectList();
+                    portProjects.LoadbyPortfolioID(ID);
+                    up.Projects = portProjects;
+
+
+                    
+                    foreach (Project p in up.Projects)
+                    {
+                        if (p.Image == string.Empty)
+                        {
+                            p.Image = "Images/UserProfiles/Default.png";
+                        }
+                    }
+                    up.User.LoadById(userin.Id);
+                    return View(up);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
+                }
+            }
+        }
+
+        // GET: DeleteProjectPortfolio (UserProfile/DeleteProjectPortfolio)
+        [HttpPost]
+        public ActionResult DeleteProjectPortfolio(Guid ProjectId, Guid PortfolioId)
+        {
+
+            UserProfile up = new UserProfile()
+            {
+                Portfolio = new Portfolio(),
+                Portfolios = new PortfolioList(),
+                Projects = new ProjectList(),
+                Privacies = new PrivacyList(),
+                User = new User()
+            };
+            up.Portfolio.LoadById(PortfolioId);
+            up.Privacies.Load();
+            up.User = System.Web.HttpContext.Current.Session["user"] as User;
+            //up.Project.LoadById(projectid);
+            if (Authenticate.IsAuthenticated())
+            {
+
+
+                up.Portfolio.RemoveProjectByPortProj(ProjectId, PortfolioId);
+
+                if (!ModelState.IsValid)
+                {
+                    return View(up);
+                }
+                return RedirectToAction("EditPortfolio", "UserProfile", new { id = up.Portfolio.Id });
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
+            }
+        }
+
+
+        // GET: Add Project (UserProfile/AddProject)
+        public ActionResult AddProject(Guid? id)
+        {
+
+            Guid ID = id.GetValueOrDefault();
+            if (ID == Guid.Empty)
+            {
+                if (Authenticate.IsAuthenticated())
+                {
+
+                    return RedirectToAction("EditPortfolios", "UserProfile", new { returnurl = HttpContext.Request.Url });
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
+                }
+            }
+            else
+            {
+
+                if (Authenticate.IsAuthenticated())
+                {
+                    UserProfile up = new UserProfile()
+                    {
+                        Portfolio = new Portfolio(),
+                        Portfolios = new PortfolioList(),
+                        Projects = new ProjectList(),
+                        Privacies = new PrivacyList(),
+                        User = new User()
+                    };
+                    up.Portfolio.LoadById(ID);
+                    up.Privacies.Load();
+                    User userin = System.Web.HttpContext.Current.Session["user"] as User;
+                    ProjectList allprojects = new ProjectList();
+                    allprojects.LoadbyUserID(userin.Id);
+                    ProjectList portProjects = new ProjectList();
+                    portProjects.LoadbyPortfolioID(ID);
+                    foreach (Project allprj in allprojects)
+                    {
+                        bool addprj = true;
+                        foreach (Project prj in portProjects)
+                        {
+
+                            if (prj.Name == allprj.Name)
+                            {
+                                //Project is already in Portfolio
+                                addprj = false;
+                            }
+                            else
+                            {
+                                //Project is not in portfolio
+
+                            }
+                        }
+                        if (addprj)
+                        {
+                            up.Projects.Add(allprj);
+                        }
+
+
+                    }
+                    foreach (Project p in up.Projects)
+                    {
+                        if (p.Image == string.Empty)
+                        {
+                            p.Image = "Images/UserProfiles/Default.png";
+                        }
+                    }
+                    up.User.LoadById(userin.Id);
+                    return View(up);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
+                }
+            }
+        }
+
+        // GET: Add Project (UserProfile/AddProject)
+        [HttpPost]
+        public ActionResult AddProject(Guid ProjectId, Guid PortfolioId)
+        {
+
+            UserProfile up = new UserProfile()
+            {
+                Portfolio = new Portfolio(),
+                Portfolios = new PortfolioList(),
+                Projects = new ProjectList(),
+                Privacies = new PrivacyList(),
+                User = new User()
+            };
+            up.Portfolio.LoadById(PortfolioId);
+            up.Privacies.Load();
+            up.User =  System.Web.HttpContext.Current.Session["user"] as User;
+            //up.Project.LoadById(projectid);
+            if (Authenticate.IsAuthenticated())
+            {
+
+
+                if (up.Portfolio.AddProject(ProjectId))
+                {
+                    //Succesfully added Project to Portfolio Logic
+                }
+                else
+                {
+                    //Failed to add Project to Portfolio Logic
+
+                    ModelState.AddModelError(string.Empty, "Can't Add Project to Portfolio");
+                }
+                if (!ModelState.IsValid)
+                {
+                    return View(up);
+                }
+                return RedirectToAction("EditPortfolio", "UserProfile", new { id = up.Portfolio.Id });
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
+            }
+        }
+
+
+
 
         // GET: Edit User Portfolio Redirect (UserProfile/EditPortfolio)
         public ActionResult EditPortfolio(Guid? id)

@@ -459,6 +459,52 @@ namespace MB.AgilePortfolio.BL
             catch (Exception ex) { throw ex; }
         }
 
+        public void LoadbyUserID(Guid userId)
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    var projects = (from p in dc.tblProjects
+                                    join pr in dc.tblPrivacies on p.PrivacyId equals pr.Id
+                                    join u in dc.tblUsers on p.UserId equals u.Id
+                                    join s in dc.tblStatuses on p.StatusId equals s.Id
+                                    where p.UserId == userId || userId == null
+                                    select new
+                                    {
+                                        p.Id,
+                                        p.Name,
+                                        p.Location,
+                                        p.Filepath,
+                                        p.PrivacyId,
+                                        p.Image,
+                                        p.Description,
+                                        p.UserId,
+                                        p.DateCreated,
+                                        p.Purpose,
+                                        p.Environment,
+                                        p.Challenges,
+                                        p.FuturePlans,
+                                        p.Collaborators,
+                                        p.LastUpdated,
+                                        p.SoftwareUsed,
+                                        p.StatusId,
+                                        Privacy = pr.Description,
+                                        Status = s.Description,
+                                        UserEmail = u.Email
+                                    }).OrderByDescending(p => p.LastUpdated).ToList();
+                    foreach (var p in projects)
+                    {
+                        Project project = new Project(p.Id, p.Name, p.Location, p.Filepath, p.PrivacyId, p.Image, p.Description, p.UserId, p.DateCreated, p.Purpose,
+                                                      p.Environment, p.Challenges, p.FuturePlans, p.Collaborators, p.LastUpdated, p.SoftwareUsed, p.StatusId, p.Privacy, p.Status, p.UserEmail);
+                        project.LoadLanguages();
+                        Add(project);
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
         public void LoadbyPortfolioID(Guid id)
         {
             try

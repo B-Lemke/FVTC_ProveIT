@@ -68,9 +68,7 @@ else
                     <div class="col-md-4 mt-2">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title" style="width: 90%;">No Projects Yet</h5>
-                                <p class="card-text">But that doesn't mean you can't add one!</p>
-                                <a href="#" class="card-link">Add a project!</a>
+                                <h5 class="card-title" style="width: 90%;">No Projects Currently</h5>
                             </div>
                         </div>
                     </div>
@@ -88,11 +86,13 @@ else
                             }
                             <div class="col-md-4">
                                 <div class="card mt-2">
-
-                                    <img class="card-img-top project-image" src="@Url.Content("~/" + @item.Image)" alt="Card image cap">
+                                    <a href="~/UserProfile/PublicProject/@item.Id" class="card-link" style="text-align:center">
+                                        <img class="card-img-top project-image" src="@Url.Content("~/" + @item.Image)" alt="Card image cap">
+                                    </a>
                                     <div class="card-body" style="text-align:center">
-
-                                        <h5 class="card-title" style="width: 90%;text-align:left">@item.Name</h5>
+                                        <a href="~/UserProfile/PublicProject/@item.Id" class="card-link" style="text-align:center">
+                                            <h5 class="card-title" style="width: 90%;text-align:left">@item.Name</h5>
+                                        </a>
                                         <h6 class="card-subtitle mb-2 text-muted" style="text-align:left">
                                             @if (item.Languages != null)
                                             {
@@ -102,7 +102,7 @@ else
                                                 {
                                                     if (badgeCount < 5)
                                                     {
-                                                    <span class="badge badge-pill badge-@lang.BadgeName">@lang.Description</span>
+                                                        <span class="badge badge-pill badge-@lang.BadgeName">@lang.Description</span>
                                                         badgeCount++;
                                                     }
                                                 }
@@ -121,10 +121,12 @@ else
                     }
                     <div class="col-md-4 mt-2">
                         <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title" style="width: 90%;">There's Even More!</h5>
-                                <a href="#" class="card-link">View All of @Model.User.FirstName's Projects</a>
-                            </div>
+                            <a href="~/UserProfile/PublicProjects/@Model.User.Id" class="card-link">
+                                <div class="card-body">
+                                    <h5 class="card-title" style="width: 90%;">There's Even More!</h5>
+                                    View All of @Model.User.FirstName's Projects
+                                </div>
+                            </a>
                         </div>
                     </div>
                 }
@@ -141,9 +143,7 @@ else
                     <div class="col-md-4 mt-2">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title" style="width: 90%;">No Portfolios Yet</h5>
-                                <p class="card-text">But that doesn't mean you can't add one!</p>
-                                <a href="#" class="card-link">Add a portfolio!</a>
+                                <h5 class="card-title" style="width: 90%;">No Portfolios Currently</h5>
                             </div>
                         </div>
                     </div>
@@ -161,15 +161,15 @@ else
                             }
                             <div class="col-md-4">
                                 <div class="card mt-2">
-                                    <div class="card-body" style="text-align:center">
-                                        <img class="card-img-top project-image" src="@Url.Content("~/" + @item.PortfolioImage)" alt="Card image cap">
-                                        <h5 class="card-title" style="width: 90%;text-align:left">@item.Name</h5>
-                                        <p class="card-text" style="text-align:left">@item.ShortDescription...</p>
-                                        <a href="~/UserProfile/PublicPortfolio/@item.Id" class="card-link" style="text-align:center">
+                                    <a href="~/UserProfile/PublicPortfolio/@item.Id" class="card-link" style="text-align:center">
+                                        <div class="card-body" style="text-align:center">
+                                            <img class="card-img-top project-image" src="@Url.Content("~/" + @item.PortfolioImage)" alt="Card image cap">
+                                            <h5 class="card-title" style="width: 90%;text-align:left">@item.Name</h5>
+                                            <p class="card-text" style="text-align:left">@item.ShortDescription...</p>
                                             <br />
                                             View Portfolio
-                                        </a>
-                                    </div>
+                                        </div>
+                                    </a>
                                 </div>
                             </div>
                         }
@@ -177,10 +177,12 @@ else
                     }
                     <div class="col-md-4">
                         <div class="card mt-2">
-                            <div class="card-body">
-                                <h5 class="card-title" style="width: 90%;">But Wait... There's More</h5>
-                                <a href="#" class="card-link">View All of @Model.User.FirstName's Portfolios</a>
-                            </div>
+                            <a href="~/UserProfile/PublicPortfolios/@Model.User.Id" class="card-link">
+                                <div class="card-body">
+                                    <h5 class="card-title" style="width: 90%;">But Wait... There's More</h5>
+                                    View All of @Model.User.FirstName's Portfolios
+                                </div>
+                            </a>
                         </div>
                     </div>
                 }

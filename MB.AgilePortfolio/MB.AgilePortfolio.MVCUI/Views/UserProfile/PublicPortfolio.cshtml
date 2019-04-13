@@ -96,18 +96,26 @@ else
                     <div class="col-md-2 border" id="sidebar">
                         <h2>@Model.User.Username</h2>
                         <div>
-                            @if (Model.User.ProfileImage != null)
-                            {
-                                <img src="~/Assets/Images/UserProfiles/@Model.User.ProfileImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image" width="100%" class="rounded" />
-                            }
-                            else
-                            {
-                                <img src="~/Assets/Images/UserProfiles/Default.png" alt="Default Profile Image" width="100%" class="rounded-circle" />
-                            }
-                            <h4 class="font-weight-normal">@Model.User.FullName</h4>
-                            <h4 class="font-weight-light">@Model.User.Email</h4>
-                            <hr />
-                            <p>View @Model.User.Username's other portfolios</p>
+                            <a href="~/User/@Model.User.Username">
+                                @if (Model.User.ProfileImage != null)
+                                {
+                                        <img src="~/Assets/Images/UserProfiles/@Model.User.ProfileImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image" width="100%" class="rounded" />
+                                }
+                                else
+                                {
+                                    <img src="~/Assets/Images/UserProfiles/Default.png" alt="Default Profile Image" width="100%" class="rounded-circle" />
+                                }
+                                </a>
+                                <h4 class="font-weight-normal">@Model.User.FullName</h4>
+                                <h4 class="font-weight-light">@Model.User.Email</h4>
+                                <hr />
+                                <a href="~/UserProfile/PublicPortfolios/@Model.Portfolio.UserId">
+                                    <p>View @Model.User.Username's other portfolios</p>
+                                </a>
+                                <a href="~/UserProfile/PublicProjects/@Model.Portfolio.UserId">
+                                    <p>View @Model.User.Username's projects</p>
+                                </a>
+
                         </div>
                     </div>
 
@@ -292,7 +300,9 @@ else
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-12">
-                        @Html.ActionLink("Back to Portfolios", "EditPortfolios", "UserProfile")
+                        <a href="~/UserProfile/PublicPortfolios/@Model.Portfolio.UserId">
+                            <p>Back to Portfolios</p>
+                        </a>
                     </div>
 
                 </div>

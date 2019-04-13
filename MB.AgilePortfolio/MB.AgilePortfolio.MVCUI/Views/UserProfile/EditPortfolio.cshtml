@@ -32,11 +32,9 @@
                 margin-left: auto;
                 margin-right: auto;
             }
-
-            .carousel-inner {
-                padding-left: 10%;
-                padding-right: 10%;
-                width: 100%;
+            .carousel-inner i {
+               font-size:50px;
+               vertical-align:middle;
             }
 
             .carousel-item {
@@ -139,7 +137,7 @@
             <div class="form-horizontal">
                 <h4>Projects</h4>
                 <hr />
-                <div id="demo" class="carousel slide" data-ride="carousel" data-interval="10000">
+                <div id="demo" class="carousel slide carousel-multi item" data-ride="carousel" data-interval="10000">
                     @{
                         int imgleft = Model.Projects.Count;
                         int ImagesPerTransition = 9;
@@ -184,7 +182,7 @@
 
                                                 @*<p>@Model.Projects[y].Name</p>*@
                                                 string imgpath = "~/" + Model.Projects[y].Image;
-                                                <a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y].Id})'>
+                                                <a href='@Url.Action("EditProject", "Screenshot",new { id = Model.Projects[y].Id})'>
                                                     <img src='@Url.Content(@imgpath)' />
                                                 </a>
                                                 imgleft--;
@@ -198,11 +196,16 @@
                                             {
                                                 @*<p>@Model.Projects[y].Name</p>*@
                                                 string imgpath = "~/" + Model.Projects[y].Image;
-                                                <a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y].Id})'>
+                                                <a href='@Url.Action("EditProject", "Screenshot",new { id = Model.Projects[y].Id})'>
                                                     <img src='@Url.Content(@imgpath)' />
                                                 </a>
                                                 imgleft--;
                                             }
+                                            <a href='@Url.Action("AddProject", "UserProfile",new { id = Model.Portfolio.Id})'>
+                                                <i class="far fa-plus-square">
+                                                    <h6>Add Project</h6>
+                                                </i>
+                                            </a>
                                         </div>
                                     }
                                 }
@@ -215,31 +218,44 @@
                                             {
                                                 @*<p>@Model.Projects[y + ssi * ImagesPerTransition].Name</p>*@
                                                 string imgpath = "~/" + Model.Projects[y + ssi * ImagesPerTransition].Image;
-                                                <a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y + ssi * ImagesPerTransition].Id})'>
+                                                <a href='@Url.Action("EditProject", "Screenshot",new { id = Model.Projects[y + ssi * ImagesPerTransition].Id})'>
                                                     <img src='@Url.Content(@imgpath)' />
                                                 </a>
                                                 imgleft--;
+                                            }
+                                            @if (ssi == iterations - 1)
+                                            {
+                                                <a href='@Url.Action("AddProject", "UserProfile",new { id = Model.Portfolio.Id})'>
+                                                    <i class="far fa-plus-square">
+                                                        <h6>Add Project</h6>
+                                                    </i>
+                                                </a>
                                             }
                                         </div>
                                     }
                                     else
                                     {
-                                        string width = ((Math.Floor((double)(99 / modssi)))).ToString() + "%";
                                         <div class="carousel-item">
                                             @for (int y = 0; y < modssi; y++)
                                             {
                                                 @*<p>@Model.Projects[y + ssi * ImagesPerTransition].Name</p>*@
                                                 string imgpath = "~/" + Model.Projects[y + ssi * ImagesPerTransition].Image;
-                                                <a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y + ssi * ImagesPerTransition].Id})'>
+                                                <a href='@Url.Action("EditProject", "Screenshot",new { id = Model.Projects[y + ssi * ImagesPerTransition].Id})'>
                                                     <img src='@Url.Content(@imgpath)' />
                                                 </a>
                                                 imgleft--;
                                             }
+                                            <a href='@Url.Action("AddProject", "UserProfile",new { id = Model.Portfolio.Id})'>
+                                                <i class="far fa-plus-square">
+                                                    <h6>Add Project</h6>
+                                                </i>
+                                            </a>
                                         </div>
                                     }
                                 }
                             }
                         }
+
                     </div>
 
                     @if (Model.Projects?.Count > 9)
@@ -255,7 +271,17 @@
                 </div>
             </div>
 
-
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.ActionLink(
+                   "Remove Projects",
+                   "DeleteProjectPortfolio",
+                   "UserProfile",
+                   new { id = Model.Portfolio.Id },
+                   new { @class = "btn btn-primary", @style= "margin-left:40px" }
+                   )
+                </div>
+            </div>
 
             <hr />
 

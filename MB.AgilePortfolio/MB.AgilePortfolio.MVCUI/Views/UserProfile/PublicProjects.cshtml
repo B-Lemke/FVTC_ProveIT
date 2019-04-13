@@ -19,7 +19,7 @@
 
         @if (Model.Projects.Count < 1)
         {
-            <p align="center" style="font-style:italic">You have no projects currently</p>
+            <p align="center" style="font-style:italic">They have no projects currently</p>
         }
         else
         {
@@ -29,7 +29,7 @@
                     {
                         <div class="col-md-4">
                             <div class="card mt-2">
-                                <a href="~/Screenshot/EditProject/@prj.Id" class="card-link" style="text-align:center">
+                                <a href="~/UserProfile/PublicProject/@prj.Id" class="card-link" style="text-align:center">
                                     <img class="card-img-top project-image" src="@Url.Content("~/" + prj.Image)" alt="Card image cap">
                                     <div class="card-body" style="text-align:center">
 
@@ -57,27 +57,17 @@
                             </div>
                         </div>
                     }
-                    <div class="col-md-4">
-                        <div class="card mt-2" style="height:98%;">
-                            <div class="card-body" style="text-align:center">
-                                <a href="~/CreateNewProject/Create/" class="card-link" style="text-align:center;vertical-align:middle;">
-                                    <i class="far fa-plus-square" style="font-size:150px;vertical-align:middle;text-align:center;margin:auto;">
-                                        <h6>Create Project</h6>
-                                    </i>
-                                    @*<img class="card-img-top project-image" src="@Url.Content("~/" + prj.Image)" alt="Card image cap">*@
-                                </a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         }
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to Profile", "Index")
-</div>
+    <div>
+        <a href="~/User/@Model.User.Username">
+            <p>Back to Profile</p>
+        </a>
+    </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

@@ -19,7 +19,7 @@
         <div class="form-group">
             @if (Model.Portfolios.Count < 1)
             {
-                <p align="center" style="font-style:italic">You have no portfolios currently</p>
+                <p align="center" style="font-style:italic">They have no portfolios currently</p>
             }
             else
             {
@@ -29,7 +29,7 @@
                         {
                             <div class="col-md-4">
                                 <div class="card mt-2">
-                                    <a href="~/UserProfile/EditPortfolio/@portfolio.Id" class="card-link" style="text-align:center">
+                                    <a href="~/UserProfile/PublicPortfolio/@portfolio.Id" class="card-link" style="text-align:center">
                                         <img class="card-img-top project-image" src="@Url.Content("~/" + portfolio.PortfolioImage)" alt="Card image cap">
                                         <div class="card-body" style="text-align:center">
                                             <h5 class="card-title" style="width: 90%;text-align:left">@portfolio.Name</h5>
@@ -39,23 +39,14 @@
                                 </div>
                             </div>
                         }
-                        <div class="col-md-4">
-                            <div class="card mt-2" style="height:98%;">
-                                <div class="card-body" style="text-align:center">
-                                    <a href="~/CreateNewPortfolio/Create/" class="card-link" style="text-align:center;vertical-align:middle;">
-                                        <i class="far fa-plus-square" style="font-size:150px;vertical-align:middle;text-align:center;margin:auto;">
-                                            <h6>Create Portfolio</h6>
-                                        </i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             }
         </div>
         <div>
-            @Html.ActionLink("Back to Profile", "Index")
+            <a href="~/User/@Model.User.Username">
+                <p>Back to Profile</p>
+            </a>
         </div>
     </div>
 }

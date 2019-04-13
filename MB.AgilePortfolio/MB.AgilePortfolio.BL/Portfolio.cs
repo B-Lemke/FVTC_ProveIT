@@ -70,10 +70,25 @@ namespace MB.AgilePortfolio.BL
         }
 
         // Insert project into portfolio
-        public void AddProject(Guid projectId)
+        public bool AddProject(Guid projectId)
         {
             try
             {
+                Project project = new Project();
+                project.LoadById(projectId);
+                Portfolio port = new Portfolio();
+                ProjectList prjs = new ProjectList();
+                prjs = port.LoadProjects(port.Id);
+                foreach(Project prj in prjs)
+                {
+                    if(prj.Name == project.Name)
+                    {
+                        // Already exists in Portfolio
+                        return false; //this should probably be a throw ex
+                    }
+                }
+
+     
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
                     tblPortfolio portfolio = dc.tblPortfolios.Where(p => p.Id == Id).FirstOrDefault();
@@ -86,6 +101,7 @@ namespace MB.AgilePortfolio.BL
                     dc.tblPortfolioProjects.Add(portProj);
                     dc.SaveChanges();
                 }
+                return true;
             }
             catch (Exception ex) { throw ex; }
         }
@@ -98,6 +114,25 @@ namespace MB.AgilePortfolio.BL
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
                     tblPortfolioProject portProj = dc.tblPortfolioProjects.Where(pp => pp.Id == portProjId).FirstOrDefault();
+                    if (portProj != null)
+                    {
+                        dc.tblPortfolioProjects.Remove(portProj);
+                        dc.SaveChanges();
+                    }
+                    else throw new Exception("Project not found in portfolio");
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        // Delete project from portfolio by passing projectid and portfolioid
+        public void RemoveProjectByPortProj(Guid ProjectId, Guid PortfolioId)
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    tblPortfolioProject portProj = dc.tblPortfolioProjects.Where(pp => pp.ProjectId == ProjectId && pp.PortfolioId == PortfolioId).FirstOrDefault();
                     if (portProj != null)
                     {
                         dc.tblPortfolioProjects.Remove(portProj);
@@ -247,6 +282,37 @@ namespace MB.AgilePortfolio.BL
                                       join pr in dc.tblPrivacies on p.PrivacyId equals pr.Id
                                       join u in dc.tblUsers on p.UserId equals u.Id
                                       where p.UserId == user.Id || user.Id == null
+                                      select new
+                                      {
+                                          p.Id,
+                                          p.Name,
+                                          p.PrivacyId,
+                                          p.Description,
+                                          p.PortfolioImage,
+                                          p.UserId,
+                                          u.Email,
+                                          Privacy = pr.Description
+                                      }).OrderByDescending(p => p.Name).ToList();
+                    foreach (var p in portfolios)
+                    {
+                        Portfolio portfolio = new Portfolio(p.Id, p.Name, p.Description, p.PortfolioImage, p.UserId, p.Email, p.Privacy, p.PrivacyId);
+                        Add(portfolio);
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        public void LoadbyUserID(Guid userId)
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    var portfolios = (from p in dc.tblPortfolios
+                                      join pr in dc.tblPrivacies on p.PrivacyId equals pr.Id
+                                      join u in dc.tblUsers on p.UserId equals u.Id
+                                      where p.UserId == userId || userId == null
                                       select new
                                       {
                                           p.Id,
