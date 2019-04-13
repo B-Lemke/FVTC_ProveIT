@@ -483,7 +483,7 @@ namespace MB.AgilePortfolio.BL
             try
             {
                 // Folder exists
-                if (Directory.Exists("~Assets/Images/" + UserName + "/Projects/" + ProjectName))
+                if (Directory.Exists("~/Assets/Images/" + UserName + "/Projects/" + ProjectName))
                 {
                     // Delete Folder
                     System.IO.Directory.Delete("~/Assets/Images/" + UserName + "/Projects/" + ProjectName);
