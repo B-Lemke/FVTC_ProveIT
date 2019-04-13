@@ -26,14 +26,21 @@
         </script>
         <style>
             .carousel-inner img {
-                width: 100px;
+                width: 10%;
                 height: 100px;
+                object-fit: contain;
+                margin-left: auto;
+                margin-right: auto;
             }
 
             .carousel-inner {
                 padding-left: 10%;
                 padding-right: 10%;
                 width: 100%;
+            }
+
+            .carousel-item {
+                text-align: center;
             }
 
             html {
@@ -124,16 +131,11 @@
 
 
 
-                    <div id="demo" class="carousel slide" data-ride="carousel">
-                        <ul class="carousel-indicators">
-
+                    <div id="demo" class="carousel slide" data-ride="carousel" data-interval="10000">
                             @{
-                                int i = 0;
                                 int imgleft = Model.ScreenshotList.Count;
-                                int ImagesPerTransition = 8;
+                                int ImagesPerTransition = 9;
                             }
-
-                        </ul>
                         <div class="carousel-inner" role="listbox">
 
                             @if (Model.ScreenshotList?.Count > 0)
@@ -148,7 +150,6 @@
                                     if (Model.ScreenshotList.Count > ImagesPerTransition - 1)
                                     {
                                         iterations = (int)Math.Ceiling(((double)Model.ScreenshotList.Count) / ImagesPerTransition);
-
                                     }
                                     else
                                     {
@@ -170,7 +171,6 @@
                                             <div class="carousel-item active">
                                                 @for (int y = 0; y < ImagesPerTransition; y++)
                                                 {
-
                                                     @*<p>@Model.ScreenshotList[y].Name</p>*@
                                                     string imgpath = "~/" + Model.ScreenshotList[y].FilePath;
                                                     @*<a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y].Id})'>*@
@@ -214,9 +214,7 @@
                                         }
                                         else
                                         {
-                                            string width = ((Math.Floor((double)(99 / modssi)))).ToString() + "%";
                                             <div class="carousel-item">
-
                                                 @for (int y = 0; y < modssi; y++)
                                                 {
                                                     @*<p>@Model.Projects[y + ssi * ImagesPerTransition].Name</p>*@
@@ -231,9 +229,9 @@
                                     }
                                 }
                             }
-
                         </div>
-                        @if (Model.ScreenshotList?.Count > 8)
+
+                        @if (Model.ScreenshotList?.Count > 9)
                         {
                             <a class="carousel-control-prev" href="#demo" data-slide="prev" style="width:auto">
                                 <i class="fas fa-chevron-left text-dark"></i>

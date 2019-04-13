@@ -241,9 +241,14 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             {
                 try
                 {
+                    User userin = System.Web.HttpContext.Current.Session["user"] as User;
                     Project Project = new Project();
                     Project.LoadById(id);
                     up.Project = Project;
+                    UploadedImage ui = new UploadedImage();
+
+                    // THIS DOESNT WORK LOCALLY IF THE DIRECTORY WAS MADE BEFORE IT WAS PUSHED
+                    ui.DeleteProjectUploadFolder(userin.Username, up.Project.Name);
                     up.Project.Delete();
                     return RedirectToAction("ProjectDeleted");
                 }
@@ -501,9 +506,14 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             {
                 try
                 {
+                    User userin = System.Web.HttpContext.Current.Session["user"] as User;
                     Portfolio Portfolio = new Portfolio();
                     Portfolio.LoadById(id);
                     up.Portfolio = Portfolio;
+                    UploadedImage ui = new UploadedImage();
+
+                    // THIS DOESNT WORK LOCALLY IF THE DIRECTORY WAS MADE BEFORE IT WAS PUSHED
+                    ui.DeleteProjectUploadFolder(userin.Username, up.Portfolio.Name);
                     up.Portfolio.Delete();
                     return RedirectToAction("PortfolioDeleted");
                 }

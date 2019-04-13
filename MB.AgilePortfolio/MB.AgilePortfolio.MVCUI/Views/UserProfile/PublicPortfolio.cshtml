@@ -49,14 +49,21 @@ else
             </script>
             <style>
                 .carousel-inner img {
-                    width: 100px;
+                    width: 10%;
                     height: 100px;
+                    object-fit: contain;
+                    margin-left: auto;
+                    margin-right: auto;
                 }
 
                 .carousel-inner {
                     padding-left: 10%;
                     padding-right: 10%;
                     width: 100%;
+                }
+
+                .carousel-item {
+                    text-align: center;
                 }
 
                 html {
@@ -81,9 +88,6 @@ else
                     padding: 5px;
                 }
             </style>
-
-
-
         </head>
 
         <body>
@@ -104,7 +108,6 @@ else
                             <h4 class="font-weight-light">@Model.User.Email</h4>
                             <hr />
                             <p>View @Model.User.Username's other portfolios</p>
-
                         </div>
                     </div>
 
@@ -121,127 +124,134 @@ else
                         }
 
                         <div class="form-horizontal">
-                            <div id="demo" class="carousel slide" data-ride="carousel">
-                                <ul class="carousel-indicators"></ul>
-                                <div id="demo" class="carousel slide" data-ride="carousel">
-                                    <ul class="carousel-indicators">
+                            <div id="demo" class="carousel slide" data-ride="carousel" data-interval="10000">
+                                @{
+                                    int imgleft = Model.Projects.Count;
+                                    int ImagesPerTransition = 9;
+                                }
+                                <div class="carousel-inner" role="listbox">
 
-                                        @{
-                                            int i = 0;
-                                            int imgleft = Model.Projects.Count;
-                                            int ImagesPerTransition = 8;
-                                        }
+                                    @if (Model.Projects?.Count > 0)
+                                    {
 
-                                    </ul>
-                                    <div class="carousel-inner" role="listbox">
+                                        int modssi = Model.Projects.Count % ImagesPerTransition;
+                                        int iterations = 0;
+                                        imgleft = Model.Projects.Count;
 
-                                        @if (Model.Projects?.Count > 0)
+                                        if (modssi > 0)
                                         {
-
-                                            int modssi = Model.Projects.Count % ImagesPerTransition;
-                                            int iterations = 0;
-                                            imgleft = Model.Projects.Count;
-
-                                            if (modssi > 0)
+                                            if (Model.Projects.Count > ImagesPerTransition - 1)
                                             {
-                                                if (Model.Projects.Count > ImagesPerTransition - 1)
-                                                {
-                                                    iterations = (int)Math.Ceiling(((double)Model.Projects.Count) / ImagesPerTransition);
+                                                iterations = (int)Math.Ceiling(((double)Model.Projects.Count) / ImagesPerTransition);
 
+                                            }
+                                            else
+                                            {
+                                                iterations = 1;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            iterations = (Model.Projects.Count) / ImagesPerTransition;
+                                        }
+                                        var active = iterations == 1 ? "active" : "";
+
+                                        for (int ssi = 0; ssi < iterations; ssi++)
+                                        {
+                                            if (ssi == 0)
+                                            {
+                                                if (iterations > 1)
+                                                {
+                                                    <div class="carousel-item active">
+                                                        @for (int y = 0; y < ImagesPerTransition; y++)
+                                                        {
+                                                            @*
+                                                                <div class="carousel-caption">
+                                                                    <p>@Model.Projects[y].Name</p>
+                                                                </div>
+                                                            *@
+                                                            string imgpath = "~/" + Model.Projects[y].Image;
+                                                            <a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y].Id})'>
+                                                                <img src='@Url.Content(@imgpath)' />
+                                                            </a>
+                                                            imgleft--;
+                                                        }
+                                                    </div>
                                                 }
                                                 else
                                                 {
-                                                    iterations = 1;
+                                                    <div class="carousel-item active">
+                                                        @for (int y = 0; y < Model.Projects.Count; y++)
+                                                        {
+                                                            @*
+                                                                <div class="carousel-caption">
+                                                                    <p>@Model.Projects[y].Name</p>
+                                                                </div>
+                                                            *@
+                                                            string imgpath = "~/" + Model.Projects[y].Image;
+                                                            <a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y].Id})'>
+                                                                <img src='@Url.Content(@imgpath)' />
+                                                            </a>
+                                                            imgleft--;
+                                                        }
+                                                    </div>
                                                 }
                                             }
                                             else
                                             {
-                                                iterations = (Model.Projects.Count) / ImagesPerTransition;
-                                            }
-                                            var active = iterations == 1 ? "active" : "";
-
-                                            for (int ssi = 0; ssi < iterations; ssi++)
-                                            {
-                                                if (ssi == 0)
+                                                if (imgleft >= ImagesPerTransition)
                                                 {
-                                                    if (iterations > 1)
-                                                    {
-                                                        <div class="carousel-item active">
-                                                            @for (int y = 0; y < ImagesPerTransition; y++)
-                                                            {
+                                                    <div class="carousel-item">
+                                                        @for (int y = 0; y < ImagesPerTransition; y++)
+                                                        {
+                                                            @*
+                                                                <div class="carousel-caption">
+                                                                    <p>@Model.Projects[y + ssi * ImagesPerTransition].Name</p>
+                                                                </div>
+                                                            *@
+                                                            string imgpath = "~/" + Model.Projects[y + ssi * ImagesPerTransition].Image;
+                                                            <a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y + ssi * ImagesPerTransition].Id})'>
+                                                                <img src='@Url.Content(@imgpath)' />
+                                                            </a>
 
-                                                                @*<p>@Model.Projects[y].Name</p>*@
-                                                                string imgpath = "~/" + Model.Projects[y].Image;
-                                                                <a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y].Id})'>
-                                                                    <img src='@Url.Content(@imgpath)' style="width:100px;height:100px;" />
-                                                                </a>
-                                                                imgleft--;
-                                                            }
-                                                        </div>
-                                                    }
-                                                    else
-                                                    {
-                                                        <div class="carousel-item active">
-                                                            @for (int y = 0; y < modssi; y++)
-                                                            {
-                                                                @*<p>@Model.Projects[y].Name</p>*@
-                                                                string imgpath = "~/" + Model.Projects[y].Image;
-                                                                <a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y].Id})'>
-                                                                    <img src='@Url.Content(@imgpath)' style="width:100px;height:100px;" />
-                                                                </a>
-                                                                imgleft--;
-                                                            }
-                                                        </div>
-                                                    }
+                                                            imgleft--;
+                                                        }
+                                                    </div>
                                                 }
                                                 else
                                                 {
-                                                    if (imgleft >= ImagesPerTransition)
-                                                    {
-                                                        <div class="carousel-item">
-                                                            @for (int y = 0; y < ImagesPerTransition; y++)
-                                                            {
-                                                                @*<p>@Model.Projects[y + ssi * ImagesPerTransition].Name</p>*@
-                                                                string imgpath = "~/" + Model.Projects[y + ssi * ImagesPerTransition].Image;
-                                                                <a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y + ssi * ImagesPerTransition].Id})'>
-                                                                    <img src='@Url.Content(@imgpath)' style="width:100px;height:100px;" />
-                                                                </a>
+                                                    string width = ((Math.Floor((double)(99 / modssi)))).ToString() + "%";
+                                                    <div class="carousel-item">
 
-                                                                imgleft--;
-                                                            }
-                                                        </div>
-                                                    }
-                                                    else
-                                                    {
-                                                        string width = ((Math.Floor((double)(99 / modssi)))).ToString() + "%";
-                                                        <div class="carousel-item">
-
-                                                            @for (int y = 0; y < modssi; y++)
-                                                            {
-                                                                @*<p>@Model.Projects[y + ssi * ImagesPerTransition].Name</p>*@
-                                                                string imgpath = "~/" + Model.Projects[y + ssi * ImagesPerTransition].Image;
-                                                                <a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y + ssi * ImagesPerTransition].Id})'>
-                                                                    <img src='@Url.Content(@imgpath)' style="width:100px;height:100px;" />
-                                                                </a>
-                                                                imgleft--;
-                                                            }
-                                                        </div>
-                                                    }
+                                                        @for (int y = 0; y < modssi; y++)
+                                                        {
+                                                            @*
+                                                                <div class="carousel-caption">
+                                                                    <p>@Model.Projects[y + ssi * ImagesPerTransition].Name</p>
+                                                                </div>
+                                                            *@
+                                                            string imgpath = "~/" + Model.Projects[y + ssi * ImagesPerTransition].Image;
+                                                            <a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y + ssi * ImagesPerTransition].Id})'>
+                                                                <img src='@Url.Content(@imgpath)' />
+                                                            </a>
+                                                            imgleft--;
+                                                        }
+                                                    </div>
                                                 }
                                             }
                                         }
-
-                                    </div>
-                                    @if (Model.Projects?.Count > 8)
-                                    {
-                                        <a class="carousel-control-prev" href="#demo" data-slide="prev" style="width:auto">
-                                            <i class="fas fa-chevron-left text-dark"></i>
-                                        </a>
-                                        <a class="carousel-control-next" href="#demo" data-slide="next" style="width:auto">
-                                            <i class="fas fa-chevron-right text-dark"></i>
-                                        </a>
                                     }
+
                                 </div>
+                                @if (Model.Projects?.Count > 9)
+                                {
+                                    <a class="carousel-control-prev" href="#demo" data-slide="prev" style="width:auto">
+                                        <i class="fas fa-chevron-left text-dark"></i>
+                                    </a>
+                                    <a class="carousel-control-next" href="#demo" data-slide="next" style="width:auto">
+                                        <i class="fas fa-chevron-right text-dark"></i>
+                                    </a>
+                                }
                             </div>
                         </div>
                         <hr />

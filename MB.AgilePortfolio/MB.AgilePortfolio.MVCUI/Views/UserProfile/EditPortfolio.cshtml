@@ -26,14 +26,21 @@
         </script>
         <style>
             .carousel-inner img {
-                width: 100px;
+                width: 10%;
                 height: 100px;
+                object-fit: contain;
+                margin-left: auto;
+                margin-right: auto;
             }
 
             .carousel-inner {
                 padding-left: 10%;
                 padding-right: 10%;
                 width: 100%;
+            }
+
+            .carousel-item {
+                text-align: center;
             }
 
             html {
@@ -58,30 +65,12 @@
                 padding: 5px;
             }
         </style>
-        @if (Model.Projects?.Count > 0)
-        {
-            int ImagesPerTransition1 = 8;
-            int iterations1 = (int)Math.Ceiling(((double)Model.Projects.Count) / ImagesPerTransition1);
-            string width = "";
-            if (iterations1 == 1 && (Model.Projects.Count % ImagesPerTransition1) > 0)
-            {
-                //Adjust size if less than images per transition
-                width = ((Math.Floor((double)(99 / (Model.Projects.Count % ImagesPerTransition1))))).ToString() + "%";
-            }
-            else
-            {
-                //Adjust size of images to fit ~100% for the images per transition
-                width = ((Math.Floor((double)(99 / ImagesPerTransition1)))).ToString() + "%";
-            }
-            //THIS NEEDS TO BE FIXED SO IT CENTERS THE ITEMS (padding is solely for nav arrows to not overlap images)
-
-        }
     </head>
     <body>
         <div class="form-horizontal">
             <h4>@Model.Portfolio.Name</h4>
             <div class="container py-4" style="text-align:center">
-             <img src="~/@Model.Portfolio.PortfolioImage" alt="" style="width:100%;height:350px; text-align:center; object-fit:contain;">
+                <img src="~/@Model.Portfolio.PortfolioImage" alt="" style="width:100%;height:350px; text-align:center; object-fit:contain;">
             </div>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -129,22 +118,33 @@
                     @Html.ValidationMessageFor(model => model.Portfolio.PrivacyId, "", new { @class = "text-danger" })
                 </div>
             </div>
+            <div class="form-group">
+                <div class="col-md-10">
 
+                    <label>Upload Display Image</label>
+                    <div class="input-group">
+                        <div class="custom-file">
+                            @Html.TextBoxFor(model => model.Fileupload, new { type = "file", id = "fileupload", name = "fileupload", accept = ".jpg, .jpeg, .gif, .png" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.Portfolio.PortfolioImage, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Fileupload, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
 
             <div class="form-horizontal">
                 <h4>Projects</h4>
                 <hr />
-                <div id="demo" class="carousel slide" data-ride="carousel">
-                    <ul class="carousel-indicators">
+                <div id="demo" class="carousel slide" data-ride="carousel" data-interval="10000">
+                    @{
+                        int imgleft = Model.Projects.Count;
+                        int ImagesPerTransition = 9;
+                    }
 
-                        @{
-                            int i = 0;
-                            int imgleft = Model.Projects.Count;
-                            int ImagesPerTransition = 8;
-                        }
-
-                    </ul>
                     <div class="carousel-inner" role="listbox">
 
                         @if (Model.Projects?.Count > 0)
@@ -185,7 +185,7 @@
                                                 @*<p>@Model.Projects[y].Name</p>*@
                                                 string imgpath = "~/" + Model.Projects[y].Image;
                                                 <a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y].Id})'>
-                                                    <img src='@Url.Content(@imgpath)' style="width:100px;height:100px;" />
+                                                    <img src='@Url.Content(@imgpath)' />
                                                 </a>
                                                 imgleft--;
                                             }
@@ -194,12 +194,12 @@
                                     else
                                     {
                                         <div class="carousel-item active">
-                                            @for (int y = 0; y < modssi; y++)
+                                            @for (int y = 0; y < Model.Projects.Count; y++)
                                             {
                                                 @*<p>@Model.Projects[y].Name</p>*@
                                                 string imgpath = "~/" + Model.Projects[y].Image;
                                                 <a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y].Id})'>
-                                                    <img src='@Url.Content(@imgpath)' style="width:100px;height:100px;" />
+                                                    <img src='@Url.Content(@imgpath)' />
                                                 </a>
                                                 imgleft--;
                                             }
@@ -216,9 +216,8 @@
                                                 @*<p>@Model.Projects[y + ssi * ImagesPerTransition].Name</p>*@
                                                 string imgpath = "~/" + Model.Projects[y + ssi * ImagesPerTransition].Image;
                                                 <a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y + ssi * ImagesPerTransition].Id})'>
-                                                    <img src='@Url.Content(@imgpath)' style="width:100px;height:100px;" />
+                                                    <img src='@Url.Content(@imgpath)' />
                                                 </a>
-
                                                 imgleft--;
                                             }
                                         </div>
@@ -227,13 +226,12 @@
                                     {
                                         string width = ((Math.Floor((double)(99 / modssi)))).ToString() + "%";
                                         <div class="carousel-item">
-
                                             @for (int y = 0; y < modssi; y++)
                                             {
                                                 @*<p>@Model.Projects[y + ssi * ImagesPerTransition].Name</p>*@
                                                 string imgpath = "~/" + Model.Projects[y + ssi * ImagesPerTransition].Image;
                                                 <a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y + ssi * ImagesPerTransition].Id})'>
-                                                    <img src='@Url.Content(@imgpath)' style="width:100px;height:100px;" />
+                                                    <img src='@Url.Content(@imgpath)' />
                                                 </a>
                                                 imgleft--;
                                             }
@@ -242,10 +240,9 @@
                                 }
                             }
                         }
-
                     </div>
 
-                    @if (Model.Projects?.Count > 8)
+                    @if (Model.Projects?.Count > 9)
                     {
                         <a class="carousel-control-prev" href="#demo" data-slide="prev" style="width:auto">
                             <i class="fas fa-chevron-left text-dark"></i>
@@ -255,29 +252,14 @@
                         </a>
                     }
 
-                    </div>
+                </div>
             </div>
 
 
 
             <hr />
 
-            <div class="form-group">
-                <div class="col-md-10">
 
-                    <label>Upload Display Image</label>
-                    <div class="input-group">
-                        <div class="custom-file">
-                            @Html.TextBoxFor(model => model.Fileupload, new { type = "file", id = "fileupload", name = "fileupload", accept = ".jpg, .jpeg, .gif, .png" })
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-10">
-                    @Html.HiddenFor(model => model.Portfolio.PortfolioImage, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Fileupload, "", new { @class = "text-danger" })
-                </div>
-            </div>
 
             <div class="row">
 

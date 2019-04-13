@@ -69,14 +69,14 @@ namespace MB.AgilePortfolio.BL
                     ObjectType = "Projects";
 
                     //Default Image FilePath for Project
-                    string DefaultFilePath = "Assets/Images/UserProfiles";
+                    string DefaultFilePath = "Assets/Images/" + UserName;
                     string DefaultFileName = "Default.png";
                     string absolutepath = "";
                     //Empty FilePath Check
                     if (FilePath == string.Empty || FilePath == null)
                     {
                         //Set empty filepath to Default image
-                        SavePath = DefaultFilePath;
+                        SavePath = "Assets/Images/UserProfile";
                         fileName = DefaultFileName;
                     }
 
@@ -169,14 +169,14 @@ namespace MB.AgilePortfolio.BL
                     ObjectType = "Profiles";
 
                     //Default Image FilePath for Project
-                    string DefaultFilePath = "Assets/Images/UserProfiles";
+                    string DefaultFilePath = "Assets/Images/" + UserName;
                     string DefaultFileName = "Default.png";
                     string absolutepath = "";
                     //Empty FilePath Check
                     if (FilePath == string.Empty || FilePath == null)
                     {
                         //Set empty filepath to Default image
-                        SavePath = DefaultFilePath;
+                        SavePath = "Assets/Images/UserProfile";
                         fileName = DefaultFileName;
                     }
 
@@ -269,14 +269,14 @@ namespace MB.AgilePortfolio.BL
                     ObjectType = "Portfolios";
 
                     //Default Image FilePath for Portfolio
-                    string DefaultFilePath = "Assets/Images/UserProfiles";
+                    string DefaultFilePath = "Assets/Images/" + UserName;
                     string DefaultFileName = "Default.png";
                     string absolutepath = "";
                     //Empty FilePath Check
                     if (FilePath == string.Empty || FilePath == null)
                     {
                         //Set empty filepath to Default image
-                        SavePath = DefaultFilePath;
+                        SavePath = "Assets/Images/UserProfile";
                         fileName = DefaultFileName;
                     }
 
@@ -381,6 +381,7 @@ namespace MB.AgilePortfolio.BL
              *          - ObjectType
              *          - UserName
              *          - ObjectName (this can be null for Profile)
+             *          - FileName
              *      
              *      RETURNS: Bool for Deletion Success (false return means file didnt exist)
              *      
@@ -389,30 +390,39 @@ namespace MB.AgilePortfolio.BL
 
             try
             {
-                // If File exists delete it
-                if (System.IO.File.Exists(FilePath))
+                if (FilePath != null && FilePath != string.Empty)
                 {
-                    // File Exists
-                    System.IO.File.Delete(FilePath);
-                    if (ObjectType == "Profile" || ObjectType == "Profiles")
-                    {
-                        ObjectName = "DisplayImage";
-                    }
 
-                    // If no files in objectname folder delete objectName folder
-                    if (Directory.Exists("~/Assets/Images/" + UserName + "/" + ObjectType + "/" + ObjectName))
+                    // If File exists delete it
+                    if (System.IO.File.Exists(FilePath))
                     {
-                        if ((Directory.GetFiles("~/Assets/Images/" + UserName + "/" + ObjectType + "/" + ObjectName)).Count() < 1)
+                        // File Exists
+                        System.IO.File.Delete(FilePath);
+                        if (ObjectType == "Profile" || ObjectType == "Profiles")
                         {
-                            System.IO.Directory.Delete("~/Assets/Images/" + UserName + "/" + ObjectType + "/" + ObjectName);
+                            ObjectName = "DisplayImage";
                         }
-                    }
 
-                    return true;
+                        // If no files in objectname folder delete objectName folder
+                        if (Directory.Exists("~/Assets/Images/" + UserName + "/" + ObjectType + "/" + ObjectName))
+                        {
+                            if ((Directory.GetFiles("~/Assets/Images/" + UserName + "/" + ObjectType + "/" + ObjectName)).Count() < 1)
+                            {
+                                System.IO.Directory.Delete("~/Assets/Images/" + UserName + "/" + ObjectType + "/" + ObjectName);
+                            }
+                        }
+
+                        return true;
+                    }
+                    else
+                    {
+                        // File Doesn't Exist
+                        return false;
+                    }
                 }
                 else
                 {
-                    // File Doesn't Exist
+                    // No file given
                     return false;
                 }
             }
@@ -422,7 +432,7 @@ namespace MB.AgilePortfolio.BL
             }
         }
 
-        public bool DeleteUserFolderByUserName(string UserName)
+        public bool DeleteUserUploadFolder(string UserName)
         {
             /*      PURPOSE: Delete Entire User upload folder
              *          - To be used when a user is deleted to remove all uploaded display images
@@ -449,6 +459,78 @@ namespace MB.AgilePortfolio.BL
                     // Username Folder Doesn't Exist
                     return false;
                 }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool DeleteProjectUploadFolder(string UserName, string ProjectName)
+        {
+            /*      PURPOSE: Delete Entire Project upload folder
+             *          - To be used when a project is deleted to remove all uploaded display images for that project
+             *      
+             *      PARAMETERS REQUIRED TO BE PASSED: 
+             *          - UserName = The username of the User to Delete all uploaded profile, portfolio and project images for
+             *          - ProjectName = Name of the Project to delete folder of
+             *      
+             *      RETURNS: Bool for Deletion Success (false return means folder didnt exist)
+             *      
+             *      OTHER INFO: Doesnt do screenshots
+            */
+
+            try
+            {
+                // Folder exists
+                if (Directory.Exists("~Assets/Images/" + UserName + "/Projects/" + ProjectName))
+                {
+                    // Delete Folder
+                    System.IO.Directory.Delete("~/Assets/Images/" + UserName + "/Projects/" + ProjectName);
+                    return true;
+                }
+                else
+                {
+                    // Folder doesnt exist
+                    return false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool DeletePortfolioUploadFolder(string UserName, string PortfolioName)
+        {
+            /*      PURPOSE: Delete Entire Portfolio upload folder
+             *          - To be used when a portfolio is deleted to remove all uploaded display images for that portfolio
+             *      
+             *      PARAMETERS REQUIRED TO BE PASSED: 
+             *          - UserName = The username of the User to Delete all uploaded profile, portfolio and project images for
+             *          - PortfolioName = Name of the Portfolio to delete folder of
+             *      
+             *      RETURNS: Bool for Deletion Success (false return means folder didnt exist)
+             *      
+             *      OTHER INFO: Doesnt do screenshots
+            */
+
+            try
+            {
+                // Folder exists
+                if (Directory.Exists("~/Assets/Images/" + UserName + "/Portfolios/" + PortfolioName))
+                {
+                    // Delete Folder
+                    System.IO.Directory.Delete("~/Assets/Images/" + UserName + "/Portfolios/" + PortfolioName);
+                    return true;
+                }
+                else
+                {
+                    // Folder doesnt exist
+                    return false;
+                }
+
             }
             catch (Exception ex)
             {
