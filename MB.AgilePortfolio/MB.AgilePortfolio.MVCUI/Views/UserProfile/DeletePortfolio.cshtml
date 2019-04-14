@@ -7,15 +7,22 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete Project</h2>
-
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h2 align="center">Are You Sure You Want to Delete <span style="color:red">@Model.Portfolio.Name?</span></h2>
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-12 ">
+                    <i class="fa fa-times-circle-o text-secondary h1 text-light" aria-hidden="true" style="font-size: 8rem"></i>
+                    <h2>Are you sure you want to delete the portfolio:</h2>
+                    <h1> @Model.Portfolio.Name?</h1>
+
+                    <p class="mt-3">This action cannot be undone.</p>
+                </div>
+            </div>
+        </div>
     </div>
 }
 
@@ -24,17 +31,17 @@
     <div class="form-group" align="center">
         <div class="row">
             <div class="col-md-offset-2 col-md-12">
-                <input type="submit" value="Yes" class="btn btn-primary" />
+                <input type="submit" value="Yes, Delete @Model.Portfolio.Name" class="btn btn-primary" />
                 @using (Html.BeginForm())
                 {
-                    @Html.ActionLink("No", "EditPortfolio", null, null, new { @class = "btn btn-primary", @style = "margin-left:60px" })
+                    @Html.ActionLink("No, Get Me Back to Safety", "EditPortfolio", null, null, new { @class = "btn btn-primary", @style = "margin-left:60px" })
                 }
             </div>
         </div>
     </div>
- }
+}
 
-<div>
+<div class="mt-5">
     @Html.ActionLink("Back to Projects", "DeletePortfolio")
 </div>
 

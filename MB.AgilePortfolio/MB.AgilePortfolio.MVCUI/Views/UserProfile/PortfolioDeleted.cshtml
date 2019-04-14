@@ -7,23 +7,24 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete Porfolio</h2>
-
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h2 style="text-align:center; color:red;">Portfolio has been Deleted</h2>
-
+        <h2 class="text-center text-secondary">
+            <i class="fa fa-minus-circle" aria-hidden="true"></i> 
+                Portfolio has been Deleted 
+            <i class="fa fa-minus-circle" aria-hidden="true"></i>
+        </h2>
     </div>
 
 }
 
 
-<div>
-    @Html.ActionLink("Back to Portfolios", "EditPortfolios")
+<div class="text-center">
+    @Html.ActionLink("Back to Portfolios", "EditPortfolios", null, new { @class = "btn btn-secondary border-dark" })
 </div>
 
 <script>
