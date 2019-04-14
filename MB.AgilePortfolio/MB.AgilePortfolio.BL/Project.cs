@@ -43,6 +43,7 @@ namespace MB.AgilePortfolio.BL
         public string StatusDescription { get; set; }
         public LanguageList Languages { get; set; }
 
+        public string CreatorUserName { get; set; }
 
         public Project() { }
 

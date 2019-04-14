@@ -20,6 +20,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         {
             ProjectLanguages pl = new ProjectLanguages
             {
+                User = new User(),
                 Projects = new ProjectList(),
                 Languages = new LanguageList(),
                 projectLanguages = new ProjectLanguageList(),
@@ -43,6 +44,8 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     {
                         Project proj = new Project();
                         proj.LoadById(projlang.ProjectId);
+                        pl.User.LoadById(proj.UserId);
+                        proj.CreatorUserName = pl.User.Username;
                         pl.Projects.Add(proj);
                     }
                 }

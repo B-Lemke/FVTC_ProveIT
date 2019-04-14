@@ -24,6 +24,7 @@ namespace MB.AgilePortfolio.BL
         [DisplayName("Privacy")]
         public string PrivacyDescription { get; set; }
         public ProjectList Projects { get; set; }
+        public string CreatorUsername { get; set; }
 
         public Portfolio()
         {
