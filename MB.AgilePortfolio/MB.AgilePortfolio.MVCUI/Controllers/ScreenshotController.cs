@@ -235,6 +235,8 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             {
                 ScreenshotProjects up = new ScreenshotProjects()
                 {
+                    SelectedLanguages = new List<string>(),
+                    AvailableLanguages = new List<SelectListItem>(),
                     Project = new Project(),
                     Privacies = new PrivacyList(),
                     User = new User(),
@@ -254,13 +256,14 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     up.DateCreated = project.DateCreated;
                     up.LastUpdated = project.LastUpdated;
                     up.Languages.Load();
-
-                    up.Privacies.Load();
+                    up.AvailableLanguages = GetLanguages(up.Languages);
+                   up.Privacies.Load();
                     User userin = System.Web.HttpContext.Current.Session["user"] as User;
                     up.User.LoadById(userin.Id);
                     up.Statuses.Load();
                     up.Project.LoadById(ID);
                     up.ScreenshotList.LoadbyProjectID(ID);
+                    up.Languages.Load();
                     return View(up);
                 }
                 else
@@ -290,7 +293,9 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     ppus.Statuses = slist;
                     ScreenshotList screenshots = new ScreenshotList();
                     screenshots.LoadbyProjectID(id);
+                    ppus.ScreenshotList = screenshots;
 
+                    /*
                     //Parsing Input string into Languages Currently in the database
                     List<string> arryInputLanguages = ppus.InputLanguages.Split(',').ToList<string>();
                     foreach (string il in arryInputLanguages)
@@ -311,19 +316,22 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                             }
                         }
                     }
+                    */
 
+                    
                     // Deletes all languages associated with project currently
                     ppus.ProjectLanguages.LoadByProjectId(id);
                     foreach (ProjectLanguage pl in ppus.ProjectLanguages)
                     {
                         pl.Delete();
                     }
-                    
+
                     // Insert New languages parsed from input into ProjectLanguage table
-                    foreach (Language l in ppus.Languages)
+                    foreach (var pl in ppus.SelectedLanguages)
                     {
+                        ProjectLanguage projlang = new ProjectLanguage();
                         ppus.ProjectLanguage.ProjectId = id;
-                        ppus.ProjectLanguage.LanguageId = l.Id;
+                        ppus.ProjectLanguage.LanguageId = (Guid.Parse(pl));
                         ppus.ProjectLanguage.Insert();
                     }
 
@@ -332,7 +340,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     Projects.LoadbyUser(userin);
                     string username = userin.Username;
                     string strUserID = userin.Id.ToString();
-                    ppus.ScreenshotList = screenshots;
+
                     if (ppus.Project.Name == null)
                     {
                         ModelState.AddModelError(string.Empty, "Project requires a name!");
@@ -370,7 +378,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                         ObjectName = ppus.Project.Name
                     };
 
-                    
+
                     if (!ModelState.IsValid)
                     {
                         ppus.Privacies = new PrivacyList();
@@ -404,6 +412,18 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             {
                 return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
             }
+        }
+        public IList<SelectListItem> GetLanguages(LanguageList languages)
+        {
+            List<SelectListItem> Langlist = new List<SelectListItem>();
+
+            foreach (Language l in languages)
+            {
+                SelectListItem sl = new SelectListItem { Text = l.Description, Value = l.Id.ToString() };
+                Langlist.Add(sl);
+            }
+            return Langlist;
+
         }
     }
 }
