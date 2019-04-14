@@ -15,6 +15,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: PortfolioProject
         public ActionResult Index()
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             portfolioProjects = new PortfolioProjectList();
             portfolioProjects.Load();
             return View(portfolioProjects);
@@ -23,6 +29,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: PortfolioProject/Details/5
         public ActionResult Details(Guid id)
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             PortfolioProjectViewModel ppvm = new PortfolioProjectViewModel()
             {
                 PortfolioProject = new PortfolioProject(),
@@ -40,6 +52,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: PortfolioProject/Create
         public ActionResult Create()
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             PortfolioProjectViewModel ppvm = new PortfolioProjectViewModel()
             {
                 PortfolioProject = new PortfolioProject(),
@@ -71,6 +89,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: PortfolioProject/Edit/5
         public ActionResult Edit(Guid id)
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             PortfolioProjectViewModel ppvm = new PortfolioProjectViewModel()
             {
                 PortfolioProject = new PortfolioProject(),
@@ -103,6 +127,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: PortfolioProject/Delete/5
         public ActionResult Delete(Guid id)
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             PortfolioProjectViewModel ppvm = new PortfolioProjectViewModel()
             {
                 PortfolioProject = new PortfolioProject(),

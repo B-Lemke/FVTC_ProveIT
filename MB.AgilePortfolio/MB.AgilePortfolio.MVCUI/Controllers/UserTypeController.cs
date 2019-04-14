@@ -15,6 +15,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: UserType
         public ActionResult Index()
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             userTypes = new UserTypeList();
             userTypes.Load();
             return View(userTypes);
@@ -23,6 +29,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: UserType/Details/5
         public ActionResult Details(Guid id)
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             userType = new UserType();
             userType.LoadById(id);
             return View(userType);
@@ -31,6 +43,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: UserType/Create
         public ActionResult Create()
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             userType = new UserType();
             return View(userType);
         }
@@ -51,6 +69,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: UserType/Edit/5
         public ActionResult Edit(Guid id)
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             userType = new UserType();
             userType.LoadById(id);
             return View(userType);
@@ -72,6 +96,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: UserType/Delete/5
         public ActionResult Delete(Guid id)
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+
+            }
             userType = new UserType();
             userType.LoadById(id);
             return View(userType);

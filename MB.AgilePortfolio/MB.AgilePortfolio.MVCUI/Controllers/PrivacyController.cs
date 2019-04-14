@@ -15,6 +15,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: Privacy
         public ActionResult Index()
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             privacies = new PrivacyList();
             privacies.Load();
             return View(privacies);
@@ -23,6 +29,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: Privacy/Details/5
         public ActionResult Details(Guid id)
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             privacy = new Privacy();
             privacy.LoadById(id);
             return View(privacy);
@@ -31,6 +43,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: Privacy/Create
         public ActionResult Create()
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             privacy = new Privacy();
             return View(privacy);
         }
@@ -51,6 +69,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: Privacy/Edit/5
         public ActionResult Edit(Guid id)
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             privacy = new Privacy();
             privacy.LoadById(id);
             return View(privacy);
@@ -72,6 +96,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: Privacy/Delete/5
         public ActionResult Delete(Guid id)
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             privacy = new Privacy();
             privacy.LoadById(id);
             return View(privacy);

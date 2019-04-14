@@ -16,6 +16,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: Project
         public ActionResult Index()
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             projects = new ProjectList();
             projects.Load();
             return View(projects);
@@ -24,6 +30,11 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: Project/Details/5
         public ActionResult Details(Guid id)
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
             project = new Project();
             project.LoadById(id);
@@ -35,6 +46,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: Project/Create
         public ActionResult Create()
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             ProjectPrivaciesUsersStatuses ppus = new ProjectPrivaciesUsersStatuses()
             {
                 Project = new Project(),
@@ -52,6 +69,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         [HttpPost]
         public ActionResult Create(ProjectPrivaciesUsersStatuses ppus)
         {
+
             try
             {
                 // TODO: Add insert logic here
@@ -64,6 +82,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: Project/Edit/5
         public ActionResult Edit(Guid id)
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             ProjectPrivaciesUsersStatuses ppus = new ProjectPrivaciesUsersStatuses()
             {
                 Project = new Project(),
@@ -94,6 +118,11 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: Project/Delete/5
         public ActionResult Delete(Guid id)
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
             project = new Project();
             project.LoadById(id);

@@ -17,6 +17,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: Screenshot
         public ActionResult Index()
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             screenshots = new ScreenshotList();
             screenshots.Load();
             return View(screenshots);
@@ -25,6 +31,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: Screenshot/Details/5
         public ActionResult Details(Guid id)
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             ScreenshotProjects sp = new ScreenshotProjects()
             {
                 Screenshot = new Screenshot(),
@@ -39,6 +51,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: Screenshot/Create
         public ActionResult Create()
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             ScreenshotProjects sp = new ScreenshotProjects()
             {
                 Screenshot = new Screenshot(),
@@ -64,6 +82,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: Screenshot/Edit/5
         public ActionResult Edit(Guid id)
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             ScreenshotProjects sp = new ScreenshotProjects()
             {
                 Screenshot = new Screenshot(),
@@ -91,6 +115,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: Screenshot/Delete/5
         public ActionResult Delete(Guid id)
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             ScreenshotProjects sp = new ScreenshotProjects()
             {
                 Projects = new ProjectList(),

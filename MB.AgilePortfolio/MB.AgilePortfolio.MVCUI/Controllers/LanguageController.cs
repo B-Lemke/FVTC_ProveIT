@@ -11,10 +11,16 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
     {
         Language language;
         LanguageList languages;
-        
+
         // GET: Language
         public ActionResult Index()
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             languages = new LanguageList();
             languages.Load();
             return View(languages);
@@ -23,6 +29,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: Language/Details/5
         public ActionResult Details(Guid id)
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             language = new Language();
             language.LoadById(id);
             return View(language);
@@ -31,6 +43,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: Language/Create
         public ActionResult Create()
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             language = new Language();
             return View(language);
         }
@@ -51,6 +69,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: Language/Edit/5
         public ActionResult Edit(Guid id)
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             language = new Language();
             language.LoadById(id);
             return View(language);
@@ -72,6 +96,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         // GET: Language/Delete/5
         public ActionResult Delete(Guid id)
         {
+            User userin = System.Web.HttpContext.Current.Session["user"] as User;
+            if (userin == null || userin.UserTypeDescription != "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             language = new Language();
             language.LoadById(id);
             return View(language);
@@ -89,5 +119,8 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             }
             catch { return View(l); }
         }
+
+
+
     }
 }
