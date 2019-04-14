@@ -160,6 +160,13 @@
                 </table>
             </div>
         </div>
+        @using (Html.BeginForm())
+        {
+
+        <div class="col-md-offset-2 col-md-12">
+            @Html.ActionLink("Back to Project", "EditProject", "UserProfile", new { id = Model.ProjectId})
+        </div>
+        }
     </div>
 </body>
 </html>  
