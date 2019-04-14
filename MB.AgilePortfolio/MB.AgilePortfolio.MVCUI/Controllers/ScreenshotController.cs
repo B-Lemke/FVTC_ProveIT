@@ -273,7 +273,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     Statuses = new StatusList(),
                     ScreenshotList = new ScreenshotList(),
                     Languages = new LanguageList(),
-                    InputLanguages = "",
                     ProjectLanguage = new ProjectLanguage(),
                     ProjectLanguages = new ProjectLanguageList()
                 };
@@ -287,13 +286,19 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     up.LastUpdated = project.LastUpdated;
                     up.Languages.Load();
                     up.AvailableLanguages = GetLanguages(up.Languages);
-                   up.Privacies.Load();
+                    up.Privacies.Load();
                     User userin = System.Web.HttpContext.Current.Session["user"] as User;
                     up.User.LoadById(userin.Id);
                     up.Statuses.Load();
                     up.Project.LoadById(ID);
                     up.ScreenshotList.LoadbyProjectID(ID);
-                    up.Languages.Load();
+                    up.ProjectLanguages.LoadByProjectId(ID);
+                    foreach(ProjectLanguage pl in up.ProjectLanguages)
+                    {
+                        Language lang = new Language();
+                        lang.LoadById(pl.LanguageId);
+                        up.SelectedLanguages.Add(lang.Description + ";");
+                    }
                     return View(up);
                 }
                 else
@@ -324,30 +329,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     ScreenshotList screenshots = new ScreenshotList();
                     screenshots.LoadbyProjectID(id);
                     ppus.ScreenshotList = screenshots;
-
-                    /*
-                    //Parsing Input string into Languages Currently in the database
-                    List<string> arryInputLanguages = ppus.InputLanguages.Split(',').ToList<string>();
-                    foreach (string il in arryInputLanguages)
-                    {
-                        if (il != null && il != string.Empty)
-                        {
-                            il.Trim();
-                            ppus.Language.LoadByDescription(il);
-                            if (ppus.Language.Id != Guid.Empty)
-                            {
-                                // Language exists
-                                ppus.Languages.Add(ppus.Language);
-                            }
-                            else
-                            {
-                                // Language doesnt exist
-                                //TODO: Maybe throw an Error or something that lets user know that one of the languages doesnt exit?
-                            }
-                        }
-                    }
-                    */
-
                     
                     // Deletes all languages associated with project currently
                     ppus.ProjectLanguages.LoadByProjectId(id);

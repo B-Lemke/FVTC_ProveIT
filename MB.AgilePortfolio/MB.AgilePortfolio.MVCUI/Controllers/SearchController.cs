@@ -23,10 +23,14 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 User = new User(),
                 Projects = new ProjectList(),
                 Languages = new LanguageList(),
+                Language = new Language(),
                 projectLanguages = new ProjectLanguageList(),
                 Portfolios = new PortfolioList(),
                 Users = new UserList()
             };
+
+
+            pl.Languages.Load();
             //if a user choose the radio button option as Subject  
             if (option == "Language")
             {
@@ -34,13 +38,17 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 // THIS MAY CHANGE IF ADVANCED SEARCH OPTIONS ARE ADDED (IE: search portfolios by languages used [languages in all projects in a Portfolio])
                 ViewBag.ReturnObject = "Projects";
 
+                Guid langid = Guid.Parse(search);
+                Language language = new Language();
+                language.LoadById(langid);
+                search = language.Description;
                 //Load Projects by input search string exact matches
                 pl.projectLanguages.LoadByLanguageName(search);
-                if(pl.projectLanguages.Count > 0)
+                if (pl.projectLanguages.Count > 0)
                 {
                     // Found at least one match
 
-                    foreach(ProjectLanguage projlang in pl.projectLanguages)
+                    foreach (ProjectLanguage projlang in pl.projectLanguages)
                     {
                         Project proj = new Project();
                         proj.LoadById(projlang.ProjectId);
@@ -62,7 +70,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                         pl.Projects.Add(proj);
                     }
                 }
-                if(pl.Projects.Count < 1)
+                if (pl.Projects.Count < 1)
                 {
                     //Throw Error Message for no projects loaded
                     ViewBag.ErrorMessage = "No Projects Found";
@@ -159,7 +167,5 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 return View(pl);
             }
         }
-
-
     }
 }

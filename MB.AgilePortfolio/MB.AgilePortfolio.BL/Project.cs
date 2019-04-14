@@ -125,8 +125,50 @@ namespace MB.AgilePortfolio.BL
                     this.Id = project.Id;
 
                     dc.tblProjects.Add(project);
-
                     return dc.SaveChanges();
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        public void Insert(IList<string> SelectedLanguages)
+        {
+            try
+            {
+                using (PortfolioEntities dc = new PortfolioEntities())
+                {
+                    tblProject project = new tblProject()
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = Name,
+                        Location = Location,
+                        Filepath = Filepath,
+                        PrivacyId = PrivacyId,
+                        Image = Image,
+                        Description = Description,
+                        UserId = UserId,
+                        DateCreated = DateCreated,
+                        Purpose = Purpose,
+                        Environment = Environment,
+                        Challenges = Challenges,
+                        FuturePlans = FuturePlans,
+                        Collaborators = Collaborators,
+                        LastUpdated = LastUpdated,
+                        SoftwareUsed = SoftwareUsed,
+                        StatusId = StatusId
+                    };
+                    //Save the Id
+                    this.Id = project.Id;
+
+                    dc.tblProjects.Add(project);
+                    dc.SaveChanges();
+                    foreach (var pl in SelectedLanguages)
+                    {
+                        ProjectLanguage projlang = new ProjectLanguage();
+                        projlang.ProjectId = project.Id;
+                        projlang.LanguageId = (Guid.Parse(pl));
+                        projlang.Insert();
+                    }
                 }
             }
             catch (Exception ex) { throw ex; }
@@ -257,6 +299,12 @@ namespace MB.AgilePortfolio.BL
                     tblProject project = dc.tblProjects.Where(p => p.Id == Id).FirstOrDefault();
                     if (project != null)
                     {
+                        ProjectLanguageList pll = new ProjectLanguageList();
+                        pll.LoadByProjectId(project.Id);
+                        foreach (ProjectLanguage pl in pll)
+                        {
+                            pl.Delete();
+                        }
                         dc.tblProjects.Remove(project);
                         return dc.SaveChanges();
                     }

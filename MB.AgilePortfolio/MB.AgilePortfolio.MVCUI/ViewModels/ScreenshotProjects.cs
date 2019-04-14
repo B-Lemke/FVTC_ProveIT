@@ -25,7 +25,6 @@ namespace MB.AgilePortfolio.MVCUI.ViewModels
         public LanguageList Languages { get; set; }
         public ProjectLanguageList ProjectLanguages { get; set; }
         public ProjectLanguage ProjectLanguage { get; set; }
-        public string InputLanguages { get; set; }
         public IList<string> SelectedLanguages { get; set; }
         public IList<SelectListItem> AvailableLanguages { get; set; }
         public User User { get; set; }

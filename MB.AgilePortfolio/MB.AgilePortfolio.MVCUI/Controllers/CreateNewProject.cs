@@ -31,10 +31,17 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 Project = new Project(),
                 Privacies = new PrivacyList(),
                 Statuses = new StatusList(),
-                User = new User()
+                User = new User(),
+                SelectedLanguages = new List<string>(),
+                AvailableLanguages = new List<SelectListItem>(),
+                Languages = new LanguageList(),
+                ProjectLanguage = new ProjectLanguage(),
+                ProjectLanguages = new ProjectLanguageList()
             };
+            ppus.Languages.Load();
             ppus.Privacies.Load();
             ppus.Statuses.Load();
+            ppus.AvailableLanguages = GetLanguages(ppus.Languages);
 
             if (Authenticate.IsAuthenticated())
             {
@@ -65,7 +72,10 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     StatusList slist = new StatusList();
                     slist.Load();
                     ppus.Statuses = slist;
-
+                    if(ppus.SelectedLanguages == null)
+                    {
+                        ppus.SelectedLanguages = new List<string>();
+                    }
                     ProjectList Projects = new ProjectList();
                     User userin = System.Web.HttpContext.Current.Session["user"] as User;
                     string username = userin.Username;
@@ -108,7 +118,19 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                         ObjectName = ppus.Project.Name
                     };
 
-                    
+                    if (!ModelState.IsValid)
+                    {
+                        ppus.User = new User();
+                        ppus.SelectedLanguages = new List<string>();
+                        ppus.AvailableLanguages = new List<SelectListItem>();
+                        ppus.Languages = new LanguageList();
+                        ppus.Language = new Language();
+                        ppus.ProjectLanguage = new ProjectLanguage();
+                        ppus.ProjectLanguages = new ProjectLanguageList();
+                        ppus.User.LoadById(userin.Id);
+                        return View(ppus);
+                    }
+
                     string fp = ui.Upload();
                     // fp will return null if no upload file was choosen else use upload file to save to database
                     if (fp != null)
@@ -117,18 +139,10 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     }
                     else
                     {
-                        // I honestly don't know when this would happen but just in case
-                        ModelState.AddModelError(string.Empty, "Portfolio Image could not found");
+                        ppus.Project.Image = null;
                     }
 
-                    if (!ModelState.IsValid)
-                    {
-                        ppus.User = new User();
-                        ppus.User.LoadById(userin.Id);
-                        return View(ppus);
-                    }
-
-                    ppus.Project.Insert();
+                    ppus.Project.Insert(ppus.SelectedLanguages);
                     return RedirectToAction("EditProjects", "UserProfile", new { returnurl = HttpContext.Request.Url });
                 }
                 catch { return View(ppus); }
@@ -137,6 +151,18 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             {
                 return RedirectToAction("Index", "Login", new { returnurl = HttpContext.Request.Url });
             }
+
+        }
+        public IList<SelectListItem> GetLanguages(LanguageList languages)
+        {
+            List<SelectListItem> Langlist = new List<SelectListItem>();
+
+            foreach (Language l in languages)
+            {
+                SelectListItem sl = new SelectListItem { Text = l.Description, Value = l.Id.ToString() };
+                Langlist.Add(sl);
+            }
+            return Langlist;
 
         }
     }

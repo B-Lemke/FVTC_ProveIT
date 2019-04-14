@@ -7,7 +7,41 @@
 @using (Html.BeginForm("Create", "CreateNewProject", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <h2>Create New Project</h2>
+    <style>
+        .multiselect {
+            width: 200px;
+        }
 
+        .selectBox {
+            position: relative;
+        }
+
+            .selectBox select {
+                width: 100%;
+                font-weight: bold;
+            }
+
+        .overSelect {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+        }
+
+        #checkboxes {
+            display: none;
+            border: 1px #dadada solid;
+        }
+
+            #checkboxes label {
+                display: block;
+            }
+
+                #checkboxes label:hover {
+                    background-color: #1e90ff;
+                }
+    </style>
 
     @Html.AntiForgeryToken()
 
@@ -136,6 +170,64 @@
         </div>
 
         <div class="form-group">
+            @Html.Label("Languages", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="multiselect">
+                    <div class="selectBox" onclick="showCheckboxes()">
+                        <select>
+                            <option id="langoptions">
+                                @{
+                                    string listedLangs = "";
+                                    if (Model.SelectedLanguages.Count < 1)
+                                    {
+                                        listedLangs = "Select Languages";
+                                    }
+                                    else
+                                    {
+                                        foreach (var lang in Model.SelectedLanguages)
+                                        {
+                                            listedLangs += lang;
+                                        }
+                                    }
+                                }
+                                @listedLangs
+                            </option>
+                        </select>
+                        <div class="overSelect"></div>
+                    </div>
+                    <div id="checkboxes">
+                        @foreach (var lang in Model.AvailableLanguages)
+                        {
+                            if (Model.SelectedLanguages.Contains(lang.Text + ";"))
+                            {
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox"
+                                               id="@lang.Text" onclick="AddLanguage('@lang.Text')"
+                                               name="SelectedLanguages"
+                                               checked="checked"
+                                               value="@lang.Value" /> @lang.Text
+                                        </label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"
+                                                   id="@lang.Text" onclick="AddLanguage('@lang.Text')"
+                                                   name="SelectedLanguages"
+                                                   value="@lang.Value" /> @lang.Text
+                                            </label>
+                                        </div>
+                                    }
+                                }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-10">
 
                 <label>Upload Display Image</label>
@@ -158,7 +250,7 @@
                 <input type="submit" value="Create" class="btn btn-secondary" />
             </div>
         </div>
-        
+
     </div>
 
 
@@ -169,6 +261,39 @@
     </div>
 
 }
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
+<script>
+    var expanded = false;
+
+    function showCheckboxes() {
+        var checkboxes = document.getElementById("checkboxes");
+        if (!expanded) {
+            checkboxes.style.display = "block";
+            expanded = true;
+        } else {
+            checkboxes.style.display = "none";
+            expanded = false;
+        }
     }
+
+    function AddLanguage(id) {
+        var checkbox = document.getElementById(id);
+        var option = document.getElementById("langoptions");
+        if (checkbox.checked == true) {
+            var text = option.innerText
+            if (text.trim() == "Select Languages") {
+                option.innerText = option.innerText.replace("Select Languages", "");
+            }
+            option.innerText += id + ";";
+        }
+        if (checkbox.checked == false) {
+            option.innerText = option.innerText.replace(id + ";", "");
+            var newtext = option.innerText
+            if (newtext.trim() == "") {
+                option.innerText = "Select Languages";
+            }
+        }
+    }
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

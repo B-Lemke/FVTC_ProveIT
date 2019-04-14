@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using MB.AgilePortfolio.BL;
 
 namespace MB.AgilePortfolio.MVCUI.ViewModels
@@ -21,8 +22,9 @@ namespace MB.AgilePortfolio.MVCUI.ViewModels
         public LanguageList Languages { get; set; }
         public ProjectLanguageList ProjectLanguages { get; set; }
         public ProjectLanguage ProjectLanguage { get; set; }
-        public string InputLanguages { get; set; }
         public HttpPostedFileBase Fileupload { get; set; }
+        public IList<string> SelectedLanguages { get; set; }
+        public IList<SelectListItem> AvailableLanguages { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime LastUpdated {get;set;}

@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = Model.User.FullName;
 }
-
 <div class="mb-5">
     <span class="h2">@Model.User.UserTypeDescription Profile </span> | <span class="h2 small"> @Html.ActionLink("Edit", "EditProfile", new { /* id = Model.PrimaryKey */ })</span>
 </div>
@@ -24,7 +23,7 @@
             <div>
                 @if (Model.User.ProfileImage != null)
                 {
-                    <img src="~/Assets/Images/UserProfiles/@Model.User.ProfileImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image" width="300px" class="rounded-circle" />
+                    <img src="~/@Model.User.ProfileImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image" width="300px" class="rounded-circle" />
                 }
                 else
                 {
@@ -64,33 +63,33 @@
                     <div class="col-md-4">
                         <div class="card mt-2">
                             <a href="~/Screenshot/EditProject/@item.Id">
-                                <img class="card-img-top project-image" src="@Url.Content("~/" + @item.Image)" alt="Card image cap">
-                                </a>
+                                <img class="card-img-top project-image" src="@Url.Content("~/" + @item.Image)" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Project Image">
+                            </a>
                             <div class="card-body" style="text-align:center">
                                 <a href="~/Screenshot/EditProject/@item.Id">
                                     <h5 class="card-title" style="width: 90%;text-align:left">@item.Name</h5>
-                                    </a>
-                                    <h6 class="card-subtitle mb-2 text-muted" style="text-align:left">
-                                        @if (item.Languages != null)
-                                        {
-                                            int badgeCount = 0;
+                                </a>
+                                <h6 class="card-subtitle mb-2 text-muted" style="text-align:left">
+                                    @if (item.Languages != null)
+                                    {
+                                        int badgeCount = 0;
 
-                                            foreach (var lang in item.Languages)
+                                        foreach (var lang in item.Languages)
+                                        {
+                                            if (badgeCount < 5)
                                             {
-                                                if (badgeCount < 5)
-                                                {
-                                                    <span class="badge badge-pill badge-@lang.BadgeName">@lang.Description</span>
-                                                    badgeCount++;
-                                                }
+                                                <span class="badge badge-pill badge-@lang.BadgeName">@lang.Description</span>
+                                                badgeCount++;
                                             }
                                         }
+                                    }
 
-                                    </h6>
-                                    <p class="card-text" style="text-align:left">@item.ShortDescription...</p>
-                                    <a href="~/Screenshot/EditProject/@item.Id">
-                                        <br />
-                                        View Project
-                                    </a>
+                                </h6>
+                                <p class="card-text" style="text-align:left">@item.ShortDescription...</p>
+                                <a href="~/Screenshot/EditProject/@item.Id">
+                                    <br />
+                                    View Project
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -133,7 +132,7 @@
             {
                 if (count < 5)
                 {
-                    if(item.PortfolioImage == null)
+                    if (item.PortfolioImage == null)
                     {
                         item.PortfolioImage = "Assets/Images/UserProfiles/Default.png";
                     }
@@ -141,7 +140,7 @@
                         <div class="card mt-2">
                             <a href="~/UserProfile/EditPortfolio/@item.Id">
                                 <div class="card-body" style="text-align:center">
-                                    <img class="card-img-top project-image" src="@Url.Content("~/" + @item.PortfolioImage)" alt="Card image cap">
+                                    <img class="card-img-top project-image" src="@Url.Content("~/" + @item.PortfolioImage)" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Portfolio Image">
                                     <h5 class="card-title" style="width: 90%;text-align:left">@item.Name</h5>
                                     <p class="card-text" style="text-align:left">@item.ShortDescription...</p>
                                     <br />
@@ -168,15 +167,15 @@
 </div>
 
 @*
-<div class="form-group mt-4" align="center">
-    <div class="form-group">
-        @Html.ActionLink("View Projects", "EditProjects", null, null, new { @class = "btn btn-primary" })
-        @Html.ValidationMessageFor(model => model.Project.Name, "", new { @class = "text-danger" })
-        @Html.ActionLink("View Portfolios", "EditPortfolios", null, null, new { @class = "btn btn-primary" })
-        @Html.ValidationMessageFor(model => model.Portfolio.Name, "", new { @class = "text-danger" })
+    <div class="form-group mt-4" align="center">
+        <div class="form-group">
+            @Html.ActionLink("View Projects", "EditProjects", null, null, new { @class = "btn btn-primary" })
+            @Html.ValidationMessageFor(model => model.Project.Name, "", new { @class = "text-danger" })
+            @Html.ActionLink("View Portfolios", "EditPortfolios", null, null, new { @class = "btn btn-primary" })
+            @Html.ValidationMessageFor(model => model.Portfolio.Name, "", new { @class = "text-danger" })
+        </div>
+
+
     </div>
-
-
-</div>
-    *@
+*@
 

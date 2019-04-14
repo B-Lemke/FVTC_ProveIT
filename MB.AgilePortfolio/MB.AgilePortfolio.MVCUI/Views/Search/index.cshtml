@@ -12,58 +12,114 @@
 @Html.AntiForgeryToken()
 @using (Html.BeginForm("Index", "Search", FormMethod.Get))
 {
-    //the following are search options
-    @Html.TextBox("search")<input type="submit" name="submit" value="Search" /><br />
+<body onload = "load()">
+    @Html.DropDownList("search", new SelectList(Model.Languages, "Id", "Description", Model.Language), null, new { @id = "ddlLanguages", @class = "form-control", style = "display:none" })
+    @Html.TextBox("search", null, new { @id = "tbxsearch", style = "display:none" })<input type="submit" name="submit" value="Search" id="inptsearch" /><br />
     <b> Search By: </b>
-    @Html.RadioButton("option", "Language") <text> Language </text>
-    @Html.RadioButton("option", "Project")<text> Project </text>
-    @Html.RadioButton("option", "Portfolio")<text> Portfolio </text>
-    @Html.RadioButton("option", "Profile")<text> Profile </text>
+    <br />
+    @Html.RadioButton("option", "Project", true, new { id = "rdoProject", onchange = "showlanguages()" })<text> Project </text><br />
+    @Html.RadioButton("option", "Portfolio", false, new { id = "rdoPortfolio", onchange = "showlanguages()" })<text> Portfolio </text><br />
+    @Html.RadioButton("option", "Profile", false, new { id = "rdoProfile", onchange = "showlanguages()" })<text> Profile </text><br />
+    @Html.RadioButton("option", "Language", false, new { id = "rdoLanguage", onchange = "showlanguages()" }) <text> Language </text><br />
 
-    if (ViewBag.ReturnObject == "Projects")
+    @if (ViewBag.ReturnObject == "Projects")
     {
-        <hr />
-        <h4 align="center">Projects</h4>
-        <hr />
-        <div class="form-horizontal">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <hr />
+    <h4 align="center">Projects</h4>
+    <hr />
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-            @if (Model.Projects.Count < 1)
+        @if (Model.Projects.Count < 1)
+        {
+            <p style="font-style:italic;text-align:center;">@ViewBag.ErrorMessage</p>
+
+        }
+        else
+        {
+            <div class="container-fluid mt-4">
+                <div class="row">
+                    @foreach (var prj in Model.Projects.OrderBy(i => i.Name))
+                    {
+                        <div class="col-md-4">
+                            <div class="card mt-2">
+                                <a href="~/User/@prj.CreatorUserName/Projects/@prj.Name" class="card-link" style="text-align:center">
+                                    <img class="card-img-top project-image" src="@Url.Content("~/" + prj.Image)" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Project Image">
+                                    <div class="card-body" style="text-align:center">
+
+                                        <h5 class="card-title" style="width: 90%;text-align:left">@prj.Name</h5>
+                                        <h6 class="card-subtitle mb-2 text-muted" style="text-align:left">
+                                            @if (prj.Languages != null)
+                                            {
+                                                int badgeCount = 0;
+
+                                                foreach (var lang in prj.Languages)
+                                                {
+                                                    if (badgeCount < 5)
+                                                    {
+                                                        <span class="badge badge-pill badge-@lang.BadgeName">@lang.Description</span>
+                                                        badgeCount++;
+                                                    }
+                                                }
+                                            }
+                                        </h6>
+                                        <p class="card-text" style="text-align:left">@prj.ShortDescription...</p>
+
+
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+    }
+    else if (ViewBag.ReturnObject == "Portfolios")
+    {
+    // Display list of Portfolios results
+    <div class="form-horizontal">
+        <hr />
+        <h4 align="center">Portfolios</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @if (Model.Portfolios.Count < 1)
             {
                 <p style="font-style:italic;text-align:center;">@ViewBag.ErrorMessage</p>
-
             }
             else
             {
                 <div class="container-fluid mt-4">
                     <div class="row">
-                        @foreach (var prj in Model.Projects.OrderBy(i => i.Name))
+                        @foreach (var portfolio in Model.Portfolios.OrderBy(i => i.Name))
                         {
                             <div class="col-md-4">
                                 <div class="card mt-2">
-                                    <a href="~/User/@prj.CreatorUserName/Projects/@prj.Name" class="card-link" style="text-align:center">
-                                        <img class="card-img-top project-image" src="@Url.Content("~/" + prj.Image)"  onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Project Image">
+                                    <a href="~/UserProfile/PublicPortfolio/@portfolio.Id" class="card-link" style="text-align:center">
+                                        <img class="card-img-top project-image" src="@Url.Content("~/" + portfolio.PortfolioImage)" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Portfolio Image">
                                         <div class="card-body" style="text-align:center">
-
-                                            <h5 class="card-title" style="width: 90%;text-align:left">@prj.Name</h5>
+                                            <h5 class="card-title" style="width: 90%;text-align:left">@portfolio.Name</h5>
                                             <h6 class="card-subtitle mb-2 text-muted" style="text-align:left">
-                                                @if (prj.Languages != null)
+                                                @foreach (var project in portfolio.Projects)
                                                 {
-                                                    int badgeCount = 0;
-
-                                                    foreach (var lang in prj.Languages)
+                                                    if (project.Languages != null)
                                                     {
-                                                        if (badgeCount < 5)
+                                                        int badgeCount = 0;
+
+                                                        foreach (var lang in project.Languages)
                                                         {
-                                                            <span class="badge badge-pill badge-@lang.BadgeName">@lang.Description</span>
-                                                            badgeCount++;
+                                                            if (badgeCount < 5)
+                                                            {
+                                                                <span class="badge badge-pill badge-@lang.BadgeName">@lang.Description</span>
+                                                                badgeCount++;
+                                                            }
                                                         }
                                                     }
                                                 }
                                             </h6>
-                                            <p class="card-text" style="text-align:left">@prj.ShortDescription...</p>
-
-
+                                            <p class="card-text" style="text-align:left">@portfolio.Description...</p>
                                         </div>
                                     </a>
                                 </div>
@@ -73,105 +129,51 @@
                 </div>
             }
         </div>
-    }
-    else if (ViewBag.ReturnObject == "Portfolios")
-    {
-        // Display list of Portfolios results
-        <div class="form-horizontal">
-            <hr />
-            <h4 align="center">Portfolios</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @if (Model.Portfolios.Count < 1)
-                {
-                    <p style="font-style:italic;text-align:center;">@ViewBag.ErrorMessage</p>
-                }
-                else
-                {
-                    <div class="container-fluid mt-4">
-                        <div class="row">
-                            @foreach (var portfolio in Model.Portfolios.OrderBy(i => i.Name))
-                            {
-                                <div class="col-md-4">
-                                    <div class="card mt-2">
-                                        <a href="~/UserProfile/PublicPortfolio/@portfolio.Id" class="card-link" style="text-align:center">
-                                            <img class="card-img-top project-image" src="@Url.Content("~/" + portfolio.PortfolioImage)"  onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Portfolio Image">
-                                            <div class="card-body" style="text-align:center">
-                                                <h5 class="card-title" style="width: 90%;text-align:left">@portfolio.Name</h5>
-                                                <h6 class="card-subtitle mb-2 text-muted" style="text-align:left">
-                                                    @foreach (var project in portfolio.Projects)
-                                                    {
-                                                        if (project.Languages != null)
-                                                        {
-                                                            int badgeCount = 0;
-
-                                                            foreach (var lang in project.Languages)
-                                                            {
-                                                                if (badgeCount < 5)
-                                                                {
-                                                                    <span class="badge badge-pill badge-@lang.BadgeName">@lang.Description</span>
-                                                                    badgeCount++;
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                </h6>
-                                                <p class="card-text" style="text-align:left">@portfolio.Description...</p>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                }
+        @*
+            <div>
+                <a href="~/User/@Model.User.Username">
+                    <p>Back to Profile</p>
+                </a>
             </div>
-            @*
-                <div>
-                    <a href="~/User/@Model.User.Username">
-                        <p>Back to Profile</p>
-                    </a>
-                </div>
-            *@
-        </div>
+        *@
+    </div>
     }
     else if (ViewBag.ReturnObject == "Profiles")
     {
-        // Display list of Profile results
-        <div class="form-horizontal">
-            <hr />
-            <h4 align="center">Profiles</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @if (Model.Users.Count < 1)
-                {
-                    <p style="font-style:italic;text-align:center;">@ViewBag.ErrorMessage</p>
-                }
-                else
-                {
-                    <div class="container-fluid mt-4">
-                        <div class="row">
-                            @foreach (var user in Model.Users.OrderBy(i => i.Username))
-                            {
-                                <div class="col-md-4">
-                                    <div class="card mt-2">
-                                        <a href="~/User/@user.Username" class="card-link" style="text-align:center">
-                                            <img class="card-img-top project-image" src="@Url.Content("~/" + user.ProfileImage)" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image">
-                                            <div class="card-body" style="text-align:center">
-                                                <h5 class="card-title" style="width: 90%;text-align:left">@user.Username</h5>
-                                                <p class="card-text" style="text-align:left">@user.FullName</p>
-                                            </div>
-                                        </a>
-                                    </div>
+    // Display list of Profile results
+    <div class="form-horizontal">
+        <hr />
+        <h4 align="center">Profiles</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @if (Model.Users.Count < 1)
+            {
+                <p style="font-style:italic;text-align:center;">@ViewBag.ErrorMessage</p>
+            }
+            else
+            {
+                <div class="container-fluid mt-4">
+                    <div class="row">
+                        @foreach (var user in Model.Users.OrderBy(i => i.Username))
+                        {
+                            <div class="col-md-4">
+                                <div class="card mt-2">
+                                    <a href="~/User/@user.Username" class="card-link" style="text-align:center">
+                                        <img class="card-img-top project-image" src="@Url.Content("~/" + user.ProfileImage)" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image">
+                                        <div class="card-body" style="text-align:center">
+                                            <h5 class="card-title" style="width: 90%;text-align:left">@user.Username</h5>
+                                            <p class="card-text" style="text-align:left">@user.FullName</p>
+                                        </div>
+                                    </a>
                                 </div>
-                            }
-                        </div>
+                            </div>
+                        }
                     </div>
-                }
-            </div>
+                </div>
+            }
         </div>
+    </div>
     }
 
     @*
@@ -181,7 +183,43 @@
             </a>
         </div>
     *@
+</body>
 }
+<script>
+    function showlanguages() {
+        var rdolang = document.getElementById("rdoLanguage");
+        var search = document.getElementById("tbxsearch");
+        var ddlLang = document.getElementById("ddlLanguages");
+        if (rdolang.checked == true) {
+            search.style.display = "none";
+            if (ddlLang.style.display == "none") {
+                ddlLang.style.display = "inline";
+            }
+        }
+        else {
+            search.style.display = "inline";
+            search.value = "";
+            ddlLang.style.display = "none";
+        }
+    }
+    function load() {
+        var rdolang = document.getElementById("rdoLanguage");
+        var search = document.getElementById("tbxsearch");
+        var ddlLang = document.getElementById("ddlLanguages");
+        if (rdolang.checked == true) {
+            search.style.display = "none";
+            if (ddlLang.style.display == "none") {
+                ddlLang.style.display = "inline";
+            }
+        }
+        else {
+            search.style.display = "inline";
+            search.value = "";
+            ddlLang.style.display = "none";
+        }
+    }
+
+</script>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

@@ -76,8 +76,9 @@ namespace MB.AgilePortfolio.BL
                     if (FilePath == string.Empty || FilePath == null)
                     {
                         //Set empty filepath to Default image
-                        SavePath = "Assets/Images/UserProfile";
+                        SavePath = "Assets/Images/UserProfiles";
                         fileName = DefaultFileName;
+                        FilePath = SavePath + "/" + fileName;
                     }
 
                     //Null file upload check
@@ -168,7 +169,7 @@ namespace MB.AgilePortfolio.BL
                     // Set Object type to Projects for filepath strings
                     ObjectType = "Profiles";
 
-                    //Default Image FilePath for Project
+                    //Default Image FilePath for profile
                     string DefaultFilePath = "Assets/Images/" + UserName;
                     string DefaultFileName = "Default.png";
                     string absolutepath = "";
@@ -176,8 +177,9 @@ namespace MB.AgilePortfolio.BL
                     if (FilePath == string.Empty || FilePath == null)
                     {
                         //Set empty filepath to Default image
-                        SavePath = "Assets/Images/UserProfile";
+                        SavePath = "Assets/Images/UserProfiles";
                         fileName = DefaultFileName;
+                        FilePath = SavePath + "/" + fileName;
                     }
 
                     //Null file upload check
@@ -276,8 +278,9 @@ namespace MB.AgilePortfolio.BL
                     if (FilePath == string.Empty || FilePath == null)
                     {
                         //Set empty filepath to Default image
-                        SavePath = "Assets/Images/UserProfile";
+                        SavePath = "Assets/Images/UserProfiles";
                         fileName = DefaultFileName;
+                        FilePath = SavePath + "/" + fileName;
                     }
 
                     //Null file upload check

@@ -365,27 +365,57 @@
             <div class="multiselect">
                 <div class="selectBox" onclick="showCheckboxes()">
                     <select>
-                        <option>Select an option</option>
+                        <option id="langoptions">
+                            @{
+                                string listedLangs = "";
+                                if (Model.SelectedLanguages.Count < 1)
+                                {
+                                    listedLangs = "Select Languages";
+                                }
+                                else
+                                {
+                                    foreach (var lang in Model.SelectedLanguages)
+                                    {
+                                        listedLangs += lang;
+                                    }
+                                }
+                            }
+                            @listedLangs
+                        </option>
                     </select>
                     <div class="overSelect"></div>
                 </div>
                 <div id="checkboxes">
                     @foreach (var lang in Model.AvailableLanguages)
                     {
-
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox"
-                                       name="SelectedLanguages"
-                                       value="@lang.Value" /> @lang.Text
-                                </label>
-                            </div>
-                        }
+                        if (Model.SelectedLanguages.Contains(lang.Text + ";"))
+                        {
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"
+                                           id="@lang.Text" onclick="AddLanguage('@lang.Text')"
+                                           name="SelectedLanguages"
+                                           checked="checked"
+                                           value="@lang.Value" /> @lang.Text
+                                    </label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox"
+                                               id="@lang.Text" onclick="AddLanguage('@lang.Text')"
+                                               name="SelectedLanguages"
+                                               value="@lang.Value" /> @lang.Text
+                                        </label>
+                                    </div>
+                                }
+                            }
                 </div>
             </div>
         </div>
     </div>
-
     <div class="form-group">
         <div class="col-md-10">
             @Html.HiddenFor(model => model.Project.UserId, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
@@ -482,6 +512,25 @@
         } else {
             checkboxes.style.display = "none";
             expanded = false;
+        }
+    }
+
+    function AddLanguage(id) {
+        var checkbox = document.getElementById(id);
+        var option = document.getElementById("langoptions");
+        if (checkbox.checked == true) {
+            var text = option.innerText
+            if (text.trim() == "Select Languages") {
+                option.innerText = option.innerText.replace("Select Languages", "");
+            }
+            option.innerText += id + ";";
+        }
+        if (checkbox.checked == false) {
+            option.innerText = option.innerText.replace(id + ";", "");
+            var newtext = option.innerText 
+            if (newtext.trim()== "") {
+                option.innerText = "Select Languages";
+            }
         }
     }
 </script>
