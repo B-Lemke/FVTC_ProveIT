@@ -86,7 +86,7 @@ else
                             }
                             <div class="col-md-4">
                                 <div class="card mt-2">
-                                    <a href="~/UserProfile/PublicProject/@item.Id" class="card-link" style="text-align:center">
+                                    <a href="~/User/@Model.User.Username/Projects/@item.Name" class="card-link" style="text-align:center">
                                         <img class="card-img-top project-image" src="@Url.Content("~/" + @item.Image)" alt="Card image cap">
                                     </a>
                                     <div class="card-body" style="text-align:center">
@@ -108,8 +108,8 @@ else
                                                 }
                                             }
                                         </h6>
-                                        <p class="card-text" style="text-align:left">@item.ShortDescription...</p>
-                                        <a href="~/UserProfile/PublicProject/@item.Id" class="card-link" style="text-align:center">
+                                        <p class="card-text" style="text-align:left">@item.ShortDescription...22</p>
+                                        <a href="~/User/@Model.User.Username/Projects/@item.Name" class="card-link" style="text-align:center">
                                             <br />
                                             View Project
                                         </a>
@@ -121,7 +121,7 @@ else
                     }
                     <div class="col-md-4 mt-2">
                         <div class="card">
-                            <a href="~/UserProfile/PublicProjects/@Model.User.Id" class="card-link">
+                            <a href="~/User/@Model.User.Username/Projects" class="card-link">
                                 <div class="card-body">
                                     <h5 class="card-title" style="width: 90%;">There's Even More!</h5>
                                     View All of @Model.User.FirstName's Projects
@@ -161,7 +161,7 @@ else
                             }
                             <div class="col-md-4">
                                 <div class="card mt-2">
-                                    <a href="~/UserProfile/PublicPortfolio/@item.Id" class="card-link" style="text-align:center">
+                                    <a href="~/User/@Model.User.Username/Portfolios/@item.Name" class="card-link" style="text-align:center">
                                         <div class="card-body" style="text-align:center">
                                             <img class="card-img-top project-image" src="@Url.Content("~/" + @item.PortfolioImage)" alt="Card image cap">
                                             <h5 class="card-title" style="width: 90%;text-align:left">@item.Name</h5>
@@ -177,7 +177,7 @@ else
                     }
                     <div class="col-md-4">
                         <div class="card mt-2">
-                            <a href="~/UserProfile/PublicPortfolios/@Model.User.Id" class="card-link">
+                            <a href="~/User/@Model.User.Username/Portfolios" class="card-link">
                                 <div class="card-body">
                                     <h5 class="card-title" style="width: 90%;">But Wait... There's More</h5>
                                     View All of @Model.User.FirstName's Portfolios

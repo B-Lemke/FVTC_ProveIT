@@ -33,7 +33,30 @@ namespace MB.AgilePortfolio.MVCUI
                 defaults: new { controller = "UserProfile", action = "PublicProfile", username = UrlParameter.Optional }
             );
 
+            routes.MapRoute(
+                name: "PublicProjects",
+                url: "User/{username}/projects",
+                defaults: new { controller = "UserProfile", action = "PublicProjects", username = UrlParameter.Optional }
+            );
 
+
+            routes.MapRoute(
+                name: "PublicPortfolios",
+                url: "User/{username}/portfolios",
+                defaults: new { controller = "UserProfile", action = "PublicPortfolios", username = UrlParameter.Optional}
+            );
+
+            routes.MapRoute(
+                name: "PublicProject",
+                url: "User/{username}/projects/{projectName}",
+                defaults: new { controller = "UserProfile", action = "PublicProject", username = UrlParameter.Optional, projectName = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "PublicPortfolio",
+                url: "User/{username}/portfolios/{portfolioName}",
+                defaults: new { controller = "UserProfile", action = "PublicPortfolio", username = UrlParameter.Optional, portfolioName = UrlParameter.Optional }
+            );
 
             routes.MapRoute(
                 name: "ResetPassword",

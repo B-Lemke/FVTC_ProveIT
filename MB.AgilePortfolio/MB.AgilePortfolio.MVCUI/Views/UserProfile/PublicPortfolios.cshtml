@@ -29,7 +29,7 @@
                         {
                             <div class="col-md-4">
                                 <div class="card mt-2">
-                                    <a href="~/UserProfile/PublicPortfolio/@portfolio.Id" class="card-link" style="text-align:center">
+                                    <a href="~/User/@Model.User.Username/Portfolios/@portfolio.Name" class="card-link" style="text-align:center">
                                         <img class="card-img-top project-image" src="@Url.Content("~/" + portfolio.PortfolioImage)" alt="Card image cap">
                                         <div class="card-body" style="text-align:center">
                                             <h5 class="card-title" style="width: 90%;text-align:left">@portfolio.Name</h5>

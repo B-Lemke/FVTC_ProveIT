@@ -167,9 +167,16 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             }
         }
         // GET: UserProfile/PublicProject
-        public ActionResult PublicProject(Guid? id)
+        public ActionResult PublicProject(string username, string projectName)
         {
-            Guid ID = id.GetValueOrDefault();
+            User user = new User();
+            Guid userId = user.CheckIfUsernameExists(username);
+
+            ProjectList pl = new ProjectList();
+            pl.LoadbyUserID(userId);
+
+
+
             ScreenshotProjects sp = new ScreenshotProjects()
             {
                 Project = new Project(),
@@ -179,11 +186,14 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 Status = new Status()
             };
 
+            sp.Project = pl.FirstOrDefault(p => p.Name == projectName);
+            sp.User.LoadById(userId);
 
-            sp.Project.LoadById(ID);
-            sp.User.LoadById(sp.Project.UserId);
+            if(sp.Project != null)
+            {
+                sp.ScreenshotList.LoadbyProjectID(sp.Project.Id);
+            }
 
-            sp.ScreenshotList.LoadbyProjectID(ID);
 
             return View(sp);
 
@@ -289,9 +299,11 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         }
 
         // GET: UserProfile/PublicProjects
-        public ActionResult PublicProjects(Guid? id)
+        public ActionResult PublicProjects(string username)
         {
-            Guid ID = id.GetValueOrDefault();
+            User user = new User();
+            Guid ID = user.CheckIfUsernameExists(username);
+
             UserProfile up = new UserProfile()
             {
                 Projects = new ProjectList(),
@@ -322,9 +334,11 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         }
 
         // GET: UserProfile/PublicPortfolios
-        public ActionResult PublicPortfolios(Guid? id)
+        public ActionResult PublicPortfolios(string username)
         {
-            Guid ID = id.GetValueOrDefault();
+            User user = new User();
+            Guid ID = user.CheckIfUsernameExists(username);
+
             UserProfile up = new UserProfile()
             {
                 Portfolio = new Portfolio(),
@@ -355,9 +369,15 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         }
 
         // GET: UserProfile/PublicPortfolio
-        public ActionResult PublicPortfolio(Guid? id)
+        public ActionResult PublicPortfolio(string username, string portfolioName)
         {
-            Guid ID = id.GetValueOrDefault();
+            User user = new User();
+            Guid userId = user.CheckIfUsernameExists(username);
+
+            PortfolioList pl = new PortfolioList();
+            pl.LoadbyUserID(userId);
+
+
             UserProfile up = new UserProfile()
             {
                 Portfolio = new Portfolio(),
@@ -366,11 +386,13 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 Privacies = new PrivacyList(),
                 User = new User()
             };
-            if (ID != Guid.Empty)
+
+            up.Portfolio = pl.FirstOrDefault(p => p.Name == portfolioName);
+            
+            if (up.Portfolio.Id != Guid.Empty)
             {
-                up.Portfolio.LoadById(ID);
-                up.User.LoadById(up.Portfolio.UserId);
-                up.Projects.LoadbyPortfolioID(ID);
+                up.User.LoadById(userId);
+                up.Projects.LoadbyPortfolioID(up.Portfolio.Id);
             }
             else
             {
@@ -1082,8 +1104,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 return View(up);
             }
         }
-
-
 
 
     }

@@ -99,22 +99,22 @@ else
                             <a href="~/User/@Model.User.Username">
                                 @if (Model.User.ProfileImage != null)
                                 {
-                                        <img src="~/Assets/Images/UserProfiles/@Model.User.ProfileImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image" width="100%" class="rounded" />
+                                    <img src="~/Assets/Images/UserProfiles/@Model.User.ProfileImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image" width="100%" class="rounded" />
                                 }
                                 else
                                 {
                                     <img src="~/Assets/Images/UserProfiles/Default.png" alt="Default Profile Image" width="100%" class="rounded-circle" />
                                 }
-                                </a>
-                                <h4 class="font-weight-normal">@Model.User.FullName</h4>
-                                <h4 class="font-weight-light">@Model.User.Email</h4>
-                                <hr />
-                                <a href="~/UserProfile/PublicPortfolios/@Model.Portfolio.UserId">
-                                    <p>View @Model.User.Username's other portfolios</p>
-                                </a>
-                                <a href="~/UserProfile/PublicProjects/@Model.Portfolio.UserId">
-                                    <p>View @Model.User.Username's projects</p>
-                                </a>
+                            </a>
+                            <h4 class="font-weight-normal">@Model.User.FullName</h4>
+                            <h4 class="font-weight-light">@Model.User.Email</h4>
+                            <hr />
+                            <a href="~/User/@Model.User.Username/Projects">
+                                <p>View @Model.User.Username's other projects</p>
+                            </a>
+                            <a href="~/User/@Model.User.Username/Portfolios">
+                                <p>View @Model.User.Username's portfolios</p>
+                            </a>
 
                         </div>
                     </div>
