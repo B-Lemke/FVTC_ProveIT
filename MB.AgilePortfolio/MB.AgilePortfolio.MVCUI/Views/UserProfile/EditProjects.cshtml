@@ -30,7 +30,7 @@
                         <div class="col-md-4">
                             <div class="card mt-2">
                                 <a href="~/Screenshot/EditProject/@prj.Id" class="card-link" style="text-align:center">
-                                    <img class="card-img-top project-image" src="@Url.Content("~/" + prj.Image)" alt="Card image cap">
+                                    <img class="card-img-top project-image" src="@Url.Content("~/" + prj.Image)"onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt=@prj.Name>
                                     <div class="card-body" style="text-align:center">
 
                                         <h5 class="card-title" style="width: 90%;text-align:left">@prj.Name</h5>

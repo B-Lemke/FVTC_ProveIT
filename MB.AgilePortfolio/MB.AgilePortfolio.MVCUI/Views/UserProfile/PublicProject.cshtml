@@ -78,7 +78,7 @@
                         <a href="~/User/@Model.User.Username">
                             @if (Model.User.ProfileImage != null)
                             {
-                                <img src="~/Assets/Images/UserProfiles/@Model.User.ProfileImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image" width="100%" class="rounded" />
+                                <img src="~/@Model.User.ProfileImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image" width="100%" class="rounded" />
                             }
                             else
                             {
@@ -181,7 +181,7 @@
                                                     @*<p>@Model.ScreenshotList[y].Name</p>*@
                                                     string imgpath = "~/" + Model.ScreenshotList[y].FilePath;
                                                     @*<a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y].Id})'>*@
-                                                    <img src='@Url.Content(@imgpath)' />
+                                                    <img src='@Url.Content(@imgpath)' onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Screenshot"/>
                                                     @*</a>*@
                                                     imgleft--;
                                                 }
@@ -195,7 +195,7 @@
                                                     @*<p>@Model.ScreenshotList[y].Name</p>*@
                                                     string imgpath = "~/" + Model.ScreenshotList[y].FilePath;
                                                     @*<a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.ScreenshotList[y].Id})'>*@
-                                                    <img src='@Url.Content(@imgpath)' />
+                                                    <img src='@Url.Content(@imgpath)' onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Screenshot"/>
                                                     @*</a>*@
                                                     imgleft--;
                                                 }
@@ -212,7 +212,7 @@
                                                     @*<p>@Model.Projects[y + ssi * ImagesPerTransition].Name</p>*@
                                                     string imgpath = "~/" + Model.ScreenshotList[y + ssi * ImagesPerTransition].FilePath;
                                                     @*<a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.ScreenshotList[y + ssi * ImagesPerTransition].Id})'>*@
-                                                    <img src='@Url.Content(@imgpath)' />
+                                                    <img src='@Url.Content(@imgpath)' onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Screenshot"/>
                                                     @*</a>*@
 
                                                     imgleft--;
@@ -227,7 +227,7 @@
                                                     @*<p>@Model.Projects[y + ssi * ImagesPerTransition].Name</p>*@
                                                     string imgpath = "~/" + Model.ScreenshotList[y + ssi * ImagesPerTransition].FilePath;
                                                     @*<a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y + ssi * ImagesPerTransition].Id})'>*@
-                                                    <img src='@Url.Content(@imgpath)' />
+                                                    <img src='@Url.Content(@imgpath)' onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Screenshot"/>
                                                     @*</a>*@
                                                     imgleft--;
                                                 }

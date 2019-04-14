@@ -38,10 +38,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 // THIS MAY CHANGE IF ADVANCED SEARCH OPTIONS ARE ADDED (IE: search portfolios by languages used [languages in all projects in a Portfolio])
                 ViewBag.ReturnObject = "Projects";
 
-                Guid langid = Guid.Parse(search);
-                Language language = new Language();
-                language.LoadById(langid);
-                search = language.Description;
                 //Load Projects by input search string exact matches
                 pl.projectLanguages.LoadByLanguageName(search);
                 if (pl.projectLanguages.Count > 0)

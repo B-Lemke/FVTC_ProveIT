@@ -48,7 +48,7 @@ else
                     <div>
                         @if (Model.User.ProfileImage != null)
                         {
-                            <img src="~/Assets/Images/UserProfiles/@Model.User.ProfileImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image" width="300px" class="rounded-circle" />
+                            <img src="~/@Model.User.ProfileImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image" width="300px" class="rounded-circle" />
                         }
                         else
                         {
@@ -88,7 +88,7 @@ else
                             <div class="col-md-4">
                                 <div class="card mt-2">
                                     <a href="~/User/@Model.User.Username/Projects/@item.Name" class="card-link" style="text-align:center">
-                                        <img class="card-img-top project-image" src="@Url.Content("~/" + @item.Image)" alt="Card image cap">
+                                        <img class="card-img-top project-image" src="@Url.Content("~/" + @item.Image)" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Project Image">
                                     </a>
                                     <div class="card-body" style="text-align:center">
                                         <a href="~/User/@Model.User.Username/Projects/@item.Name" class="card-link" style="text-align:center">
@@ -109,7 +109,7 @@ else
                                                 }
                                             }
                                         </h6>
-                                        <p class="card-text" style="text-align:left">@item.ShortDescription...22</p>
+                                        <p class="card-text" style="text-align:left">@item.ShortDescription</p>
                                         <a href="~/User/@Model.User.Username/Projects/@item.Name" class="card-link" style="text-align:center">
                                             <br />
                                             View Project
@@ -164,9 +164,9 @@ else
                                 <div class="card mt-2">
                                     <a href="~/User/@Model.User.Username/Portfolios/@item.Name" class="card-link" style="text-align:center">
                                         <div class="card-body" style="text-align:center">
-                                            <img class="card-img-top project-image" src="@Url.Content("~/" + @item.PortfolioImage)" alt="Card image cap">
+                                            <img class="card-img-top project-image" src="@Url.Content("~/" + @item.PortfolioImage)" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Portfolio Image">
                                             <h5 class="card-title" style="width: 90%;text-align:left">@item.Name</h5>
-                                            <p class="card-text" style="text-align:left">@item.ShortDescription...</p>
+                                            <p class="card-text" style="text-align:left">@item.ShortDescription</p>
                                             <br />
                                             View Portfolio
                                         </div>
