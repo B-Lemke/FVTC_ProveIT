@@ -7,23 +7,22 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete Project</h2>
-
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h2 style="text-align:center; color:red;">Project has been Deleted</h2>
+
+    <div class="form-horizontal border-dark">
+        <h2 class="text-center text-secondary m-5" style="font-size: 3em"> <i class="fa fa-minus-circle" aria-hidden="true"></i> Project has been Deleted <i class="fa fa-minus-circle" aria-hidden="true"></i></h2>
 
     </div>
 
 }
 
 
-<div>
-    @Html.ActionLink("Back to Projects", "EditProjects")
+<div class="text-center">
+    @Html.ActionLink("Back to Projects", "EditProjects", null, new { @class = "btn btn-secondary border-dark" })
 </div>
 
 <script>

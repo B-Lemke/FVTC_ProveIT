@@ -7,5 +7,6 @@
     [LastName] VARCHAR(255) NOT NULL, 
     [ProfileImage] VARCHAR(255) NULL, 
     [UserTypeId] UNIQUEIDENTIFIER NOT NULL, 
-    [Username] VARCHAR(50) NOT NULL
+    [Username] VARCHAR(50) NOT NULL, 
+    [Bio] TEXT NULL
 )
