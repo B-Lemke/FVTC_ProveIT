@@ -21,6 +21,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         public string FullName;
         public string ProfileImage;
         public string Username;
+        public string Bio;
         public string UserTypesDescription;
         public Guid UserTypesID;
         [DataType(DataType.Date)]
@@ -1012,6 +1013,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 UserTypesDescription = up.User.UserTypeDescription;
                 ProfileImage = up.User.ProfileImage;
                 Username = up.User.Username;
+                Bio = up.User.Bio;
                 User user = new User();
                 user.LoadById(userin.Id);
                 up.User = user;
@@ -1022,7 +1024,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 up.User.LastName = LastName;
                 up.User.UserTypeId = UserTypesID;
                 up.User.UserTypeDescription = UserTypesDescription;
-
+                up.User.Bio = Bio;
 
                 string currentemail = userin.Email;
                 string currentUsername = userin.Username;

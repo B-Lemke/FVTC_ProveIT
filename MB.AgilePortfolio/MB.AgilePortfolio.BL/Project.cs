@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace MB.AgilePortfolio.BL
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        [DisplayName("Link")]
         public string Location { get; set; }
         public string Filepath { get; set; }
         [DisplayName("Privacy")]
@@ -20,6 +22,7 @@ namespace MB.AgilePortfolio.BL
         public string PrivacyDescription { get; set; }
         public string Image { get; set; }
         public string ShortDescription => Description == null ? string.Empty : new string(Description.Take(100).ToArray());
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
         [DisplayName("User")]
         public Guid UserId { get; set; }
@@ -27,14 +30,18 @@ namespace MB.AgilePortfolio.BL
         public string UserEmail { get; set; }
         [DisplayName("Date Created")]
         public DateTime DateCreated { get; set; }
+        [DataType(DataType.MultilineText)]
         public string Purpose { get; set; }
         public string Environment { get; set; }
+        [DataType(DataType.MultilineText)]
         public string Challenges { get; set; }
+        [DataType(DataType.MultilineText)]
         [DisplayName("Future Plans")]
         public string FuturePlans { get; set; }
         public string Collaborators { get; set; }
         [DisplayName("Last Updated")]
         public DateTime LastUpdated { get; set; }
+        [DataType(DataType.MultilineText)]
         [DisplayName("Software Used")]
         public string SoftwareUsed { get; set; }
         [DisplayName("Status")]

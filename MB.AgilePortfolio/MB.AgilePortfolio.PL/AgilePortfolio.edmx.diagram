@@ -12,10 +12,10 @@
         <EntityTypeShape EntityType="brouchouddbModel.tblProject" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="brouchouddbModel.tblProjectLanguage" Width="1.5" PointX="5.375" PointY="5.5" IsExpanded="true" />
         <EntityTypeShape EntityType="brouchouddbModel.tblScreenshot" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="brouchouddbModel.tblUser" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="brouchouddbModel.tblUserType" Width="1.5" PointX="7.375" PointY="3.75" />
         <EntityTypeShape EntityType="brouchouddbModel.tblStatus" Width="1.5" PointX="7.5" PointY="6" />
         <EntityTypeShape EntityType="brouchouddbModel.tblForgotPassword" Width="1.5" PointX="3.375" PointY="8.75" />
+        <EntityTypeShape EntityType="brouchouddbModel.tblUser" Width="1.5" PointX="0.75" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

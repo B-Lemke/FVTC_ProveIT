@@ -198,7 +198,7 @@ else
         <body>
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-2 border" id="sidebar">
+                    <div class="col-lg-2 border" id="sidebar">
                         <h2 class="mt-2">@Model.User.Username</h2>
                         <div>
                             <div class="text-center">
@@ -215,6 +215,14 @@ else
                             </div>
                             <h4 class="font-weight-normal mt-2">@Model.User.FullName</h4>
                             <h4 class="font-weight-light">@Model.User.Email</h4>
+                            @if (Model.User.ShortBio != String.Empty)
+                            {
+                                <hr />
+                                <p class="font-italic font-weight-light">
+                                    @Model.User.ShortBio@if (Model.User.ShortBio.Length == 100)
+                                    {<span>...</span>}
+                                </p>
+                            }
                             <hr />
                             <a href="~/User/@Model.User.Username/Projects">
                                 <p>View @Model.User.Username's other projects</p>
@@ -232,15 +240,15 @@ else
                         <h2 class="text-left mt-2">@Model.Project.Name <span class="badge badge-primary status_badge status_badge_@Model.Project.StatusDescription.ToLower().Replace(" ", "_")">@Model.Project.StatusDescription </span></h2>
                         @if (Model.Project.Languages != null)
                         {
-                            int badgeCount = 0;
+            
 
                             foreach (var lang in Model.Project.Languages)
                             {
-                                if (badgeCount < 5)
-                                {
+
+                                
                                     <span class="badge badge-pill badge-@lang.BadgeName">@lang.Description</span>
-                                    badgeCount++;
-                                }
+
+                                
                             }
                         }
 

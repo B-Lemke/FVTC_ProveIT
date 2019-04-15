@@ -10,7 +10,15 @@
         ViewBag.Title = "Profile Not Found";
     }
 }
+<style>
+    .email {
+        word-break: break-all;
+    }
 
+    .bio-text{
+        font-size: 1.6em;
+    }
+</style>
 
 @if (Model.User.Id == Guid.Empty)
 {
@@ -38,23 +46,23 @@ else
     </div>
 
     <div>
-        <div class=" container">
+        <div class=" container jumbotron">
             <div class="row">
 
                 <div class="col-md-9">
-                    <h1 class="display-5">@Model.User.FullName</h1>
+                    <h1 class="display-5">@Model.User.FullName <span class="small badge badge-secondary">@Model.User.UserTypeDescription</span></h1>
                     <hr />
-                    <h2 class="display-6">@Model.User.Email</h2>
+                    <h2 class="display-6 email">@Model.User.Email</h2>
                     <dl class="dl-horizontal"></dl>
                     <br />
 
-                    <span class="">@Model.User.UserTypeDescription</span>
+
                 </div>
                 <div class="col-md-3">
                     <div>
                         @if (Model.User.ProfileImage != null)
                         {
-                            <img src="~/@Model.User.ProfileImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image" width="300px" class="rounded-circle" />
+                            <img src="~/@Model.User.ProfileImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image" class="rounded-circle w-100" />
                         }
                         else
                         {
@@ -63,6 +71,14 @@ else
                     </div>
                 </div>
             </div>
+            @if (Model.User.ProfileImage != null)
+            {
+            
+                <div class="row mt-4 bio-text font-weight-light border-dark rounded p-2">
+                    @Model.User.Bio
+
+                </div>
+            }
         </div>
 
 

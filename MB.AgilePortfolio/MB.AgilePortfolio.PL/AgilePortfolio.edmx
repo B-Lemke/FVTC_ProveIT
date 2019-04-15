@@ -26,7 +26,7 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="Description" Type="varchar" MaxLength="255" />
+          <Property Name="Description" Type="text" />
           <Property Name="PortfolioImage" Type="varchar" MaxLength="255" />
           <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="PrivacyId" Type="uniqueidentifier" Nullable="false" />
@@ -56,16 +56,16 @@
           <Property Name="Filepath" Type="varchar" MaxLength="255" />
           <Property Name="PrivacyId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Image" Type="varchar" MaxLength="255" />
-          <Property Name="Description" Type="varchar" MaxLength="255" />
+          <Property Name="Description" Type="text" />
           <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="DateCreated" Type="date" Nullable="false" />
-          <Property Name="Purpose" Type="varchar" MaxLength="255" />
+          <Property Name="Purpose" Type="text" />
           <Property Name="Environment" Type="varchar" MaxLength="255" />
-          <Property Name="Challenges" Type="varchar" MaxLength="255" />
-          <Property Name="FuturePlans" Type="varchar" MaxLength="255" />
+          <Property Name="Challenges" Type="text" />
+          <Property Name="FuturePlans" Type="text" />
           <Property Name="Collaborators" Type="varchar" MaxLength="255" />
           <Property Name="LastUpdated" Type="date" Nullable="false" />
-          <Property Name="SoftwareUsed" Type="varchar" MaxLength="255" />
+          <Property Name="SoftwareUsed" Type="text" />
           <Property Name="StatusId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="tblProjectLanguage">
@@ -103,6 +103,7 @@
           <Property Name="ProfileImage" Type="varchar" MaxLength="255" />
           <Property Name="UserTypeId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Bio" Type="text" />
         </EntityType>
         <EntityType Name="tblUserType">
           <Key>
@@ -150,7 +151,7 @@
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="PortfolioImage" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="UserId" Type="Guid" Nullable="false" />
           <Property Name="PrivacyId" Type="Guid" Nullable="false" />
@@ -180,16 +181,16 @@
           <Property Name="Filepath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="PrivacyId" Type="Guid" Nullable="false" />
           <Property Name="Image" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="UserId" Type="Guid" Nullable="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Purpose" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Purpose" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Environment" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Challenges" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="FuturePlans" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Challenges" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FuturePlans" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Collaborators" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="LastUpdated" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="SoftwareUsed" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="SoftwareUsed" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="StatusId" Type="Guid" Nullable="false" />
         </EntityType>
         <EntityType Name="tblProjectLanguage">
@@ -208,19 +209,6 @@
           <Property Name="Filepath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ProjectId" Type="Guid" Nullable="false" />
         </EntityType>
-        <EntityType Name="tblUser">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ProfileImage" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="UserTypeId" Type="Guid" Nullable="false" />
-          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityContainer Name="PortfolioEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tblLanguages" EntityType="Self.tblLanguage" />
           <EntitySet Name="tblPortfolios" EntityType="Self.tblPortfolio" />
@@ -229,7 +217,6 @@
           <EntitySet Name="tblProjects" EntityType="Self.tblProject" />
           <EntitySet Name="tblProjectLanguages" EntityType="Self.tblProjectLanguage" />
           <EntitySet Name="tblScreenshots" EntityType="Self.tblScreenshot" />
-          <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
           <EntitySet Name="tblUserTypes" EntityType="brouchouddbModel.tblUserType" />
           <EntitySet Name="tblStatus" EntityType="brouchouddbModel.tblStatus" />
           <FunctionImport Name="Portfolio_ViewData" ReturnType="Collection(brouchouddbModel.Portfolio_ViewData_Result)">
@@ -242,6 +229,7 @@
           <FunctionImport Name="Screenshots_ViewData" ReturnType="Collection(brouchouddbModel.Screenshots_ViewData_Result)" />
           <FunctionImport Name="User_ViewData" ReturnType="Collection(brouchouddbModel.User_ViewData_Result)" />
           <EntitySet Name="tblForgotPasswords" EntityType="brouchouddbModel.tblForgotPassword" />
+          <EntitySet Name="tblUsers" EntityType="brouchouddbModel.tblUser" />
         </EntityContainer>
         <EntityType Name="tblUserType">
           <Key>
@@ -327,6 +315,20 @@
           <Property Name="UserId" Type="Guid" Nullable="false" />
           <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ProfileImage" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="UserTypeId" Type="Guid" Nullable="false" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Bio" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -408,20 +410,6 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Filepath" ColumnName="Filepath" />
                 <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblUsers">
-            <EntityTypeMapping TypeName="brouchouddbModel.tblUser">
-              <MappingFragment StoreEntitySet="tblUser">
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="ProfileImage" ColumnName="ProfileImage" />
-                <ScalarProperty Name="UserTypeId" ColumnName="UserTypeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -536,6 +524,21 @@
               <MappingFragment StoreEntitySet="tblForgotPassword">
                 <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUsers">
+            <EntityTypeMapping TypeName="brouchouddbModel.tblUser">
+              <MappingFragment StoreEntitySet="tblUser">
+                <ScalarProperty Name="Bio" ColumnName="Bio" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="UserTypeId" ColumnName="UserTypeId" />
+                <ScalarProperty Name="ProfileImage" ColumnName="ProfileImage" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

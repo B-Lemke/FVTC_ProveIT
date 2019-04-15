@@ -22,5 +22,6 @@ namespace MB.AgilePortfolio.PL
         public string ProfileImage { get; set; }
         public System.Guid UserTypeId { get; set; }
         public string Username { get; set; }
+        public string Bio { get; set; }
     }
 }

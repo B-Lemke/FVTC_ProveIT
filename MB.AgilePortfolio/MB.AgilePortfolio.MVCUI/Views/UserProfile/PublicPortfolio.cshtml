@@ -49,23 +49,7 @@ else
             <script src="~/scripts/jquery.dataTables.min.js"></script>
             <script src="~/scripts/dataTables.bootstrap4.min.js"></script>
             <style>
-                .carousel-inner img {
-                    width: 10%;
-                    height: 100px;
-                    object-fit: contain;
-                    margin-left: auto;
-                    margin-right: auto;
-                }
 
-                .carousel-inner {
-                    padding-left: 10%;
-                    padding-right: 10%;
-                    width: 100%;
-                }
-
-                .carousel-item {
-                    text-align: center;
-                }
 
                 html {
                     width: 100%;
@@ -94,7 +78,7 @@ else
         <body>
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-2 border" id="sidebar">
+                    <div class="col-lg-2 border" id="sidebar">
                         <h2 class="mt-2">@Model.User.Username</h2>
                         <div>
                             <div class="text-center">
@@ -111,6 +95,12 @@ else
                             </div>
                             <h4 class="font-weight-normal mt-2">@Model.User.FullName</h4>
                             <h4 class="font-weight-light">@Model.User.Email</h4>
+                            @if (Model.User.ShortBio != String.Empty)
+                            {
+                            <hr />
+                            <p class="font-italic font-weight-light">
+                                @Model.User.ShortBio@if (Model.User.ShortBio.Length == 100) {<span>...</span>} </p>
+                            }
                             <hr />
                             <a href="~/User/@Model.User.Username/Projects">
                                 <p>View @Model.User.Username's other projects</p>
@@ -132,7 +122,7 @@ else
                         {
                             <hr />
                             <p class="portfolio-description">
-                                @Html.DisplayFor(model => model.Portfolio.Description)
+                                @Model.Portfolio.Description
                             </p>
                         }
 
@@ -147,166 +137,59 @@ else
                         {
                             <hr />
                             <h4 align="center">Projects</h4>
-                        }
 
-                        @{
-                            int imgleft = Model.Projects.Count;
-                            int ImagesPerTransition = 9;
-                        }
-
-                        <div class="form-horizontal">
-                            <div id="demo" class="carousel slide" data-ride="carousel" data-interval="10000">
-
-                                <div class="carousel-inner" role="listbox">
-
-                                    @if (Model.Projects?.Count > 0)
+                            <div class="container-fluid">
+                                <div class="row">
+                                    @foreach (var item in Model.Projects)
                                     {
-
-                                        int modssi = Model.Projects.Count % ImagesPerTransition;
-                                        int iterations = 0;
-                                        imgleft = Model.Projects.Count;
-
-                                        if (modssi > 0)
+                                        if (item.Image == null)
                                         {
-                                            if (Model.Projects.Count > ImagesPerTransition - 1)
-                                            {
-                                                iterations = (int)Math.Ceiling(((double)Model.Projects.Count) / ImagesPerTransition);
-
-                                            }
-                                            else
-                                            {
-                                                iterations = 1;
-                                            }
+                                            item.Image = "Assets/Images/UserProfiles/Default.png";
                                         }
-                                        else
-                                        {
-                                            iterations = (Model.Projects.Count) / ImagesPerTransition;
-                                        }
-                                        var active = iterations == 1 ? "active" : "";
+                                        <div class="col-md-4">
+                                            <div class="card mt-2">
+                                                <a href="~/User/@Model.User.Username/Projects/@item.Name" class="card-link" style="text-align:center">
+                                                    <img class="card-img-top project-image" src="@Url.Content("~/" + @item.Image)" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Project Image">
+                                                </a>
+                                                <div class="card-body" style="text-align:center">
+                                                    <a href="~/User/@Model.User.Username/Projects/@item.Name" class="card-link" style="text-align:center">
+                                                        <h5 class="card-title" style="width: 90%;text-align:left">@item.Name</h5>
+                                                    </a>
+                                                    <h6 class="card-subtitle mb-2 text-muted" style="text-align:left">
+                                                        @if (item.Languages != null)
+                                                        {
+                                                            int badgeCount = 0;
 
-                                        for (int ssi = 0; ssi < iterations; ssi++)
-                                        {
-                                            if (ssi == 0)
-                                            {
-                                                if (iterations > 1)
-                                                {
-                                                    <div class="carousel-item active">
-                                                        @for (int y = 0; y < ImagesPerTransition; y++)
-                                                        {
-                                                            @*
-                                            <div class="carousel-caption">
-                                                <p>@Model.Projects[y].Name</p>
-                                            </div>
-                                                            *@
-                                                            string imgpath = "~/" + Model.Projects[y].Image;
-                                                            <a href="~/User/@Model.User.Username/Projects/@Model.Projects[y].Name">
-                                                                <img src='@Url.Content(@imgpath)' onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt=@Model.Projects[y].Name />
-                                                            </a>
-                                                            imgleft--;
+                                                            foreach (var lang in item.Languages)
+                                                            {
+                                                                if (badgeCount < 5)
+                                                                {
+                                                                    <span class="badge badge-pill badge-@lang.BadgeName">@lang.Description</span>
+                                                                    badgeCount++;
+                                                                }
+                                                            }
                                                         }
-                                                    </div>
-                                                }
-                                                else
-                                                {
-                                                    <div class="carousel-item active">
-                                                        @for (int y = 0; y < Model.Projects.Count; y++)
-                                                        {
-                                                            @*
-                                            <div class="carousel-caption">
-                                                <p>@Model.Projects[y].Name</p>
+                                                    </h6>
+                                                    <p class="card-text" style="text-align:left">@item.ShortDescription</p>
+                                                    <a href="~/User/@Model.User.Username/Projects/@item.Name" class="card-link" style="text-align:center">
+                                                        <br />
+                                                        View Project
+                                                    </a>
+                                                </div>
                                             </div>
-                                                            *@
-                                                            string imgpath = "~/" + Model.Projects[y].Image;
-                                                            <a href="~/User/@Model.User.Username/Projects/@Model.Projects[y].Name">
-                                                                <img src='@Url.Content(@imgpath)' onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt=@Model.Projects[y].Name />
-                                                            </a>
-                                                            imgleft--;
-                                                        }
-                                                    </div>
-                                                }
-                                            }
-                                            else
-                                            {
-                                                if (imgleft >= ImagesPerTransition)
-                                                {
-                                                    <div class="carousel-item">
-                                                        @for (int y = 0; y < ImagesPerTransition; y++)
-                                                        {
-                                                            @*
-                                            <div class="carousel-caption">
-                                                <p>@Model.Projects[y + ssi * ImagesPerTransition].Name</p>
-                                            </div>
-                                                            *@
-                                                            string imgpath = "~/" + Model.Projects[y + ssi * ImagesPerTransition].Image;
-                                                            <a href="~/User/@Model.User.Username/Projects/@Model.Projects[y + ssi * ImagesPerTransition].Name">
-                                                                <img src='@Url.Content(@imgpath)' onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt=@Model.Projects[y + ssi * ImagesPerTransition].Name />
-                                                            </a>
-
-                                                            imgleft--;
-                                                        }
-                                                    </div>
-                                                }
-                                                else
-                                                {
-                                                    string width = ((Math.Floor((double)(99 / modssi)))).ToString() + "%";
-                                                    <div class="carousel-item">
-
-                                                        @for (int y = 0; y < modssi; y++)
-                                                        {
-                                                            @*
-                                            <div class="carousel-caption">
-                                                <p>@Model.Projects[y + ssi * ImagesPerTransition].Name</p>
-                                            </div>
-                                                            *@
-                                                            string imgpath = "~/" + Model.Projects[y + ssi * ImagesPerTransition].Image;
-                                                            <a href="~/User/@Model.User.Username/Projects/@Model.Projects[y + ssi * ImagesPerTransition].Name">
-                                                                <img src='@Url.Content(@imgpath)' onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt=@Model.Projects[y + ssi * ImagesPerTransition].Name />
-                                                            </a>
-                                                            imgleft--;
-                                                        }
-                                                    </div>
-                                                }
-                                            }
-                                        }
+                                        </div>
                                     }
 
                                 </div>
-                                @if (Model.Projects?.Count > ImagesPerTransition)
-                                {
-                                    <a class="carousel-control-prev" href="#demo" data-slide="prev" style="width:auto">
-                                        <i class="fas fa-chevron-left text-dark"></i>
-                                    </a>
-                                    <a class="carousel-control-next" href="#demo" data-slide="next" style="width:auto">
-                                        <i class="fas fa-chevron-right text-dark"></i>
-                                    </a>
-                                }
                             </div>
-                        </div>
+                        }
+
+
+
                         <hr />
-                        @Html.HiddenFor(model => model.Portfolio.Id)
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        
 
-                        <dl class="dl-horizontal">
-                            <dt>
-                                @Html.DisplayNameFor(model => model.Portfolio.Name)
-                            </dt>
-                            <dd>
-                                @Html.DisplayFor(model => model.Portfolio.Name)
-                            </dd>
-
-                            <dd>
-                                @Html.HiddenFor(model => model.Portfolio.PortfolioImage)
-                            </dd>
-                            <dd>
-                                @Html.HiddenFor(model => model.Portfolio.UserId, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @readonly = "readonly" } })
-                            </dd>
-                            <dt>
-                                @Html.DisplayNameFor(model => model.Portfolio.PrivacyDescription)
-                            </dt>
-                            <dd>
-                                @Html.DisplayFor(model => model.Portfolio.PrivacyDescription)
-                            </dd>
-                        </dl>
+                       
 
                     </div>
                 </div>

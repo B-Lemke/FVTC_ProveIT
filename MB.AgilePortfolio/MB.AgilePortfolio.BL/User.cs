@@ -16,6 +16,9 @@ namespace MB.AgilePortfolio.BL
 {
     public class User
     {
+        [DataType(DataType.MultilineText)]
+        public string Bio { get; set; }
+        public string ShortBio => Bio == null ? string.Empty : new string(Bio.Take(100).ToArray());
         public Guid Id { get; set; }
         public string Email { get; set; }
         [DataType(DataType.Password)]
@@ -37,7 +40,7 @@ namespace MB.AgilePortfolio.BL
 
         public User() { }
 
-        public User(Guid id, string email, string password, string firstName, string lastName, string profileImage, Guid userTypeId, string userTypeDescription, string username)
+        public User(Guid id, string email, string password, string firstName, string lastName, string profileImage, Guid userTypeId, string userTypeDescription, string username, string bio)
         {
             Id = id;
             Email = email;
@@ -48,6 +51,7 @@ namespace MB.AgilePortfolio.BL
             UserTypeId = userTypeId;
             UserTypeDescription = userTypeDescription;
             Username = username;
+            Bio = bio;
         }
 
         public Guid ForgotPasswordKeyGen(string email)
@@ -176,6 +180,7 @@ namespace MB.AgilePortfolio.BL
                                         u.ProfileImage,
                                         u.UserTypeId,
                                         u.Username,
+                                        u.Bio,
                                         ut.Description
                                     }).FirstOrDefault();
                         if (user != null)
@@ -192,6 +197,7 @@ namespace MB.AgilePortfolio.BL
                                 UserTypeId = user.UserTypeId;
                                 Username = user.Username;
                                 UserTypeDescription = user.Description;
+                                Bio = user.Bio;
                                 return true;
                             }
                             else { return false; }
@@ -221,7 +227,8 @@ namespace MB.AgilePortfolio.BL
                         LastName = LastName,
                         ProfileImage = ProfileImage,
                         UserTypeId = UserTypeId,
-                        Username = Username
+                        Username = Username,
+                        Bio = Bio
                     };
                     //Save the Id
                     this.Id = user.Id;
@@ -267,6 +274,7 @@ namespace MB.AgilePortfolio.BL
                         user.ProfileImage = ProfileImage;
                         user.UserTypeId = UserTypeId;
                         user.Username = Username;
+                        user.Bio = Bio;
                         return dc.SaveChanges();
                     }
                     else throw new Exception("User not found");
@@ -401,7 +409,9 @@ namespace MB.AgilePortfolio.BL
                                     u.ProfileImage,
                                     u.UserTypeId,
                                     u.Username,
+                                    u.Bio,
                                     ut.Description
+
                                 }).FirstOrDefault();
                     if (user != null)
                     {
@@ -414,6 +424,7 @@ namespace MB.AgilePortfolio.BL
                         UserTypeId = user.UserTypeId;
                         Username = user.Username;
                         UserTypeDescription = user.Description;
+                        Bio = user.Bio;
                     }
                     else throw new Exception("User not found");
                 }
@@ -445,11 +456,12 @@ namespace MB.AgilePortfolio.BL
                                      u.ProfileImage,
                                      u.UserTypeId,
                                      u.Username,
+                                     u.Bio,
                                      ut.Description
                                  }).OrderByDescending(u => u.LastName).ToList();
                     foreach (var u in users)
                     {
-                        User user = new User(u.Id, u.Email, u.Password, u.FirstName, u.LastName, u.ProfileImage, u.UserTypeId, u.Description, u.Username);
+                        User user = new User(u.Id, u.Email, u.Password, u.FirstName, u.LastName, u.ProfileImage, u.UserTypeId, u.Description, u.Username, u.Bio);
                         Add(user);
                     }
                 }
@@ -483,11 +495,12 @@ namespace MB.AgilePortfolio.BL
                                      u.ProfileImage,
                                      u.UserTypeId,
                                      u.Username,
+                                     u.Bio,
                                      ut.Description
                                  }).OrderByDescending(u => u.LastName).ToList();
                     foreach (var u in users)
                     {
-                        User user = new User(u.Id, u.Email, u.Password, u.FirstName, u.LastName, u.ProfileImage, u.UserTypeId, u.Description, u.Username);
+                        User user = new User(u.Id, u.Email, u.Password, u.FirstName, u.LastName, u.ProfileImage, u.UserTypeId, u.Description, u.Username, u.Bio);
                         //POSSIBLY ADD LOAD PROJECTS AND LOAD PORTFOLIOS HERE
                         Add(user);
                     }
@@ -522,11 +535,12 @@ namespace MB.AgilePortfolio.BL
                                      u.ProfileImage,
                                      u.UserTypeId,
                                      u.Username,
+                                     u.Bio,
                                      ut.Description
                                  }).OrderByDescending(u => u.LastName).ToList();
                     foreach (var u in users)
                     {
-                        User user = new User(u.Id, u.Email, u.Password, u.FirstName, u.LastName, u.ProfileImage, u.UserTypeId, u.Description, u.Username);
+                        User user = new User(u.Id, u.Email, u.Password, u.FirstName, u.LastName, u.ProfileImage, u.UserTypeId, u.Description, u.Username, u.Bio);
                         //POSSIBLY ADD LOAD PROJECTS AND LOAD PORTFOLIOS HERE
                         Add(user);
                     }
