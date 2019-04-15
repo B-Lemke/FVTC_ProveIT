@@ -19,5 +19,5 @@
 		
 		(NEWID(), 'ProveIT', 'https://github.com/B-Lemke/ProveIt', null, null, 'This ASP.Net website was created for the Spring 2019 section of Agile Development at FVTC.',
 		@UserIdBrody, @PrivacyIdPublic, '2019-1-27', 'A portfolio website for IT students to showcase their work.', 'Made to run in browser, hosted on Microsoft Azure.', 'Learning the Agile work process',
-		'Develop the site', 'Mason Brouchard, Lauren Sassi and Brenton Wienkes', '2019-2-27', 'Visual Studio 2017', @StatusIdInProgress);
+		'Develop the site', 'Brenton Wienkes', '2019-2-27', 'Visual Studio 2017', @StatusIdInProgress);
 END

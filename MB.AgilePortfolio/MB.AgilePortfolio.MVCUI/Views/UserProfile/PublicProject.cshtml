@@ -78,9 +78,12 @@ else
                 .modal-content {
                     margin: auto;
                     display: block;
-                    width: 80%;
-                    max-width: 700px;
+                    max-width: 80vw;
+                    max-height: 80vh;
+                    width:auto;
                 }
+
+
 
                 /* Caption of Modal Image */
                 #caption {
@@ -592,6 +595,7 @@ else
 <script>
     function loadImage(id) {
         // Get the modal
+
         var modal = document.getElementById('myModal');
 
         // Get the image and insert it inside the modal - use its "alt" text as a caption
@@ -602,7 +606,6 @@ else
         modalImg.src = img.src;
         captionText.innerHTML = img.alt;
 
-
         // Get the <span>
         var span = document.getElementsByClassName("close")[0];
 
@@ -611,6 +614,21 @@ else
             modal.style.display = "none";
         }
     }
+
+
+    document.onkeydown = function (evt) {
+        evt = evt || window.event;
+        var isEscape = false;
+        if ("key" in evt) {
+            isEscape = (evt.key === "Escape" || evt.key === "Esc");
+        } else {
+            isEscape = (evt.keyCode === 27);
+        }
+        if (isEscape) {
+            var modal = document.getElementById('myModal');
+            modal.style.display = "none";
+        }
+    };
 </script>
 
 @section Scripts {

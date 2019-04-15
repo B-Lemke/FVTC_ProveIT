@@ -128,9 +128,21 @@ else
                     <div class="col-md-10 pl-2 border">
                         <h2 class="text-left">@Model.Portfolio.Name</h2>
 
-                        <div class="container py-4" style="text-align:center">
-                            <img src="~/@Model.Portfolio.PortfolioImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt=@Model.Portfolio.Name style="width:100%;height:350px; text-align:center; object-fit:contain;">
-                        </div>
+                        @if (Model.Portfolio.Description != null)
+                        {
+                            <hr />
+                            <p class="portfolio-description">
+                                @Html.DisplayFor(model => model.Portfolio.Description)
+                            </p>
+                        }
+
+                        @if (@Model.Portfolio.PortfolioImage != null && @Model.Portfolio.PortfolioImage != "Assets/Images/UserProfiles/Default.png")
+                        {
+                            <div class="container py-4" style="text-align:center">
+                                <img src="~/@Model.Portfolio.PortfolioImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt=@Model.Portfolio.Name style="width:100%;height:350px; text-align:center; object-fit:contain;">
+                            </div>
+                        }
+
                         @if (Model.Projects?.Count > 0)
                         {
                             <hr />
@@ -281,15 +293,7 @@ else
                             <dd>
                                 @Html.DisplayFor(model => model.Portfolio.Name)
                             </dd>
-                            @if (Model.Portfolio.Description != null)
-                            {
-                                <dt>
-                                    @Html.DisplayNameFor(model => model.Portfolio.Description)
-                                </dt>
-                                <dd>
-                                    @Html.DisplayFor(model => model.Portfolio.Description)
-                                </dd>
-                            }
+
                             <dd>
                                 @Html.HiddenFor(model => model.Portfolio.PortfolioImage)
                             </dd>

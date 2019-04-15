@@ -36,7 +36,7 @@ textarea {
     object-fit: cover;
 }
 
-.project-description{
+.project-description, .portfolio-description {
     font-size: 1.2em;
 }
 
