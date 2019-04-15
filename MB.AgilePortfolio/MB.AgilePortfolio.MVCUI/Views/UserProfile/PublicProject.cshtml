@@ -1,16 +1,43 @@
 ﻿@model MB.AgilePortfolio.MVCUI.ViewModels.ScreenshotProjects
 @{
-    ViewBag.Title = Model.Project.Name;
+    if (Model.Project != null) {
+        ViewBag.Title = Model.Project.Name;
+    }
+    else
+    {
+        ViewBag.Title = "Project Not Found";
+    }
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
 
 
-@using (Html.BeginForm())
+@if (Model.Project == null)
 {
-    @Html.AntiForgeryToken()
-    <!DOCTYPE html>
+    //Project not found.
+    <div class=" container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="display-2 text-center text-secondary mt-5">
+                    <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                    Project Not Found
+                    <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                </h1>
+                <div class="text-center mt-5">
+                    @Html.ActionLink("Search Projects", "Index", "Search", new { option = "Project" }, new { @class = "btn btn-secondary border-dark" })
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <!DOCTYPE html>
 
     <html>
     <head>
@@ -128,108 +155,113 @@
                 cursor: pointer;
             }
 
-            .carousel-inner {
-                padding-left: 10%;
-                padding-right: 10%;
-                width: 100%;
-            }
+                .carousel-inner {
+                    padding-left: 10%;
+                    padding-right: 10%;
+                    width: 100%;
+                }
 
-            .carousel-item {
-                text-align: center;
-            }
+                .carousel-item {
+                    text-align: center;
+                }
 
-            html {
-                width: 100%;
-            }
+                html {
+                    width: 100%;
+                }
 
-            body {
-                width: 100%;
-                word-wrap: break-word;
-            }
+                body {
+                    width: 100%;
+                    word-wrap: break-word;
+                }
 
-            .container {
-                max-width: none;
-                width: 100% !important;
-                padding-right: 15px;
-                padding-left: 15px;
-                margin-right: 0;
-                margin-left: 0;
-            }
+                .container {
+                    max-width: none;
+                    width: 100% !important;
+                    padding-right: 15px;
+                    padding-left: 15px;
+                    margin-right: 0;
+                    margin-left: 0;
+                }
 
-            .sidebar {
-                padding: 5px;
-            }
-        </style>
+                .sidebar {
+                    padding: 5px;
+                }
+            </style>
 
 
-    </head>
+        </head>
 
-    <body>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-2 border" id="sidebar">
-                    <h2>@Model.User.Username</h2>
-                    <div>
-                        <a href="~/User/@Model.User.Username">
-                            @if (Model.User.ProfileImage != null)
-                            {
-                                <img src="~/@Model.User.ProfileImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image" width="100%" class="rounded" />
-                            }
-                            else
-                            {
-                                <img src="~/Assets/Images/UserProfiles/Default.png" alt="Default Profile Image" width="100%" class="rounded-circle" />
-                            }
-                        </a>
-                        <h4 class="font-weight-normal">@Model.User.FullName</h4>
-                        <h4 class="font-weight-light">@Model.User.Email</h4>
-                        <hr />
-                        <a href="~/User/@Model.User.Username/Projects">
-                            <p>View @Model.User.Username's other projects</p>
-                        </a>
-                        <a href="~/User/@Model.User.Username/Portfolios">
-                            <p>View @Model.User.Username's portfolios</p>
-                        </a>
+        <body>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-2 border" id="sidebar">
+                        <h2 class="mt-2">@Model.User.Username</h2>
+                        <div>
+                            <div class="text-center">
+                                <a class="text-center" href="~/User/@Model.User.Username">
+                                    @if (Model.User.ProfileImage != null)
+                                    {
+                                        <img class="profile-image rounded" width="100%" src="~/@Model.User.ProfileImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/Assets/Images/UserProfiles/Default.png" alt="Default Profile Image" width="100%" class="rounded-circle" />
+                                    }
+                                </a>
+                            </div>
+                            <h4 class="font-weight-normal mt-2">@Model.User.FullName</h4>
+                            <h4 class="font-weight-light">@Model.User.Email</h4>
+                            <hr />
+                            <a href="~/User/@Model.User.Username/Projects">
+                                <p>View @Model.User.Username's other projects</p>
+                            </a>
+                            <a href="~/User/@Model.User.Username/Portfolios">
+                                <p>View @Model.User.Username's portfolios</p>
+                            </a>
+
+
+                        </div>
 
 
                     </div>
-
-
-                </div>
-                <div class="col-md-10 pl-2 border">
-                    <h2 class="text-left">@Model.Project.Name</h2>
-                    @if (Model.Project.Languages != null)
-                    {
-                        int badgeCount = 0;
-
-                        foreach (var lang in Model.Project.Languages)
+                    <div class="col-md-10 pl-2 border">
+                        <h2 class="text-left mt-2">@Model.Project.Name <span class="badge badge-primary status_badge status_badge_@Model.Project.StatusDescription.ToLower().Replace(" ", "_")">@Model.Project.StatusDescription </span></h2>
+                        @if (Model.Project.Languages != null)
                         {
-                            if (badgeCount < 5)
+                            int badgeCount = 0;
+
+                            foreach (var lang in Model.Project.Languages)
                             {
-                                <span class="badge badge-pill badge-@lang.BadgeName">@lang.Description</span>
-                                badgeCount++;
+                                if (badgeCount < 5)
+                                {
+                                    <span class="badge badge-pill badge-@lang.BadgeName">@lang.Description</span>
+                                    badgeCount++;
+                                }
                             }
                         }
-                    }
 
-                    @if (Model.Project.Description != null)
-                    {
-                        <hr />
-                        <p class="project-description">
-                            @Html.DisplayFor(model => model.Project.Description)
-                        </p>
-                    }
-
+                        @if (Model.Project.Description != null)
+                        {
+                            <hr />
+                            <p class="project-description">
+                                @Html.DisplayFor(model => model.Project.Description)
+                            </p>
+                        }
 
 
 
-                    <div class="container py-4" style="text-align:center">
-                        <img src="~/@Model.Project.Image" alt="" style="width:100%;height:350px; text-align:center; object-fit:contain;">
-                    </div>
-                    @if (Model.ScreenshotList?.Count > 0)
-                    {
-                        <hr />
-                        <h4 align="center">Screenshots</h4>
-                    }
+                        @if (Model.Project.Image != "Assets/Images/UserProfiles/Default.png")
+                        {
+                            <div class="container py-4" style="text-align:center">
+                                <img src="~/@Model.Project.Image" alt="" style="width:100%;height:350px; text-align:center; object-fit:contain;">
+                            </div>
+                        }
+
+                        @if (Model.ScreenshotList?.Count > 0)
+                        {
+                            <hr />
+                            <h4 class="text-center mt-2">Screenshots</h4>
+                        }
 
 
                     <!-- The Modal -->
@@ -252,22 +284,22 @@
                                 int iterations = 0;
                                 imgleft = Model.ScreenshotList.Count;
 
-                                if (modssi > 0)
-                                {
-                                    if (Model.ScreenshotList.Count > ImagesPerTransition - 1)
+                                    if (modssi > 0)
                                     {
-                                        iterations = (int)Math.Ceiling(((double)Model.ScreenshotList.Count) / ImagesPerTransition);
+                                        if (Model.ScreenshotList.Count > ImagesPerTransition - 1)
+                                        {
+                                            iterations = (int)Math.Ceiling(((double)Model.ScreenshotList.Count) / ImagesPerTransition);
+                                        }
+                                        else
+                                        {
+                                            iterations = 1;
+                                        }
                                     }
                                     else
                                     {
-                                        iterations = 1;
+                                        iterations = (Model.ScreenshotList.Count) / ImagesPerTransition;
                                     }
-                                }
-                                else
-                                {
-                                    iterations = (Model.ScreenshotList.Count) / ImagesPerTransition;
-                                }
-                                var active = iterations == 1 ? "active" : "";
+                                    var active = iterations == 1 ? "active" : "";
 
                                 for (int ssi = 0; ssi < iterations; ssi++)
                                 {
@@ -343,155 +375,188 @@
                             }
                         </div>
 
-                        @if (Model.ScreenshotList?.Count > 9)
-                        {
-                            <a class="carousel-control-prev" href="#demo" data-slide="prev" style="width:auto">
-                                <i class="fas fa-chevron-left text-dark"></i>
-                            </a>
-                            <a class="carousel-control-next" href="#demo" data-slide="next" style="width:auto">
-                                <i class="fas fa-chevron-right text-dark"></i>
-                            </a>
-                        }
+                            @if (Model.ScreenshotList?.Count > 9)
+                            {
+                                <a class="carousel-control-prev" href="#demo" data-slide="prev" style="width:auto">
+                                    <i class="fas fa-chevron-left text-dark"></i>
+                                </a>
+                                <a class="carousel-control-next" href="#demo" data-slide="next" style="width:auto">
+                                    <i class="fas fa-chevron-right text-dark"></i>
+                                </a>
+                            }
+
+                        </div>
+
+                        <hr />
+
+                        <ul class="nav nav-tabs">
+                            <li class="active nav-item"><a href="#firsttab" data-toggle="tab" class="nav-link">Basic Info</a></li>
+                            <li class="nav-item"><a href="#secondtab" data-toggle="tab" class="nav-link">Project Details</a></li>
+                        </ul>
+
+                        <div class="tab-content p-3">
+                            <div class="tab-pane active" id="firsttab">
+                                <dl class="dl-horizontal">
+
+                                    @if (Model.Project.Location != null)
+                                    {
+                                        <dt>
+                                            View Project Code
+                                        </dt>
+
+                                        <dd>
+                                            <a href="@Model.Project.Location">
+                                                @Html.DisplayFor(model => model.Project.Location)
+                                            </a>
+                                        </dd>
+                                    }
+
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.Project.PrivacyDescription)
+                                    </dt>
+                                    <dd>
+
+                                        @Html.DisplayFor(model => model.Project.PrivacyDescription)
+
+                                    </dd>
+
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.Project.DateCreated)
+                                    </dt>
+
+                                    <dd>
+                                        @Model.Project.DateCreated.ToString("MM/dd/yyyy")
+                                    </dd>
+
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.Project.LastUpdated)
+                                    </dt>
+
+                                    <dd>
+                                        @Model.Project.LastUpdated.ToString("MM/dd/yyyy")
+                                    </dd>
+
+                                </dl>
+
+
+
+                            </div>
+                            <div class="tab-pane" id="secondtab">
+                                <dl class="dl-horizontal">
+                                    @if (Model.Project.Purpose != null)
+                                    {
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.Project.Purpose)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.Project.Purpose)
+                                        </dd>
+                                    }
+                                    @if (Model.Project.Environment != null)
+                                    {
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.Project.Environment)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.Project.Environment)
+                                        </dd>
+                                    }
+                                    @if (Model.Project.Challenges != null)
+                                    {
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.Project.Challenges)
+                                        </dt>
+                                        <dd>
+                                            @Html.DisplayFor(model => model.Project.Challenges)
+                                        </dd>
+                                    }
+
+
+
+                                    @if (Model.Project.SoftwareUsed != null)
+                                    {
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.Project.SoftwareUsed)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.Project.SoftwareUsed)
+                                        </dd>
+                                    }
+
+                                    @if (Model.Project.FuturePlans != null)
+                                    {
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.Project.FuturePlans)
+                                        </dt>
+                                        <dd>
+                                            @Html.DisplayFor(model => model.Project.FuturePlans)
+                                        </dd>
+                                    }
+
+                                    @if (Model.Project.Collaborators != null)
+                                    {
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.Project.Collaborators)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.Project.Collaborators)
+                                        </dd>
+                                    }
+                                </dl>
+                            </div>
+                        </div>
+
+
+
+
+
+
+                        @*if (Model.Project.Filepath != null)
+                            {
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Project.Filepath)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.Project.Filepath)
+                                </dd>
+                            }*@
+
+                        <dl>
+
+                            <dd>
+                                @Html.HiddenFor(model => model.Project.Image)
+                            </dd>
+
+
+
+
+
+
+
+
+                        </dl>
+
 
                     </div>
-                    <hr />
-                    <dl class="dl-horizontal">
-
-                        @if (Model.Project.Location != null)
-                        {
-                            <dt>
-                                @Html.DisplayNameFor(model => model.Project.Location)
-                            </dt>
-
-                            <dd>
-                                @Html.DisplayFor(model => model.Project.Location)
-                            </dd>
-                        }
-
-                        @if (Model.Project.Filepath != null)
-                        {
-                            <dt>
-                                @Html.DisplayNameFor(model => model.Project.Filepath)
-                            </dt>
-
-                            <dd>
-                                @Html.DisplayFor(model => model.Project.Filepath)
-                            </dd>
-                        }
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Project.PrivacyDescription)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.Project.PrivacyDescription)
-                        </dd>
-
-                        @*
-            <dt>
-                @Html.DisplayNameFor(model => model.Project.Image)
-            </dt>
-                        *@
-
-                        <dd>
-                            @Html.HiddenFor(model => model.Project.Image)
-                        </dd>
-
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Project.DateCreated)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.Project.DateCreated)
-                        </dd>
-                        @if (Model.Project.Purpose != null)
-                        {
-                            <dt>
-                                @Html.DisplayNameFor(model => model.Project.Purpose)
-                            </dt>
-
-                            <dd>
-                                @Html.DisplayFor(model => model.Project.Purpose)
-                            </dd>
-                        }
-                        @if (Model.Project.Environment != null)
-                        {
-                            <dt>
-                                @Html.DisplayNameFor(model => model.Project.Environment)
-                            </dt>
-
-                            <dd>
-                                @Html.DisplayFor(model => model.Project.Environment)
-                            </dd>
-                        }
-                        @if (Model.Project.Challenges != null)
-                        {
-                            <dt>
-                                @Html.DisplayNameFor(model => model.Project.Challenges)
-                            </dt>
-                            <dd>
-                                @Html.DisplayFor(model => model.Project.Challenges)
-                            </dd>
-                        }
-                        @if (Model.Project.FuturePlans != null)
-                        {
-                            <dt>
-                                @Html.DisplayNameFor(model => model.Project.FuturePlans)
-                            </dt>
-                            <dd>
-                                @Html.DisplayFor(model => model.Project.FuturePlans)
-                            </dd>
-                        }
-                        @if (Model.Project.Collaborators != null)
-                        {
-                            <dt>
-                                @Html.DisplayNameFor(model => model.Project.Collaborators)
-                            </dt>
-
-                            <dd>
-                                @Html.DisplayFor(model => model.Project.Collaborators)
-                            </dd>
-                        }
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Project.LastUpdated)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.Project.LastUpdated)
-                        </dd>
-                        @if (Model.Project.SoftwareUsed != null)
-                        {
-                            <dt>
-                                @Html.DisplayNameFor(model => model.Project.SoftwareUsed)
-                            </dt>
-
-                            <dd>
-                                @Html.DisplayFor(model => model.Project.SoftwareUsed)
-                            </dd>
-                        }
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Project.StatusDescription)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.Project.StatusDescription)
-                        </dd>
-
-                    </dl>
                 </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-12">
-                <a href="~/User/@Model.User.Username/Projects">
-                    <p>Back to Projects</p>
-                </a>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-12">
+                    <a href="~/User/@Model.User.Username/Projects">
+                        <p>Back to Projects</p>
+                    </a>
+                </div>
             </div>
-        </div>
-    </body>
+        </body>
 
 
-</html>
+    </html>
 
 
 }
@@ -519,6 +584,7 @@
     }
 </script>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
 }

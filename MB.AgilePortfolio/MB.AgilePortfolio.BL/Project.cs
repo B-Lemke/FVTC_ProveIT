@@ -42,7 +42,7 @@ namespace MB.AgilePortfolio.BL
         [DisplayName("Status")]
         public string StatusDescription { get; set; }
         public LanguageList Languages { get; set; }
-
+        public bool UsesDefaultImage { get; set; }
         public string CreatorUserName { get; set; }
 
         public Project() { }

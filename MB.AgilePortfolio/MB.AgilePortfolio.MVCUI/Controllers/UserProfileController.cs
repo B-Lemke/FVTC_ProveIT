@@ -193,6 +193,10 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             {
                 sp.ScreenshotList.LoadbyProjectID(sp.Project.Id);
             }
+            else
+            {
+
+            }
 
 
             return View(sp);
@@ -389,7 +393,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
             up.Portfolio = pl.FirstOrDefault(p => p.Name == portfolioName);
             
-            if (up.Portfolio.Id != Guid.Empty)
+            if (up.Portfolio != null && up.Portfolio.Id != Guid.Empty )
             {
                 up.User.LoadById(userId);
                 up.Projects.LoadbyPortfolioID(up.Portfolio.Id);
