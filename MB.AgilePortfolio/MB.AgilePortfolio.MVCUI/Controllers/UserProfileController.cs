@@ -187,10 +187,11 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             };
 
             sp.Project = pl.FirstOrDefault(p => p.Name == projectName);
-            sp.User.LoadById(userId);
+
 
             if(sp.Project != null)
             {
+                sp.User.LoadById(userId);
                 sp.ScreenshotList.LoadbyProjectID(sp.Project.Id);
             }
             else
