@@ -42,7 +42,8 @@ else
 {
     //Profile found
     <div class="mb-5">
-        <span class="h2">User Profile </span>
+        <span class="h2">User Profile  @if (Model.User.ToString() == @HttpContext.Current.Session["user"].ToString())
+        {<span class="h2 small"> | @Html.ActionLink("Edit", "EditProfile", new { id = Model.User.Id })</span>} </span> 
     </div>
 
     <div>
@@ -66,14 +67,14 @@ else
                         }
                         else
                         {
-                            <img src="~/Assets/Images/UserProfiles/Default.png" alt="Default Profile Image" width="300px" class="rounded-circle" />
+                            <img src="~/Assets/Images/UserProfiles/Default.png" alt="Default Profile Image" class="rounded-circle w-100" />
                         }
                     </div>
                 </div>
             </div>
             @if (Model.User.ProfileImage != null)
             {
-            
+
                 <div class="row mt-4 bio-text font-weight-light border-dark rounded p-2">
                     @Model.User.Bio
 
@@ -83,7 +84,10 @@ else
 
 
 
-        <h3 class="mt-5">Projects:</h3>
+        <h3 class="mt-5">
+            Projects @if (Model.User.ToString() == @HttpContext.Current.Session["user"].ToString())
+            {<span class="h2 small"> | @Html.ActionLink("Edit Projects", "EditProjects", new { id = Model.User.Id })</span>}
+        </h3> 
         <div class="container-fluid mt-4">
             <div class="row">
                 @if (Model.Projects.Count == 0 || Model.Projects == null)
@@ -158,7 +162,10 @@ else
         </div>
 
 
-        <h3 class="mt-5">Portfolios:</h3>
+        <h3 class="mt-5">
+            Portfolios @if (Model.User.ToString() == @HttpContext.Current.Session["user"].ToString())
+            {<span class="h2 small"> | @Html.ActionLink("Edit Portfolios", "EditPortfolios", new { id = Model.User.Id })</span>}
+        </h3> 
         <div class="container-fluid mt-4">
             <div class="row">
                 @if (Model.Portfolios.Count == 0 || Model.Portfolios == null)

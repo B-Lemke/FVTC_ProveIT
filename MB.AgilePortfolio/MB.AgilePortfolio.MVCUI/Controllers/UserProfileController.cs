@@ -45,6 +45,9 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             {
                 User userin = System.Web.HttpContext.Current.Session["user"] as User;
                 up.User.LoadById(userin.Id);
+
+                //Don't use the userProfile index anymore, send it to the public profile. It's conditionalized now.
+                return RedirectToAction("PublicProfile", new { username = up.User.Username });
                 up.Projects.LoadbyUser(up.User);
                 up.Portfolios.LoadbyUser(up.User);
 
