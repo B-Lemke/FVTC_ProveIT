@@ -116,7 +116,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         public ActionResult Delete(Guid id)
         {
             User userin = System.Web.HttpContext.Current.Session["user"] as User;
-            if (userin == null || userin.UserTypeDescription != "Admin")
+            if (userin == null)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -185,6 +185,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     Screenshot = new Screenshot(),
                     ScreenshotList = new ScreenshotList()
                 };
+                sp.ProjectId = ID;
                 sp.ScreenshotList.LoadbyProjectID(ID);
                 return View(sp);
             }
@@ -293,7 +294,8 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     up.Project.LoadById(ID);
                     up.ScreenshotList.LoadbyProjectID(ID);
                     up.ProjectLanguages.LoadByProjectId(ID);
-                    foreach(ProjectLanguage pl in up.ProjectLanguages)
+                    up.ProjectId = ID;
+                    foreach (ProjectLanguage pl in up.ProjectLanguages)
                     {
                         Language lang = new Language();
                         lang.LoadById(pl.LanguageId);
@@ -328,6 +330,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     ppus.Statuses = slist;
                     ScreenshotList screenshots = new ScreenshotList();
                     screenshots.LoadbyProjectID(id);
+                    ppus.ProjectId = id;
                     ppus.ScreenshotList = screenshots;
                     
                     // Deletes all languages associated with project currently
