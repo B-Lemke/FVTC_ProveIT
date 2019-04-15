@@ -197,12 +197,15 @@
             <img class="modal-content" id="img01">
             <div id="caption"></div>
         </div>
+
+        @{
+            int imgleft = Model.ScreenshotList.Count;
+            int ImagesPerTransition = 9;
+        }
+
         <div id="demo" class="carousel slide" data-ride="carousel" data-interval="10000">
 
-            @{
-                int imgleft = Model.ScreenshotList.Count;
-                int ImagesPerTransition = 9;
-            }
+
 
             <div class="carousel-inner">
                 @if (Model.ScreenshotList?.Count > 0)
@@ -244,7 +247,7 @@
                                         string imgpath = "~/" + Model.ScreenshotList[y].FilePath;
                                         string jsimgpath = Model.ScreenshotList[y].FilePath;
                                         @*<a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y].Id})'>*@
-                                            <img src='@Url.Content(@imgpath)' id=@count onclick="openImage(@count)"/>
+                                        <img src='@Url.Content(@imgpath)' id=@count onclick="openImage(@count)" />
 
 
                                         @*</a>*@
@@ -261,7 +264,7 @@
                                         @*<p>@Model.Projects[y].Name</p>*@
                                         string imgpath = "~/" + Model.ScreenshotList[y].FilePath;
                                         string jsimgpath = Model.ScreenshotList[y].FilePath;
-                                    <img src='@Url.Content(imgpath)' id=@count onclick="openImage(@count)" />
+                                        <img src='@Url.Content(imgpath)' id=@count onclick="openImage(@count)" />
                                         imgleft--;
                                         count++;
                                     }
@@ -285,8 +288,8 @@
 
                                         imgleft--;
                                         count++;
-                                        }
-</div>
+                                    }
+                                </div>
                             }
                             else
                             {
@@ -297,7 +300,7 @@
                                         string imgpath = "~/" + Model.ScreenshotList[y + ssi * ImagesPerTransition].FilePath;
                                         string jsimgpath = Model.ScreenshotList[y + ssi * ImagesPerTransition].FilePath;
                                         @*<a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y + ssi * ImagesPerTransition].Id})'>*@
-                                    <img src='@Url.Content(@imgpath)' id=@count onclick="openImage(@count)" />
+                                        <img src='@Url.Content(@imgpath)' id=@count onclick="openImage(@count)" />
                                         @*</a>*@
                                         imgleft--;
                                         count++;
@@ -310,7 +313,7 @@
                 }
             </div>
 
-            @if (Model.ScreenshotList?.Count > 9)
+            @if (Model.ScreenshotList?.Count > ImagesPerTransition)
             {
                 <a class="carousel-control-prev" href="#demo" data-slide="prev" style="width:auto">
                     <i class="fas fa-chevron-left text-dark"></i>

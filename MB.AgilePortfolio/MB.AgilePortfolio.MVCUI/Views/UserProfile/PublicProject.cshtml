@@ -399,11 +399,14 @@ else
                                     <img class="modal-content" id="img01">
                                     <div id="caption"></div>
                                 </div>
+
+                                @{
+                                    int imgleft = Model.ScreenshotList.Count;
+                                    int ImagesPerTransition = 9;
+                                }
+
                                 <div id="demo" class="carousel slide" data-ride="carousel" data-interval="10000">
-                                    @{
-                                        int imgleft = Model.ScreenshotList.Count;
-                                        int ImagesPerTransition = 9;
-                                    }
+
                                     <div class="carousel-inner container-fluid" role="listbox">
 
                                         @if (Model.ScreenshotList?.Count > 0)
@@ -504,7 +507,7 @@ else
                                         }
                                     </div>
 
-                                    @if (Model.ScreenshotList?.Count > 9)
+                                    @if (Model.ScreenshotList?.Count > ImagesPerTransition)
                                     {
                                         <a class="carousel-control-prev" href="#demo" data-slide="prev" style="width:auto">
                                             <i class="fas fa-chevron-left text-dark"></i>
@@ -514,7 +517,7 @@ else
                                         </a>
                                     }
 
-                                </div>  
+                                </div>
                             </div>
                             }
                             </div>
