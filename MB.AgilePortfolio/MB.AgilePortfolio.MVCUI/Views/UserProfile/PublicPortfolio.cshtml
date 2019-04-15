@@ -95,20 +95,21 @@ else
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-2 border" id="sidebar">
-                        
-                        <h2>@Model.User.Username</h2>
+                        <h2 class="mt-2">@Model.User.Username</h2>
                         <div>
-                            <a href="~/User/@Model.User.Username">
-                                @if (Model.User.ProfileImage != null)
-                                {
-                                    <img src="~/@Model.User.ProfileImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image" width="100%" class="rounded" />
-                                }
-                                else
-                                {
-                                    <img src="~/Assets/Images/UserProfiles/Default.png" alt="Default Profile Image" width="100%" class="rounded-circle" />
-                                }
-                            </a>
-                            <h4 class="font-weight-normal">@Model.User.FullName</h4>
+                            <div class="text-center">
+                                <a class="text-center" href="~/User/@Model.User.Username">
+                                    @if (Model.User.ProfileImage != null)
+                                    {
+                                        <img class="profile-image rounded" width="100%" src="~/@Model.User.ProfileImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/Assets/Images/UserProfiles/Default.png" alt="Default Profile Image" width="100%" class="rounded-circle" />
+                                    }
+                                </a>
+                            </div>
+                            <h4 class="font-weight-normal mt-2">@Model.User.FullName</h4>
                             <h4 class="font-weight-light">@Model.User.Email</h4>
                             <hr />
                             <a href="~/User/@Model.User.Username/Projects">
@@ -118,7 +119,10 @@ else
                                 <p>View @Model.User.Username's portfolios</p>
                             </a>
 
+
                         </div>
+
+
                     </div>
 
                     <div class="col-md-10 pl-2 border">
@@ -172,21 +176,21 @@ else
                                             {
                                                 if (iterations > 1)
                                                 {
-                                    <div class="carousel-item active">
-                                        @for (int y = 0; y < ImagesPerTransition; y++)
-                                        {
-                                            @*
-            <div class="carousel-caption">
-                <p>@Model.Projects[y].Name</p>
-            </div>
-                                            *@
-                                            string imgpath = "~/" + Model.Projects[y].Image;
-                                            <a href="~/User/@Model.User.Username/Projects/@Model.Projects[y].Name">
-                                                                <img src='@Url.Content(@imgpath)' onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt=@Model.Projects[y].Name/>
+                                                    <div class="carousel-item active">
+                                                        @for (int y = 0; y < ImagesPerTransition; y++)
+                                                        {
+                                                            @*
+                                                                <div class="carousel-caption">
+                                                                    <p>@Model.Projects[y].Name</p>
+                                                                </div>
+                                                            *@
+                                                            string imgpath = "~/" + Model.Projects[y].Image;
+                                                            <a href="~/User/@Model.User.Username/Projects/@Model.Projects[y].Name">
+                                                                <img src='@Url.Content(@imgpath)' onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt=@Model.Projects[y].Name />
                                                             </a>
                                                             imgleft--;
                                                         }
-                                        </div>
+                                                    </div>
                                                 }
                                                 else
                                                 {
@@ -199,9 +203,9 @@ else
                                                                 </div>
                                                             *@
                                                             string imgpath = "~/" + Model.Projects[y].Image;
-                                                        <a href="~/User/@Model.User.Username/Projects/@Model.Projects[y].Name">
-                                                            <img src='@Url.Content(@imgpath)' onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt=@Model.Projects[y].Name />
-                                                        </a>
+                                                            <a href="~/User/@Model.User.Username/Projects/@Model.Projects[y].Name">
+                                                                <img src='@Url.Content(@imgpath)' onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt=@Model.Projects[y].Name />
+                                                            </a>
                                                             imgleft--;
                                                         }
                                                     </div>
@@ -215,18 +219,18 @@ else
                                                         @for (int y = 0; y < ImagesPerTransition; y++)
                                                         {
                                                             @*
-            <div class="carousel-caption">
-                <p>@Model.Projects[y + ssi * ImagesPerTransition].Name</p>
-            </div>
+                                                                <div class="carousel-caption">
+                                                                    <p>@Model.Projects[y + ssi * ImagesPerTransition].Name</p>
+                                                                </div>
                                                             *@
                                                             string imgpath = "~/" + Model.Projects[y + ssi * ImagesPerTransition].Image;
                                                             <a href="~/User/@Model.User.Username/Projects/@Model.Projects[y + ssi * ImagesPerTransition].Name">
-                                                                    <img src='@Url.Content(@imgpath)' onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt=@Model.Projects[y + ssi * ImagesPerTransition].Name />
-                                                                </a>
+                                                                <img src='@Url.Content(@imgpath)' onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt=@Model.Projects[y + ssi * ImagesPerTransition].Name />
+                                                            </a>
 
-                                                                imgleft--;
-                                                                }
-                                                        </div>
+                                                            imgleft--;
+                                                        }
+                                                    </div>
                                                 }
                                                 else
                                                 {
@@ -236,17 +240,17 @@ else
                                                         @for (int y = 0; y < modssi; y++)
                                                         {
                                                             @*
-            <div class="carousel-caption">
-                <p>@Model.Projects[y + ssi * ImagesPerTransition].Name</p>
-            </div>
+                                                                <div class="carousel-caption">
+                                                                    <p>@Model.Projects[y + ssi * ImagesPerTransition].Name</p>
+                                                                </div>
                                                             *@
                                                             string imgpath = "~/" + Model.Projects[y + ssi * ImagesPerTransition].Image;
                                                             <a href="~/User/@Model.User.Username/Projects/@Model.Projects[y + ssi * ImagesPerTransition].Name">
-                                                                    <img src='@Url.Content(@imgpath)' onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt=@Model.Projects[y + ssi * ImagesPerTransition].Name />
-                                                                </a>
-                                                                imgleft--;
-                                                                }
-                                                        </div>
+                                                                <img src='@Url.Content(@imgpath)' onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt=@Model.Projects[y + ssi * ImagesPerTransition].Name />
+                                                            </a>
+                                                            imgleft--;
+                                                        }
+                                                    </div>
                                                 }
                                             }
                                         }

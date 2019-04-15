@@ -198,9 +198,7 @@
     <Content Include="Assets\Images\Home\smartphones.jpg" />
     <Content Include="Assets\Images\Home\spaceWithCode.jpg" />
     <Content Include="Assets\Images\Home\twitter.jpg" />
-    <Content Include="Assets\Images\UserProfiles\BroderickLemke.png" />
     <Content Include="Assets\Images\UserProfiles\Default.png" />
-    <Content Include="Assets\Images\UserProfiles\fvtc.png" />
     <Content Include="Assets\Images\UserProfiles\JoeWetzel.png" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
