@@ -34,6 +34,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     ViewBag.Message = "Login successful";
                     ViewBag.FullName = user.FullName;
                     Session["user"] = user;
+                    Session["UserID"] = user.Id;
                     //Set UserType on login in a session
                     Session["UserType"] = user.UserTypeDescription;
 
