@@ -13,7 +13,7 @@
 @using (Html.BeginForm("Index", "Search", FormMethod.Get))
 {
 <body onload = "load()">
-    @Html.DropDownList("search", new SelectList(Model.Languages, "Description", "Description", Model.Language), null, new { @id = "ddlLanguages", @class = "form-control", style = "display:none" })
+    @Html.DropDownList("language", new SelectList(Model.Languages, "Description", "Description", Model.Language), null, new { @id = "ddlLanguages", @class = "form-control", style = "display:none" })
     @Html.TextBox("search", null, new { @id = "tbxsearch", style = "display:none" })<input type="submit" name="submit" value="Search" id="inptsearch" /><br />
     <b> Search By: </b>
     <br />

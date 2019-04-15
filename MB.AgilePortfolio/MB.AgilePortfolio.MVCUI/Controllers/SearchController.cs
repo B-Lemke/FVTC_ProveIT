@@ -16,7 +16,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
     public class SearchController : Controller
     {
 
-        public ActionResult Index(string option, string search)
+        public ActionResult Index(string option, string search, string language)
         {
             ProjectLanguages pl = new ProjectLanguages
             {
@@ -37,9 +37,9 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 // Currently searching by language only returns projects
                 // THIS MAY CHANGE IF ADVANCED SEARCH OPTIONS ARE ADDED (IE: search portfolios by languages used [languages in all projects in a Portfolio])
                 ViewBag.ReturnObject = "Projects";
-
+                
                 //Load Projects by input search string exact matches
-                pl.projectLanguages.LoadByLanguageName(search);
+                pl.projectLanguages.LoadByLanguageName(language);
                 if (pl.projectLanguages.Count > 0)
                 {
                     // Found at least one match
@@ -58,7 +58,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     //No exact matches found
 
                     //Load Projects by input search string partial matches
-                    pl.projectLanguages.LoadByPartialLanguageName(search);
+                    pl.projectLanguages.LoadByPartialLanguageName(language);
                     foreach (ProjectLanguage projlang in pl.projectLanguages)
                     {
                         Project proj = new Project();
