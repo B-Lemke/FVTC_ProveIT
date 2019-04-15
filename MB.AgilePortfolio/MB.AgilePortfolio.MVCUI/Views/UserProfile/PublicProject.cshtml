@@ -1,6 +1,7 @@
 ﻿@model MB.AgilePortfolio.MVCUI.ViewModels.ScreenshotProjects
 @{
-    if (Model.Project != null) {
+    if (Model.Project != null)
+    {
         ViewBag.Title = Model.Project.Name;
     }
     else
@@ -39,121 +40,121 @@ else
         @Html.AntiForgeryToken()
         <!DOCTYPE html>
 
-    <html>
-    <head>
-        <meta name="viewport" content="width=device-width" />
-        <script src="~/scripts/jquery-3.3.1.min.js"></script>
-        <script src="~/scripts/bootstrap.min.js"></script>
-        <script src="~/scripts/jquery.dataTables.min.js"></script>
-        <script src="~/scripts/dataTables.bootstrap4.min.js"></script>
-        <style>
+        <html>
+        <head>
+            <meta name="viewport" content="width=device-width" />
+            <script src="~/scripts/jquery-3.3.1.min.js"></script>
+            <script src="~/scripts/bootstrap.min.js"></script>
+            <script src="~/scripts/jquery.dataTables.min.js"></script>
+            <script src="~/scripts/dataTables.bootstrap4.min.js"></script>
+            <style>
 
-            #myImg {
-                border-radius: 5px;
-                cursor: pointer;
-                transition: 0.3s;
-            }
-
-                #myImg:hover {
-                    opacity: 0.7;
+                #myImg {
+                    border-radius: 5px;
+                    cursor: pointer;
+                    transition: 0.3s;
                 }
 
-            /* The Modal (background) */
-            .modal {
-                display: none; /* Hidden by default */
-                position: fixed; /* Stay in place */
-                z-index: 1; /* Sit on top */
-                padding-top: 100px; /* Location of the box */
-                left: 0;
-                top: 0;
-                width: 100%; /* Full width */
-                height: 100%; /* Full height */
-                overflow: auto; /* Enable scroll if needed */
-                background-color: rgb(0,0,0); /* Fallback color */
-                background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
-            }
+                    #myImg:hover {
+                        opacity: 0.7;
+                    }
 
-            /* Modal Content (image) */
-            .modal-content {
-                margin: auto;
-                display: block;
-                width: 80%;
-                max-width: 700px;
-            }
+                /* The Modal (background) */
+                .modal {
+                    display: none; /* Hidden by default */
+                    position: fixed; /* Stay in place */
+                    z-index: 1; /* Sit on top */
+                    padding-top: 100px; /* Location of the box */
+                    left: 0;
+                    top: 0;
+                    width: 100%; /* Full width */
+                    height: 100%; /* Full height */
+                    overflow: auto; /* Enable scroll if needed */
+                    background-color: rgb(0,0,0); /* Fallback color */
+                    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+                }
 
-            /* Caption of Modal Image */
-            #caption {
-                margin: auto;
-                display: block;
-                width: 80%;
-                max-width: 700px;
-                text-align: center;
-                color: #ccc;
-                padding: 10px 0;
-                height: 150px;
-            }
+                /* Modal Content (image) */
+                .modal-content {
+                    margin: auto;
+                    display: block;
+                    width: 80%;
+                    max-width: 700px;
+                }
 
-            /* Add Animation */
-            .modal-content, #caption {
-                -webkit-animation-name: zoom;
-                -webkit-animation-duration: 0.6s;
-                animation-name: zoom;
-                animation-duration: 0.6s;
-            }
+                /* Caption of Modal Image */
+                #caption {
+                    margin: auto;
+                    display: block;
+                    width: 80%;
+                    max-width: 700px;
+                    text-align: center;
+                    color: #ccc;
+                    padding: 10px 0;
+                    height: 150px;
+                }
+
+                /* Add Animation */
+                .modal-content, #caption {
+                    -webkit-animation-name: zoom;
+                    -webkit-animation-duration: 0.6s;
+                    animation-name: zoom;
+                    animation-duration: 0.6s;
+                }
 
 
 
 
-            /* The Close Button */
-            .close {
-                position: absolute;
-                top: 15px;
-                right: 35px;
-                color: #f1f1f1;
-                font-size: 40px;
-                font-weight: bold;
-                transition: 0.3s;
-            }
+                /* The Close Button */
+                .close {
+                    position: absolute;
+                    top: 15px;
+                    right: 35px;
+                    color: #f1f1f1;
+                    font-size: 40px;
+                    font-weight: bold;
+                    transition: 0.3s;
+                }
 
-                .close:hover,
-                .close:focus {
-                    color: #bbb;
-                    text-decoration: none;
+                    .close:hover,
+                    .close:focus {
+                        color: #bbb;
+                        text-decoration: none;
+                        cursor: pointer;
+                    }
+
+
+
+
+                .multiselect {
+                    width: 200px;
+                }
+
+                .selectBox {
+                    position: relative;
+                }
+
+                    .selectBox select {
+                        width: 100%;
+                        font-weight: bold;
+                    }
+
+                .overSelect {
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    top: 0;
+                    bottom: 0;
+                }
+
+                .carousel-inner img {
+                    width: 10%;
+                    height: 100px;
+                    object-fit: contain;
+                    margin-left: auto;
+                    margin-right: auto;
                     cursor: pointer;
                 }
-
-
-
-
-            .multiselect {
-                width: 200px;
-            }
-
-            .selectBox {
-                position: relative;
-            }
-
-                .selectBox select {
-                    width: 100%;
-                    font-weight: bold;
-                }
-
-            .overSelect {
-                position: absolute;
-                left: 0;
-                right: 0;
-                top: 0;
-                bottom: 0;
-            }
-
-            .carousel-inner img {
-                width: 10%;
-                height: 100px;
-                object-fit: contain;
-                margin-left: auto;
-                margin-right: auto;
-                cursor: pointer;
-            }
 
                 .carousel-inner {
                     padding-left: 10%;
@@ -257,141 +258,21 @@ else
                             </div>
                         }
 
-                        @if (Model.ScreenshotList?.Count > 0)
-                        {
-                            <hr />
-                            <h4 class="text-center mt-2">Screenshots</h4>
-                        }
+
+                        <hr />
 
 
-                    <!-- The Modal -->
-                    <div id="myModal" class="modal">
-                        <span class="close">&times;</span>
-                        <img class="modal-content" id="img01">
-                        <div id="caption"></div>
-                    </div>
-                    <div id="demo" class="carousel slide" data-ride="carousel" data-interval="10000">
-                        @{
-                            int imgleft = Model.ScreenshotList.Count;
-                            int ImagesPerTransition = 9;
-                        }
-                        <div class="carousel-inner" role="listbox">
 
-                            @if (Model.ScreenshotList?.Count > 0)
-                            {
-                                int count = 1;
-                                int modssi = Model.ScreenshotList.Count % ImagesPerTransition;
-                                int iterations = 0;
-                                imgleft = Model.ScreenshotList.Count;
-
-                                    if (modssi > 0)
-                                    {
-                                        if (Model.ScreenshotList.Count > ImagesPerTransition - 1)
-                                        {
-                                            iterations = (int)Math.Ceiling(((double)Model.ScreenshotList.Count) / ImagesPerTransition);
-                                        }
-                                        else
-                                        {
-                                            iterations = 1;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        iterations = (Model.ScreenshotList.Count) / ImagesPerTransition;
-                                    }
-                                    var active = iterations == 1 ? "active" : "";
-
-                                for (int ssi = 0; ssi < iterations; ssi++)
-                                {
-                                    if (ssi == 0)
-                                    {
-                                        if (iterations > 1)
-                                        {
-                                            <div class="carousel-item active">
-                                                @for (int y = 0; y < ImagesPerTransition; y++)
-                                                {
-                                                    @*<p>@Model.ScreenshotList[y].Name</p>*@
-                                                    string imgpath = "~/" + Model.ScreenshotList[y].FilePath;
-                                                    @*<a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y].Id})'>*@
-                                                    <img src='@Url.Content(@imgpath)' onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Screenshot" id=@count onclick="loadImage(@count)" />
-                                                    @*</a>*@
-                                                    imgleft--;
-                                                    count++;
-
-                                                }
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            <div class="carousel-item active">
-                                                @for (int y = 0; y < modssi; y++)
-                                                {
-                                                    @*<p>@Model.ScreenshotList[y].Name</p>*@
-                                                    string imgpath = "~/" + Model.ScreenshotList[y].FilePath;
-                                                    @*<a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.ScreenshotList[y].Id})'>*@
-                                                    <img src='@Url.Content(@imgpath)' onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Screenshot" id=@count onclick="loadImage(@count)" />
-                                                    @*</a>*@
-                                                    imgleft--;
-                                                    count++;
-                                                }
-                                            </div>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (imgleft >= ImagesPerTransition)
-                                        {
-                                            <div class="carousel-item">
-                                                @for (int y = 0; y < ImagesPerTransition; y++)
-                                                {
-                                                    @*<p>@Model.Projects[y + ssi * ImagesPerTransition].Name</p>*@
-                                                    string imgpath = "~/" + Model.ScreenshotList[y + ssi * ImagesPerTransition].FilePath;
-                                                    @*<a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.ScreenshotList[y + ssi * ImagesPerTransition].Id})'>*@
-                                                    <img src='@Url.Content(@imgpath)' onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Screenshot" id=@count onclick="loadImage(@count)" />
-                                                    @*</a>*@
-
-                                                    imgleft--;
-                                                    count++;
-                                                }
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            <div class="carousel-item">
-                                                @for (int y = 0; y < modssi; y++)
-                                                {
-                                                    @*<p>@Model.Projects[y + ssi * ImagesPerTransition].Name</p>*@
-                                                    string imgpath = "~/" + Model.ScreenshotList[y + ssi * ImagesPerTransition].FilePath;
-                                                    @*<a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y + ssi * ImagesPerTransition].Id})'>*@
-                                                    <img src='@Url.Content(@imgpath)' onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Screenshot" id=@count onclick="loadImage(@count)" />
-                                                    @*</a>*@
-                                                    imgleft--;
-                                                    count++;
-                                                }
-                                            </div>
-                                        }
-                                    }
-                                }
-                            }
-                        </div>
-
-                            @if (Model.ScreenshotList?.Count > 9)
-                            {
-                                <a class="carousel-control-prev" href="#demo" data-slide="prev" style="width:auto">
-                                    <i class="fas fa-chevron-left text-dark"></i>
-                                </a>
-                                <a class="carousel-control-next" href="#demo" data-slide="next" style="width:auto">
-                                    <i class="fas fa-chevron-right text-dark"></i>
-                                </a>
-                            }
-
-                        </div>
 
                         <hr />
 
                         <ul class="nav nav-tabs">
                             <li class="active nav-item"><a href="#firsttab" data-toggle="tab" class="nav-link">Basic Info</a></li>
                             <li class="nav-item"><a href="#secondtab" data-toggle="tab" class="nav-link">Project Details</a></li>
+                            @if (Model.ScreenshotList?.Count > 0)
+                            {
+                                <li class="nav-item"><a href="#thirdtab" data-toggle="tab" class="nav-link">Screenshots</a></li>
+                            }
                         </ul>
 
                         <div class="tab-content p-3">
@@ -508,7 +389,135 @@ else
                                     }
                                 </dl>
                             </div>
-                        </div>
+                            @if (Model.ScreenshotList?.Count > 0)
+                            {
+                            <div class="tab-pane" id="thirdtab">
+
+                                <!-- The Modal -->
+                                <div id="myModal" class="modal">
+                                    <span class="close">&times;</span>
+                                    <img class="modal-content" id="img01">
+                                    <div id="caption"></div>
+                                </div>
+                                <div id="demo" class="carousel slide" data-ride="carousel" data-interval="10000">
+                                    @{
+                                        int imgleft = Model.ScreenshotList.Count;
+                                        int ImagesPerTransition = 9;
+                                    }
+                                    <div class="carousel-inner container-fluid" role="listbox">
+
+                                        @if (Model.ScreenshotList?.Count > 0)
+                                        {
+                                            int count = 1;
+                                            int modssi = Model.ScreenshotList.Count % ImagesPerTransition;
+                                            int iterations = 0;
+                                            imgleft = Model.ScreenshotList.Count;
+
+                                            if (modssi > 0)
+                                            {
+                                                if (Model.ScreenshotList.Count > ImagesPerTransition - 1)
+                                                {
+                                                    iterations = (int)Math.Ceiling(((double)Model.ScreenshotList.Count) / ImagesPerTransition);
+                                                }
+                                                else
+                                                {
+                                                    iterations = 1;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                iterations = (Model.ScreenshotList.Count) / ImagesPerTransition;
+                                            }
+                                            var active = iterations == 1 ? "active" : "";
+
+                                            for (int ssi = 0; ssi < iterations; ssi++)
+                                            {
+                                                if (ssi == 0)
+                                                {
+                                                    if (iterations > 1)
+                                                    {
+                                                        <div class="carousel-item active ">
+                                                            @for (int y = 0; y < ImagesPerTransition; y++)
+                                                            {
+                                                                @*<p>@Model.ScreenshotList[y].Name</p>*@
+                                                                string imgpath = "~/" + Model.ScreenshotList[y].FilePath;
+                                                                @*<a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y].Id})'>*@
+                                                                <img src='@Url.Content(@imgpath)' onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Screenshot" id=@count onclick="loadImage(@count)" />
+                                                                @*</a>*@
+                                                                imgleft--;
+                                                                count++;
+
+                                                            }
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="carousel-item active">
+                                                            @for (int y = 0; y < modssi; y++)
+                                                            {
+                                                                @*<p>@Model.ScreenshotList[y].Name</p>*@
+                                                                string imgpath = "~/" + Model.ScreenshotList[y].FilePath;
+                                                                @*<a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.ScreenshotList[y].Id})'>*@
+                                                                <img src='@Url.Content(@imgpath)' onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Screenshot" id=@count onclick="loadImage(@count)" />
+                                                                @*</a>*@
+                                                                imgleft--;
+                                                                count++;
+                                                            }
+                                                        </div>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    if (imgleft >= ImagesPerTransition)
+                                                    {
+                                                        <div class="carousel-item">
+                                                            @for (int y = 0; y < ImagesPerTransition; y++)
+                                                            {
+                                                                @*<p>@Model.Projects[y + ssi * ImagesPerTransition].Name</p>*@
+                                                                string imgpath = "~/" + Model.ScreenshotList[y + ssi * ImagesPerTransition].FilePath;
+                                                                @*<a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.ScreenshotList[y + ssi * ImagesPerTransition].Id})'>*@
+                                                                <img src='@Url.Content(@imgpath)' onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Screenshot" id=@count onclick="loadImage(@count)" />
+                                                                @*</a>*@
+
+                                                                imgleft--;
+                                                                count++;
+                                                            }
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="carousel-item">
+                                                            @for (int y = 0; y < modssi; y++)
+                                                            {
+                                                                @*<p>@Model.Projects[y + ssi * ImagesPerTransition].Name</p>*@
+                                                                string imgpath = "~/" + Model.ScreenshotList[y + ssi * ImagesPerTransition].FilePath;
+                                                                @*<a href='@Url.Action("PublicProject", "UserProfile",new { id = Model.Projects[y + ssi * ImagesPerTransition].Id})'>*@
+                                                                <img src='@Url.Content(@imgpath)' onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Screenshot" id=@count onclick="loadImage(@count)" />
+                                                                @*</a>*@
+                                                                imgleft--;
+                                                                count++;
+                                                            }
+                                                        </div>
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    </div>
+
+                                    @if (Model.ScreenshotList?.Count > 9)
+                                    {
+                                        <a class="carousel-control-prev" href="#demo" data-slide="prev" style="width:auto">
+                                            <i class="fas fa-chevron-left text-dark"></i>
+                                        </a>
+                                        <a class="carousel-control-next" href="#demo" data-slide="next" style="width:auto">
+                                            <i class="fas fa-chevron-right text-dark"></i>
+                                        </a>
+                                    }
+
+                                </div>  
+                            </div>
+                            }
+                            </div>
 
 
 
@@ -584,7 +593,7 @@ else
     }
 </script>
 
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
 }
