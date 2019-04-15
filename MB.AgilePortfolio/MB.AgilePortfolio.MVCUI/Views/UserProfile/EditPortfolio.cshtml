@@ -137,11 +137,14 @@
             <div class="form-horizontal">
                 <h4>Projects</h4>
                 <hr />
+                @{
+                    int imgleft = Model.Projects.Count;
+                    int ImagesPerTransition = 9;
+                }
+
                 <div id="demo" class="carousel slide carousel-multi item" data-ride="carousel" data-interval="10000">
-                    @{
-                        int imgleft = Model.Projects.Count;
-                        int ImagesPerTransition = 9;
-                    }
+
+
 
                     <div class="carousel-inner" role="listbox">
 
@@ -258,7 +261,7 @@
 
                     </div>
 
-                    @if (Model.Projects?.Count > 9)
+                    @if (Model.Projects?.Count > ImagesPerTransition)
                     {
                         <a class="carousel-control-prev" href="#demo" data-slide="prev" style="width:auto">
                             <i class="fas fa-chevron-left text-dark"></i>

@@ -393,18 +393,21 @@ else
                             {
                                 <div class="tab-pane" id="thirdtab">
 
-                                    <!-- The Modal -->
-                                    <div id="myModal" class="modal">
-                                        <span class="close">&times;</span>
-                                        <img class="modal-content" id="img01">
-                                        <div id="caption"></div>
-                                    </div>
-                                    <div id="demo" class="carousel slide" data-ride="carousel" data-interval="10000">
-                                        @{
-                                            int imgleft = Model.ScreenshotList.Count;
-                                            int ImagesPerTransition = 9;
-                                        }
-                                        <div class="carousel-inner container-fluid" role="listbox">
+                                <!-- The Modal -->
+                                <div id="myModal" class="modal">
+                                    <span class="close">&times;</span>
+                                    <img class="modal-content" id="img01">
+                                    <div id="caption"></div>
+                                </div>
+
+                                @{
+                                    int imgleft = Model.ScreenshotList.Count;
+                                    int ImagesPerTransition = 9;
+                                }
+
+                                <div id="demo" class="carousel slide" data-ride="carousel" data-interval="10000">
+
+                                    <div class="carousel-inner container-fluid" role="listbox">
 
                                             @if (Model.ScreenshotList?.Count > 0)
                                             {
@@ -504,18 +507,18 @@ else
                                             }
                                         </div>
 
-                                        @if (Model.ScreenshotList?.Count > 9)
-                                        {
-                                            <a class="carousel-control-prev" href="#demo" data-slide="prev" style="width:auto">
-                                                <i class="fas fa-chevron-left text-dark"></i>
-                                            </a>
-                                            <a class="carousel-control-next" href="#demo" data-slide="next" style="width:auto">
-                                                <i class="fas fa-chevron-right text-dark"></i>
-                                            </a>
-                                        }
+                                    @if (Model.ScreenshotList?.Count > ImagesPerTransition)
+                                    {
+                                        <a class="carousel-control-prev" href="#demo" data-slide="prev" style="width:auto">
+                                            <i class="fas fa-chevron-left text-dark"></i>
+                                        </a>
+                                        <a class="carousel-control-next" href="#demo" data-slide="next" style="width:auto">
+                                            <i class="fas fa-chevron-right text-dark"></i>
+                                        </a>
+                                    }
 
-                                    </div>
                                 </div>
+                            </div>
                             }
                         </div>
 
