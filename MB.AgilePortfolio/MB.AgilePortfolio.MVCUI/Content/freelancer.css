@@ -1,8 +1,4 @@
-﻿.left-margin {
-    margin-left: 50px;
-}
-
-body {
+﻿body {
   font-family: 'Lato'; }
 
 h1,
@@ -45,10 +41,10 @@ hr.star-light:after {
   background-color: #262E43; }
 
 hr.star-dark {
-  border-color: #F26230; }
+  border-color: #D63542; }
 
 hr.star-dark:after {
-  color: #F26230;
+  color: #D63542;
   background-color: white; }
 
 section {
@@ -95,7 +91,7 @@ section {
     #mainNav .navbar-nav li.nav-item a.nav-link {
       color: #fff; }
       #mainNav .navbar-nav li.nav-item a.nav-link:hover {
-        color: #F26230; }
+        color: #D63542; }
       #mainNav .navbar-nav li.nav-item a.nav-link:active, #mainNav .navbar-nav li.nav-item a.nav-link:focus {
         color: #fff; }
       #mainNav .navbar-nav li.nav-item a.nav-link.active {
@@ -131,7 +127,7 @@ section {
       font-size: 1.5em; } }
 
 .navbar-menu-button:hover, .navbar-menu-button:active, .navbar-menu-button:focus {
-  background: #F26230 !important; }
+  background: #D63542 !important; }
 
 header.masthead {
   padding-top: calc(6rem + 72px);
@@ -267,6 +263,8 @@ form .row:first-child .floating-label-form-group {
 .footer-link-block {
   padding-top: 20px; }
 
+.section-header {
+  font-size: 6rem; }
 
 a {
   color: #262E43; }
@@ -280,46 +278,24 @@ a {
   background-color: #262E43 !important; }
 
 .bg-secondary {
-    background-color: #D63542 !important;
-}
+  background-color: #D63542 !important; }
 
 .text-primary {
   color: #262E43 !important; }
 
 .text-secondary {
-    color: #FF4454 !important;
-}
+  color: #D63542 !important; }
 
 .btn-primary {
-    background-color: #D63542;
-    border-color: #262E43;
-}
+  background-color: #262E43;
+  border-color: #262E43; }
   .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
     background-color: #141822;
     border-color: #141822; }
 
 .btn-secondary {
-    background-color: #D63542;
-    border-color: #D63542;
-}
-    .btn-secondary:hover, .btn-secondary:focus, .btn-secondary:active {
-        background-color: #D63542;
-        border-color: #D63542;
-    }
-
-
-
-.carousel-inner img {
-    width: 100px;
-    height: 100px;
-}
-
-.carousel-inner {
-    padding-left: 10%;
-    padding-right: 10%;
-    width: 100%;
-}
-
-.carousel-control-prev, .carousel-control-next {
-    width: auto !important;
-}
+  background-color: #D63542;
+  border-color: #D63542; }
+  .btn-secondary:hover, .btn-secondary:focus, .btn-secondary:active {
+    background-color: #b42430;
+    border-color: #b42430; }

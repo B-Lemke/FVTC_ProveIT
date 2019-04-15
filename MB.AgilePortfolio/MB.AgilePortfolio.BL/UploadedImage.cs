@@ -79,6 +79,7 @@ namespace MB.AgilePortfolio.BL
                         SavePath = "Assets/Images/UserProfiles";
                         fileName = DefaultFileName;
                         FilePath = SavePath + "/" + fileName;
+
                     }
 
                     //Null file upload check

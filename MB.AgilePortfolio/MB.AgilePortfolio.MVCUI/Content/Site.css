@@ -44,3 +44,29 @@ body {
     width: 100%;
     margin: 0%;
 }
+
+.profile-image {
+    max-height: 300px;
+    max-width: 300px;
+}
+
+.status_badge{
+    font-size: .5em; 
+    margin-left: 5px;
+}
+
+.status_badge_in_progress {
+    background-color: #0575B2;
+}
+
+.status_badge_completed {
+    background-color: #29A226;
+}
+
+.status_badge_cancelled {
+    background-color: #D63542;
+}
+
+.status_badge_bugged {
+    background-color: #FFC02C;
+}
