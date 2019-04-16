@@ -128,6 +128,8 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                         ppus.ProjectLanguage = new ProjectLanguage();
                         ppus.ProjectLanguages = new ProjectLanguageList();
                         ppus.User.LoadById(userin.Id);
+                        ppus.Languages.Load();
+                        ppus.AvailableLanguages = GetLanguages(ppus.Languages);
                         return View(ppus);
                     }
 

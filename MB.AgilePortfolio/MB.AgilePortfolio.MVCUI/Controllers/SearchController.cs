@@ -63,6 +63,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     {
                         Project proj = new Project();
                         proj.LoadById(projlang.ProjectId);
+                        proj.CreatorUserName = pl.User.Username;
                         pl.Projects.Add(proj);
                     }
                 }
@@ -84,6 +85,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 if (pl.Projects.Count > 0)
                 {
                     // Found at least one match
+                    foreach (Project prj in pl.Projects)
+                    {
+                        User creator = new User();
+                        creator.LoadById(prj.UserId);
+                        prj.CreatorUserName = creator.Username;
+                    }
                 }
                 else
                 {
@@ -91,6 +98,13 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
                     //Load Projects by input search string partial matches
                     pl.Projects.LoadByPartialProjectName(search);
+                    foreach (Project prj in pl.Projects)
+                    {
+                        User creator = new User();
+                        creator.LoadById(prj.UserId);
+                        prj.CreatorUserName = creator.Username;
+                    }
+
                 }
 
                 if (pl.Projects.Count < 1)
@@ -108,6 +122,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
                 //Load Portfolios by input search string exact matches
                 pl.Portfolios.LoadByPortfolioName(search);
+                foreach (Portfolio port in pl.Portfolios)
+                {
+                    User creator = new User();
+                    creator.LoadById(port.UserId);
+                    port.CreatorUsername = creator.Username;
+                }
                 if (pl.Portfolios.Count > 0)
                 {
                     // Found at least one match
@@ -118,6 +138,12 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
                     //Load Portfolios by input search string partial matches
                     pl.Portfolios.LoadByPartialPortfolioName(search);
+                    foreach (Portfolio port in pl.Portfolios)
+                    {
+                        User creator = new User();
+                        creator.LoadById(port.UserId);
+                        port.CreatorUsername = creator.Username;
+                    }
                 }
 
                 if (pl.Portfolios.Count < 1)

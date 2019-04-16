@@ -20,6 +20,17 @@
             @if (Model.Portfolios.Count < 1)
             {
                 <p align="center" style="font-style:italic">You have no portfolios currently</p>
+                <div class="text-center ">
+                    <div class="card mt-2" style="height:98%;">
+                        <div class="card-body" style="text-align:center">
+                            <a href="~/CreateNewPortfolio/Create/" class="card-link" style="text-align:center;vertical-align:middle;">
+                                <i class="far fa-plus-square mt-2" style="font-size:150px;vertical-align:middle;text-align:center;margin:auto;">
+                                </i>
+                                <h4 class="mt-4">Create Portfolio</h4>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             }
             else
             {

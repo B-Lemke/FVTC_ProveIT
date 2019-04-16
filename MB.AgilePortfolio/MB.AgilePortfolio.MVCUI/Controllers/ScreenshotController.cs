@@ -7,6 +7,7 @@ using MB.AgilePortfolio.BL;
 using MB.AgilePortfolio.MVCUI.ViewModels;
 using MB.AgilePortfolio.MVCUI.Models;
 using System.IO;
+using System.Text;
 
 namespace MB.AgilePortfolio.MVCUI.Controllers
 {
@@ -395,12 +396,17 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
                     if (!ModelState.IsValid)
                     {
+                        ppus.Languages = new LanguageList();
+                        ppus.SelectedLanguages = new List<string>();
+                        ppus.AvailableLanguages = new List<SelectListItem>();
                         ppus.Privacies = new PrivacyList();
                         ppus.Statuses = new StatusList();
                         ppus.User = new User();
                         ppus.User.LoadById(userin.Id);
                         ppus.Privacies.Load();
                         ppus.Statuses.Load();
+                        ppus.Languages.Load();
+                        ppus.AvailableLanguages = GetLanguages(ppus.Languages);
                         return View(ppus);
                     }
                     string fp = ui.Upload();
@@ -439,5 +445,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             return Langlist;
 
         }
+        
     }
 }

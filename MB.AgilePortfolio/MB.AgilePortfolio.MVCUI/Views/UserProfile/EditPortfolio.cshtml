@@ -279,18 +279,36 @@
 
                 </div>
             </div>
-
-            <div class="form-group">
-                <div class="col-md-12">
-                    @Html.ActionLink(
-                   "Remove Projects",
-                   "DeleteProjectPortfolio",
-                   "UserProfile",
-                   new { id = Model.Portfolio.Id },
-                   new { @class = "btn btn-primary", @style= "margin-left:40px" }
-                   )
+            @if (Model.Projects?.Count > 0)
+            {
+                <br />
+                <div class="form-group">
+                    <div class="text-center">
+                        @Html.ActionLink(
+                        "Remove Projects",
+                        "DeleteProjectPortfolio",
+                        "UserProfile",
+                        new { id = Model.Portfolio.Id },
+                        new { @class = "btn btn-primary", @style = "margin-left:40px" }
+                        )
+                    </div>
                 </div>
-            </div>
+            }
+            else
+            {
+                    <div class="text-md-center">
+                        <div class="card mt-2" style="height:98%;">
+                            <div class="card-body" style="text-align:center">
+                                <a href="~/UserProfile/AddProject/@Model.Portfolio.Id" class="card-link" style="text-align:center;vertical-align:middle;">
+                                    <i class="far fa-plus-square mt-2" style="font-size:150px;vertical-align:middle;text-align:center;margin:auto;">
+                                    </i>
+                                    <h4 class="mt-4">Add Project</h4>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+            }
 
             <hr />
 
