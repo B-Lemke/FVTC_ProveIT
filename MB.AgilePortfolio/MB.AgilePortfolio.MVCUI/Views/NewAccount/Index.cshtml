@@ -12,7 +12,7 @@
 <h2>Create New Account</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Index", "NewAccount", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -105,12 +105,12 @@
         <div class="form-group">
 
 
-                <label>Upload Display Image</label>
-                <div class="input-group">
-                    <div class="custom-file">
-                        @Html.TextBoxFor(model => model.Fileupload, new { type = "file", id = "fileupload", name = "fileupload", accept = ".jpg, .jpeg, .gif, .png" })
-                    </div>
+            <label>Upload Display Image</label>
+            <div class="input-group">
+                <div class="custom-file">
+                    @Html.TextBoxFor(model => model.Fileupload, new { type = "file", id = "fileupload", name = "fileupload", accept = ".jpg, .jpeg, .gif, .png" })
                 </div>
+            </div>
 
             <div class="col-md-10">
                 @Html.HiddenFor(model => model.User.ProfileImage, new { htmlAttributes = new { @class = "form-control" } })
