@@ -27,8 +27,8 @@ namespace MB.AgilePortfolio.BL
         public string PrivacyDescription { get; set; }
         public ProjectList Projects { get; set; }
         public string CreatorUsername { get; set; }
-        public readonly string UrlFriendlyName;
-        public readonly string UrlFriendlyCreatorUserName;
+        public string UrlFriendlyName { get { return URLFriendly(this.Name); } }
+        public string UrlFriendlyCreatorUserName { get { return URLFriendly(this.CreatorUsername); } }
 
         /// <summary>
         /// Produces optional, URL-friendly version of a title, "like-this-one". 
@@ -232,8 +232,6 @@ namespace MB.AgilePortfolio.BL
             UserEmail = email;
             PrivacyDescription = privacy;
             PrivacyId = privacyId;
-            UrlFriendlyName = URLFriendly(name);
-            UrlFriendlyCreatorUserName = URLFriendlyByUserID(userId);
             Projects = new ProjectList();
         }
 

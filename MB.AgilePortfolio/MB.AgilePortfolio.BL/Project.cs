@@ -51,8 +51,8 @@ namespace MB.AgilePortfolio.BL
         public LanguageList Languages { get; set; }
         public bool UsesDefaultImage { get; set; }
         public string CreatorUserName { get; set; }
-        public readonly string UrlFriendlyName;
-        public readonly string UrlFriendlyCreatorUserName;
+        public string UrlFriendlyName { get { return URLFriendly(this.Name); } }
+        public string UrlFriendlyCreatorUserName { get { return URLFriendly(this.CreatorUserName); } }
 
 
         /// <summary>
@@ -264,8 +264,6 @@ namespace MB.AgilePortfolio.BL
             LastUpdated = lastUpdated;
             SoftwareUsed = softwareUsed;
             StatusId = statusId;
-            UrlFriendlyName = URLFriendly(name);
-            UrlFriendlyCreatorUserName = URLFriendlyByUserID(userId);
         }
 
         public Project(Guid id, string name, string location, string filepath, Guid privacyId, string image, string description, Guid userId, DateTime dateCreated,
@@ -291,8 +289,6 @@ namespace MB.AgilePortfolio.BL
             PrivacyDescription = privacy;
             StatusDescription = status;
             UserEmail = email;
-            UrlFriendlyName = URLFriendly(name);
-            UrlFriendlyCreatorUserName = URLFriendlyByUserID(userId);
         }
 
         // Old insert
