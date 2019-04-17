@@ -761,7 +761,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 PortfolioList pl = new PortfolioList();
                 pl.LoadbyUserID(userId);
 
-                up.Portfolio = pl.FirstOrDefault(p => p.Name == portfolioName);
+                up.Portfolio = pl.FirstOrDefault(p => p.UrlFriendlyName == portfolioName);
 
                 if (up.Portfolio != null && up.Portfolio.Id != Guid.Empty)
                 {
