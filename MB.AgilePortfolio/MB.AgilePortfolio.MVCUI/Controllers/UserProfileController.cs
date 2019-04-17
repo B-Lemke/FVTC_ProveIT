@@ -457,10 +457,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         public ActionResult PublicProject(string username, string projectName)
         {
             User user = new User();
-            Guid userId = user.CheckIfUsernameExists(username);
-
             ProjectList pl = new ProjectList();
-            pl.LoadbyUserID(userId);
 
             ScreenshotProjects sp = new ScreenshotProjects()
             {
@@ -471,6 +468,11 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 Status = new Status()
             };
 
+            UserList users = new UserList();
+            users.Load();
+            sp.User = users.FirstOrDefault(p => p.UrlFriendlyName == username);
+            Guid userId = user.CheckIfUsernameExists(sp.User.Username);
+            pl.LoadbyUserID(userId);
             sp.Project = pl.FirstOrDefault(p => p.UrlFriendlyName == projectName);
 
             if (sp.Project != null)
