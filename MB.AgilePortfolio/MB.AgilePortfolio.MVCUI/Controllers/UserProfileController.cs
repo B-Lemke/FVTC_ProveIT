@@ -118,7 +118,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             };
             UserList users = new UserList();
             users.Load();
-            up.User = users.FirstOrDefault(p => p.UrlFriendlyName == username);
+            up.User = users.FirstOrDefault(p => p.UrlFriendlyName == username.ToLower());
             Guid idOfUser = up.User.CheckIfUsernameExists(up.User.Username);
 
             if (idOfUser != Guid.Empty)
@@ -470,10 +470,10 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
             UserList users = new UserList();
             users.Load();
-            sp.User = users.FirstOrDefault(p => p.UrlFriendlyName == username);
+            sp.User = users.FirstOrDefault(p => p.UrlFriendlyName == username.ToLower());
             Guid userId = user.CheckIfUsernameExists(sp.User.Username);
             pl.LoadbyUserID(userId);
-            sp.Project = pl.FirstOrDefault(p => p.UrlFriendlyName == projectName);
+            sp.Project = pl.FirstOrDefault(p => p.UrlFriendlyName == projectName.ToLower());
 
             if (sp.Project != null)
             {
@@ -510,7 +510,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
             UserList users = new UserList();
             users.Load();
-            up.User = users.FirstOrDefault(p => p.UrlFriendlyName == username);
+            up.User = users.FirstOrDefault(p => p.UrlFriendlyName == username.ToLower());
             Guid ID = up.User.CheckIfUsernameExists(up.User.Username);
             if (ID != Guid.Empty)
             {
@@ -770,14 +770,14 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
             UserList users = new UserList();
             users.Load();
-            up.User = users.FirstOrDefault(p => p.UrlFriendlyName == username);
+            up.User = users.FirstOrDefault(p => p.UrlFriendlyName == username.ToLower());
             Guid userId = user.CheckIfUsernameExists(up.User.Username);
             if (userId != Guid.Empty)
             {
                 PortfolioList pl = new PortfolioList();
                 pl.LoadbyUserID(userId);
 
-                up.Portfolio = pl.FirstOrDefault(p => p.UrlFriendlyName == portfolioName);
+                up.Portfolio = pl.FirstOrDefault(p => p.UrlFriendlyName == portfolioName.ToLower());
 
                 if (up.Portfolio != null && up.Portfolio.Id != Guid.Empty)
                 {
@@ -827,7 +827,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
             UserList users = new UserList();
             users.Load();
-            up.User = users.FirstOrDefault(p => p.UrlFriendlyName == username);
+            up.User = users.FirstOrDefault(p => p.UrlFriendlyName == username.ToLower());
             Guid ID = up.User.CheckIfUsernameExists(up.User.Username);
             if (ID != Guid.Empty)
             {
