@@ -104,7 +104,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                         creator.LoadById(prj.UserId);
                         prj.CreatorUserName = creator.Username;
                     }
-
                 }
 
                 if (pl.Projects.Count < 1)
@@ -134,6 +133,8 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 }
                 else
                 {
+
+                    
                     //No exact matches found
 
                     //Load Portfolios by input search string partial matches

@@ -30,29 +30,9 @@ namespace MB.AgilePortfolio.BL
                 {
                     tblProjectLanguage projectlanguage = new tblProjectLanguage();
 
-                    /* 
-                        TODO: Compare code
-                    --------------------------------------------------------------------------------------
-                      Which works (or is preferred) Commented Code or uncommented code:
-                        +   SIDENOTE: personally ProjectID = ProjectID looks ambigously confusing to me
-
-                    {                
-                        Id = Guid.NewGuid();
-                        ProjectId = ProjectId;
-                        LanguageId = LanguageId;
-                    };
-                     
-                    */
-
                     projectlanguage.Id = Guid.NewGuid();
                     projectlanguage.ProjectId = this.ProjectId;
                     projectlanguage.LanguageId = this.LanguageId;
-
-                    /*
-                    --------------------------------------------------------------------------------------
-                        END TODO: Compare code
-                    */
-                    //Save the Id
                     this.Id = projectlanguage.Id;
 
                     dc.tblProjectLanguages.Add(projectlanguage);
@@ -61,17 +41,6 @@ namespace MB.AgilePortfolio.BL
             }
             catch (Exception ex) { throw ex; }
         }
-
-        /*
-        public int Delete()
-        {
-            try
-            {
-                return Delete(null);
-            }
-            catch (Exception ex) { throw ex; }
-        }
-        */
 
         public int Delete()
         {
@@ -116,15 +85,6 @@ namespace MB.AgilePortfolio.BL
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
-
-                    /*
-                        TODO: Doublecheck Code
-                    --------------------------------------------------------------------------------------
-                           THIS NEEDED TO BE DOUBLECHECKED, AS I AM UNSURE THIS IS CORRECT
-                    --------------------------------------------------------------------------------------
-                        END TODO: Doublecheck Code
-                    */
-
                     var projectlanguage = (from pl in dc.tblProjectLanguages
                                                //join lang in dc.tblLanguages on pl.LanguageId equals lang.Id
                                                //join p in dc.tblProjects on pl.ProjectId equals p.Id
@@ -184,13 +144,6 @@ namespace MB.AgilePortfolio.BL
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
-
-                    /*TODO:
-                            WHERE clause needs FIXING (or doublechecking)
-                            Orderby needed?
-                            In general checking needed (I'm rusty at BL SQL)
-                    */
-
                     var projectlanguages = (from pl in dc.tblProjectLanguages
                                                 //join lang in dc.tblLanguages on pl.LanguageId equals lang.Id
                                                 //join p in dc.tblProjects on pl.ProjectId equals p.Id
@@ -217,13 +170,6 @@ namespace MB.AgilePortfolio.BL
             {
                 using (PortfolioEntities dc = new PortfolioEntities())
                 {
-
-                    /*TODO:
-                            WHERE clause needs FIXING (or doublechecking)
-                            Orderby needed?
-                            In general checking needed (I'm rusty at BL SQL)
-                    */
-
                     var projectlanguages = (from pl in dc.tblProjectLanguages
                                                 //join lang in dc.tblLanguages on pl.LanguageId equals lang.Id
                                                 //join p in dc.tblProjects on pl.ProjectId equals p.Id

@@ -148,7 +148,7 @@ else
                                         }
                                         <div class="col-md-4">
                                             <div class="card mt-2">
-                                                <a href="~/User/@Model.User.Username/Projects/@item.Name" class="card-link" style="text-align:center">
+                                                <a href="~/User/@Model.User.UrlFriendlyName/Projects/@item.UrlFriendlyName" class="card-link" style="text-align:center">
                                                     <img class="card-img-top project-image" src="@Url.Content("~/" + @item.Image)" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Project Image">
                                                 </a>
                                                 <div class="card-body" style="text-align:center">
@@ -171,7 +171,7 @@ else
                                                         }
                                                     </h6>
                                                     <p class="card-text" style="text-align:left">@item.ShortDescription</p>
-                                                    <a href="~/User/@Model.User.Username/Projects/@item.Name" class="card-link" style="text-align:center">
+                                                    <a href="~/User/@Model.User.UrlFriendlyName/Projects/@item.UrlFriendlyName" class="card-link" style="text-align:center">
                                                         <br />
                                                         View Project
                                                     </a>
@@ -195,7 +195,7 @@ else
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-12">
-                        <a href="~/User/@Model.User.Username/Portfolios">
+                        <a href="~/User/@Model.User.UrlFriendlyName/Portfolios">
                             <p>Back to Portfolios</p>
                         </a>
                     </div>
