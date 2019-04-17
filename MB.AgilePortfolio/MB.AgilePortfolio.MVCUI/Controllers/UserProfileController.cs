@@ -47,15 +47,27 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             if (Authenticate.IsAuthenticated())
             {
                 User userin = System.Web.HttpContext.Current.Session["user"] as User;
-                up.User.LoadById(userin.Id);
+
+                // INSTANCE TESTING
+                User newuser = new User
+                {
+                    Username = userin.Username,
+                    Password =  userin.Password,
+                    ProfileImage = userin.ProfileImage,
+                    Bio = userin.Bio,
+                    Email = userin.Email,
+                    FirstName = userin.FirstName,
+                    LastName = userin.LastName,
+                    Id = userin.Id,
+                    UserTypeId = userin.UserTypeId
+                };
+                up.User = newuser;
+                // INSTANCE TESTING
+
 
                 //Don't use the userProfile index anymore, send it to the public profile. It's conditionalized now.
-                return RedirectToAction("PublicProfile", new { username = up.User.Username });
-                up.Projects.LoadbyUser(up.User);
-                up.Portfolios.LoadbyUser(up.User);
+                return RedirectToAction("PublicProfile", new { username = up.User.UrlFriendlyName });
 
-                // REDIRECT TO PROJECT EDIT PROFILE GET
-                return View(up);
             }
             else
             {
@@ -104,8 +116,10 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 Portfolios = new PortfolioList(),
                 User = new User()
             };
-
-            Guid idOfUser = up.User.CheckIfUsernameExists(username);
+            UserList users = new UserList();
+            users.Load();
+            up.User = users.FirstOrDefault(p => p.UrlFriendlyName == username);
+            Guid idOfUser = up.User.CheckIfUsernameExists(up.User.Username);
 
             if (idOfUser != Guid.Empty)
             {
