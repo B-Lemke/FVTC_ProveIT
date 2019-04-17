@@ -37,7 +37,13 @@ namespace MB.AgilePortfolio.BL
         {
             get { return FirstName + " " + LastName; }
         }
-        public readonly string UrlFriendlyName;
+        public string UrlFriendlyName
+        {
+            get
+            {
+                return URLFriendly(this.Username);
+            }
+        }
 
         #region URL Cleaning 
         //-----------------------START URL CLEANING METHODS------------------------------------
@@ -198,7 +204,6 @@ namespace MB.AgilePortfolio.BL
             UserTypeDescription = userTypeDescription;
             Username = username;
             Bio = bio;
-            UrlFriendlyName = URLFriendly(username);
         }
 
         // To use when adding a user
@@ -210,7 +215,6 @@ namespace MB.AgilePortfolio.BL
             LastName = lastName;
             UserTypeId = userTypeId;
             Username = username;
-            UrlFriendlyName = URLFriendly(username);
         }
 
         // To use when a user logs in
