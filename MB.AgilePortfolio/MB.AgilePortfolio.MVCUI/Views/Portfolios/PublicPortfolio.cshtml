@@ -1,0 +1,213 @@
+﻿@model MB.AgilePortfolio.MVCUI.ViewModels.UserProfile
+
+@{
+    if (Model.Portfolio != null)
+    {
+        ViewBag.Title = Model.Portfolio.Name;
+    }
+    else
+    {
+        ViewBag.Title = "Portfolio Not Found";
+    }
+}
+
+
+
+@if (Model.Portfolio == null)
+{
+    //Portfolio not found.
+    <div class=" container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="display-2 text-center text-secondary mt-5">
+                    <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                    Portfolio Not Found
+                    <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                </h1>
+                <div class="text-center mt-5">
+                    @Html.ActionLink("Search Portfolios", "Index", "Search", new { option = "Portfolio" }, new { @class = "btn btn-secondary border-dark" })
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+
+    using (Html.BeginForm())
+    {
+
+
+        @Html.AntiForgeryToken()
+        <!DOCTYPE html>
+
+        <html>
+        <head>
+            <meta name="viewport" content="width=device-width" />
+            <script src="~/scripts/jquery-3.3.1.min.js"></script>
+            <script src="~/scripts/bootstrap.min.js"></script>
+            <script src="~/scripts/jquery.dataTables.min.js"></script>
+            <script src="~/scripts/dataTables.bootstrap4.min.js"></script>
+            <style>
+
+
+                html {
+                    width: 100%;
+                }
+
+                body {
+                    width: 100%;
+                    word-wrap: break-word;
+                }
+
+                .container {
+                    max-width: none;
+                    width: 100% !important;
+                    padding-right: 15px;
+                    padding-left: 15px;
+                    margin-right: 0;
+                    margin-left: 0;
+                }
+
+                .sidebar {
+                    padding: 5px;
+                }
+            </style>
+        </head>
+
+        <body>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-2 border" id="sidebar">
+                        <h2 class="mt-2">@Model.User.Username</h2>
+                        <div>
+                            <div class="text-center">
+                                <a class="text-center" href="~/User/@Model.User.Username">
+                                    @if (Model.User.ProfileImage != null)
+                                    {
+                                        <img class="profile-image rounded" width="100%" src="~/@Model.User.ProfileImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/Assets/Images/UserProfiles/Default.png" alt="Default Profile Image" width="100%" class="rounded-circle" />
+                                    }
+                                </a>
+                            </div>
+                            <h4 class="font-weight-normal mt-2">@Model.User.FullName</h4>
+                            <h4 class="font-weight-light">@Model.User.Email</h4>
+                            @if (Model.User.ShortBio != String.Empty)
+                            {
+                            <hr />
+                            <p class="font-italic font-weight-light">
+                                @Model.User.ShortBio@if (Model.User.ShortBio.Length == 100) {<span>...</span>} </p>
+                            }
+                            <hr />
+                            <a href="~/User/@Model.User.Username/Projects">
+                                <p>View @Model.User.Username's other projects</p>
+                            </a>
+                            <a href="~/User/@Model.User.Username/Portfolios">
+                                <p>View @Model.User.Username's portfolios</p>
+                            </a>
+
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="col-md-10 pl-2 border">
+                        <h2 class="text-left">@Model.Portfolio.Name</h2>
+
+                        @if (Model.Portfolio.Description != null)
+                        {
+                            <hr />
+                            <p class="portfolio-description">
+                                @Model.Portfolio.Description
+                            </p>
+                        }
+
+                        @if (@Model.Portfolio.PortfolioImage != null && @Model.Portfolio.PortfolioImage != "Assets/Images/UserProfiles/Default.png")
+                        {
+                            <div class="container py-4" style="text-align:center">
+                                <img src="~/@Model.Portfolio.PortfolioImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt=@Model.Portfolio.Name style="width:100%;height:350px; text-align:center; object-fit:contain;">
+                            </div>
+                        }
+
+                        @if (Model.Projects?.Count > 0)
+                        {
+                            <hr />
+                            <h4 align="center">Projects</h4>
+
+                            <div class="container-fluid">
+                                <div class="row">
+                                    @foreach (var item in Model.Projects)
+                                    {
+                                        if (item.Image == null)
+                                        {
+                                            item.Image = "Assets/Images/UserProfiles/Default.png";
+                                        }
+                                        <div class="col-md-4">
+                                            <div class="card mt-2">
+                                                <a href="~/User/@Model.User.UrlFriendlyName/Projects/@item.UrlFriendlyName" class="card-link" style="text-align:center">
+                                                    <img class="card-img-top project-image" src="@Url.Content("~/" + @item.Image)" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Project Image">
+                                                </a>
+                                                <div class="card-body" style="text-align:center">
+                                                    <a href="~/User/@Model.User.UrlFriendlyName/Projects/@item.UrlFriendlyName" class="card-link" style="text-align:center">
+                                                        <h5 class="card-title" style="width: 90%;text-align:left">@item.Name</h5>
+                                                    </a>
+                                                    <h6 class="card-subtitle mb-2 text-muted" style="text-align:left">
+                                                        @if (item.Languages != null)
+                                                        {
+                                                            int badgeCount = 0;
+
+                                                            foreach (var lang in item.Languages)
+                                                            {
+                                                                if (badgeCount < 5)
+                                                                {
+                                                                    <span class="badge badge-pill badge-@lang.BadgeName">@lang.Description</span>
+                                                                    badgeCount++;
+                                                                }
+                                                            }
+                                                        }
+                                                    </h6>
+                                                    <p class="card-text" style="text-align:left">@item.ShortDescription</p>
+                                                    <a href="~/User/@Model.User.UrlFriendlyName/Projects/@item.UrlFriendlyName" class="card-link" style="text-align:center">
+                                                        <br />
+                                                        View Project
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+                        }
+
+
+
+                        <hr />
+                        
+
+                       
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-12">
+                        <a href="~/User/@Model.User.UrlFriendlyName/Portfolios">
+                            <p>Back to Portfolios</p>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </body>
+    </html>
+}
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

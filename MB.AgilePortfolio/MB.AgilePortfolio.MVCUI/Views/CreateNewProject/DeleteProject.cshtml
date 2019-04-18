@@ -1,0 +1,53 @@
+﻿@model MB.AgilePortfolio.MVCUI.ViewModels.UserProfile
+
+@{
+    /**/
+
+    ViewBag.Title = "Delete " + @Model.Project.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-12 ">
+                    <i class="fa fa-times-circle-o text-secondary h1 text-light" aria-hidden="true" style="font-size: 8rem"></i>
+                    <h2>Are you sure you want to delete the project:</h2>
+                    <h1> @Model.Project.Name?</h1>
+
+                    <p class="mt-3">This action cannot be undone.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@using (Html.BeginForm("DeleteProject", "UserProfile"))
+{
+    <div class="form-group mt-2" align="center">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-12">
+                <input type="submit" value="Yes, Delete @Model.Project.Name" class="btn btn-primary" />
+                @using (Html.BeginForm())
+                {
+                    @Html.ActionLink("No, Get Me Back to Safety!", "EditProjects", null, null, new { @class = "btn btn-primary", @style = "margin-left:60px" })
+                }
+            </div>
+        </div>
+    </div>
+}
+
+<div class="mt-5">
+    @Html.ActionLink("Back to Projects", "EditProjects")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,81 @@
+﻿@model MB.AgilePortfolio.MVCUI.ViewModels.PortfolioUsers
+
+@{
+    ViewBag.Title = "Create New Portfolio";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create New Portfolio</h2>
+
+
+@using (Html.BeginForm("Create", "CreateNewPortfolio", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Portfolio.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Portfolio.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Portfolio.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Portfolio.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Portfolio.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Portfolio.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.Portfolio.UserId, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.Portfolio.UserId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Portfolio.PrivacyId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Portfolio.PrivacyId, new SelectList(Model.Privacies, "Id", "Description", Model.Portfolio), null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Portfolio.PrivacyId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-md-10">
+
+            <label>Upload Display Image</label>
+            <div class="input-group">
+                <div class="custom-file">
+                    @Html.TextBoxFor(model => model.Fileupload, new { type = "file", id = "fileupload", name = "fileupload", accept = ".jpg, .jpeg, .gif, .png" })
+                </div>
+            </div>
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.Portfolio.PortfolioImage, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Portfolio.PortfolioImage, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-12">
+            @Html.ActionLink("Back to Portfolios", "EditPortfolios", "UserProfile")
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

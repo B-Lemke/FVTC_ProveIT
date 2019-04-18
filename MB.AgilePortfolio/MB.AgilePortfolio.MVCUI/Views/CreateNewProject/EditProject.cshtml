@@ -354,6 +354,7 @@
                     </div>
                 </div>
 
+
                 <div class="form-group">
                     @Html.LabelFor(model => model.Project.Description, htmlAttributes: new { @class = "control-label offset-md-1 col-md-10" })
                     <div class="offset-md-1 col-md-10">
@@ -361,6 +362,9 @@
                         @Html.ValidationMessageFor(model => model.Project.Description, "", new { @class = "text-danger" })
                     </div>
                 </div>
+
+
+
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.Project.StatusId, htmlAttributes: new { @class = "control-label offset-md-1 col-md-10" })
@@ -473,11 +477,18 @@
 
 
                 <div class="form-group">
+                    @*
+            @Html.LabelFor(model => model.Project.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+                    *@
                     <div class="offset-md-1 col-md-10">
                         @Html.HiddenFor(model => model.Project.Image, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Project.Image, "", new { @class = "text-danger" })
                     </div>
                 </div>
+
+
+
+
 
                 <div class="form-group">
                     @Html.Label("Languages", htmlAttributes: new { @class = "control-label offset-md-1 col-md-10" })
@@ -551,6 +562,11 @@
                             <div class="custom-file">
                                 @Html.TextBoxFor(model => model.Fileupload, new { type = "file", id = "fileupload", name = "fileupload", accept = ".jpg, .jpeg, .gif, .png" })
                             </div>
+                            @*
+                    <div class="input-group-append">
+                        <input type="submit" id="btnUpload" class="btn btn-secondary" value="Upload" />
+                    </div>
+                            *@
                         </div>
                     </div>
 
@@ -562,10 +578,15 @@
             </div>
 
 
-            <div class="form-horizontal">
-                <hr />
+        <div class="form-horizontal">
+            <hr />
 
+
+
+
+          
             </div>
+
 
             <div class="form-group">
                 <div class="offset-md-1 col-md-10 text-center">
@@ -583,7 +604,7 @@
             <div class="row">
                 <div class="offset-md-1 col-md-10 text-center">
                     <input type="submit" value="Save" class="btn btn-primary" />
-                    <a href="~/User/@Model.User.UrlFriendlyName/Projects/@Model.Project.UrlFriendlyName" class="btn btn-primary">View Project</a>
+                    <a href="~/User/@Model.User.Username/Projects/@Model.Project.Name" class="btn btn-primary">View Project</a>
 
                     @Html.ActionLink(
                      "Delete",
@@ -593,6 +614,10 @@
                      new { @class = "btn btn-primary" }
                      )
                 </div>
+               
+                       
+
+
 
                 <div class="col-md-offset-2 col-md-12">
                     @Html.ActionLink("Back to Projects", "EditProjects", "UserProfile")
@@ -604,6 +629,9 @@
 }
 
 <script>
+
+
+
 
     var expanded = false;
 

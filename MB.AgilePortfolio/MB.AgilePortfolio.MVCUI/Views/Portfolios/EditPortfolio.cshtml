@@ -1,0 +1,365 @@
+﻿@model MB.AgilePortfolio.MVCUI.ViewModels.UserProfile
+
+@{
+    ViewBag.Title = "Edit Portfolio";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+@using (Html.BeginForm("EditPortfolio", "UserProfile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <!DOCTYPE html>
+
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <script src="~/scripts/jquery-3.3.1.min.js"></script>
+        <script src="~/scripts/bootstrap.min.js"></script>
+
+        <script src="~/scripts/autosizeTextarea.js"></script>
+        <!--
+
+        <script src="~/scripts/jquery.dataTables.min.js"></script>
+        <script src="~/scripts/dataTables.bootstrap4.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#dataTable").dataTable();
+            });
+        </script>
+        -->
+        <style>
+            .carousel-inner img {
+                width: 10%;
+                height: 100px;
+                object-fit: contain;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .carousel-inner i {
+                font-size: 50px;
+                vertical-align: middle;
+            }
+
+            .carousel-item {
+                text-align: center;
+            }
+
+            html {
+                width: 100%;
+            }
+
+            body {
+                width: 100%;
+                word-wrap: break-word;
+            }
+
+            .container {
+                max-width: none;
+                width: 100% !important;
+                padding-right: 15px;
+                padding-left: 15px;
+                margin-right: 0;
+                margin-left: 0;
+            }
+
+            .sidebar {
+                padding: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="form-horizontal">
+            <h4>@Model.Portfolio.Name</h4>
+            <div class="container py-4" style="text-align:center">
+                <img src="~/@Model.Portfolio.PortfolioImage" alt="" style="width:100%;height:350px; text-align:center; object-fit:contain;">
+            </div>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Portfolio.Id)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Portfolio.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Portfolio.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Portfolio.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Portfolio.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Portfolio.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Portfolio.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @*
+            @Html.LabelFor(model => model.Portfolio.PortfolioImage, htmlAttributes: new { @class = "control-label col-md-2" })
+                *@
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.Portfolio.PortfolioImage, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Portfolio.PortfolioImage, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.Portfolio.UserId, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.Portfolio.UserId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Portfolio.PrivacyId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.Portfolio.PrivacyId, new SelectList(Model.Privacies, "Id", "Description", Model.Portfolio), null, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Portfolio.PrivacyId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-10">
+
+                    <label>Upload Display Image</label>
+                    <div class="input-group">
+                        <div class="custom-file">
+                            @Html.TextBoxFor(model => model.Fileupload, new { type = "file", id = "fileupload", name = "fileupload", accept = ".jpg, .jpeg, .gif, .png" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.Portfolio.PortfolioImage, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Fileupload, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-horizontal">
+                <h4>Projects</h4>
+                <hr />
+                @{
+                    int imgleft = Model.Projects.Count;
+                    int ImagesPerTransition = 9;
+                }
+
+                <div id="demo" class="carousel slide carousel-multi item" data-ride="carousel" data-interval="10000">
+
+
+
+                    <div class="carousel-inner" role="listbox">
+
+                        @if (Model.Projects?.Count > 0)
+                        {
+
+                            int modssi = Model.Projects.Count % ImagesPerTransition;
+                            int iterations = 0;
+                            imgleft = Model.Projects.Count;
+
+                            if (modssi > 0)
+                            {
+                                if (Model.Projects.Count > ImagesPerTransition - 1)
+                                {
+                                    iterations = (int)Math.Ceiling(((double)Model.Projects.Count) / ImagesPerTransition);
+
+                                }
+                                else
+                                {
+                                    iterations = 1;
+                                }
+                            }
+                            else
+                            {
+                                iterations = (Model.Projects.Count) / ImagesPerTransition;
+                            }
+                            var active = iterations == 1 ? "active" : "";
+
+                            for (int ssi = 0; ssi < iterations; ssi++)
+                            {
+                                if (ssi == 0)
+                                {
+                                    if (iterations > 1)
+                                    {
+                                        <div class="carousel-item active">
+                                            @for (int y = 0; y < ImagesPerTransition; y++)
+                                            {
+
+                                                @*<p>@Model.Projects[y].Name</p>*@
+                                                string imgpath = "~/" + Model.Projects[y].Image;
+                                                <a href='@Url.Action("EditProject", "Screenshot",new { id = Model.Projects[y].Id})'>
+                                                    <img src='@Url.Content(@imgpath)' />
+                                                </a>
+                                                imgleft--;
+                                            }
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="carousel-item active">
+                                            @for (int y = 0; y < Model.Projects.Count; y++)
+                                            {
+                                                @*<p>@Model.Projects[y].Name</p>*@
+                                                string imgpath = "~/" + Model.Projects[y].Image;
+                                                <a href='@Url.Action("EditProject", "Screenshot",new { id = Model.Projects[y].Id})'>
+                                                    <img src='@Url.Content(@imgpath)' />
+                                                </a>
+                                                imgleft--;
+                                            }
+                                            <a href='@Url.Action("AddProject", "UserProfile",new { id = Model.Portfolio.Id})'>
+                                                <i class="far fa-plus-square">
+                                                    <h6>Add Project</h6>
+                                                </i>
+                                            </a>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    if (imgleft >= ImagesPerTransition)
+                                    {
+                                        <div class="carousel-item">
+                                            @for (int y = 0; y < ImagesPerTransition; y++)
+                                            {
+                                                @*<p>@Model.Projects[y + ssi * ImagesPerTransition].Name</p>*@
+                                                string imgpath = "~/" + Model.Projects[y + ssi * ImagesPerTransition].Image;
+                                                <a href='@Url.Action("EditProject", "Screenshot",new { id = Model.Projects[y + ssi * ImagesPerTransition].Id})'>
+                                                    <img src='@Url.Content(@imgpath)' />
+                                                </a>
+                                                imgleft--;
+                                            }
+                                            @if (ssi == iterations - 1)
+                                            {
+                                                <a href='@Url.Action("AddProject", "UserProfile",new { id = Model.Portfolio.Id})'>
+                                                    <i class="far fa-plus-square">
+                                                        <h6>Add Project</h6>
+                                                    </i>
+                                                </a>
+                                            }
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="carousel-item">
+                                            @for (int y = 0; y < modssi; y++)
+                                            {
+                                                @*<p>@Model.Projects[y + ssi * ImagesPerTransition].Name</p>*@
+                                                string imgpath = "~/" + Model.Projects[y + ssi * ImagesPerTransition].Image;
+                                                <a href='@Url.Action("EditProject", "Screenshot",new { id = Model.Projects[y + ssi * ImagesPerTransition].Id})'>
+                                                    <img src='@Url.Content(@imgpath)' />
+                                                </a>
+                                                imgleft--;
+                                            }
+                                            <a href='@Url.Action("AddProject", "UserProfile",new { id = Model.Portfolio.Id})'>
+                                                <i class="far fa-plus-square">
+                                                    <h6>Add Project</h6>
+                                                </i>
+                                            </a>
+                                        </div>
+                                    }
+                                }
+                            }
+                        }
+
+                    </div>
+
+                    @if (Model.Projects?.Count > ImagesPerTransition)
+                    {
+                        <a class="carousel-control-prev" href="#demo" data-slide="prev" style="width:auto">
+                            <i class="fas fa-chevron-left text-dark"></i>
+                        </a>
+                        <a class="carousel-control-next" href="#demo" data-slide="next" style="width:auto">
+                            <i class="fas fa-chevron-right text-dark"></i>
+                        </a>
+                    }
+
+                </div>
+            </div>
+            @if (Model.Projects?.Count > 0)
+            {
+                <br />
+                <div class="form-group">
+                    <div class="text-center">
+                        @Html.ActionLink(
+                        "Remove Projects",
+                        "DeleteProjectPortfolio",
+                        "UserProfile",
+                        new { id = Model.Portfolio.Id },
+                        new { @class = "btn btn-primary", @style = "margin-left:40px" }
+                        )
+                    </div>
+                </div>
+            }
+            else
+            {
+                    <div class="text-md-center">
+                        <div class="card mt-2" style="height:98%;">
+                            <div class="card-body" style="text-align:center">
+                                <a href="~/UserProfile/AddProject/@Model.Portfolio.Id" class="card-link" style="text-align:center;vertical-align:middle;">
+                                    <i class="far fa-plus-square mt-2" style="font-size:150px;vertical-align:middle;text-align:center;margin:auto;">
+                                    </i>
+                                    <h4 class="mt-4">Add Project</h4>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+            }
+
+            <hr />
+
+
+
+            <div class="row">
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-primary" style="margin-left:40px" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.ActionLink(
+                       "View Portfolio",
+                       "PublicPortfolio",
+                       "UserProfile",
+                       new { id = Model.Portfolio.Id },
+                       new { @class = "btn btn-primary", @style= "margin-left:40px" }
+                       )
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.ActionLink(
+                       "Delete",
+                       "DeletePortfolio",
+                       "UserProfile",
+                       new { id = Model.Portfolio.Id },
+                       new { @class = "btn btn-primary", @style = "margin-left:60px" }
+                       )
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-offset-2 col-md-12">
+                @Html.ActionLink("Back to Portfolios", "EditPortfolios", null, null, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </body>
+}
+
+<script>
+    $('textarea').autoResize();
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

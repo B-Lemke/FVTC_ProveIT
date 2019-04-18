@@ -655,6 +655,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                         Portfolio = new Portfolio(),
                         Portfolios = new PortfolioList(),
                         Projects = new ProjectList(),
+                        Project = new Project(),
                         Privacies = new PrivacyList(),
                         User = new User()
                     };
@@ -706,17 +707,21 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
         // POST: AddProject
         [HttpPost]
-        public ActionResult AddProject(Guid ProjectId, Guid PortfolioId)
+        public ActionResult AddProject(Guid id, Guid ProjectId)
         {
-            UserProfile up = new UserProfile()
-            {
-                Portfolio = new Portfolio(),
-                Portfolios = new PortfolioList(),
-                Projects = new ProjectList(),
-                Privacies = new PrivacyList(),
-                User = new User()
-            };
-            up.Portfolio.LoadById(PortfolioId);
+
+                UserProfile up = new UserProfile()
+                {
+                    Project = new Project(),
+                    Portfolio = new Portfolio(),
+                    Portfolios = new PortfolioList(),
+                    Projects = new ProjectList(),
+                    Privacies = new PrivacyList(),
+                    User = new User()
+                };
+
+            up.Project.LoadById(ProjectId);
+            up.Portfolio.LoadById(id);
             up.Privacies.Load();
             up.User = System.Web.HttpContext.Current.Session["user"] as User;
             //up.Project.LoadById(projectid);

@@ -1,0 +1,42 @@
+﻿@model MB.AgilePortfolio.MVCUI.ViewModels.UserProfile
+
+@{
+    /**/
+
+    ViewBag.Title = "Portfolio Deleted";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h2 class="text-center text-secondary">
+            <i class="fa fa-minus-circle" aria-hidden="true"></i> 
+                Portfolio has been Deleted 
+            <i class="fa fa-minus-circle" aria-hidden="true"></i>
+        </h2>
+    </div>
+
+}
+
+
+<div class="text-center">
+    @Html.ActionLink("Back to Portfolios", "EditPortfolios", null, new { @class = "btn btn-secondary border-dark" })
+</div>
+
+<script>
+    window.setTimeout(function () {
+
+        // Move to a new location or you can do something else
+        window.location.href = "/UserProfile/EditPortfolios";
+
+    }, 5000);
+
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
