@@ -328,13 +328,7 @@
 
                 <div class="form-group">
                     <div class="col-md-12">
-                        @Html.ActionLink(
-                       "View Portfolio",
-                       "PublicPortfolio",
-                       "UserProfile",
-                       new { id = Model.Portfolio.Id },
-                       new { @class = "btn btn-primary", @style= "margin-left:40px" }
-                       )
+                        <a href="~/User/@Model.User.UrlFriendlyName/Portfolios/@Model.Portfolio.UrlFriendlyName" class="btn btn-primary">View Portfolio</a>
                     </div>
                 </div>
 

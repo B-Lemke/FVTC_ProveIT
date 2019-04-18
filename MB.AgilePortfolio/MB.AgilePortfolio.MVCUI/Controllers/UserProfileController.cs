@@ -1158,7 +1158,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
 
         // POST: DeleteProjectPortfolio 
         [HttpPost]
-        public ActionResult DeleteProjectPortfolio(Guid ProjectId, Guid PortfolioId)
+        public ActionResult DeleteProjectPortfolio(Guid id, Guid ProjectId)
         {
             UserProfile up = new UserProfile()
             {
@@ -1168,13 +1168,13 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                 Privacies = new PrivacyList(),
                 User = new User()
             };
-            up.Portfolio.LoadById(PortfolioId);
+            up.Portfolio.LoadById(id);
             up.Privacies.Load();
             up.User = System.Web.HttpContext.Current.Session["user"] as User;
             //up.Project.LoadById(projectid);
             if (Authenticate.IsAuthenticated())
             {
-                up.Portfolio.RemoveProjectByPortProj(ProjectId, PortfolioId);
+                up.Portfolio.RemoveProjectByPortProj(ProjectId, id);
 
                 if (!ModelState.IsValid)
                 {

@@ -319,20 +319,41 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
             {
                 try
                 {
+                    ppus.Language = new Language();
+                    ppus.Languages = new LanguageList();
+
+                    if (ppus.SelectedLanguages == null)
+                    {
+                        ppus.SelectedLanguages = new List<string>();
+                    }
+
+                    if (ppus.AvailableLanguages == null)
+                    {
+                        ppus.AvailableLanguages = new List<SelectListItem>();
+                        if(ppus.Languages.Count < 1)
+                        {
+                            //Load Languages
+                            ppus.Languages.Load();
+                        }
+                        else
+                        {
+                            // Languages already loaded
+                        }
+                        ppus.AvailableLanguages = GetLanguages(ppus.Languages);
+                    }
+                    
                     PrivacyList plist = new PrivacyList();
                     plist.Load();
                     ppus.Privacies = plist;
                     StatusList slist = new StatusList();
                     slist.Load();
-                    ppus.Language = new Language();
-                    ppus.Languages = new LanguageList();
+                    
                     ppus.ProjectLanguage = new ProjectLanguage();
                     ppus.ProjectLanguages = new ProjectLanguageList();
                     ppus.Statuses = slist;
-                    ScreenshotList screenshots = new ScreenshotList();
-                    screenshots.LoadbyProjectID(id);
+                    ppus.ScreenshotList = new ScreenshotList();
+                    ppus.ScreenshotList.LoadbyProjectID(id);
                     ppus.ProjectId = id;
-                    ppus.ScreenshotList = screenshots;
                     
                     // Deletes all languages associated with project currently
                     ppus.ProjectLanguages.LoadByProjectId(id);

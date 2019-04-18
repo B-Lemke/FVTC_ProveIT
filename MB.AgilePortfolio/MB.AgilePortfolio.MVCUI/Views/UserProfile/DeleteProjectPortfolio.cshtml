@@ -1,11 +1,11 @@
 ﻿@model MB.AgilePortfolio.MVCUI.ViewModels.UserProfile
 
 @{
-    ViewBag.Title = "View Projects";
+    ViewBag.Title = "Delete Profolio Project";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>View Projects</h2>
+<h2>Remove Project</h2>
 
 @Html.AntiForgeryToken()
 <div class="form-horizontal">
@@ -27,7 +27,7 @@
                         <div class="card mt-2">
                             <div class="row text-center">
                                 <div class="col-12">
-                                    @using (Html.BeginForm("AddProject", "UserProfile", FormMethod.Post, new { name = prj.Name, id = prj.Name }))
+                                    @using (Html.BeginForm("DeleteProjectPortfolio", "UserProfile", FormMethod.Post, new { name = prj.Name, id = prj.Name }))
                                     {
                                         @Html.Hidden("id", Model.Portfolio.Id)
                                         @Html.Hidden("ProjectId", prj.Id)
