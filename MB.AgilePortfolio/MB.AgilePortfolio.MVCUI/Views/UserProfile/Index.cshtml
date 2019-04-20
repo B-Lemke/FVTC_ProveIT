@@ -17,7 +17,7 @@
             <dl class="dl-horizontal"></dl>
             <br />
 
-            <span class="">@Model.User.UserTypeDescription</span>
+            <span class="h4">@Model.User.UserTypeDescription</span>
         </div>
         <div class="col-md-3">
             <div>
@@ -27,7 +27,7 @@
                 }
                 else
                 {
-                    <img src="~/Assets/Images/UserProfiles/Default.png" alt="Default Profile Image" width="300px" class="rounded-circle" />
+                    <img src="~/Assets/Images/UserProfiles/Default.png" alt="Default Profile Image" class="w-300 rounded-circle" />
                 }
             </div>
         </div>
@@ -42,7 +42,7 @@
             <div class="col-md-4">
                 <div class="card mt-2">
                     <div class="card-body">
-                        <h5 class="card-title" style="width: 90%;">No Projects Yet</h5>
+                        <h5 class="card-title w-90%;">No Projects Yet</h5>
                         <p class="card-text">But that doesn't mean you can't add one!</p>
                         <a href="~/CreateNewProject/Create" class="card-link">Add a project!</a>
                     </div>
@@ -65,9 +65,9 @@
                             <a href="~/Screenshot/EditProject/@item.Id">
                                 <img class="card-img-top project-image" src="@Url.Content("~/" + @item.Image)" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Project Image">
                             </a>
-                            <div class="card-body" style="text-align:center">
+                            <div class="card-body text-center">
                                 <a href="~/Screenshot/EditProject/@item.Id">
-                                    <h5 class="card-title" style="width: 90%;text-align:left">@item.Name</h5>
+                                    <h5 class="card-title w-90% text-left">@item.Name</h5>
                                 </a>
                                 <h6 class="card-subtitle mb-2 text-muted" style="text-align:left">
                                     @if (item.Languages != null)
@@ -85,7 +85,7 @@
                                     }
 
                                 </h6>
-                                <p class="card-text" style="text-align:left">@item.ShortDescription...</p>
+                                <p class="card-text text-left">@item.ShortDescription...</p>
                                 <a href="~/Screenshot/EditProject/@item.Id">
                                     <br />
                                     View Project
@@ -118,7 +118,7 @@
             <div class="col-md-4">
                 <div class="card mt-2">
                     <div class="card-body">
-                        <h5 class="card-title" style="width: 90%;">No Portfolios Yet</h5>
+                        <h5 class="card-title w-90%">No Portfolios Yet</h5>
                         <p class="card-text">But that doesn't mean you can't add one!</p>
                         <a href="~/CreateNewPortfolio/Create" class="card-link">Add a portfolio!</a>
                     </div>
@@ -139,10 +139,10 @@
                     <div class="col-md-4">
                         <div class="card mt-2">
                             <a href="~/UserProfile/EditPortfolio/@item.Id">
-                                <div class="card-body" style="text-align:center">
+                                <div class="card-body text-center">
                                     <img class="card-img-top project-image" src="@Url.Content("~/" + @item.PortfolioImage)" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Portfolio Image">
-                                    <h5 class="card-title" style="width: 90%;text-align:left">@item.Name</h5>
-                                    <p class="card-text" style="text-align:left">@item.ShortDescription...</p>
+                                    <h5 class="card-title w-90% text-left">@item.Name</h5>
+                                    <p class="card-text text-left">@item.ShortDescription...</p>
                                     <br />
                                     View Portfolio
                                 </div>
