@@ -21,10 +21,10 @@
     {
         <p align="center" style="font-style:italic">You have no projects currently</p>
         <div class="text-center ">
-            <div class="card mt-2" style="height:98%;">
-                <div class="card-body" style="text-align:center">
-                    <a href="~/CreateNewProject/Create/" class="card-link" style="text-align:center;vertical-align:middle;">
-                        <i class="far fa-plus-square mt-2" style="font-size:150px;vertical-align:middle;text-align:center;margin:auto;">
+            <div class="card mt-2 h-98%;">
+                <div class="card-body text-center">
+                    <a href="~/CreateNewProject/Create/" class="card-link text-center" style="vertical-align:middle;">
+                        <i class="far fa-plus-square mt-2 text-center m-auto" style="font-size:150px;vertical-align:middle;">
                         </i>
                         <h4 class="mt-4">Create Project</h4>
                     </a>
@@ -40,12 +40,12 @@
                 {
                     <div class="col-md-4">
                         <div class="card mt-2">
-                            <a href="~/Screenshot/EditProject/@prj.Id" class="card-link" style="text-align:center">
+                            <a href="~/Screenshot/EditProject/@prj.Id" class="card-link text-center">
                                 <img class="card-img-top project-image" src="@Url.Content("~/" + prj.Image)" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt=@prj.Name>
-                                <div class="card-body" style="text-align:center">
+                                <div class="card-body text-center">
 
-                                    <h5 class="card-title" style="width: 90%;text-align:left">@prj.Name</h5>
-                                    <h6 class="card-subtitle mb-2 text-muted" style="text-align:left">
+                                    <h5 class="card-title w-90% text-left">@prj.Name</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted text-left">
                                         @if (prj.Languages != null)
                                         {
                                             int badgeCount = 0;
@@ -60,7 +60,7 @@
                                             }
                                         }
                                     </h6>
-                                    <p class="card-text" style="text-align:left">@prj.ShortDescription...</p>
+                                    <p class="card-text text-left">@prj.ShortDescription...</p>
 
 
                                 </div>
@@ -69,10 +69,10 @@
                     </div>
                 }
                 <div class="col-md-4">
-                    <div class="card mt-2" style="height:98%;">
-                        <div class="card-body" style="text-align:center">
+                    <div class="card mt-2 h-98%;">
+                        <div class="card-body text-center">
                             <a href="~/CreateNewProject/Create/" class="card-link" style="text-align:center;vertical-align:middle;">
-                                <i class="far fa-plus-square mt-2" style="font-size:150px;vertical-align:middle;text-align:center;margin:auto;">
+                                <i class="far fa-plus-square mt-2 text-center m-auto" style="font-size:150px;vertical-align:middle;">
 
                                 </i>
                                 <h4 class="mt-4">Create Project</h4>

@@ -73,8 +73,8 @@
     <body>
         <div class="form-horizontal">
             <h4>@Model.Portfolio.Name</h4>
-            <div class="container py-4" style="text-align:center">
-                <img src="~/@Model.Portfolio.PortfolioImage" alt="" style="width:100%;height:350px; text-align:center; object-fit:contain;">
+            <div class="container py-4 text-center">
+                <img src="~/@Model.Portfolio.PortfolioImage" alt="Portfolio" class="text-center w-100% h-350px" style="object-fit:contain;">
             </div>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -269,10 +269,10 @@
 
                     @if (Model.Projects?.Count > ImagesPerTransition)
                     {
-                        <a class="carousel-control-prev" href="#demo" data-slide="prev" style="width:auto">
+                        <a class="carousel-control-prev w-auto" href="#demo" data-slide="prev">
                             <i class="fas fa-chevron-left text-dark"></i>
                         </a>
-                        <a class="carousel-control-next" href="#demo" data-slide="next" style="width:auto">
+                        <a class="carousel-control-next w-auto" href="#demo" data-slide="next">
                             <i class="fas fa-chevron-right text-dark"></i>
                         </a>
                     }
@@ -297,10 +297,10 @@
             else
             {
                     <div class="text-md-center">
-                        <div class="card mt-2" style="height:98%;">
-                            <div class="card-body" style="text-align:center">
-                                <a href="~/UserProfile/AddProject/@Model.Portfolio.Id" class="card-link" style="text-align:center;vertical-align:middle;">
-                                    <i class="far fa-plus-square mt-2" style="font-size:150px;vertical-align:middle;text-align:center;margin:auto;">
+                        <div class="card mt-2 h-98%">
+                            <div class="card-body text-center">
+                                <a href="~/UserProfile/AddProject/@Model.Portfolio.Id" class="card-link text-center" style="vertical-align:middle;">
+                                    <i class="far fa-plus-square mt-2 text-center m-auto" style="font-size:150px;vertical-align:middle;">
                                     </i>
                                     <h4 class="mt-4">Add Project</h4>
                                 </a>
@@ -318,7 +318,7 @@
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Save" class="btn btn-primary" style="margin-left:40px" />
+                        <input type="submit" value="Save" class="btn btn-primary ml-40px" />
                     </div>
                 </div>
 

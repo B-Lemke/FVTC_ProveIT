@@ -264,8 +264,8 @@ else
 
                         @if (Model.Project.Image != "Assets/Images/UserProfiles/Default.png")
                         {
-                            <div class="container py-4" style="text-align:center">
-                                <img src="~/@Model.Project.Image" alt="" style="width:100%;height:350px; text-align:center; object-fit:contain;">
+                            <div class="container py-4 text-center">
+                                <img src="~/@Model.Project.Image" alt="Profile" class="w=100% h-350px text-center" style="object-fit:contain;">
                             </div>
                         }
 
@@ -536,10 +536,10 @@ else
 
                                             @if (Model.ScreenshotList?.Count > ImagesPerTransition)
                                             {
-                                                <a class="carousel-control-prev" href="#demo" data-slide="prev" style="width:auto">
+                                                <a class="carousel-control-prev w-auto" href="#demo" data-slide="prev">
                                                     <i class="fas fa-chevron-left text-dark"></i>
                                                 </a>
-                                                <a class="carousel-control-next" href="#demo" data-slide="next" style="width:auto">
+                                                <a class="carousel-control-next w-auto" href="#demo" data-slide="next">
                                                     <i class="fas fa-chevron-right text-dark"></i>
                                                 </a>
                                             }

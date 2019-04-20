@@ -55,14 +55,14 @@
 
 
     <div class="form-horizontal">
-        <div class="container py-4" style="text-align:center">
+        <div class="container py-4 text-center">
             @if (Model.User.ProfileImage != null)
             {
-                <img src="~/@Model.User.ProfileImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image" style="width:100%;height:350px;text-align:center; object-fit:contain" class="rounded-circle" />
+                <img src="~/@Model.User.ProfileImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image" style="object-fit:contain" class="w-100% h-350px text-center rounded-circle" />
             }
             else
             {
-                <img src="~/Assets/Images/UserProfiles/Default.png" alt="Default Profile Image" style="width:300px;text-align:center;" class="rounded-circle" />
+                <img src="~/Assets/Images/UserProfiles/Default.png" alt="Default Profile Image" class ="width-300px text-center rounded-circle" />
             }
         </div>
         <hr />

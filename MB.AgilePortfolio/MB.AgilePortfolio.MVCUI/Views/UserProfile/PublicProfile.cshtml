@@ -95,7 +95,7 @@ else
                     <div class="col-md-4 mt-2">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title" style="width: 90%;">No Projects Currently</h5>
+                                <h5 class="card-title w-90%">No Projects Currently</h5>
                             </div>
                         </div>
                     </div>
@@ -113,14 +113,14 @@ else
                             }
                             <div class="col-md-4">
                                 <div class="card mt-2">
-                                    <a href="~/User/@Model.User.UrlFriendlyName/Projects/@item.UrlFriendlyName" class="card-link" style="text-align:center">
+                                    <a href="~/User/@Model.User.UrlFriendlyName/Projects/@item.UrlFriendlyName" class="card-link text-center">
                                         <img class="card-img-top project-image" src="@Url.Content("~/" + @item.Image)" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Project Image">
                                     </a>
-                                    <div class="card-body" style="text-align:center">
-                                        <a href="~/User/@Model.User.UrlFriendlyName/Projects/@item.UrlFriendlyName" class="card-link" style="text-align:center">
-                                            <h5 class="card-title" style="width: 90%;text-align:left">@item.Name</h5>
+                                    <div class="card-body text-center">
+                                        <a href="~/User/@Model.User.UrlFriendlyName/Projects/@item.UrlFriendlyName" class="card-link text-center">
+                                            <h5 class="card-title w-90% text-left">@item.Name</h5>
                                         </a>
-                                        <h6 class="card-subtitle mb-2 text-muted" style="text-align:left">
+                                        <h6 class="card-subtitle mb-2 text-muted text-left">
                                             @if (item.Languages != null)
                                             {
                                                 int badgeCount = 0;
@@ -135,8 +135,8 @@ else
                                                 }
                                             }
                                         </h6>
-                                        <p class="card-text" style="text-align:left">@item.ShortDescription</p>
-                                        <a href="~/User/@Model.User.UrlFriendlyName/Projects/@item.UrlFriendlyName" class="card-link" style="text-align:center">
+                                        <p class="card-text text-left">@item.ShortDescription</p>
+                                        <a href="~/User/@Model.User.UrlFriendlyName/Projects/@item.UrlFriendlyName" class="card-link text-center">
                                             <br />
                                             View Project
                                         </a>
@@ -150,7 +150,7 @@ else
                         <div class="card">
                             <a href="~/User/@Model.User.UrlFriendlyName/Projects" class="card-link">
                                 <div class="card-body">
-                                    <h5 class="card-title" style="width: 90%;">There's Even More!</h5>
+                                    <h5 class="card-title w-90%;">There's Even More!</h5>
                                     View All of @Model.User.FirstName's Projects
                                 </div>
                             </a>

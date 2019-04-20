@@ -19,7 +19,7 @@
 
         @if (Model.Projects.Count < 1)
         {
-            <p align="center" style="font-style:italic">They have no projects currently</p>
+            <p align="center text-italic">No projects currently</p>
         }
         else
         {
@@ -29,12 +29,12 @@
                     {
                         <div class="col-md-4">
                             <div class="card mt-2">
-                                <a href="~/User/@Model.User.UrlFriendlyName/Projects/@prj.UrlFriendlyName" class="card-link" style="text-align:center">
+                                <a href="~/User/@Model.User.UrlFriendlyName/Projects/@prj.UrlFriendlyName" class="card-link text-center">
                                     <img class="card-img-top project-image" src="@Url.Content("~/" + prj.Image)" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt=@prj.Name>
-                                    <div class="card-body" style="text-align:center">
+                                    <div class="card-body text-center">
 
-                                        <h5 class="card-title" style="width: 90%;text-align:left">@prj.Name</h5>
-                                        <h6 class="card-subtitle mb-2 text-muted" style="text-align:left">
+                                        <h5 class="card-title w-90% text-left">@prj.Name</h5>
+                                        <h6 class="card-subtitle mb-2 text-muted text-left">
                                             @if (prj.Languages != null)
                                             {
                                                 int badgeCount = 0;
@@ -49,7 +49,7 @@
                                                 }
                                             }
                                         </h6>
-                                        <p class="card-text" style="text-align:left">@prj.ShortDescription</p>
+                                        <p class="card-text text-left">@prj.ShortDescription</p>
 
 
                                     </div>
