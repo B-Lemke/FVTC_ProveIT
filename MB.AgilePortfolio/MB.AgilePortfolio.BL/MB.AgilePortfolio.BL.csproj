@@ -66,6 +66,7 @@
     <Compile Include="Screenshot.cs" />
     <Compile Include="Status.cs" />
     <Compile Include="ForgotPassword.cs" />
+    <Compile Include="UploadedZip.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserType.cs" />
   </ItemGroup>
