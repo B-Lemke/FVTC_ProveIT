@@ -13,18 +13,18 @@
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
-    <h4 align="center">Projects</h4>
+    <h4 class="align-center">Projects</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     @if (Model.Projects.Count < 1)
     {
-        <p align="center" style="font-style:italic">You have no projects currently</p>
+        <p class="align-center" style="font-style:italic">You have no projects currently</p>
         <div class="text-center ">
             <div class="card mt-2 h-98%;">
                 <div class="card-body text-center">
-                    <a href="~/CreateNewProject/Create/" class="card-link text-center" style="vertical-align:middle;">
-                        <i class="far fa-plus-square mt-2 text-center m-auto" style="font-size:150px;vertical-align:middle;">
+                    <a href="~/CreateNewProject/Create/" class="card-link text-center align-middle">
+                        <i class="far fa-plus-square mt-2 text-center m-auto align-middle" style="font-size:150px;">
                         </i>
                         <h4 class="mt-4">Create Project</h4>
                     </a>
@@ -71,8 +71,8 @@
                 <div class="col-md-4">
                     <div class="card mt-2 h-98%;">
                         <div class="card-body text-center">
-                            <a href="~/CreateNewProject/Create/" class="card-link" style="text-align:center;vertical-align:middle;">
-                                <i class="far fa-plus-square mt-2 text-center m-auto" style="font-size:150px;vertical-align:middle;">
+                            <a href="~/CreateNewProject/Create/" class="card-link text-center align-middle">
+                                <i class="far fa-plus-square mt-2 text-center m-auto align-middle" style="font-size:150px;">
 
                                 </i>
                                 <h4 class="mt-4">Create Project</h4>

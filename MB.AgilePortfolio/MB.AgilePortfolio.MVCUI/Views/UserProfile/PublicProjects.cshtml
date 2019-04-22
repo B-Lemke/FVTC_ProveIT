@@ -13,13 +13,13 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4 align="center">Projects</h4>
+        <h4 class="align-center">Projects</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         @if (Model.Projects.Count < 1)
         {
-            <p align="center text-italic">No projects currently</p>
+            <p class="align-center text-italic">No projects currently</p>
         }
         else
         {

@@ -136,7 +136,7 @@ else
                         @if (Model.Projects?.Count > 0)
                         {
                             <hr />
-                            <h4 align="center">Projects</h4>
+                            <h4 class="align-center">Projects</h4>
 
                             <div class="container-fluid">
                                 <div class="row">
@@ -148,11 +148,11 @@ else
                                         }
                                         <div class="col-md-4">
                                             <div class="card mt-2">
-                                                <a href="~/User/@Model.User.UrlFriendlyName/Projects/@item.UrlFriendlyName" class="card-link" style="text-align:center">
+                                                <a href="~/User/@Model.User.UrlFriendlyName/Projects/@item.UrlFriendlyName" class="card-link text-center">
                                                     <img class="card-img-top project-image" src="@Url.Content("~/" + @item.Image)" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Project Image">
                                                 </a>
                                                 <div class="card-body text-center">
-                                                    <a href="~/User/@Model.User.UrlFriendlyName/Projects/@item.UrlFriendlyName" class="card-link" style="text-align:center">
+                                                    <a href="~/User/@Model.User.UrlFriendlyName/Projects/@item.UrlFriendlyName" class="card-link text-center">
                                                         <h5 class="card-title w-90% text-left">@item.Name</h5>
                                                     </a>
                                                     <h6 class="card-subtitle mb-2 text-muted text-left">

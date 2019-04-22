@@ -289,7 +289,7 @@
                         "DeleteProjectPortfolio",
                         "UserProfile",
                         new { id = Model.Portfolio.Id },
-                        new { @class = "btn btn-primary", @style = "margin-left:40px" }
+                        new { @class = "btn btn-primary ml-40px" }
                         )
                     </div>
                 </div>
@@ -299,8 +299,8 @@
                     <div class="text-md-center">
                         <div class="card mt-2 h-98%">
                             <div class="card-body text-center">
-                                <a href="~/UserProfile/AddProject/@Model.Portfolio.Id" class="card-link text-center" style="vertical-align:middle;">
-                                    <i class="far fa-plus-square mt-2 text-center m-auto" style="font-size:150px;vertical-align:middle;">
+                                <a href="~/UserProfile/AddProject/@Model.Portfolio.Id" class="card-link text-center align-middle;">
+                                    <i class="far fa-plus-square mt-2 text-center m-auto align-middle" style="font-size:150px;">
                                     </i>
                                     <h4 class="mt-4">Add Project</h4>
                                 </a>
@@ -339,13 +339,13 @@
                        "DeletePortfolio",
                        "UserProfile",
                        new { id = Model.Portfolio.Id },
-                       new { @class = "btn btn-primary", @style = "margin-left:60px" }
+                       new { @class = "btn btn-primary ml-60px" }
                        )
                     </div>
                 </div>
             </div>
             <div class="col-md-offset-2 col-md-12">
-                @Html.ActionLink("Back to Portfolios", "EditPortfolios", null, null, new { @class = "btn btn-default" })
+                @Html.ActionLink("Back to Portfolios", "EditPortfolios", null, null, new { @class = "btn-secondary" })
             </div>
         </div>
     </body>

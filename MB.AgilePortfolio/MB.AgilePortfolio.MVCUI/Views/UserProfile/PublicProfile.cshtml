@@ -191,11 +191,11 @@ else
                             }
                             <div class="col-md-4">
                                 <div class="card mt-2">
-                                    <a href="~/User/@Model.User.UrlFriendlyName/Portfolios/@item.UrlFriendlyName" class="card-link" style="text-align:center">
-                                        <div class="card-body" style="text-align:center">
+                                    <a href="~/User/@Model.User.UrlFriendlyName/Portfolios/@item.UrlFriendlyName" class="card-link text-center">
+                                        <div class="card-body text-center">
                                             <img class="card-img-top project-image" src="@Url.Content("~/" + @item.PortfolioImage)" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Portfolio Image">
-                                            <h5 class="card-title" style="width: 90%;text-align:left">@item.Name</h5>
-                                            <p class="card-text" style="text-align:left">@item.ShortDescription</p>
+                                            <h5 class="card-title w-90% text-left">@item.Name</h5>
+                                            <p class="card-text text-left">@item.ShortDescription</p>
                                             <br />
                                             View Portfolio
                                         </div>
