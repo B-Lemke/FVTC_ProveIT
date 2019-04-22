@@ -289,7 +289,7 @@
                         "DeleteProjectPortfolio",
                         "UserProfile",
                         new { id = Model.Portfolio.Id },
-                        new { @class = "btn btn-primary ml-40px" }
+                        new { @class = "btn btn-secondary ml-40px" }
                         )
                     </div>
                 </div>
@@ -314,11 +314,11 @@
 
 
 
-            <div class="row">
+            <div class="row justify-content-center">
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Save" class="btn btn-primary ml-40px" />
+                        <input type="submit" value="Save" class="btn btn-secondary ml-40px" />
                     </div>
                 </div>
 
@@ -328,7 +328,7 @@
 
                 <div class="form-group">
                     <div class="col-md-12">
-                        <a href="~/User/@Model.User.UrlFriendlyName/Portfolios/@Model.Portfolio.UrlFriendlyName" class="btn btn-primary">View Portfolio</a>
+                        <a href="~/User/@Model.User.UrlFriendlyName/Portfolios/@Model.Portfolio.UrlFriendlyName" class="btn btn-secondary">View Portfolio</a>
                     </div>
                 </div>
 
@@ -339,13 +339,13 @@
                        "DeletePortfolio",
                        "UserProfile",
                        new { id = Model.Portfolio.Id },
-                       new { @class = "btn btn-primary ml-60px" }
+                       new { @class = "btn btn-secondary ml-60px" }
                        )
                     </div>
                 </div>
             </div>
             <div class="col-md-offset-2 col-md-12">
-                @Html.ActionLink("Back to Portfolios", "EditPortfolios", null, null, new { @class = "btn-secondary" })
+                @Html.ActionLink("Back to Portfolios", "EditPortfolios", null, null, new { @class = "btn btn-default" })
             </div>
         </div>
     </body>
