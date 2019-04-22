@@ -118,6 +118,14 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                         ObjectName = ppus.Project.Name
                     };
 
+                    UploadedZip uz = new UploadedZip
+                    {
+                        FilePath = ppus.Project.Filepath,
+                        Fileupload = ppus.Fileupload,
+                        UserName = username,
+                        ProjectName = ppus.Project.Name
+                    };
+
                     if (!ModelState.IsValid)
                     {
                         ppus.User = new User();
@@ -142,6 +150,17 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     else
                     {
                         ppus.Project.Image = null;
+                    }
+
+                    fp = uz.Upload();
+                    // fp will return null if no upload file was choosen else use upload file to save to database
+                    if (fp != null)
+                    {
+                        ppus.Project.Filepath = fp;
+                    }
+                    else
+                    {
+                        ppus.Project.Filepath = null;
                     }
 
                     ppus.Project.Insert(ppus.SelectedLanguages);
