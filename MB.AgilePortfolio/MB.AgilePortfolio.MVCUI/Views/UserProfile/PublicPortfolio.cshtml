@@ -85,11 +85,11 @@ else
                                 <a class="text-center" href="~/User/@Model.User.Username">
                                     @if (Model.User.ProfileImage != null)
                                     {
-                                        <img class="profile-image rounded" width="100%" src="~/@Model.User.ProfileImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image" />
+                                        <img class="profile-image rounded w-100%" src="~/@Model.User.ProfileImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image" />
                                     }
                                     else
                                     {
-                                        <img src="~/Assets/Images/UserProfiles/Default.png" alt="Default Profile Image" width="100%" class="rounded-circle" />
+                                        <img src="~/Assets/Images/UserProfiles/Default.png" alt="Default Profile Image" class="w-100 h-25 rounded-circle" />
                                     }
                                 </a>
                             </div>
