@@ -21,7 +21,7 @@
             {
                 <p class="center-block bg bg-primary font-italic">No portfolios currently</p>
                 <div class="text-center ">
-                    <div class="card mt-2 h-98%">
+                    <div class="card mt-2 h-98">
                         <div class="card-body text-center">
                             <a href="~/CreateNewPortfolio/Create/" class="card-link text-center align-middle">
                                 <i class="far fa-plus-square mt-2 text-center m-auto align-middle" style="font-size:150px;">
@@ -43,7 +43,7 @@
                                     <a href="~/UserProfile/EditPortfolio/@portfolio.Id" class="card-link text-center">
                                         <img class="card-img-top project-image" src="@Url.Content("~/" + portfolio.PortfolioImage)" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt=@portfolio.Name>
                                         <div class="card-body text-center">
-                                            <h5 class="card-title w-90% text-left">@portfolio.Name</h5>
+                                            <h5 class="card-title w-90 text-left">@portfolio.Name</h5>
                                             <p class="card-text text-left">@portfolio.Description...</p>
                                         </div>
                                     </a>
@@ -51,7 +51,7 @@
                             </div>
                         }
                         <div class="col-md-4">
-                            <div class="card mt-2 h-98%;">
+                            <div class="card mt-2 h-98;">
                                 <div class="card-body text-center">
                                     <a href="~/CreateNewPortfolio/Create/" class="card-link text-center align-middle">
                                         <i class="far fa-plus-square mt-2 text-center m-auto align-middle" style="font-size:150px;">
