@@ -30,7 +30,7 @@
                             <div class="col-md-4">
                                 <div class="card mt-2">
                                     <a href="~/User/@Model.User.UrlFriendlyName/Portfolios/@portfolio.UrlFriendlyName" class="card-link text-center">
-                                        <img class="card-img-top project-image" src="@Url.Content("~/" + portfolio.PortfolioImage)" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt=@portfolio.Name>
+                                        <img class="card-img-top project-image" src="@Url.Content("~/" + portfolio.PortfolioImage)" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="@portfolio.Name"> @*image size needs fixing (unless it was on other portfolio page?)*@
                                         <div class="card-body text-center">
                                             <h5 class="card-title  w-90% text-left">@portfolio.Name</h5>
                                             <p class="card-text text-left">@portfolio.Description</p>
