@@ -102,15 +102,16 @@
     </div>
 </div>
 
-<div id="footerholder">
+<div id="footerholder" class="mt-5">
 
 </div>
 
 <script>
     //Move the footer to the proper location on the screen because it wasn't working any other way. Some day come back and fix this properly.
     $(document).ready(function () {
-
-        $("#footerholder").append($("footer"));
+        $("#footer").removeClass("fixed-bottom");
+        $
+        $("#footerholder").append($("#footer"));
         console.log("ready!");
     });
 </script>

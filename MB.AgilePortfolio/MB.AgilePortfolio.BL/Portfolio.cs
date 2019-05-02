@@ -13,7 +13,50 @@ namespace MB.AgilePortfolio.BL
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string ShortDescription => Description == null ? "test" : new string(Description.Take(100).ToArray());
+        public string ShortDescription
+        {
+            get
+            {
+                if (Description == null)
+                {
+                    return String.Empty;
+                }
+                else if (Description.Length < 100)
+                {
+                    return Description;
+                }
+                else
+                {
+                    StringBuilder output = new StringBuilder();
+                    int i = 100;
+                    bool flag = true;
+                    output.Append(Description.Substring(0, 100));
+                    while (flag)
+                    {
+                        if (i <= 125)
+                        {
+                            if (Description[i] != ' ')
+                            {
+                                output.Append(Description[i]);
+                            }
+                            else
+                            {
+                                output.Append("...");
+                                flag = !flag;
+                            }
+                        }
+                        else
+                        {
+                            output.Append("...");
+                            flag = !flag;
+                        }
+                        i++;
+                    }
+                    return output.ToString();
+                }
+            }
+        }
+
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
         [DisplayName("Portfolio Image")]

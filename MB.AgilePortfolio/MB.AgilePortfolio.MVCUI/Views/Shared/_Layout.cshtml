@@ -65,23 +65,13 @@
             </div>
         </div>
     </nav>
-    <div class="container body-content">
+    <div class="container body-content main-content">
         @RenderBody()
 
     </div>
- @* 
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
 
-     These worked on every page except the homepage, tiny white space still at bottom but better than what we had before
-*@
-    <hr class="footer-bar" />
-    <div class="page-footer font-small text-center bg-primary" id="footer"> @*"fixed-bottom" class worked the best but did not force footer to bottom of page*@
+
+    <div class="page-footer font-small text-center bg-primary fixed-bottom" id="footer">
         <div class="container-fluid">
             <div class="footer-link-block row">
                 <div class="col col-lg-6">
@@ -107,7 +97,7 @@
                 </div>
 
             </div>
-            <div class="row footer-copyright text-center font-small bg-secondary">
+            <div class="row  footer-copyright text-center font-small bg-secondary">
                 <div class="container">
                     <p class="text-white">&copy; @DateTime.Now.Year - Team Dead Pens</p>
                 </div>
