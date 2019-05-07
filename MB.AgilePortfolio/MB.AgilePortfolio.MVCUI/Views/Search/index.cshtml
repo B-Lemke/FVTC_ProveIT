@@ -14,7 +14,7 @@
 {
 <body onload = "load()">
     @Html.DropDownList("language", new SelectList(Model.Languages, "Description", "Description", Model.Language), null, new { @id = "ddlLanguages", @class = "form-control", style = "display:none" })
-    @Html.TextBox("search", null, new { @id = "tbxsearch", style = "display:none" })<input type="submit" name="submit" value="Search" id="inptsearch" /><br />
+    @Html.TextBox("search", null, new { @id = "tbxsearch", style = "display:none" })<input type="submit" name="submit" value="Search" id="inptsearch"/><br /> <!--radio-inline class where?-->
     <b> Search By: </b>
     <br />
     @Html.RadioButton("option", "Project", true, new { id = "rdoProject", onchange = "showlanguages()" })<text> Project </text><br />
@@ -27,12 +27,12 @@
     <hr />
     <h4 align="center">Projects</h4>
     <hr />
-    <div class="form-horizontal">
+    <div class="form-horizontal"> <!---form-inline?-->
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         @if (Model.Projects.Count < 1)
         {
-            <p style="font-style:italic;text-align:center;">@ViewBag.ErrorMessage</p>
+            <p class="font-italic text-center;">@ViewBag.ErrorMessage</p>
 
         }
         else
