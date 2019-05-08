@@ -74,3 +74,11 @@ body {
 .main-content { 
    padding-bottom: 200px;
 }
+
+.multiline {
+    white-space: pre-line;
+}
+
+.smaller-image{
+    max-height: 300px;
+}

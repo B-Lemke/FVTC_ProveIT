@@ -121,7 +121,7 @@ else
                         @if (Model.Portfolio.Description != null)
                         {
                             <hr />
-                            <p class="portfolio-description">
+                            <p class="portfolio-description multiline">
                                 @Model.Portfolio.Description
                             </p>
                         }
@@ -129,7 +129,7 @@ else
                         @if (@Model.Portfolio.PortfolioImage != null && @Model.Portfolio.PortfolioImage != "Assets/Images/UserProfiles/Default.png")
                         {
                             <div class="container py-4 text-center">
-                                <img src="~/@Model.Portfolio.PortfolioImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt=@Model.Portfolio.Name class="w-100 h-350px text-center" style="object-fit:contain;">
+                                <img src="~/@Model.Portfolio.PortfolioImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt=@Model.Portfolio.Name class="w-100 text-center smaller-image" style="object-fit:contain;">
                             </div>
                         }
 

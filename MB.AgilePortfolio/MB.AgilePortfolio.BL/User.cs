@@ -18,7 +18,7 @@ namespace MB.AgilePortfolio.BL
     {
         [DataType(DataType.MultilineText)]
         public string Bio { get; set; }
-        public string ShortBio => Bio == null ? string.Empty : new string(Bio.Take(100).ToArray());
+        
         public Guid Id { get; set; }
         public string Email { get; set; }
         [DataType(DataType.Password)]
@@ -44,6 +44,50 @@ namespace MB.AgilePortfolio.BL
                 return URLFriendly(this.Username);
             }
         }
+        public string ShortBio
+        {
+            get
+            {
+                if (Bio == null)
+                {
+                    return String.Empty;
+                }
+                else if (Bio.Length < 100)
+                {
+                    return Bio;
+                }
+                else
+                {
+                    StringBuilder output = new StringBuilder();
+                    int i = 100;
+                    bool flag = true;
+                    output.Append(Bio.Substring(0, 100));
+                    while (flag)
+                    {
+                        if (i <= 125)
+                        {
+                            if (Bio[i] != ' ')
+                            {
+                                output.Append(Bio[i]);
+                            }
+                            else
+                            {
+                                output.Append("...");
+                                flag = !flag;
+                            }
+                        }
+                        else
+                        {
+                            output.Append("...");
+                            flag = !flag;
+                        }
+                        i++;
+                    }
+                    return output.ToString();
+                }
+            }
+        }
+
 
         #region URL Cleaning 
         //-----------------------START URL CLEANING METHODS------------------------------------
