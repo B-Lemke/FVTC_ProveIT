@@ -68,11 +68,20 @@
             .sidebar {
                 padding: 5px;
             }
+
+            input, textarea {
+                max-width: none;
+
+            }
+
+            textarea {
+                height: 1000px;
+            }
         </style>
     </head>
     <body>
         <div class="form-horizontal">
-            <h4>@Model.Portfolio.Name</h4>
+            <h2 class="text-center">@Model.Portfolio.Name</h2>
             <div class="container py-4 text-center">
                 <img src="~/@Model.Portfolio.PortfolioImage" alt="Portfolio" class="text-center w-100 h-350px" style="object-fit:contain;">
             </div>
@@ -81,16 +90,16 @@
             @Html.HiddenFor(model => model.Portfolio.Id)
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Portfolio.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                @Html.LabelFor(model => model.Portfolio.Name, htmlAttributes: new { @class = "control-label offset-md-1 col-md-10" })
+                <div class="offset-md-1 col-md-10">
                     @Html.EditorFor(model => model.Portfolio.Name, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Portfolio.Name, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Portfolio.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                @Html.LabelFor(model => model.Portfolio.Description, htmlAttributes: new { @class = "control-label offset-md-1 col-md-10" })
+                <div class="offset-md-1 col-md-10">
                     @Html.EditorFor(model => model.Portfolio.Description, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Portfolio.Description, "", new { @class = "text-danger" })
                 </div>
@@ -99,9 +108,9 @@
 
             <div class="form-group">
                 @*
-            @Html.LabelFor(model => model.Portfolio.PortfolioImage, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Portfolio.PortfolioImage, htmlAttributes: new { @class = "control-label offset-md-1 col-md-10" })
                 *@
-                <div class="col-md-10">
+                <div class="offset-md-1 col-md-10">
                     @Html.HiddenFor(model => model.Portfolio.PortfolioImage, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Portfolio.PortfolioImage, "", new { @class = "text-danger" })
                 </div>
@@ -109,21 +118,21 @@
 
 
             <div class="form-group">
-                <div class="col-md-10">
+                <div class="offset-md-1 col-md-10">
                     @Html.HiddenFor(model => model.Portfolio.UserId, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
                     @Html.ValidationMessageFor(model => model.Portfolio.UserId, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Portfolio.PrivacyId, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                @Html.LabelFor(model => model.Portfolio.PrivacyId, htmlAttributes: new { @class = "control-label offset-md-1 col-md-10" })
+                <div class="offset-md-1 col-md-10">
                     @Html.DropDownListFor(model => model.Portfolio.PrivacyId, new SelectList(Model.Privacies, "Id", "Description", Model.Portfolio), null, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Portfolio.PrivacyId, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-md-10">
+                <div class="offset-md-1 col-md-10">
 
                     <label>Upload Display Image</label>
                     <div class="input-group">
@@ -133,7 +142,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-10">
+                <div class="offset-md-1 col-md-10">
                     @Html.HiddenFor(model => model.Portfolio.PortfolioImage, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Fileupload, "", new { @class = "text-danger" })
                 </div>
@@ -314,33 +323,26 @@
 
 
 
-            <div class="row justify-content-center">
+            <div class="row text-center">
+                <div class="offset-md-1 col-md-10 text-center">
+                    <div class="form-group">
+                 
+                            <input type="submit" value="Save" class="btn btn-primary" />
+            
+  
+         
+                            <a href="~/User/@Model.User.UrlFriendlyName/Portfolios/@Model.Portfolio.UrlFriendlyName" class="btn btn-primary">View Portfolio</a>
+   
 
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Save" class="btn btn-primary ml-40px" />
-                    </div>
-                </div>
-
-                <div class="form-group">
-
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <a href="~/User/@Model.User.UrlFriendlyName/Portfolios/@Model.Portfolio.UrlFriendlyName" class="btn btn-primary">View Portfolio</a>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-12">
-                        @Html.ActionLink(
-                       "Delete",
-                       "DeletePortfolio",
-                       "UserProfile",
-                       new { id = Model.Portfolio.Id },
-                       new { @class = "btn btn-primary ml-60px" }
-                       )
+           
+                            @Html.ActionLink(
+                           "Delete",
+                           "DeletePortfolio",
+                           "UserProfile",
+                           new { id = Model.Portfolio.Id },
+                           new { @class = "btn btn-primary ml-60px" }
+                           )
+            
                     </div>
                 </div>
             </div>

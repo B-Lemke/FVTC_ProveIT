@@ -72,7 +72,27 @@ namespace MB.AgilePortfolio.BL
         public string CreatorUsername { get; set; }
         public string UrlFriendlyName { get { return URLFriendly(this.Name); } }
         public string UrlFriendlyCreatorUserName { get { return URLFriendly(this.CreatorUsername); } }
+        public LanguageList LanguagesOfProjects
+        {
+            get
+            {
+                LanguageList tempList = new LanguageList();
 
+                foreach(Project proj in Projects)
+                {
+                    foreach(Language lang in proj.Languages)
+                    {
+                        //Language hasn't been added yet
+                        if (!tempList.Any(tl => tl.Description == lang.Description))
+                        {
+                            tempList.Add(lang);
+                        }
+                    }
+                }
+
+                return tempList;
+            }
+        }
         /// <summary>
         /// Produces optional, URL-friendly version of a title, "like-this-one". 
         /// hand-tuned for speed, reflects performance refactoring contributed

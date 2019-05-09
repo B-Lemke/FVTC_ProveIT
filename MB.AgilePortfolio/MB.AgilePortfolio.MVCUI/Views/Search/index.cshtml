@@ -12,104 +12,58 @@
 @Html.AntiForgeryToken()
 @using (Html.BeginForm("Index", "Search", FormMethod.Get))
 {
-<body onload = "load()">
-    @Html.DropDownList("language", new SelectList(Model.Languages, "Description", "Description", Model.Language), null, new { @id = "ddlLanguages", @class = "form-control", style = "display:none" })
-    @Html.TextBox("search", null, new { @id = "tbxsearch", style = "display:none" })<input type="submit" name="submit" value="Search" id="inptsearch"/><br /> <!--radio-inline class where?-->
-    <b> Search By: </b>
-    <br />
-    @Html.RadioButton("option", "Project", true, new { id = "rdoProject", onchange = "showlanguages()" })<text> Project </text><br />
-    @Html.RadioButton("option", "Portfolio", false, new { id = "rdoPortfolio", onchange = "showlanguages()" })<text> Portfolio </text><br />
-    @Html.RadioButton("option", "Profile", false, new { id = "rdoProfile", onchange = "showlanguages()" })<text> Profile </text><br />
-    @Html.RadioButton("option", "Language", false, new { id = "rdoLanguage", onchange = "showlanguages()" }) <text> Language </text><br />
-
-    @if (ViewBag.ReturnObject == "Projects")
-    {
-    <hr />
-    <h4 align="center">Projects</h4>
-    <hr />
-    <div class="form-horizontal"> <!---form-inline?-->
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        @if (Model.Projects.Count < 1)
-        {
-            <p class="font-italic text-center;">@ViewBag.ErrorMessage</p>
-
-        }
-        else
-        {
-            <div class="container-fluid mt-4">
-                <div class="row">
-                    @foreach (var prj in Model.Projects.OrderBy(i => i.Name))
-                    {
-                        <div class="col-md-4">
-                            <div class="card mt-2">
-                                <a href="~/User/@prj.UrlFriendlyCreatorUserName/Projects/@prj.UrlFriendlyName" class="card-link" style="text-align:center">
-                                    <img class="card-img-top project-image" src="@Url.Content("~/" + prj.Image)" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Project Image">
-                                    <div class="card-body" style="text-align:center">
-
-                                        <h5 class="card-title" style="width: 90%;text-align:left">@prj.Name</h5>
-                                        <h6 class="card-subtitle mb-2 text-muted text-light font-weight-light" style="width: 90%;text-align:left">@prj.CreatorUserName</h6>
-                                        <h6 class="card-subtitle mb-2 text-muted" style="text-align:left">
-                                            @if (prj.Languages != null)
-                                            {
-                                                int badgeCount = 0;
-
-                                                foreach (var lang in prj.Languages)
-                                                {
-                                                    if (badgeCount < 5)
-                                                    {
-                                                        <span class="badge badge-pill badge-@lang.BadgeName">@lang.Description</span>
-                                                        badgeCount++;
-                                                    }
-                                                }
-                                            }
-                                        </h6>
-                                        <p class="card-text" style="text-align:left">@prj.ShortDescription...</p>
-
-
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    }
+    <body onload="load()">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="mt-2 col-md-4">
+                    @Html.DropDownList("language", new SelectList(Model.Languages, "Description", "Description", Model.Language), null, new { @id = "ddlLanguages", @class = "form-control", style = "display:none" })
+                    @Html.TextBox("search", null, new { @id = "tbxsearch", style = "display:none; width: 66%;" })<input type="submit" name="submit" value="Search" id="inptsearch" style="width: 33%" /><br /> <!--radio-inline class where?-->
+                </div>
+                <div class="col-md-8 mt-2">
+                    <b class="mr-2"> Search By: </b>
+   
+                    @Html.RadioButton("option", "Project", true, new { id = "rdoProject", onchange = "showlanguages()" })<text class="mr-2"> Project </text>
+                    @Html.RadioButton("option", "Portfolio", false, new { id = "rdoPortfolio", onchange = "showlanguages()" })<text class="mr-2"> Portfolio </text>
+                    @Html.RadioButton("option", "Profile", false, new { id = "rdoProfile", onchange = "showlanguages()" })<text class="mr-2"> Profile </text>
+                    @Html.RadioButton("option", "Language", false, new { id = "rdoLanguage", onchange = "showlanguages()" }) <text class="mr-2"> Language </text><br />
                 </div>
             </div>
-        }
-    </div>
-    }
-    else if (ViewBag.ReturnObject == "Portfolios")
-    {
-    // Display list of Portfolios results
-    <div class="form-horizontal">
-        <hr />
-        <h4 align="center">Portfolios</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @if (Model.Portfolios.Count < 1)
-            {
-                <p style="font-style:italic;text-align:center;">@ViewBag.ErrorMessage</p>
-            }
-            else
-            {
-                <div class="container-fluid mt-4">
-                    <div class="row">
-                        @foreach (var portfolio in Model.Portfolios.OrderBy(i => i.Name))
-                        {
-                            <div class="col-md-4">
-                                <div class="card mt-2">
-                                    <a href="~/User/@portfolio.UrlFriendlyCreatorUserName/Portfolios/@portfolio.UrlFriendlyName" class="card-link" style="text-align:center">
-                                        <img class="card-img-top project-image" src="@Url.Content("~/" + portfolio.PortfolioImage)" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Portfolio Image">
-                                        <div class="card-body" style="text-align:center">
-                                            <h5 class="card-title" style="width: 90%;text-align:left">@portfolio.Name</h5>
-                                            <h6 class="card-subtitle mb-2 text-muted" style="text-align:left">
-                                                @foreach (var project in portfolio.Projects)
-                                                {
-                                                    if (project.Languages != null)
+        </div>
+
+        @if (ViewBag.ReturnObject == "Projects")
+        {
+            <hr />
+            <h4 align="center">Projects</h4>
+            <hr />
+            <div class="form-horizontal">
+                <!---form-inline?-->
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                @if (Model.Projects.Count < 1)
+                {
+                    <p class="font-italic text-center;">@ViewBag.ErrorMessage</p>
+
+                }
+                else
+                {
+                    <div class="container-fluid mt-4">
+                        <div class="row">
+                            @foreach (var prj in Model.Projects.OrderBy(i => i.Name))
+                            {
+                                <div class="col-md-4">
+                                    <div class="card mt-2">
+                                        <a href="~/User/@prj.UrlFriendlyCreatorUserName/Projects/@prj.UrlFriendlyName" class="card-link" style="text-align:center">
+                                            <img class="card-img-top project-image" src="@Url.Content("~/" + prj.Image)" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Project Image">
+                                            <div class="card-body" style="text-align:center">
+
+                                                <h5 class="card-title" style="width: 90%;text-align:left">@prj.Name</h5>
+                                                <h6 class="card-subtitle mb-2 text-muted text-light font-weight-light" style="width: 90%;text-align:left">@prj.CreatorUserName</h6>
+                                                <h6 class="card-subtitle mb-2 text-muted" style="text-align:left">
+                                                    @if (prj.Languages != null)
                                                     {
                                                         int badgeCount = 0;
 
-                                                        foreach (var lang in project.Languages)
+                                                        foreach (var lang in prj.Languages)
                                                         {
                                                             if (badgeCount < 5)
                                                             {
@@ -118,18 +72,119 @@
                                                             }
                                                         }
                                                     }
-                                                }
-                                            </h6>
-                                            <p class="card-text" style="text-align:left">@portfolio.Description...</p>
-                                        </div>
-                                    </a>
+                                                </h6>
+                                                <p class="card-text" style="text-align:left">@prj.ShortDescription...</p>
+
+
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                        }
+                            }
+                        </div>
                     </div>
+                }
+            </div>
+        }
+        else if (ViewBag.ReturnObject == "Portfolios")
+        {
+            // Display list of Portfolios results
+            <div class="form-horizontal">
+                <hr />
+                <h4 align="center">Portfolios</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @if (Model.Portfolios.Count < 1)
+                    {
+                        <p style="font-style:italic;text-align:center;">@ViewBag.ErrorMessage</p>
+                    }
+                    else
+                    {
+                        <div class="container-fluid mt-4">
+                            <div class="row">
+                                @foreach (var portfolio in Model.Portfolios.OrderBy(i => i.Name))
+                                {
+                                    <div class="col-md-4">
+                                        <div class="card mt-2">
+                                            <a href="~/User/@portfolio.UrlFriendlyCreatorUserName/Portfolios/@portfolio.UrlFriendlyName" class="card-link" style="text-align:center">
+                                                <img class="card-img-top project-image" src="@Url.Content("~/" + portfolio.PortfolioImage)" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Portfolio Image">
+                                                <div class="card-body" style="text-align:center">
+                                                    <h5 class="card-title" style="width: 90%;text-align:left">@portfolio.Name</h5>
+                                                    <h6 class="card-subtitle text-left mb-2 font-weight-light">@portfolio.CreatorUsername</h6>
+                                                    <h6 class="card-subtitle mb-2 text-muted" style="text-align:left">
+                                                        @if (portfolio.LanguagesOfProjects != null)
+                                                            {
+                                                                int badgeCount = 0;
+
+                                                                foreach (var lang in portfolio.LanguagesOfProjects)
+                                                                {
+                                                                    if (badgeCount < 5)
+                                                                    {
+                                                                        <span class="badge badge-pill badge-@lang.BadgeName">@lang.Description</span>
+                                                                        badgeCount++;
+                                                                    }
+                                                                }
+                                                            }
+                                                        
+                                                    </h6>
+                                                    <p class="card-text" style="text-align:left">@portfolio.ShortDescription</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
                 </div>
-            }
-        </div>
+                @*
+                    <div>
+                        <a href="~/User/@Model.User.Username">
+                            <p>Back to Profile</p>
+                        </a>
+                    </div>
+                *@
+            </div>
+        }
+        else if (ViewBag.ReturnObject == "Profiles")
+        {
+            // Display list of Profile results
+            <div class="form-horizontal">
+                <hr />
+                <h4 align="center">Profiles</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @if (Model.Users.Count < 1)
+                    {
+                        <p style="font-style:italic;text-align:center;">@ViewBag.ErrorMessage</p>
+                    }
+                    else
+                    {
+                        <div class="container-fluid mt-4">
+                            <div class="row">
+                                @foreach (var user in Model.Users.OrderBy(i => i.Username))
+                                {
+                                    <div class="col-md-4">
+                                        <div class="card mt-2">
+                                            <a href="~/User/@user.UrlFriendlyName" class="card-link" style="text-align:center">
+                                                <img class="card-img-top project-image" src="@Url.Content("~/" + user.ProfileImage)" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image">
+                                                <div class="card-body" style="text-align:center">
+                                                    <h5 class="card-title" style="width: 90%;text-align:left">@user.Username</h5>
+                                                    <p class="card-text" style="text-align:left">@user.FullName</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
         @*
             <div>
                 <a href="~/User/@Model.User.Username">
@@ -137,54 +192,7 @@
                 </a>
             </div>
         *@
-    </div>
-    }
-    else if (ViewBag.ReturnObject == "Profiles")
-    {
-    // Display list of Profile results
-    <div class="form-horizontal">
-        <hr />
-        <h4 align="center">Profiles</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @if (Model.Users.Count < 1)
-            {
-                <p style="font-style:italic;text-align:center;">@ViewBag.ErrorMessage</p>
-            }
-            else
-            {
-                <div class="container-fluid mt-4">
-                    <div class="row">
-                        @foreach (var user in Model.Users.OrderBy(i => i.Username))
-                        {
-                            <div class="col-md-4">
-                                <div class="card mt-2">
-                                    <a href="~/User/@user.UrlFriendlyName" class="card-link" style="text-align:center">
-                                        <img class="card-img-top project-image" src="@Url.Content("~/" + user.ProfileImage)" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image">
-                                        <div class="card-body" style="text-align:center">
-                                            <h5 class="card-title" style="width: 90%;text-align:left">@user.Username</h5>
-                                            <p class="card-text" style="text-align:left">@user.FullName</p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                </div>
-            }
-        </div>
-    </div>
-    }
-
-    @*
-        <div>
-            <a href="~/User/@Model.User.Username">
-                <p>Back to Profile</p>
-            </a>
-        </div>
-    *@
-</body>
+    </body>
 }
 <script>
     function showlanguages() {

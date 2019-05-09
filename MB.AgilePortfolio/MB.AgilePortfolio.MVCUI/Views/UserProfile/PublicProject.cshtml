@@ -237,7 +237,11 @@ else
 
                     </div>
                     <div class="col-md-10 pl-2 border">
-                        <h2 class="text-left mt-2">@Model.Project.Name <span class="badge badge-primary status_badge status_badge_@Model.Project.StatusDescription.ToLower().Replace(" ", "_")">@Model.Project.StatusDescription </span></h2>
+                        <h2 class="text-left mt-2">
+                            @Model.Project.Name <span class="badge badge-primary status_badge status_badge_@Model.Project.StatusDescription.ToLower().Replace(" ", "_")">@Model.Project.StatusDescription </span>
+                            @if (@HttpContext.Current.Session["user"] != null && Model.User.Id.ToString() == @HttpContext.Current.Session["UserID"].ToString())
+                            {<span class="h2 small"> | @Html.ActionLink("Edit Project", "EditProject", "Screenshot", new { id = Model.Project.Id }, null)</span>}
+                        </h2>
                         @if (Model.Project.Languages != null)
                         {
             
