@@ -188,6 +188,32 @@
     <Compile Include="ViewModels\UserUserTypes.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Images\Favicon\android-icon-144x144.png" />
+    <Content Include="Assets\Images\Favicon\android-icon-192x192.png" />
+    <Content Include="Assets\Images\Favicon\android-icon-36x36.png" />
+    <Content Include="Assets\Images\Favicon\android-icon-48x48.png" />
+    <Content Include="Assets\Images\Favicon\android-icon-72x72.png" />
+    <Content Include="Assets\Images\Favicon\android-icon-96x96.png" />
+    <Content Include="Assets\Images\Favicon\apple-icon-114x114.png" />
+    <Content Include="Assets\Images\Favicon\apple-icon-120x120.png" />
+    <Content Include="Assets\Images\Favicon\apple-icon-144x144.png" />
+    <Content Include="Assets\Images\Favicon\apple-icon-152x152.png" />
+    <Content Include="Assets\Images\Favicon\apple-icon-180x180.png" />
+    <Content Include="Assets\Images\Favicon\apple-icon-57x57.png" />
+    <Content Include="Assets\Images\Favicon\apple-icon-60x60.png" />
+    <Content Include="Assets\Images\Favicon\apple-icon-72x72.png" />
+    <Content Include="Assets\Images\Favicon\apple-icon-76x76.png" />
+    <Content Include="Assets\Images\Favicon\apple-icon-precomposed.png" />
+    <Content Include="Assets\Images\Favicon\apple-icon.png" />
+    <Content Include="Assets\Images\Favicon\browserconfig.xml" />
+    <Content Include="Assets\Images\Favicon\favicon-16x16.png" />
+    <Content Include="Assets\Images\Favicon\favicon-32x32.png" />
+    <Content Include="Assets\Images\Favicon\favicon-96x96.png" />
+    <Content Include="Assets\Images\Favicon\favicon.ico" />
+    <Content Include="Assets\Images\Favicon\ms-icon-144x144.png" />
+    <Content Include="Assets\Images\Favicon\ms-icon-150x150.png" />
+    <Content Include="Assets\Images\Favicon\ms-icon-310x310.png" />
+    <Content Include="Assets\Images\Favicon\ms-icon-70x70.png" />
     <Content Include="Assets\Images\Home\board.jpg" />
     <Content Include="Assets\Images\Home\calculators.jpg" />
     <Content Include="Assets\Images\Home\fixingComputer.jpg" />
@@ -249,6 +275,7 @@
     <Content Include="Content\_navbar.scss" />
     <Content Include="Content\_portfolio.scss" />
     <Content Include="Content\_variables.scss" />
+    <Content Include="Assets\Images\Favicon\manifest.json" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
