@@ -58,7 +58,7 @@
         <div class="container py-4 text-center">
             @if (Model.User.ProfileImage != null)
             {
-                <img src="~/@Model.User.ProfileImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image" style="object-fit:contain" class="w-100% h-350px text-center rounded-circle" />
+                <img src="~/@Model.User.ProfileImage" onerror="this.onerror = null;this.src='/Assets/Images/UserProfiles/Default.png'" alt="Profile Image" style="object-fit:contain; max-height: 350px" class="w-100 text-center rounded-circle" />
             }
             else
             {
