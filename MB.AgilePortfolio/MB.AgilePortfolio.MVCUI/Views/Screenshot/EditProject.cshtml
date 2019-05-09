@@ -559,6 +559,23 @@
                         @Html.ValidationMessageFor(model => model.Fileupload, "", new { @class = "text-danger" })
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <div class="offset-md-1 col-md-10">
+
+                        <label>Upload ZipFile</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                @Html.TextBoxFor(model => model.ZipFileupload, new { type = "file", id = "Zipfileupload", name = "Zipfileupload", accept = ".zip" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="offset-md-1 col-md-10">
+                        @Html.HiddenFor(model => model.Project.Filepath, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ZipFileupload, "", new { @class = "text-danger" })
+                    </div>
+                </div>
             </div>
 
 

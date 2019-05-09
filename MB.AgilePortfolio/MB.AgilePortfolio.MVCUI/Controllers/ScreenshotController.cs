@@ -200,7 +200,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         [HttpPost]
         public ActionResult UploadProjectSliderImage(Guid id, ScreenshotProjects sp)
         {
-
+            
             HttpPostedFileBase fileupload = sp.Fileupload;
             if (fileupload != null)
             {
@@ -404,7 +404,13 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                             ppus.LastUpdated = ppus.DateCreated;
                         }
                     }
-
+                    UploadedZip zu = new UploadedZip
+                    {
+                        FilePath = ppus.Project.Filepath,
+                        Fileupload = ppus.ZipFileupload,
+                        UserName = username,
+                        ProjectName = ppus.Project.Name
+                    };
                     UploadedImage ui = new UploadedImage
                     {
                         FilePath = ppus.Project.Image,
@@ -431,7 +437,7 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                         return View(ppus);
                     }
                     string fp = ui.Upload();
-
+                    string zp = zu.Upload();
                     // fp will return null if no upload file was choosen else use upload file to save to database
                     if (fp != null)
                     {
@@ -440,6 +446,15 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                     else
                     {
                         ppus.Project.Image = null;
+                    }
+
+                    if (zp != null)
+                    {
+                        ppus.Project.Filepath = zp;
+                    }
+                    else
+                    {
+                        ppus.Project.Filepath = null;
                     }
 
                     ppus.Project.DateCreated = ppus.DateCreated;

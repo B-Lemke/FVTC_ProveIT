@@ -66,7 +66,7 @@ namespace MB.AgilePortfolio.BL
                 if (FilePath == string.Empty || FilePath == null)
                 {
                     //Set empty filepath to Default zip
-                    SavePath = "Assets/Zipfiles/UserProfiles";
+                    SavePath = "Assets/Zipfiles/" + UserName;
                     fileName = DefaultFileName;
                     FilePath = SavePath + "/" + fileName;
 
@@ -149,8 +149,13 @@ namespace MB.AgilePortfolio.BL
                 if (Fileupload != null)
                 {
                     Fileupload.SaveAs(HttpContext.Current.Server.MapPath("~/" + absolutepath));
+                    return absolutepath;
                 }
-                return absolutepath;
+                else
+                {
+                    return null;
+                }
+                
             }
             catch (Exception ex)
             {

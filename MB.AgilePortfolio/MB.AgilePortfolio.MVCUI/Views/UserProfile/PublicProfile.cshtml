@@ -149,11 +149,14 @@ else
                     <div class="col-md-4 mt-2">
                         <div class="card">
                             <a href="~/User/@Model.User.UrlFriendlyName/Projects" class="card-link">
-                                <div class="card-body">
+                                <div class="card-body text-center">
                                     <h5 class="card-title w-90%;">There's Even More!</h5>
-                                    View All of @Model.User.FirstName's Projects
-                                </div>
-                            </a>
+                                    <i class="fas fa-arrow-alt-circle-right mt-2 text-center m-auto align-middle" style="font-size:150px;">
+
+                                    </i>
+                                    <div>View All of @Model.User.FirstName's Projects</div>
+                                    </div>
+</a>
                         </div>
                     </div>
                 }
@@ -208,9 +211,12 @@ else
                     <div class="col-md-4">
                         <div class="card mt-2">
                             <a href="~/User/@Model.User.UrlFriendlyName/Portfolios" class="card-link">
-                                <div class="card-body">
+                                <div class="card-body text-center">
                                     <h5 class="card-title" style="width: 90%;">But Wait... There's More</h5>
-                                    View All of @Model.User.FirstName's Portfolios
+                                    <i class="fas fa-arrow-alt-circle-right mt-2 text-center m-auto align-middle" style="font-size:150px;">
+
+                                </i>
+                                    <div>View All of @Model.User.FirstName's Portfolios</div>
                                 </div>
                             </a>
                         </div>

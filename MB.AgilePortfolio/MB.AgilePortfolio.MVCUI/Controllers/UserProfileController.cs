@@ -450,7 +450,6 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         }
         // ==================== END EDIT =====================
 
-
         // ==================== START PUBLIC =====================
 
         // GET: PublicProject

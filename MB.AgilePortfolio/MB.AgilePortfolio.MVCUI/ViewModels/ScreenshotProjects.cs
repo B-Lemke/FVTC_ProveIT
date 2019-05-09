@@ -16,6 +16,7 @@ namespace MB.AgilePortfolio.MVCUI.ViewModels
         public Guid ProjectId { get; set; }
         public ScreenshotList ScreenshotList { get; set; }
         public HttpPostedFileBase Fileupload { get; set; }
+        public HttpPostedFileBase ZipFileupload { get; set; }
         public Project Project { get; set; }
         public PrivacyList Privacies { get; set; }
         public Privacy Privacy { get; set; }

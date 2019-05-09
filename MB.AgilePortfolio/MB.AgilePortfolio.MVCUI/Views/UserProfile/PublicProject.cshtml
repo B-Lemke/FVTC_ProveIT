@@ -398,6 +398,18 @@ else
                                             @Html.DisplayFor(model => model.Project.Collaborators)
                                         </dd>
                                     }
+
+                                    @if (Model.Project.Filepath != null)
+                                    {
+                                        <dt>
+                                            @Html.DisplayName("Zip File")
+                                        </dt>
+
+                                        <dd>
+                                            @Html.HiddenFor(model => model.Project.Filepath)
+                                            <a href="/@Model.Project.Filepath" target="_blank">Download</a>
+                                        </dd>
+                                    }
                                 </dl>
                             </div>
                             @if (Model.ScreenshotList?.Count > 0)

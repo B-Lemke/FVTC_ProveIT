@@ -23,6 +23,7 @@ namespace MB.AgilePortfolio.MVCUI.ViewModels
         public ProjectLanguageList ProjectLanguages { get; set; }
         public ProjectLanguage ProjectLanguage { get; set; }
         public HttpPostedFileBase Fileupload { get; set; }
+        public HttpPostedFileBase ZipFileupload { get; set; }
         public IList<string> SelectedLanguages { get; set; }
         public IList<SelectListItem> AvailableLanguages { get; set; }
         [DataType(DataType.Date)]
