@@ -83,7 +83,7 @@
         <div class="form-horizontal">
             <h2 class="text-center">@Model.Portfolio.Name</h2>
             <div class="container py-4 text-center">
-                <img src="~/@Model.Portfolio.PortfolioImage" alt="Portfolio" class="text-center w-100 h-350px" style="object-fit:contain;">
+                <img src="~/@Model.Portfolio.PortfolioImage" alt="Portfolio" class="text-center w-100" style="object-fit:contain; max-height: 350px;">
             </div>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })

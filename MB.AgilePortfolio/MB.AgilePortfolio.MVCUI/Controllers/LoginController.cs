@@ -25,10 +25,19 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(User user, string returnurl)
+        public ActionResult Index(User user, string txtUsernameOrEmail, string returnurl)
         {
             try
             {
+                if (txtUsernameOrEmail.Contains('@'))
+                {
+                    user.Email = txtUsernameOrEmail;
+                }
+                else
+                {
+                    user.Username = txtUsernameOrEmail;
+                }
+
                 if (user.Login())
                 {
                     ViewBag.Message = "Login successful";

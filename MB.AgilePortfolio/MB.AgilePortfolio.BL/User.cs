@@ -18,7 +18,7 @@ namespace MB.AgilePortfolio.BL
     {
         [DataType(DataType.MultilineText)]
         public string Bio { get; set; }
-        
+
         public Guid Id { get; set; }
         public string Email { get; set; }
         [DataType(DataType.Password)]
@@ -458,6 +458,57 @@ namespace MB.AgilePortfolio.BL
                         var user = (from u in dc.tblUsers
                                     join ut in dc.tblUserTypes on u.UserTypeId equals ut.Id
                                     where u.Email == Email
+                                    select new
+                                    {
+                                        u.Id,
+                                        u.Email,
+                                        u.Password,
+                                        u.FirstName,
+                                        u.LastName,
+                                        u.ProfileImage,
+                                        u.UserTypeId,
+                                        u.Username,
+                                        u.Bio,
+                                        ut.Description
+                                    }).FirstOrDefault();
+                        if (user != null)
+                        {
+                            if (user.Password == GetHash(Password, user.Id))
+                            {
+                                // Login successful
+                                FirstName = user.FirstName;
+                                LastName = user.LastName;
+                                Email = user.Email;
+                                Password = user.Password;
+                                Id = user.Id;
+                                ProfileImage = user.ProfileImage;
+                                UserTypeId = user.UserTypeId;
+                                Username = user.Username;
+                                UserTypeDescription = user.Description;
+                                Bio = user.Bio;
+                                return true;
+                            }
+                            else { return false; }
+                        }
+                        else { return false; }
+                    }
+
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else if (Username != null && Username != String.Empty)
+                {
+                    if (Password != null && Password != string.Empty)
+                    {
+                        PortfolioEntities dc = new PortfolioEntities();
+
+                        //tblUser user = dc.tblUsers.FirstOrDefault(u => u.Email == Email);
+
+                        var user = (from u in dc.tblUsers
+                                    join ut in dc.tblUserTypes on u.UserTypeId equals ut.Id
+                                    where u.Username == Username
                                     select new
                                     {
                                         u.Id,
