@@ -116,7 +116,7 @@ else
                     </div>
 
                     <div class="col-md-10 pl-2 border">
-                        <h2 class="text-left">
+                        <h2 class="text-left mt-3">
                             @Model.Portfolio.Name
                             @if (@HttpContext.Current.Session["user"] != null && Model.User.Id.ToString() == @HttpContext.Current.Session["UserID"].ToString())
                               {<span class="h2 small"> | @Html.ActionLink("Edit Portfolio", "EditPortfolio", "UserProfile", new { id = Model.Portfolio.Id }, null)</span>}
