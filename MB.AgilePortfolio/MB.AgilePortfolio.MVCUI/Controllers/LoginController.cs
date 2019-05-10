@@ -56,10 +56,10 @@ namespace MB.AgilePortfolio.MVCUI.Controllers
                         if (Session["UserType"].ToString() == "User")
                             return RedirectToAction("Index", "UserProfile");
                         if (Session["UserType"].ToString() == "Employer")
-                            return RedirectToAction("EmployerIndex", "UserProfile");
+                            return RedirectToAction("Index", "UserProfile");
                     }
+                    return RedirectToAction("Index", "UserProfile");
 
-                    return Redirect(returnurl);
                 }
                 else
                 {
