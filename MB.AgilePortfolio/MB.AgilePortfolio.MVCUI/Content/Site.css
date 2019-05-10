@@ -82,3 +82,7 @@ body {
 .smaller-image{
     max-height: 300px;
 }
+
+.w-90 {
+    width: 90%;
+}

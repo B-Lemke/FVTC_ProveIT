@@ -78,7 +78,7 @@ else
         <body>
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-2 border" id="sidebar">
+                    <div class="col-lg-2 mt-2 border" id="sidebar">
                         <h2 class="mt-2">@Model.User.Username</h2>
                         <div>
                             <div class="text-center">
@@ -115,7 +115,7 @@ else
 
                     </div>
 
-                    <div class="col-md-10 pl-2 border">
+                    <div class="col-lg-10 pl-2 mt-2 border">
                         <h2 class="text-left">
                             @Model.Portfolio.Name
                             @if (@HttpContext.Current.Session["user"] != null && Model.User.Id.ToString() == @HttpContext.Current.Session["UserID"].ToString())
@@ -157,7 +157,7 @@ else
                                                 </a>
                                                 <div class="card-body text-center">
                                                     <a href="~/User/@Model.User.UrlFriendlyName/Projects/@item.UrlFriendlyName" class="card-link text-center">
-                                                        <h5 class="card-title w-90% text-left">@item.Name</h5>
+                                                        <h5 class="card-title w-90 text-left">@item.Name</h5>
                                                     </a>
                                                     <h6 class="card-subtitle mb-2 text-muted text-left">
                                                         @if (item.Languages != null)
