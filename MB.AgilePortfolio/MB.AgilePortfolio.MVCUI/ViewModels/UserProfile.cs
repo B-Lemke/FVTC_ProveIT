@@ -38,8 +38,8 @@ namespace MB.AgilePortfolio.MVCUI.ViewModels
         public void SendPasswordReset(string Email, string Subject, string ResetLink)
         {
 
-            string html = "To reset your ProveIT account password click this link: <a href=\"" + ResetLink + "\">Reset Password</a><br/>If you did not attempt to reset your password please report this";
-            html += HttpUtility.HtmlEncode(@"Or click on the copy the following link on the browser:" + ResetLink + "<br/> If you did not attempt to reset your password please report this");
+            string html = "To reset your ProveIT account password click this link: <a href=\"" + ResetLink + "\">Reset Password</a><br/>If you did not attempt to reset your password please report this. ";
+            html += HttpUtility.HtmlEncode(@" Or click on the copy the following link on the browser:" + ResetLink + ". Again, if you did not attempt to reset your password please report this to the admin.");
             
             MailMessage msg = new MailMessage();
             msg.From = new MailAddress("ProveITConfirmation@gmail.com", "ProveIT Support");
